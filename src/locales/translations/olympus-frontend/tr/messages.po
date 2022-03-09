@@ -61,7 +61,7 @@ msgid "Award period has finished, you can navigate to Pool Together's UI to comp
 msgstr "Ödül süresi sonra erdi, dağıtımı tamamlamak için Pool Together'ın arayüzüne girebilirsiniz."
 
 #: src/views/TreasuryDashboard/TreasuryDashboard.jsx:147
-#~ msgid "Backing per OHM"
+#~ msgid "Backing per THS"
 #~ msgstr "OHM başına ciro"
 
 #: src/views/Stake/ExternalStakePool.jsx:93
@@ -192,16 +192,16 @@ msgid "Deposit"
 msgstr "Yatır"
 
 #: src/views/33Together/PoolDeposit.jsx:162
-msgid "Deposit sOHM"
-msgstr "sOHM Yatır"
+msgid "Deposit sTHS"
+msgstr "sTHS Yatır"
 
 #: src/views/33Together/PoolDeposit.jsx:100
-msgid "Deposit sOHM to win! Once deposited, you will receive a corresponding amount of 33T and be entered to win until your sOHM is withdrawn."
+msgid "Deposit sTHS to win! Once deposited, you will receive a corresponding amount of 33T and be entered to win until your sTHS is withdrawn."
 msgstr ""
 
 #: src/views/33Together/PoolDeposit.jsx:179
-msgid "Depositing {quantity} sOHM will increase odds of winning to 1 in {newOdds}"
-msgstr "{quantity} sOHM yatırarak kazanma şansınız {newOdds}de 1 olacak."
+msgid "Depositing {quantity} sTHS will increase odds of winning to 1 in {newOdds}"
+msgstr "{quantity} sTHS yatırarak kazanma şansınız {newOdds}de 1 olacak."
 
 #: src/views/33Together/PoolDeposit.jsx:112
 msgid "Deposits can be made once the prize has been awarded."
@@ -296,8 +296,8 @@ msgid "Max You Can Buy"
 msgstr "Satın alabileceğiniz maksimum miktar"
 
 #: src/views/Stake/Stake.jsx:183
-msgid "Migrate sOHM!"
-msgstr "sOHM'unuzu taşıyın!"
+msgid "Migrate sTHS!"
+msgstr "sTHS'unuzu taşıyın!"
 
 #: src/views/Stake/Stake.jsx:442
 msgid "Next Reward Amount"
@@ -339,7 +339,7 @@ msgstr "İşleniyor..."
 #: src/views/Bond/BondPurchase.jsx:147
 #: src/views/Stake/Stake.jsx:293
 #: src/views/Stake/Stake.jsx:300
-msgid "Please approve Olympus Dao to use your"
+msgid "Please approve Themis Dao to use your"
 msgstr ""
 
 #: src/views/Bond/BondPurchase.jsx:52
@@ -444,7 +444,7 @@ msgstr "Yatır"
 
 #: src/views/Stake/Stake.jsx:344
 msgid "Stake OHM"
-msgstr "OHM yatır"
+msgstr "DAI yatır"
 
 #: src/views/Stake/ExternalStakePool.jsx:140
 #: src/views/Stake/ExternalStakePool.jsx:205
@@ -460,8 +460,8 @@ msgid "Staked Balance in Fuse"
 msgstr ""
 
 #: src/slices/PendingTxnsSlice.ts:29
-msgid "Staking OHM"
-msgstr "OHM yatırılıyor"
+msgid "Staking DAI"
+msgstr "DAI yatırılıyor"
 
 #: src/views/Dashboard/Dashboard.jsx:66
 msgid "Supply (circulating/total)"
@@ -473,8 +473,8 @@ msgid "TVD"
 msgstr "Toplam yatırılan Miktar"
 
 #: src/views/TreasuryDashboard/TreasuryDashboard.jsx:158
-#~ msgid "The current index tracks the amount of sOHM accumulated since the beginning of staking. Basically, how much sOHM one would have if they staked and held a single OHM from day 1."
-#~ msgstr "Güncel Katsayı yatırımın başlangıcından itibaren ne kadar sOHM kazanıldığını gösterir."
+#~ msgid "The current index tracks the amount of sTHS accumulated since the beginning of staking. Basically, how much sTHS one would have if they staked and held a single OHM from day 1."
+#~ msgstr "Güncel Katsayı yatırımın başlangıcından itibaren ne kadar sTHS kazanıldığını gösterir."
 
 #: src/views/33Together/PoolDeposit.jsx:109
 msgid "This Prize Pool is unable to accept deposits at this time."
@@ -525,11 +525,11 @@ msgid "Unstaked Balance"
 msgstr ""
 
 #: src/slices/PendingTxnsSlice.ts:29
-msgid "Unstaking sOHM"
-msgstr "sOHM çekiliyor"
+msgid "Unstaking sTHS"
+msgstr "sTHS çekiliyor"
 
 #: src/slices/PendingTxnsSlice.ts:33
-msgid "Unwrapping sOHM"
+msgid "Unwrapping sTHS"
 msgstr ""
 
 #: src/views/Bond/BondPurchase.jsx:268
@@ -555,16 +555,16 @@ msgid "Withdraw Early & pay"
 msgstr "Erken çek ve ücret öde"
 
 #: src/views/33Together/PoolWithdraw.jsx:154
-msgid "Withdraw sOHM"
-msgstr "sOHM çek"
+msgid "Withdraw sTHS"
+msgstr "sTHS çek"
 
 #: src/views/33Together/PoolWithdraw.jsx:105
 msgid "Withdrawals can be made once the prize has been awarded."
 msgstr "Ödül dağıtıldıktan sonra para çekilebilir."
 
 #: src/views/33Together/PoolWithdraw.jsx:161
-msgid "Withdrawing {quantity} sOHM reduces your odds of winning to 1 in {newOdds}"
-msgstr "{quantity} sOHM çekmek kazanma şansınızı {newOdds}de 1'e düşürecektir"
+msgid "Withdrawing {quantity} sTHS reduces your odds of winning to 1 in {newOdds}"
+msgstr "{quantity} sTHS çekmek kazanma şansınızı {newOdds}de 1'e düşürecektir"
 
 #: src/views/Stake/Stake.jsx:431
 msgid "Wrapped Balance"
@@ -593,8 +593,8 @@ msgstr "OHM bakiyenizden daha fazla olan bir değeri yatıramazsınız."
 
 #: src/views/Stake/Stake.jsx:123
 #: src/views/Stake/Stake.jsx:123
-msgid "You cannot unstake more than your sOHM balance."
-msgstr "sOHM bakiyenizden daha fazla olan bir değeri çekemezsiniz."
+msgid "You cannot unstake more than your sTHS balance."
+msgstr "sTHS bakiyenizden daha fazla olan bir değeri çekemezsiniz."
 
 #: src/views/33Together/PoolWithdraw.jsx:86
 msgid "You cannot withdraw more than your pool balance"
@@ -672,12 +672,12 @@ msgid "min"
 msgstr "dk."
 
 #: src/views/33Together/PoolInfo.jsx:158
-msgid "sOHM Pool Details"
-msgstr "sOHM Havuzu Detayları"
+msgid "sTHS Pool Details"
+msgstr "sTHS Havuzu Detayları"
 
 #: src/views/33Together/PoolInfo.jsx:150
-msgid "sOHM Prize Pool"
-msgstr "sOHM Ödül Havuzu"
+msgid "sTHS Prize Pool"
+msgstr "sTHS Ödül Havuzu"
 
 #: src/views/33Together/PoolPrize.jsx:160
 msgid "sec"

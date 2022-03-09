@@ -23,12 +23,13 @@ import { format } from "date-fns";
 import "./chart.scss";
 
 const formatCurrency = c => {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-    minimumFractionDigits: 0,
-  }).format(c);
+  return;
+  // new Intl.NumberFormat("en-US", {
+  //   style: "currency",
+  //   currency: "USD",
+  //   maximumFractionDigits: 0,
+  //   minimumFractionDigits: 0,
+  // }).format(c);
 };
 
 const tickCount = 3;
@@ -488,13 +489,14 @@ function Chart({
             headerText={headerText}
             headerSubText={headerSubText}
           />
-        </Box>
-        {loading ? (
+          </Box>
+          
+        {loading || true ? (
           <Skeleton variant="text" width={100} />
         ) : (
           <Box display="flex">
             <Typography variant="h4" style={{ fontWeight: 600, marginRight: 5 }}>
-              {headerSubText}
+              {/* {headerSubText} */}0.00
             </Typography>
             <Typography variant="h4" color="textSecondary" style={{ fontWeight: 400 }}>
               {type !== "multi" && "Today"}
@@ -502,14 +504,15 @@ function Chart({
           </Box>
         )}
       </div>
-      <Box width="100%" minHeight={260} minWidth={310} className="ohm-chart">
-        {loading || (data && data.length > 0) ? (
+        <Box width="100%" minHeight={260} minWidth={310} className="ohm-chart">
+          0.00
+        {/* {loading || (data && data.length > 0) ? (
           <ResponsiveContainer minHeight={260} width="100%">
             {renderChart(type, false)}
           </ResponsiveContainer>
         ) : (
           <Skeleton variant="rect" width="100%" height={260} />
-        )}
+        )} */}
       </Box>
     </Box>
   );

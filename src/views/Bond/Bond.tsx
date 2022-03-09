@@ -70,8 +70,8 @@ const Bond = ({ bond }: { bond: IAllBondData }) => {
                   <Typography variant="h5" color="textSecondary">
                     <Trans>Bond Price</Trans>
                   </Typography>
-                  <Typography variant="h3" className="price" color="primary">
-                    <>{isBondLoading ? <Skeleton width="50px" /> : <DisplayBondPrice key={bond.name} bond={bond} />}</>
+                  <Typography variant="h3" className="price" color="primary">0.00
+                    {/* <>{isBondLoading ? <Skeleton width="50px" /> : <DisplayBondPrice key={bond.name} bond={bond} />}</> */}
                   </Typography>
                 </div>
                 <div className="bond-price-data">
@@ -79,7 +79,8 @@ const Bond = ({ bond }: { bond: IAllBondData }) => {
                     <Trans>Market Price</Trans>
                   </Typography>
                   <Typography variant="h3" color="primary" className="price">
-                    {isBondLoading ? <Skeleton /> : formatCurrency(bond.marketPrice, 2)}
+                    {/* {isBondLoading ? <Skeleton /> : formatCurrency(bond.marketPrice, 2)} */}
+                    0.00
                   </Typography>
                 </div>
               </Box>
@@ -127,12 +128,14 @@ export const DisplayBondPrice = ({ bond }: { bond: IAllBondData }): ReactElement
 
   return (
     <Fragment>
-      {new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-        maximumFractionDigits: 2,
-        minimumFractionDigits: 2,
-      }).format(bond.bondPrice)}
+      {"0.00"
+        // new Intl.NumberFormat("en-US", {
+        //   style: "currency",
+        // currency: "USD",
+        // maximumFractionDigits: 2,
+        // minimumFractionDigits: 2,
+        // }).format(bond.bondPrice)
+      }
     </Fragment>
   );
 };

@@ -33,7 +33,7 @@ import {
   Link,
 } from "@material-ui/core";
 
-import { dai, frax } from "src/helpers/AllBonds";
+import { dai /*, frax */ } from "src/helpers/AllBonds";
 
 const useStyles = makeStyles(theme => ({
   menuContainer: {
@@ -184,18 +184,18 @@ function InitialWalletView() {
   return (
     <Paper>
       <Token
-        name="OHM"
+        name="THS"
         userBalance={ohmBalance}
         userBalanceUSD={trim(ohmBalance * marketPrice, 2)}
         icon={ohmTokenImg}
       />
       <Token
-        name="sOHM"
+        name="sTHS"
         userBalance={sOhmBalance}
         userBalanceUSD={trim(sOhmBalance * marketPrice, 2)}
         icon={sOhmTokenImg}
       />
-      <Token
+      {/* <Token
         name="wsOHM"
         userBalance={wsOhmBalance}
         userBalanceUSD={trim(wsOhmBalance * marketPrice, 2)}
@@ -206,7 +206,7 @@ function InitialWalletView() {
         userBalance={poolBalance}
         userBalanceUSD={trim(poolBalance * marketPrice, 2)}
         icon={t33TokenImg}
-      />
+      /> */}
 
       <Divider color="secondary" className="less-margin" />
 
@@ -233,7 +233,7 @@ function InitialWalletView() {
             </Button>
           </ExternalLink>
 
-          <ExternalLink
+          {/* <ExternalLink
             href={`https://app.uniswap.org/#/swap?inputCurrency=${frax.getAddressForReserve(chainID)}&outputCurrency=${
               addresses[chainID].OHM_ADDRESS
             }`}
@@ -243,7 +243,7 @@ function InitialWalletView() {
                 Buy on Uniswap <ExternalLinkIcon />
               </Typography>
             </Button>
-          </ExternalLink>
+          </ExternalLink> */}
 
           <ExternalLink href={`https://dune.xyz/0xrusowsky/Olympus-Wallet-History`}>
             <Button size="large" variant="contained" color="secondary">

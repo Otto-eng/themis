@@ -96,7 +96,8 @@ function BondRedeem({ bond }) {
               <Trans>Pending Rewards</Trans>
             </Typography>
             <Typography className="price-data">
-              {isBondLoading ? <Skeleton width="100px" /> : `${trim(bond.interestDue, 4)} OHM`}
+              0THS
+              {/* {isBondLoading ? <Skeleton width="100px" /> : `${trim(bond.interestDue, 4)} THS`} */}
             </Typography>
           </div>
           <div className="data-row">
@@ -104,22 +105,25 @@ function BondRedeem({ bond }) {
               <Trans>Claimable Rewards</Trans>
             </Typography>
             <Typography id="claimable" className="price-data">
-              {isBondLoading ? <Skeleton width="100px" /> : `${trim(bond.pendingPayout, 4)} OHM`}
+              0THS
+              {/* {isBondLoading ? <Skeleton width="100px" /> : `${trim(bond.pendingPayout, 4)} THS`} */}
             </Typography>
           </div>
           <div className="data-row">
             <Typography>
               <Trans>Time until fully vested</Trans>
             </Typography>
-            <Typography className="price-data">{isBondLoading ? <Skeleton width="100px" /> : vestingTime()}</Typography>
+            <Typography className="price-data">{"0.00"
+              // isBondLoading ? <Skeleton width="100px" /> : vestingTime()
+            }</Typography>
           </div>
 
           <div className="data-row">
             <Typography>
               <Trans>ROI</Trans>
             </Typography>
-            <Typography>
-              {isBondLoading ? <Skeleton width="100px" /> : <DisplayBondDiscount key={bond.name} bond={bond} />}
+            <Typography>0.00
+              {/* {isBondLoading ? <Skeleton width="100px" /> : <DisplayBondDiscount key={bond.name} bond={bond} />} */}
             </Typography>
           </div>
 
@@ -128,7 +132,8 @@ function BondRedeem({ bond }) {
               <Trans>Debt Ratio</Trans>
             </Typography>
             <Typography>
-              {isBondLoading ? <Skeleton width="100px" /> : `${trim(bond.debtRatio / 10000000, 2)}%`}
+              0%
+              {/* {isBondLoading ? <Skeleton width="100px" /> : `${trim(bond.debtRatio / 10000000, 2)}%`} */}
             </Typography>
           </div>
 
@@ -136,7 +141,11 @@ function BondRedeem({ bond }) {
             <Typography>
               <Trans>Vesting Term</Trans>
             </Typography>
-            <Typography>{isBondLoading ? <Skeleton width="100px" /> : vestingPeriod()}</Typography>
+            <Typography>{
+              "0 days"
+
+              // isBondLoading ? <Skeleton width="100px" /> : vestingPeriod()
+            }</Typography>
           </div>
         </Box>
       </Slide>

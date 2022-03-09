@@ -9,9 +9,9 @@ const lightTheme = {
   blueish_gray: "#768299",
   textHighlightColor: "#93AEBC", // "#F4D092",
   backgroundColor: "#AFCDE9",
-  // background:
-  // "radial-gradient(circle at 25% 0%, rgba(227,255,240,.5), rgba(227,255,240,0) 50%), radial-gradient(circle at 80% 80%, rgba(131,165,203,.5), rgba(131,165,203,0) 50%)",
-  background: "linear-gradient(180deg, #AFCDE9 1%, #F7FBE7 100%)",
+  // background: "linear-gradient(180deg, #AFCDE9 1%, #F7FBE7 100%)",
+  background: "linear-gradient(180deg, #B6B7C8 0%, #DEDCE1 100%)",
+  boxshadow: "0px 5px 16px 1px rgba(0, 0, 0, 0.1607843137254902)",
   paperBg: "rgba(255, 255, 255, 0.6)",
   modalBg: "#FAFAFAEF",
   popoverBg: "rgba(255, 255, 255, 0.95)",
@@ -74,6 +74,7 @@ export const light = responsiveFontSizes(
             "@font-face": fonts,
             body: {
               background: lightTheme.background,
+              boxshadow: lightTheme.boxshadow
             },
           },
         },

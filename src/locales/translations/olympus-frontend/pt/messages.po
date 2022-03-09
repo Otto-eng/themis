@@ -161,15 +161,15 @@ msgid "Deposit"
 msgstr ""
 
 #: src/views/33Together/PoolDeposit.jsx:162
-msgid "Deposit sOHM"
+msgid "Deposit sTHS"
 msgstr ""
 
 #: src/views/33Together/PoolDeposit.jsx:100
-msgid "Deposit sOHM to win! Once deposited, you will receive a corresponding amount of 33T and be entered to win until your sOHM is withdrawn."
+msgid "Deposit sTHS to win! Once deposited, you will receive a corresponding amount of 33T and be entered to win until your sTHS is withdrawn."
 msgstr ""
 
 #: src/views/33Together/PoolDeposit.jsx:179
-msgid "Depositing {quantity} sOHM will increase odds of winning to 1 in {newOdds}"
+msgid "Depositing {quantity} sTHS will increase odds of winning to 1 in {newOdds}"
 msgstr ""
 
 #: src/views/33Together/PoolDeposit.jsx:112
@@ -257,7 +257,7 @@ msgid "Max You Can Buy"
 msgstr ""
 
 #: src/views/Stake/Stake.jsx:183
-msgid "Migrate sOHM!"
+msgid "Migrate sTHS!"
 msgstr ""
 
 #: src/views/Stake/Stake.jsx:436
@@ -296,7 +296,7 @@ msgstr ""
 #: src/views/Bond/BondPurchase.jsx:147
 #: src/views/Stake/Stake.jsx:287
 #: src/views/Stake/Stake.jsx:294
-msgid "Please approve Olympus Dao to use your"
+msgid "Please approve Themis Dao to use your"
 msgstr ""
 
 #: src/views/Bond/BondPurchase.jsx:52
@@ -405,7 +405,7 @@ msgid "Staked Balance in Fuse"
 msgstr ""
 
 #: src/slices/PendingTxnsSlice.ts:29
-msgid "Staking OHM"
+msgid "Staking DAI"
 msgstr ""
 
 #: src/views/Dashboard/Dashboard.jsx:66
@@ -466,11 +466,11 @@ msgid "Unstaked Balance"
 msgstr ""
 
 #: src/slices/PendingTxnsSlice.ts:29
-msgid "Unstaking sOHM"
+msgid "Unstaking sTHS"
 msgstr ""
 
 #: src/slices/PendingTxnsSlice.ts:33
-msgid "Unwrapping sOHM"
+msgid "Unwrapping sTHS"
 msgstr ""
 
 #: src/views/Bond/BondPurchase.jsx:268
@@ -496,7 +496,7 @@ msgid "Withdraw Early & pay"
 msgstr ""
 
 #: src/views/33Together/PoolWithdraw.jsx:154
-msgid "Withdraw sOHM"
+msgid "Withdraw sTHS"
 msgstr ""
 
 #: src/views/33Together/PoolWithdraw.jsx:105
@@ -504,7 +504,7 @@ msgid "Withdrawals can be made once the prize has been awarded."
 msgstr ""
 
 #: src/views/33Together/PoolWithdraw.jsx:161
-msgid "Withdrawing {quantity} sOHM reduces your odds of winning to 1 in {newOdds}"
+msgid "Withdrawing {quantity} sTHS reduces your odds of winning to 1 in {newOdds}"
 msgstr ""
 
 #: src/views/Stake/Stake.jsx:425
@@ -534,7 +534,7 @@ msgstr ""
 
 #: src/views/Stake/Stake.jsx:123
 #: src/views/Stake/Stake.jsx:123
-msgid "You cannot unstake more than your sOHM balance."
+msgid "You cannot unstake more than your sTHS balance."
 msgstr ""
 
 #: src/views/33Together/PoolWithdraw.jsx:86
@@ -607,11 +607,11 @@ msgid "min"
 msgstr ""
 
 #: src/views/33Together/PoolInfo.jsx:158
-msgid "sOHM Pool Details"
+msgid "sTHS Pool Details"
 msgstr ""
 
 #: src/views/33Together/PoolInfo.jsx:150
-msgid "sOHM Prize Pool"
+msgid "sTHS Prize Pool"
 msgstr ""
 
 #: src/views/33Together/PoolPrize.jsx:160

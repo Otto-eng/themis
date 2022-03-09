@@ -29,7 +29,7 @@ function SOhmTx() {
         <Typography align="left"> Zap</Typography>
       </Button>
       <Drawer style={{ width: "40%" }} anchor={"right"} open={anchor === "sOHMZaps"} onClose={toggleDrawer("OG")}>
-        sOHM Zap Stuff
+        sTHS Zap Stuff
       </Drawer>
       <Drawer style={{ width: "40%" }} anchor={"right"} open={anchor === "sOHMtx"} onClose={toggleDrawer("OG")}>
         test

@@ -64,14 +64,14 @@ export const secondsToDaysForInput = (seconds: number) => {
 export const poolTogetherUILinks = (chainID: number): Array<string> => {
   const contractAddress = addresses[chainID].PT_PRIZE_POOL_ADDRESS;
 
-  if (chainID === 4) {
+  if (chainID === 56) {
     return [
       `https://community.pooltogether.com/pools/rinkeby/${contractAddress}/home`,
       `https://community.pooltogether.com/pools/rinkeby/${contractAddress}/manage#stats`,
     ];
   } else {
     return [
-      `https://app.pooltogether.com/pools/mainnet/sOHM`,
+      `https://app.pooltogether.com/pools/mainnet/sTHS`,
       `https://community.pooltogether.com/pools/mainnet/${contractAddress}/manage#stats`,
     ];
   }

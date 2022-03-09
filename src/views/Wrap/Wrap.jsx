@@ -108,7 +108,7 @@ function Wrap() {
       action === "wrap" &&
       ethers.utils.parseUnits(quantity, "gwei").gt(ethers.utils.parseUnits(sohmBalance, "gwei"))
     ) {
-      return dispatch(error("You cannot wrap more than your sOHM balance."));
+      return dispatch(error("You cannot wrap more than your sTHS balance."));
     }
 
     if (
@@ -171,9 +171,9 @@ function Wrap() {
               <div className="stake-top-metrics">
                 <Grid container spacing={2} alignItems="flex-end">
                   <Grid item xs={12} sm={4} md={4} lg={4}>
-                    <div className="wrap-sOHM">
+                    <div className="wrap-sTHS">
                       <Typography variant="h5" color="textSecondary">
-                        sOHM Price
+                        sTHS Price
                       </Typography>
                       <Typography variant="h4">
                         {sOhmPrice ? formatCurrency(sOhmPrice, 2) : <Skeleton width="150px" />}
@@ -186,7 +186,7 @@ function Wrap() {
                         Current Index
                       </Typography>
                       <Typography variant="h4">
-                        {currentIndex ? <>{trim(currentIndex, 1)} OHM</> : <Skeleton width="150px" />}
+                        {currentIndex ? <>{trim(currentIndex, 1)} THS</> : <Skeleton width="150px" />}
                       </Typography>
                     </div>
                   </Grid>
@@ -196,12 +196,13 @@ function Wrap() {
                         wsOHM Price
                         <InfoTooltip
                           message={
-                            "wsOHM = sOHM * index\n\nThe price of wsOHM is equal to the price of OHM multiplied by the current index"
+                            "wsOHM = sTHS * index\n\nThe price of wsOHM is equal to the price of THS multiplied by the current index"
                           }
                         />
                       </Typography>
                       <Typography variant="h4">
-                        {wsOhmPrice ? formatCurrency(wsOhmPrice, 2) : <Skeleton width="150px" />}
+                        0.00
+                        {/* {wsOhmPrice ? formatCurrency(wsOhmPrice, 2) : <Skeleton width="150px" />} */}
                       </Typography>
                     </div>
                   </Grid>
@@ -215,7 +216,7 @@ function Wrap() {
                   <div className="wallet-menu" id="wallet-menu">
                     {modalButton}
                   </div>
-                  <Typography variant="h6">Connect your wallet to wrap sOHM</Typography>
+                  <Typography variant="h6">Connect your wallet to wrap sTHS</Typography>
                 </div>
               ) : (
                 <>
@@ -240,9 +241,9 @@ function Wrap() {
                             <Typography variant="body1" className="stake-note" color="textSecondary">
                               {view === 0 && (
                                 <>
-                                  First time wrapping <b>sOHM</b>?
+                                  First time wrapping <b>sTHS</b>?
                                   <br />
-                                  Please approve Olympus Dao to use your <b>sOHM</b> for wrapping.
+                                  Please approve Themis Dao to use your <b>sTHS</b> for wrapping.
                                 </>
                               )}
                             </Typography>
@@ -283,7 +284,7 @@ function Wrap() {
                               onChangeWrap("wrap");
                             }}
                           >
-                            {txnButtonText(pendingTransactions, "wrapping", "Wrap sOHM")}
+                            {txnButtonText(pendingTransactions, "wrapping", "Wrap sTHS")}
                           </Button>
                         ) : (
                           <Button
@@ -310,7 +311,7 @@ function Wrap() {
                             onChangeWrap("unwrap");
                           }}
                         >
-                          {txnButtonText(pendingTransactions, "unwrapping", "Unwrap sOHM")}
+                          {txnButtonText(pendingTransactions, "unwrapping", "Unwrap sTHS")}
                         </Button>
                       </TabPanel>
                     </Box>
@@ -319,8 +320,8 @@ function Wrap() {
                       <Box padding={1}>
                         <Typography variant="body2" className={classes.textHighlight}>
                           {isUnwrap
-                            ? `Unwrapping ${quantity} wsOHM will result in ${trim(convertedQuantity, 4)} sOHM`
-                            : `Wrapping ${quantity} sOHM will result in ${trim(convertedQuantity, 4)} wsOHM`}
+                            ? `Unwrapping ${quantity} wsOHM will result in ${trim(convertedQuantity, 4)} sTHS`
+                            : `Wrapping ${quantity} sTHS will result in ${trim(convertedQuantity, 4)} wsOHM`}
                         </Typography>
                       </Box>
                     )}
@@ -330,7 +331,7 @@ function Wrap() {
                     <div className="data-row">
                       <Typography variant="body1">Wrappable Balance</Typography>
                       <Typography variant="body1">
-                        {isAppLoading ? <Skeleton width="80px" /> : <>{trim(sohmBalance, 4)} sOHM</>}
+                        {isAppLoading ? <Skeleton width="80px" /> : <>{trim(sohmBalance, 4)} sTHS</>}
                       </Typography>
                     </div>
                     <div className="data-row">

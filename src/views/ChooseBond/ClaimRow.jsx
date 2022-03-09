@@ -36,7 +36,7 @@ export function ClaimBondTableData({ userBond }) {
 
   async function onRedeem({ autostake }) {
     // TODO (appleseed-expiredBonds): there may be a smarter way to refactor this
-    let currentBond = [...bonds, ...expiredBonds].find(bnd => bnd.name === bondName);
+    let currentBond = [...bonds /*, ...expiredBonds*/].find(bnd => bnd.name === bondName);
     await dispatch(redeemBond({ address, bond: currentBond, networkID: chainID, provider, autostake }));
   }
 
@@ -46,16 +46,19 @@ export function ClaimBondTableData({ userBond }) {
         <BondLogo bond={bond} />
         <div className="bond-name">
           <Typography variant="body1">
-            {bond.displayName ? trim(bond.displayName, 4) : <Skeleton width={100} />}
+            {/* {bond.displayName  ? trim(bond.displayName, 4) : <Skeleton width={100} />} */}
+            0.00
           </Typography>
         </div>
       </TableCell>
       <TableCell align="center">
-        {bond.pendingPayout ? trim(bond.pendingPayout, 4) : <Skeleton width={100} />}
+        {/* {bond.pendingPayout ? trim(bond.pendingPayout, 4) : <Skeleton width={100} />} */}
+        0.00
       </TableCell>
-      <TableCell align="center">{bond.interestDue ? trim(bond.interestDue, 4) : <Skeleton width={100} />}</TableCell>
+      <TableCell align="center">{/*bond.interestDue ? trim(bond.interestDue, 4) : <Skeleton width={100} /> */}0.00</TableCell>
       <TableCell align="right" style={{ whiteSpace: "nowrap" }}>
-        {isAppLoading ? <Skeleton /> : vestingPeriod()}
+        {/* {isAppLoading ? <Skeleton /> : vestingPeriod()} */}
+        0.00
       </TableCell>
       <TableCell align="right">
         <Button

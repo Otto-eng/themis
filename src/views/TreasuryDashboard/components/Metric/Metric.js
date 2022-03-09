@@ -20,7 +20,10 @@ export const MarketCap = () => {
   return (
     <Metric className="market">
       <Metric.Title>Market Cap</Metric.Title>
-      <Metric.Value>{marketCap && formatCurrency(marketCap, 0)}</Metric.Value>
+      <Metric.Value>
+        0.00
+        {/* {marketCap && formatCurrency(marketCap, 0)} */}
+      </Metric.Value>
     </Metric>
   );
 };
@@ -30,8 +33,10 @@ export const OHMPrice = () => {
 
   return (
     <Metric className="price">
-      <Metric.Title>OHM Price</Metric.Title>
-      <Metric.Value>{marketPrice && formatCurrency(marketPrice, 2)}</Metric.Value>
+      <Metric.Title>THS Price</Metric.Title>
+      <Metric.Value>0.00
+        {/* {marketPrice && formatCurrency(marketPrice, 2)} */}
+      </Metric.Value>
     </Metric>
   );
 };
@@ -45,7 +50,9 @@ export const CircSupply = () => {
   return (
     <Metric className="circ">
       <Metric.Title>Circulating Supply (total)</Metric.Title>
-      <Metric.Value>{isDataLoaded && parseInt(circSupply) + " / " + parseInt(totalSupply)}</Metric.Value>
+      <Metric.Value>0.00
+        {/* {isDataLoaded && parseInt(circSupply) + " / " + parseInt(totalSupply)} */}
+      </Metric.Value>
     </Metric>
   );
 };
@@ -55,8 +62,10 @@ export const BackingPerOHM = () => {
 
   return (
     <Metric className="bpo">
-      <Metric.Title>Backing per OHM</Metric.Title>
-      <Metric.Value>{!isNaN(backingPerOhm) && formatCurrency(backingPerOhm, 2)}</Metric.Value>
+      <Metric.Title>Backing per THS</Metric.Title>
+      <Metric.Value>0.00
+        {/* {!isNaN(backingPerOhm) && formatCurrency(backingPerOhm, 2)} */}
+      </Metric.Value>
     </Metric>
   );
 };
@@ -68,9 +77,12 @@ export const CurrentIndex = () => {
     <Metric className="index">
       <Metric.Title>
         Current Index
-        <InfoTooltip message="The current index tracks the amount of sOHM accumulated since the beginning of staking. Basically, how much sOHM one would have if they staked and held a single OHM from day 1." />
+        <InfoTooltip message="The current index tracks the amount of sTHS accumulated since the beginning of staking. Basically, how much sTHS one would have if they staked and held a single THS from day 1." />
       </Metric.Title>
-      <Metric.Value>{currentIndex && trim(currentIndex, 2) + " sOHM"}</Metric.Value>
+      <Metric.Value>
+        0.00
+        {/* {currentIndex && trim(currentIndex, 2) + " sTHS"} */}
+      </Metric.Value>
     </Metric>
   );
 };
@@ -84,11 +96,13 @@ export const WSOHMPrice = () => {
         wsOHM Price
         <InfoTooltip
           message={
-            "wsOHM = sOHM * index\n\nThe price of wsOHM is equal to the price of OHM multiplied by the current index"
+            "wsOHM = sTHS * index\n\nThe price of wsOHM is equal to the price of THS multiplied by the current index"
           }
         />
       </Metric.Title>
-      <Metric.Value>{wsOhmPrice && formatCurrency(wsOhmPrice, 2)}</Metric.Value>
+      <Metric.Value>0.00
+        {/* {wsOhmPrice && formatCurrency(wsOhmPrice, 2)} */}
+      </Metric.Value>
     </Metric>
   );
 };

@@ -20,7 +20,7 @@ import { Skeleton } from "@material-ui/lab";
 
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import BondLogo from "../../components/BondLogo";
-import { ReactComponent as OhmLusdImg } from "src/assets/tokens/OHM-LUSD.svg";
+import { ReactComponent as OhmLusdImg } from "src/assets/tokens/THS-LUSD.svg";
 import { ReactComponent as ArrowUp } from "../../assets/icons/arrow-up.svg";
 import { getLusdData } from "../../slices/LusdSlice";
 import { useWeb3Context } from "src/hooks/web3Context";
@@ -101,7 +101,7 @@ export default function ExternalStakePool() {
                     <TableCell>
                       <Box className="ohm-pairs">
                         <BondLogo bond={{ bondIconSvg: OhmLusdImg, isLP: true }}></BondLogo>
-                        <Typography>OHM-LUSD</Typography>
+                        <Typography>THS-USDT</Typography>
                       </Box>
                     </TableCell>
                     <TableCell align="left">
@@ -117,12 +117,13 @@ export default function ExternalStakePool() {
                       {isLusdLoading ? (
                         <Skeleton width="80px" />
                       ) : (
-                        new Intl.NumberFormat("en-US", {
-                          style: "currency",
-                          currency: "USD",
-                          maximumFractionDigits: 0,
-                          minimumFractionDigits: 0,
-                        }).format(lusdData.tvl)
+                          "0.00"
+                        // new Intl.NumberFormat("en-US", {
+                        //   style: "currency",
+                        //   currency: "USD",
+                        //   maximumFractionDigits: 0,
+                        //   minimumFractionDigits: 0,
+                        // }).format(lusdData.tvl)
                       )}
                     </TableCell>
                     <TableCell align="left">
@@ -132,8 +133,8 @@ export default function ExternalStakePool() {
                       <Button
                         variant="outlined"
                         color="secondary"
-                        href="https://crucible.alchemist.wtf/reward-programs"
-                        target="_blank"
+                        // href="https://crucible.alchemist.wtf/reward-programs"
+                        // target="_blank"
                         className="stake-lp-button"
                       >
                         <Typography variant="body1">
@@ -151,7 +152,7 @@ export default function ExternalStakePool() {
               <div className={`pool-card-top-row ${isMobileScreen && "small"}`}>
                 <Box className="ohm-pairs">
                   <BondLogo bond={{ bondIconSvg: OhmLusdImg, isLP: true }}></BondLogo>
-                  <Typography gutterBottom={false}>OHM-LUSD</Typography>
+                  <Typography gutterBottom={false}>THS-USDT</Typography>
                 </Box>
               </div>
               <div className="pool-data">
@@ -175,12 +176,13 @@ export default function ExternalStakePool() {
                     {isLusdLoading ? (
                       <Skeleton width="80px" />
                     ) : (
-                      new Intl.NumberFormat("en-US", {
-                        style: "currency",
-                        currency: "USD",
-                        maximumFractionDigits: 0,
-                        minimumFractionDigits: 0,
-                      }).format(lusdData.tvl)
+                          "0.00"
+                      //     new Intl.NumberFormat("en-US", {
+                      //   style: "currency",
+                      //   currency: "USD",
+                      //   maximumFractionDigits: 0,
+                      //   minimumFractionDigits: 0,
+                      // }).format(lusdData.tvl)
                     )}
                   </Typography>
                 </div>
@@ -196,8 +198,9 @@ export default function ExternalStakePool() {
                 <Button
                   variant="outlined"
                   color="secondary"
-                  href="https://crucible.alchemist.wtf/reward-programs"
-                  target="_blank"
+                  href="javascript:;"
+                  // href="https://crucible.alchemist.wtf/reward-programs"
+                  // target="_blank"
                   className="stake-lp-button"
                   fullWidth
                 >

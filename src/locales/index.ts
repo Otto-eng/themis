@@ -11,9 +11,9 @@ interface ILocales {
 }
 export const locales: ILocales = {
   en: { flag: "us", plurals: en },
-  fr: { flag: "fr", plurals: fr },
-  ko: { flag: "kr", plurals: ko },
-  tr: { flag: "tr", plurals: tr },
+  // fr: { flag: "fr", plurals: fr },
+  // ko: { flag: "kr", plurals: ko },
+  // tr: { flag: "tr", plurals: tr },
 };
 
 // Load locale data

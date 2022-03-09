@@ -40,7 +40,7 @@ import {
   Link,
 } from "@material-ui/core";
 
-import { dai, frax } from "src/helpers/AllBonds";
+import { dai /*, frax */ } from "src/helpers/AllBonds";
 
 const useStyles = makeStyles(theme => ({
   menuContainer: {
@@ -176,7 +176,7 @@ const addTokenToWallet = (tokenSymbol, tokenAddress, address) => async () => {
   let tokenPath;
   let tokenDecimals = TOKEN_DECIMALS;
   switch (tokenSymbol) {
-    case "OHM":
+    case "THS":
       tokenPath = OhmImg;
       break;
     case "33T":
@@ -244,14 +244,14 @@ function InitialWalletView() {
   };
   return (
     <Paper>
-      <Accordion expanded={expanded === "OHM"} onChange={handleChange("OHM")}>
+      <Accordion expanded={expanded === "THS"} onChange={handleChange("THS")}>
         <AccordionSummary
           expandIcon={<SvgIcon component={ArrowUpIcon} viewBox="0 0 32 32" style={{ height: "25px", width: "25px" }} />}
         >
           <Typography align="left" style={{ width: "100%", flexDirection: "row" }}>
             {" "}
             <SvgIcon component={ohmTokenImg} viewBox="0 0 32 32" style={{ height: "25px", width: "25px" }} />
-            OHM
+            THS
           </Typography>
           <Paper>
             <Typography align="left">{ohmBalance}</Typography>
@@ -267,7 +267,7 @@ function InitialWalletView() {
                   style={{ width: "100%", fontSize: "12px" }}
                   variant="contained"
                   color="secondary"
-                  onClick={addTokenToWallet("OHM", OHM_ADDRESS, address)}
+                  onClick={addTokenToWallet("THS", OHM_ADDRESS, address)}
                 >
                   ADD TOKEN TO WALLET
                 </Button>
@@ -276,7 +276,7 @@ function InitialWalletView() {
           ) : null}
         </Box>
       </Accordion>
-      <Accordion expanded={expanded === "sOHM"} onChange={handleChange("sOHM")}>
+      <Accordion expanded={expanded === "sTHS"} onChange={handleChange("sTHS")}>
         <AccordionSummary
           alignItems="center"
           expandIcon={<SvgIcon component={ArrowUpIcon} viewBox="0 0 32 32" style={{ height: "25px", width: "25px" }} />}
@@ -284,7 +284,7 @@ function InitialWalletView() {
           <Typography align="left" style={{ width: "100%", flexDirection: "row" }}>
             {" "}
             <SvgIcon component={sOhmTokenImg} viewBox="0 0 99 99" style={{ height: "25px", width: "25px" }} />
-            sOHM
+            sTHS
           </Typography>
           <Paper>
             <Typography align="left">{sohmBalance}</Typography>
@@ -301,7 +301,7 @@ function InitialWalletView() {
                     style={{ width: "100%", fontSize: "12px" }}
                     variant="contained"
                     color="secondary"
-                    onClick={addTokenToWallet("sOHM", SOHM_ADDRESS, address)}
+                    onClick={addTokenToWallet("sTHS", SOHM_ADDRESS, address)}
                   >
                     ADD TOKEN TO WALLET
                   </Button>
@@ -356,7 +356,10 @@ function InitialWalletView() {
             3TT
           </Typography>
           <Paper>
-            <Typography align="left">{new Intl.NumberFormat("en-US").format(poolBalance)}</Typography>
+            <Typography align="left">{"0.00"
+              // new Intl.NumberFormat("en-US").format(poolBalance)
+            
+            }</Typography>
             <Typography align="left">${trim(poolBalance * marketPrice, 2)}</Typography>
           </Paper>
         </AccordionSummary>
@@ -405,7 +408,7 @@ function InitialWalletView() {
             </Button>
           </ExternalLink>
 
-          <ExternalLink
+          {/* <ExternalLink
             href={`https://app.uniswap.org/#/swap?inputCurrency=${frax.getAddressForReserve(chainID)}&outputCurrency=${
               addresses[chainID].OHM_ADDRESS
             }`}
@@ -415,7 +418,7 @@ function InitialWalletView() {
                 Buy on Uniswap <ExternalLinkIcon />
               </Typography>
             </Button>
-          </ExternalLink>
+          </ExternalLink> */}
 
           <ExternalLink href={`https://dune.xyz/0xrusowsky/Olympus-Wallet-History`}>
             <Button size="large" variant="contained" color="secondary">

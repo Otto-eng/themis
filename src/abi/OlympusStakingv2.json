@@ -31,7 +31,7 @@
     },
     {
       "inputs": [],
-      "name": "OHM",
+      "name": "THS",
       "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
       "stateMutability": "view",
       "type": "function"
@@ -117,7 +117,7 @@
     },
     {
       "inputs": [],
-      "name": "sOHM",
+      "name": "sTHS",
       "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
       "stateMutability": "view",
       "type": "function"

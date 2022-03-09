@@ -66,8 +66,8 @@ function RebaseTimer() {
   return (
     <Box className="rebase-timer">
       <Typography variant="body2">
-        {currentBlock ? (
-          secondsToRebase > 0 ? (
+        {currentBlock || true ? (
+          secondsToRebase > 0 || true ? (
             <>
               <strong>{rebaseString}&nbsp;</strong>
               <Trans>to next rebase</Trans>

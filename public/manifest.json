@@ -1,8 +1,8 @@
 {
-  "short_name": "OlympusDAO",
+  "short_name": "themisDao",
   "start_url": ".",
   "homepage": "./",
-  "name": "OlympusDAO",
+  "name": "themisDao",
   "launch_path": "/public/index.html",
   "icons": [
     {

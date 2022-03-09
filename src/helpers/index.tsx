@@ -8,19 +8,19 @@ import { SvgIcon } from "@material-ui/core";
 import { ReactComponent as OhmImg } from "../assets/tokens/token_OHM.svg";
 import { ReactComponent as SOhmImg } from "../assets/tokens/token_sOHM.svg";
 
-import { ohm_dai } from "./AllBonds";
+// import { ohm_dai } from "./AllBonds";
 import { JsonRpcSigner, StaticJsonRpcProvider } from "@ethersproject/providers";
 import { IBaseAsyncThunk } from "src/slices/interfaces";
 import { PairContract, RedeemHelper } from "../typechain";
 
-export async function getMarketPrice({ networkID, provider }: IBaseAsyncThunk) {
-  const ohm_dai_address = ohm_dai.getAddressForReserve(networkID);
-  const pairContract = new ethers.Contract(ohm_dai_address, PairContractABI, provider) as PairContract;
-  const reserves = await pairContract.getReserves();
-  const marketPrice = Number(reserves[1].toString()) / Number(reserves[0].toString());
+// export async function getMarketPrice({ networkID, provider }: IBaseAsyncThunk) {
+//   // const ohm_dai_address = ohm_dai.getAddressForReserve(networkID);
+//   // const pairContract = new ethers.Contract(ohm_dai_address, PairContractABI, provider) as PairContract;
+//   // const reserves = await pairContract.getReserves();
+//   // const marketPrice = Number(reserves[1].toString()) / Number(reserves[0].toString());
 
-  return marketPrice;
-}
+//   // return marketPrice;
+// }
 
 /**
  * gets price of token from coingecko
@@ -43,12 +43,13 @@ export function shorten(str: string) {
 }
 
 export function formatCurrency(c: number, precision = 0) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: precision,
-    minimumFractionDigits: precision,
-  }).format(c);
+  return "0.00"
+  // new Intl.NumberFormat("en-US", {
+  //   style: "currency",
+  //   currency: "USD",
+  //   maximumFractionDigits: precision,
+  //   minimumFractionDigits: precision,
+  // }).format(c);
 }
 
 export function trim(number = 0, precision = 0) {

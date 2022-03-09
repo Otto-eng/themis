@@ -4,13 +4,14 @@ import { ethers } from "ethers";
 import { abi as ierc20Abi } from "src/abi/IERC20.json";
 import { getTokenPrice } from "src/helpers";
 import { getBondCalculator } from "src/helpers/BondCalculator";
-import { EthContract, PairContract } from "src/typechain";
+import { PairContract } from "src/typechain";
 import { addresses } from "src/constants";
 import React from "react";
+import { EthContract } from "src/typechain/EthContract";
 
 export enum NetworkID {
   Mainnet = 1,
-  Testnet = 4,
+  Testnet = 56,
 }
 
 export enum BondType {

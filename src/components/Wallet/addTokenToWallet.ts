@@ -8,14 +8,14 @@ import WsOhmImg from "src/assets/tokens/token_wsOHM.svg";
 import token33tImg from "src/assets/tokens/token_33T.svg";
 
 export const addTokenToWallet =
-  (tokenSymbol: "OHM" | "33T" | "wsOHM" | "sOHM", tokenAddress: string, userAddress: string) => async () => {
+  (tokenSymbol: "THS" | "33T" | "wsOHM" | "sTHS", tokenAddress: string, userAddress: string) => async () => {
     if (!window.ethereum) return;
 
     const host = window.location.origin;
     const tokenDecimals = tokenSymbol === "wsOHM" ? 18 : TOKEN_DECIMALS; // 9;
     const tokenImagePath = {
-      OHM: OhmImg,
-      sOHM: SOhmImg,
+      THS: OhmImg,
+      sTHS: SOhmImg,
       wsOHM: WsOhmImg,
       "33T": token33tImg,
     }[tokenSymbol];

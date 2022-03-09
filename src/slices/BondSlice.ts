@@ -7,6 +7,8 @@ import { clearPendingTxn, fetchPendingTxns } from "./PendingTxnsSlice";
 import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
 import { getBondCalculator } from "src/helpers/BondCalculator";
 import { RootState } from "src/store";
+import { abi as OlympusBondDepository } from "src/abi/bonds/OlympusBondDepository.json";
+
 import {
   IApproveBondAsyncThunk,
   IBondAssetAsyncThunk,
@@ -16,6 +18,7 @@ import {
   IRedeemBondAsyncThunk,
 } from "./interfaces";
 import { segmentUA } from "../helpers/userAnalyticHelpers";
+import { EthContract } from "src/typechain/EthContract";
 
 export const changeApproval = createAsyncThunk(
   "bonding/changeApproval",
@@ -78,7 +81,6 @@ export const calcBondDetails = createAsyncThunk(
       value = "0";
     }
     const amountInWei = ethers.utils.parseEther(value);
-
     let bondPrice = BigNumber.from(0),
       bondDiscount = 0,
       valuation = 0,
@@ -157,7 +159,7 @@ export const calcBondDetails = createAsyncThunk(
       const errorString =
         "You're trying to bond more than the maximum payout available! The maximum bond payout is " +
         (Number(maxBondPrice.toString()) / Math.pow(10, 9)).toFixed(2).toString() +
-        " OHM.";
+        " THS.";
       dispatch(error(errorString));
     }
 
@@ -190,8 +192,10 @@ export const bondAsset = createAsyncThunk(
     // const calculatePremium = await bonding.calculatePremium();
     const signer = provider.getSigner();
     const bondContract = bond.getContractForBond(networkID, signer);
+    // const bondContract = new ethers.Contract("0x3E19EbAD5C9180410598E5ed7b8c82c4Cf4A8232", OlympusBondDepository, provider) as EthContract;
+    console.log("bondContract", bondContract)
     const calculatePremium = await bondContract.bondPrice();
-    const maxPremium = Math.round(Number(calculatePremium.toString()) * (1 + acceptedSlippage));
+    // const maxPremium = Math.round(Number(calculatePremium.toString()) * (1 + acceptedSlippage));
 
     // Deposit the bond
     let bondTx;
@@ -204,7 +208,9 @@ export const bondAsset = createAsyncThunk(
       txHash: "",
     };
     try {
-      bondTx = await bondContract.deposit(valueInWei, maxPremium, depositorAddress);
+
+      bondTx = await bondContract.deposit(valueInWei, calculatePremium, depositorAddress);
+      console.log("AWAIT")
       dispatch(
         fetchPendingTxns({ txnHash: bondTx.hash, text: "Bonding " + bond.displayName, type: "bond_" + bond.name }),
       );
@@ -345,6 +351,7 @@ const bondingSlice = createSlice({
         state.loading = true;
       })
       .addCase(calcBondDetails.fulfilled, (state, action) => {
+        console.log("setBondState", state, action)
         setBondState(state, action.payload);
         state.loading = false;
       })

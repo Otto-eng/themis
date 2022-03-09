@@ -1,9 +1,8 @@
-import { ThemeProvider } from "@material-ui/core/styles";
+import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
 import { useEffect, useState, useCallback } from "react";
 import { Route, Redirect, Switch, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useMediaQuery } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import useTheme from "./hooks/useTheme";
 import useBonds, { IAllBondData } from "./hooks/Bonds";
@@ -17,7 +16,7 @@ import { loadAppDetails } from "./slices/AppSlice";
 import { loadAccountDetails, calculateUserBondDetails } from "./slices/AccountSlice";
 import { info } from "./slices/MessagesSlice";
 
-import { Stake, ChooseBond, Bond, Wrap, TreasuryDashboard, PoolTogether } from "./views";
+import { Stake, ChooseBond, Bond, TreasuryDashboard } from "./views";
 import Sidebar from "./components/Sidebar/Sidebar.jsx";
 import TopBar from "./components/TopBar/TopBar.jsx";
 import NavDrawer from "./components/Sidebar/NavDrawer.jsx";
@@ -26,10 +25,13 @@ import NotFound from "./views/404/NotFound";
 
 import { dark as darkTheme } from "./themes/dark.js";
 import { light as lightTheme } from "./themes/light.js";
-import { girth as gTheme } from "./themes/girth.js";
 import "./style.scss";
-import { Bond as IBond } from "./lib/Bond";
 import { useGoogleAnalytics } from "./hooks/useGoogleAnalytics";
+import Claim from "./views/Claim";
+import { THEME_LIGHT } from "./constants";
+import Sc from "./views/Sc";
+import { useAppSelector } from "./hooks";
+
 
 // 😬 Sorry for all the console logging
 const DEBUG = false;
@@ -79,11 +81,14 @@ function App() {
   useGoogleAnalytics();
   const location = useLocation();
   const dispatch = useDispatch();
-  const [theme, toggleTheme, mounted] = useTheme();
+  const theme: {
+    theme: string
+  } = useAppSelector(state => state.theme)
   const currentPath = location.pathname + location.search + location.hash;
   const classes = useStyles();
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [themeMode, setThemeMode] = useState(theme.theme === THEME_LIGHT ? lightTheme : darkTheme);
   const isSmallerScreen = useMediaQuery("(max-width: 980px)");
   const isSmallScreen = useMediaQuery("(max-width: 600px)");
 
@@ -91,9 +96,8 @@ function App() {
   const address = useAddress();
 
   const [walletChecked, setWalletChecked] = useState(false);
-
   // TODO (appleseed-expiredBonds): there may be a smarter way to refactor this
-  const { bonds, expiredBonds } = useBonds(chainID);
+  const { bonds /*, expiredBonds */ } = useBonds(chainID);
   async function loadDetails(whichDetails: string) {
     // NOTE (unbanksy): If you encounter the following error:
     // Unhandled Rejection (Error): call revert exception (method="balanceOf(address)", errorArgs=null, errorName=null, errorSignature=null, reason=null, code=CALL_EXCEPTION, version=abi/5.4.0)
@@ -113,6 +117,11 @@ function App() {
     }
   }
 
+  const data = useAppSelector(state => state)
+  useEffect(() => {
+    console.log("DATA", data)
+  }, [])
+
   const loadApp = useCallback(
     loadProvider => {
       dispatch(loadAppDetails({ networkID: chainID, provider: loadProvider }));
@@ -129,9 +138,9 @@ function App() {
       bonds.map(bond => {
         dispatch(calculateUserBondDetails({ address, bond, provider, networkID: chainID }));
       });
-      expiredBonds.map(bond => {
-        dispatch(calculateUserBondDetails({ address, bond, provider, networkID: chainID }));
-      });
+      // expiredBonds.map(bond => {
+      //   dispatch(calculateUserBondDetails({ address, bond, provider, networkID: chainID }));
+      // });
     },
     [connected],
   );
@@ -158,7 +167,7 @@ function App() {
       setWalletChecked(true);
     }
     if (shouldTriggerSafetyCheck()) {
-      dispatch(info("Safety Check: Always verify you're on app.olympusdao.finance!"));
+      dispatch(info("Safety Check: Always verify you're on app.themisDao.finance!"));
     }
   }, []);
 
@@ -186,12 +195,10 @@ function App() {
     setIsSidebarExpanded(false);
   };
 
-  let themeMode = theme === "light" ? lightTheme : theme === "dark" ? darkTheme : gTheme;
 
   useEffect(() => {
-    themeMode = theme === "light" ? lightTheme : darkTheme;
+    setThemeMode(theme.theme === THEME_LIGHT ? lightTheme : darkTheme)
   }, [theme]);
-
   useEffect(() => {
     if (isSidebarExpanded) handleSidebarClose();
   }, [location]);
@@ -225,13 +232,13 @@ function App() {
               <Stake />
             </Route>
 
-            <Route path="/wrap">
+            {/* <Route path="/wrap">
               <Wrap />
-            </Route>
+            </Route> */}
 
-            <Route path="/33-together">
+            {/* <Route path="/33-together">
               <PoolTogether />
-            </Route>
+            </Route> */}
 
             <Route path="/bonds">
               {(bonds as IAllBondData[]).map(bond => {
@@ -242,6 +249,12 @@ function App() {
                 );
               })}
               <ChooseBond />
+            </Route>
+            <Route path="/claim">
+              <Claim />
+            </Route>
+            <Route path="/sc">
+              <Sc />
             </Route>
 
             <Route component={NotFound} />

@@ -99,7 +99,7 @@ export const PoolDeposit = props => {
 
   useEffect(() => {
     props.setInfoTooltipMessage([
-      t`Deposit sOHM to win! Once deposited, you will receive a corresponding amount of 33T and be entered to win until your sOHM is withdrawn.`,
+      t`Deposit sTHS to win! Once deposited, you will receive a corresponding amount of 33T and be entered to win until your sTHS is withdrawn.`,
     ]);
   }, []);
 
@@ -161,7 +161,7 @@ export const PoolDeposit = props => {
                 onClick={() => onDeposit("deposit")}
                 fullWidth
               >
-                {txnButtonText(pendingTransactions, "pool_deposit", t`Deposit sOHM`)}
+                {txnButtonText(pendingTransactions, "pool_deposit", t`Deposit sTHS`)}
               </Button>
             ) : (
               <Button
@@ -179,13 +179,13 @@ export const PoolDeposit = props => {
             <Box padding={1}>
               <Typography variant="body2" style={{ color: "#33BB33" }}>
                 <Trans>
-                  Depositing {quantity} sOHM will increase odds of winning to 1 in {newOdds}
+                  Depositing {quantity} sTHS will increase odds of winning to 1 in {newOdds}
                 </Trans>
                 &nbsp;
               </Typography>
             </Box>
           )}
-          {/* NOTE (Appleseed): added this bc I kept losing track of which accounts I had sOHM in during testing */}
+          {/* NOTE (Appleseed): added this bc I kept losing track of which accounts I had sTHS in during testing */}
           <div className={`stake-user-data`}>
             <div className="data-row">
               <Typography variant="body1" align="left">
@@ -195,7 +195,9 @@ export const PoolDeposit = props => {
                 {isAppLoading ? (
                   <Skeleton width="80px" />
                 ) : (
-                  <>{new Intl.NumberFormat("en-US").format(sohmBalance)} sOHM</>
+                      <>{0.00
+                        // new Intl.NumberFormat("en-US").format(sohmBalance)
+                  } sTHS</>
                 )}
               </Typography>
             </div>

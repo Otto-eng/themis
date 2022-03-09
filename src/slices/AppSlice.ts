@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 import { addresses } from "../constants";
 import { abi as OlympusStakingv2ABI } from "../abi/OlympusStakingv2.json";
 import { abi as sOHMv2 } from "../abi/sOhmv2.json";
-import { setAll, getTokenPrice, getMarketPrice } from "../helpers";
+import { setAll, getTokenPrice /*, getMarketPrice */ } from "../helpers";
 import apollo from "../lib/apolloClient";
 import { createSlice, createSelector, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "src/store";
@@ -100,8 +100,18 @@ export const loadAppDetails = createAsyncThunk(
       provider,
     ) as SOhmv2;
 
+    console.log("sohmMainContract", sohmMainContract)
+    console.log("stakingContract", stakingContract)
+
+    stakingContract.epoch().then((res) => {
+      console.log("RES", res)
+    }).catch((error) => {
+      console.log("ERROR", error)
+    })
     // Calculating staking
     const epoch = await stakingContract.epoch();
+    console.log("EPOCH", epoch)
+
     const stakingReward = epoch.distribute;
     const circ = await sohmMainContract.circulatingSupply();
     const stakingRebase = Number(stakingReward.toString()) / Number(circ.toString());
@@ -167,18 +177,20 @@ export const findOrLoadMarketPrice = createAsyncThunk(
 );
 
 /**
- * - fetches the OHM price from CoinGecko (via getTokenPrice)
+ * - fetches the THS price from CoinGecko (via getTokenPrice)
  * - falls back to fetch marketPrice from ohm-dai contract
  * - updates the App.slice when it runs
  */
 const loadMarketPrice = createAsyncThunk("app/loadMarketPrice", async ({ networkID, provider }: IBaseAsyncThunk) => {
   let marketPrice: number;
-  try {
-    marketPrice = await getMarketPrice({ networkID, provider });
-    marketPrice = marketPrice / Math.pow(10, 9);
-  } catch (e) {
-    marketPrice = await getTokenPrice("olympus");
-  }
+  marketPrice = await getTokenPrice("olympus");
+
+  // try {
+  //   // marketPrice = await getMarketPrice({ networkID, provider });
+  //   // marketPrice = marketPrice / Math.pow(10, 9);
+  // } catch (e) {
+  //   console.log("getTokenPrice", marketPrice)
+  // }
   return { marketPrice };
 });
 

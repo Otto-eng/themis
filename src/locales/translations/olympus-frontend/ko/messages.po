@@ -69,7 +69,7 @@ msgid "Award period has finished, you can navigate to Pool Together's UI to comp
 msgstr "어워드 기간이 끝났습니다. 이제 풀의 UI를 통해 배분을 마칠 수 있습니다."
 
 #: src/views/TreasuryDashboard/TreasuryDashboard.jsx:147
-#~ msgid "Backing per OHM"
+#~ msgid "Backing per THS"
 #~ msgstr "OHM 당 지지 자산"
 
 #: src/views/Stake/ExternalStakePool.jsx:93
@@ -200,15 +200,15 @@ msgid "Deposit"
 msgstr "예치"
 
 #: src/views/33Together/PoolDeposit.jsx:162
-msgid "Deposit sOHM"
-msgstr "sOHM 예치"
+msgid "Deposit sTHS"
+msgstr "sTHS 예치"
 
 #: src/views/33Together/PoolDeposit.jsx:100
-msgid "Deposit sOHM to win! Once deposited, you will receive a corresponding amount of 33T and be entered to win until your sOHM is withdrawn."
+msgid "Deposit sTHS to win! Once deposited, you will receive a corresponding amount of 33T and be entered to win until your sTHS is withdrawn."
 msgstr "우승하기 위해 sOHM을 예치하세요! 한 번 예치되고 나면, 상응하는 33T를 받게 되고 출금 전 까지 게임에 참여하게 됩니다."
 
 #: src/views/33Together/PoolDeposit.jsx:179
-msgid "Depositing {quantity} sOHM will increase odds of winning to 1 in {newOdds}"
+msgid "Depositing {quantity} sTHS will increase odds of winning to 1 in {newOdds}"
 msgstr "{quantity} 만큼의 sOHM을 예치하면 {newOdds} 분의 1 만큼 우승 배당률이 상승합니다. "
 
 #: src/views/33Together/PoolDeposit.jsx:112
@@ -304,8 +304,8 @@ msgid "Max You Can Buy"
 msgstr "구입 가능한 최대"
 
 #: src/views/Stake/Stake.jsx:183
-msgid "Migrate sOHM!"
-msgstr "sOHM 마이그레이트 하세요!"
+msgid "Migrate sTHS!"
+msgstr "sTHS 마이그레이트 하세요!"
 
 #: src/views/Stake/Stake.jsx:442
 msgid "Next Reward Amount"
@@ -355,7 +355,7 @@ msgstr "계류중..."
 #: src/views/Bond/BondPurchase.jsx:147
 #: src/views/Stake/Stake.jsx:293
 #: src/views/Stake/Stake.jsx:300
-msgid "Please approve Olympus Dao to use your"
+msgid "Please approve Themis Dao to use your"
 msgstr "OlympusDAO를 승인해 주세요"
 
 #: src/views/Bond/BondPurchase.jsx:52
@@ -460,7 +460,7 @@ msgstr "스테이크"
 
 #: src/views/Stake/Stake.jsx:344
 msgid "Stake OHM"
-msgstr "OHM 스테이크"
+msgstr "DAI 스테이크"
 
 #: src/views/Stake/ExternalStakePool.jsx:140
 #: src/views/Stake/ExternalStakePool.jsx:205
@@ -476,8 +476,8 @@ msgid "Staked Balance in Fuse"
 msgstr "퓨즈에 스테이크 된 잔고"
 
 #: src/slices/PendingTxnsSlice.ts:29
-msgid "Staking OHM"
-msgstr "스테이킹 중인 OHM"
+msgid "Staking DAI"
+msgstr "스테이킹 중인 DAI"
 
 #: src/views/Dashboard/Dashboard.jsx:66
 msgid "Supply (circulating/total)"
@@ -489,7 +489,7 @@ msgid "TVD"
 msgstr "TVD"
 
 #: src/views/TreasuryDashboard/TreasuryDashboard.jsx:158
-#~ msgid "The current index tracks the amount of sOHM accumulated since the beginning of staking. Basically, how much sOHM one would have if they staked and held a single OHM from day 1."
+#~ msgid "The current index tracks the amount of sTHS accumulated since the beginning of staking. Basically, how much sTHS one would have if they staked and held a single OHM from day 1."
 #~ msgstr "현재 인덱스는 가장 최초 스테이킹 시점부터 sOHM이 얼만큼 누적되었는지를 추적합니다. 기본적으로, 첫 날에 1개의 OHM을 스테이킹 했을 경우 현재 얼만큼의 sOHM이 되었는지를 보여줍니다."
 
 #: src/views/33Together/PoolDeposit.jsx:109
@@ -545,12 +545,12 @@ msgid "Unstaked Balance"
 msgstr "언스테이크 된 잔고"
 
 #: src/slices/PendingTxnsSlice.ts:29
-msgid "Unstaking sOHM"
-msgstr "sOHM 언스테이킹"
+msgid "Unstaking sTHS"
+msgstr "sTHS 언스테이킹"
 
 #: src/slices/PendingTxnsSlice.ts:33
-msgid "Unwrapping sOHM"
-msgstr "sOHM 래핑하기"
+msgid "Unwrapping sTHS"
+msgstr "sTHS 래핑하기"
 
 #: src/views/Bond/BondPurchase.jsx:268
 #: src/views/Bond/BondRedeem.jsx:137
@@ -575,15 +575,15 @@ msgid "Withdraw Early & pay"
 msgstr "초기 출금하고 지불하기"
 
 #: src/views/33Together/PoolWithdraw.jsx:154
-msgid "Withdraw sOHM"
-msgstr "sOHM 출금"
+msgid "Withdraw sTHS"
+msgstr "sTHS 출금"
 
 #: src/views/33Together/PoolWithdraw.jsx:105
 msgid "Withdrawals can be made once the prize has been awarded."
 msgstr "상금이 지급된 후 출금할 수 있습니다."
 
 #: src/views/33Together/PoolWithdraw.jsx:161
-msgid "Withdrawing {quantity} sOHM reduces your odds of winning to 1 in {newOdds}"
+msgid "Withdrawing {quantity} sTHS reduces your odds of winning to 1 in {newOdds}"
 msgstr "{quantity} sOHM을 출금하면 우승 배당률이 {newOdds}분의 1로 줄어듭니다."
 
 #: src/views/Stake/Stake.jsx:431
@@ -613,8 +613,8 @@ msgstr "OHM 잔고 보다 더 많은 양을 스테이크 할 수 없습니다."
 
 #: src/views/Stake/Stake.jsx:123
 #: src/views/Stake/Stake.jsx:123
-msgid "You cannot unstake more than your sOHM balance."
-msgstr "sOHM 잔고 보다 더 많은 양을 언스테이크 할 수 없습니다."
+msgid "You cannot unstake more than your sTHS balance."
+msgstr "sTHS 잔고 보다 더 많은 양을 언스테이크 할 수 없습니다."
 
 #: src/views/33Together/PoolWithdraw.jsx:86
 msgid "You cannot withdraw more than your pool balance"
@@ -692,12 +692,12 @@ msgid "min"
 msgstr "분"
 
 #: src/views/33Together/PoolInfo.jsx:158
-msgid "sOHM Pool Details"
-msgstr "sOHM 풀 정보"
+msgid "sTHS Pool Details"
+msgstr "sTHS 풀 정보"
 
 #: src/views/33Together/PoolInfo.jsx:150
-msgid "sOHM Prize Pool"
-msgstr "sOHM 상금 풀"
+msgid "sTHS Prize Pool"
+msgstr "sTHS 상금 풀"
 
 #: src/views/33Together/PoolPrize.jsx:160
 msgid "sec"

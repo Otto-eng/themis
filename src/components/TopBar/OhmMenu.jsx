@@ -21,7 +21,7 @@ function OhmMenu() {
         size="large"
         variant="contained"
         color="secondary"
-        title="OHM"
+        title="THS"
       >
         <SvgIcon component={WalletIcon} color="primary" />
         <Typography>Wallet</Typography>
@@ -33,7 +33,7 @@ function OhmMenu() {
           size="large"
           variant="contained"
           color="secondary"
-          title="OHM"
+          title="THS"
         >
           <SvgIcon component={ArrowUpIcon} viewBox="0 0 32 32" style={{ height: "25px", width: "25px" }} />
         </Button>

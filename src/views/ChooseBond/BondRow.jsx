@@ -12,7 +12,7 @@ import { useWeb3Context } from "../../hooks/web3Context";
 export function BondDataCard({ bond }) {
   const { chainID } = useWeb3Context();
   const { loading } = useBonds(chainID);
-  const isBondLoading = !bond.bondPrice ?? true;
+  const isBondLoading = !bond.bondPrice;
 
   return (
     <Slide direction="up" in={true}>
@@ -45,8 +45,8 @@ export function BondDataCard({ bond }) {
           <Typography>
             <Trans>ROI</Trans>
           </Typography>
-          <Typography>
-            {isBondLoading ? <Skeleton width="50px" /> : <DisplayBondDiscount key={bond.name} bond={bond} />}
+          <Typography>0.00
+            {/* {isBondLoading ? <Skeleton width="50px" /> : <DisplayBondDiscount key={bond.name} bond={bond} />} */}
           </Typography>
         </div>
 
@@ -55,7 +55,8 @@ export function BondDataCard({ bond }) {
             <Trans>Purchased</Trans>
           </Typography>
           <Typography>
-            {isBondLoading ? (
+            0.00
+            {/* {isBondLoading ? (
               <Skeleton width="80px" />
             ) : (
               new Intl.NumberFormat("en-US", {
@@ -64,7 +65,7 @@ export function BondDataCard({ bond }) {
                 maximumFractionDigits: 0,
                 minimumFractionDigits: 0,
               }).format(bond.purchased)
-            )}
+            )} */}
           </Typography>
         </div>
         <Link component={NavLink} to={`/bonds/${bond.name}`}>
@@ -82,7 +83,7 @@ export function BondDataCard({ bond }) {
 export function BondTableData({ bond }) {
   const { chainID } = useWeb3Context();
   // Use BondPrice as indicator of loading.
-  const isBondLoading = !bond.bondPrice ?? true;
+  const isBondLoading = !bond.bondPrice;
   // const isBondLoading = useSelector(state => !state.bonding[bond]?.bondPrice ?? true);
 
   return (
@@ -102,24 +103,25 @@ export function BondTableData({ bond }) {
         </div>
       </TableCell>
       <TableCell align="left">
-        <Typography>
-          <>{isBondLoading ? <Skeleton width="50px" /> : <DisplayBondPrice key={bond.name} bond={bond} />}</>
+        <Typography>0.00
+          {/* <>{isBondLoading ? <Skeleton width="50px" /> : <DisplayBondPrice key={bond.name} bond={bond} />}</> */}
         </Typography>
       </TableCell>
       <TableCell align="left">
-        {" "}
-        {isBondLoading ? <Skeleton width="50px" /> : <DisplayBondDiscount key={bond.name} bond={bond} />}
+        {"0.00"}
+        {/* {isBondLoading ? <Skeleton width="50px" /> : <DisplayBondDiscount key={bond.name} bond={bond} />} */}
       </TableCell>
       <TableCell align="right">
         {isBondLoading ? (
           <Skeleton />
         ) : (
-          new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD",
-            maximumFractionDigits: 0,
-            minimumFractionDigits: 0,
-          }).format(bond.purchased)
+            "0.00"
+          //    new Intl.NumberFormat("en-US", {
+          //   style: "currency",
+          //   currency: "USD",
+          //   maximumFractionDigits: 0,
+          //   minimumFractionDigits: 0,
+          // }).format(bond.purchased)
         )}
       </TableCell>
       <TableCell>

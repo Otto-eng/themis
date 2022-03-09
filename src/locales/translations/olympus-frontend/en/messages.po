@@ -77,8 +77,8 @@ msgid "Award period has finished, you can navigate to Pool Together's UI to comp
 msgstr "Award period has finished, you can navigate to Pool Together's UI to complete distribution"
 
 #: src/views/TreasuryDashboard/TreasuryDashboard.jsx:147
-#~ msgid "Backing per OHM"
-#~ msgstr "Backing per OHM"
+#~ msgid "Backing per THS"
+#~ msgstr "Backing per THS"
 
 #: src/views/Stake/ExternalStakePool.jsx:93
 #: src/views/Stake/ExternalStakePool.jsx:189
@@ -216,16 +216,16 @@ msgid "Deposit"
 msgstr "Deposit"
 
 #: src/views/33Together/PoolDeposit.jsx:162
-msgid "Deposit sOHM"
-msgstr "Deposit sOHM"
+msgid "Deposit sTHS"
+msgstr "Deposit sTHS"
 
 #: src/views/33Together/PoolDeposit.jsx:100
-msgid "Deposit sOHM to win! Once deposited, you will receive a corresponding amount of 33T and be entered to win until your sOHM is withdrawn."
-msgstr "Deposit sOHM to win! Once deposited, you will receive a corresponding amount of 33T and be entered to win until your sOHM is withdrawn."
+msgid "Deposit sTHS to win! Once deposited, you will receive a corresponding amount of 33T and be entered to win until your sTHS is withdrawn."
+msgstr "Deposit sTHS to win! Once deposited, you will receive a corresponding amount of 33T and be entered to win until your sTHS is withdrawn."
 
 #: src/views/33Together/PoolDeposit.jsx:179
-msgid "Depositing {quantity} sOHM will increase odds of winning to 1 in {newOdds}"
-msgstr "Depositing {quantity} sOHM will increase odds of winning to 1 in {newOdds}"
+msgid "Depositing {quantity} sTHS will increase odds of winning to 1 in {newOdds}"
+msgstr "Depositing {quantity} sTHS will increase odds of winning to 1 in {newOdds}"
 
 #: src/views/33Together/PoolDeposit.jsx:112
 msgid "Deposits can be made once the prize has been awarded."
@@ -320,8 +320,8 @@ msgid "Max You Can Buy"
 msgstr "Max You Can Buy"
 
 #: src/views/Stake/Stake.jsx:183
-msgid "Migrate sOHM!"
-msgstr "Migrate sOHM!"
+msgid "Migrate sTHS!"
+msgstr "Migrate sTHS!"
 
 #: src/views/Stake/Stake.jsx:442
 msgid "Next Reward Amount"
@@ -371,8 +371,8 @@ msgstr "Pending..."
 #: src/views/Bond/BondPurchase.jsx:147
 #: src/views/Stake/Stake.jsx:293
 #: src/views/Stake/Stake.jsx:300
-msgid "Please approve Olympus Dao to use your"
-msgstr "Please approve Olympus Dao to use your"
+msgid "Please approve Themis Dao to use your"
+msgstr "Please approve Themis Dao to use your"
 
 #: src/views/Bond/BondPurchase.jsx:52
 msgid "Please enter a valid value!"
@@ -497,8 +497,8 @@ msgid "Staked Balance in Fuse"
 msgstr "Staked Balance in Fuse"
 
 #: src/slices/PendingTxnsSlice.ts:29
-msgid "Staking OHM"
-msgstr "Staking OHM"
+msgid "Staking DAI"
+msgstr "Staking DAI"
 
 #: src/views/33Together/PoolPrize.jsx:228
 #~ msgid "Start Award"
@@ -514,8 +514,8 @@ msgid "TVD"
 msgstr "TVD"
 
 #: src/views/TreasuryDashboard/TreasuryDashboard.jsx:158
-#~ msgid "The current index tracks the amount of sOHM accumulated since the beginning of staking. Basically, how much sOHM one would have if they staked and held a single OHM from day 1."
-#~ msgstr "The current index tracks the amount of sOHM accumulated since the beginning of staking. Basically, how much sOHM one would have if they staked and held a single OHM from day 1."
+#~ msgid "The current index tracks the amount of sTHS accumulated since the beginning of staking. Basically, how much sTHS one would have if they staked and held a single OHM from day 1."
+#~ msgstr "The current index tracks the amount of sTHS accumulated since the beginning of staking. Basically, how much sTHS one would have if they staked and held a single OHM from day 1."
 
 #: src/views/33Together/PoolPrize.jsx:209
 #~ msgid "The random number generator has timed out. You must cancel the awarding process to unlock users funds users funds and start the awarding process again."
@@ -578,12 +578,12 @@ msgid "Unstaked Balance"
 msgstr "Unstaked Balance"
 
 #: src/slices/PendingTxnsSlice.ts:29
-msgid "Unstaking sOHM"
-msgstr "Unstaking sOHM"
+msgid "Unstaking sTHS"
+msgstr "Unstaking sTHS"
 
 #: src/slices/PendingTxnsSlice.ts:33
-msgid "Unwrapping sOHM"
-msgstr "Unwrapping sOHM"
+msgid "Unwrapping sTHS"
+msgstr "Unwrapping sTHS"
 
 #: src/views/Bond/BondPurchase.jsx:268
 #: src/views/Bond/BondRedeem.jsx:137
@@ -612,8 +612,8 @@ msgstr "Withdraw Early & pay"
 #~ msgstr "Withdraw Early & pay t"
 
 #: src/views/33Together/PoolWithdraw.jsx:154
-msgid "Withdraw sOHM"
-msgstr "Withdraw sOHM"
+msgid "Withdraw sTHS"
+msgstr "Withdraw sTHS"
 
 #: src/views/33Together/PoolWithdraw.jsx:148
 #~ msgid "Withdraw sOHMt"
@@ -624,8 +624,8 @@ msgid "Withdrawals can be made once the prize has been awarded."
 msgstr "Withdrawals can be made once the prize has been awarded."
 
 #: src/views/33Together/PoolWithdraw.jsx:161
-msgid "Withdrawing {quantity} sOHM reduces your odds of winning to 1 in {newOdds}"
-msgstr "Withdrawing {quantity} sOHM reduces your odds of winning to 1 in {newOdds}"
+msgid "Withdrawing {quantity} sTHS reduces your odds of winning to 1 in {newOdds}"
+msgstr "Withdrawing {quantity} sTHS reduces your odds of winning to 1 in {newOdds}"
 
 #: src/views/Stake/Stake.jsx:431
 msgid "Wrapped Balance"
@@ -658,8 +658,8 @@ msgstr "You cannot stake more than your OHM balance."
 
 #: src/views/Stake/Stake.jsx:123
 #: src/views/Stake/Stake.jsx:123
-msgid "You cannot unstake more than your sOHM balance."
-msgstr "You cannot unstake more than your sOHM balance."
+msgid "You cannot unstake more than your sTHS balance."
+msgstr "You cannot unstake more than your sTHS balance."
 
 #: src/views/33Together/PoolWithdraw.jsx:86
 msgid "You cannot withdraw more than your pool balance"
@@ -737,12 +737,12 @@ msgid "min"
 msgstr "min"
 
 #: src/views/33Together/PoolInfo.jsx:158
-msgid "sOHM Pool Details"
-msgstr "sOHM Pool Details"
+msgid "sTHS Pool Details"
+msgstr "sTHS Pool Details"
 
 #: src/views/33Together/PoolInfo.jsx:150
-msgid "sOHM Prize Pool"
-msgstr "sOHM Prize Pool"
+msgid "sTHS Prize Pool"
+msgstr "sTHS Prize Pool"
 
 #: src/views/33Together/PoolPrize.jsx:160
 msgid "sec"

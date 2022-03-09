@@ -23,7 +23,7 @@ import { format } from "date-fns";
 import "./chart.scss";
 
 const formatCurrency = c => {
-  return new Intl.NumberFormat("en-US", {
+  return  new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
     maximumFractionDigits: 0,
@@ -488,13 +488,13 @@ function WalletChart({
             headerText={headerText}
             headerSubText={headerSubText}
           />
-        </Box>
-        {loading ? (
+          </Box>
+        {loading || true ? (
           <Skeleton variant="text" width={100} />
         ) : (
           <Box display="flex">
             <Typography variant="h4" style={{ fontWeight: 600, marginRight: 5 }}>
-              {headerSubText}
+             0.00 {/* {headerSubText} */}
             </Typography>
             <Typography variant="h4" color="textSecondary" style={{ fontWeight: 400 }}>
               {type !== "multi" && "Today"}
@@ -503,7 +503,7 @@ function WalletChart({
         )}
       </div>
       <Box width="100%" minHeight={50} minWidth={100} className="ohm-chart">
-        {loading || (data && data.length > 0) ? (
+        {loading || true || (data && data.length > 0) ? (
           <ResponsiveContainer minHeight={50} width="100%">
             {renderChart(type, false)}
           </ResponsiveContainer>
