@@ -11,15 +11,11 @@ export const dai = new StableBond({
   name: "usdt",
   displayName: "USDT",
   bondToken: "USDT",
-  isAvailable: { [NetworkID.Mainnet]: true, [NetworkID.Testnet]: true },
+  isAvailable: { [NetworkID.Mainnet]: true },
   bondIconSvg: DaiImg,
   bondContractABI: DaiBondContract,
   networkAddrs: {
     [NetworkID.Mainnet]: {
-      bondAddress: "0x575409F8d77c12B05feD8B455815f0e54797381c",
-      reserveAddress: "0x6b175474e89094c44da98b954eedeac495271d0f",
-    },
-    [NetworkID.Testnet]: {
       bondAddress: "0x3E19EbAD5C9180410598E5ed7b8c82c4Cf4A8232",
       reserveAddress: "0x205df2b395aE13fddA5790D9fD114f3548EB8A7A",
     },

@@ -3,7 +3,7 @@ import { addresses } from "../constants";
 import { abi as ierc20Abi } from "../abi/IERC20.json";
 import { abi as sOHMv2 } from "../abi/sOhmv2.json";
 import { abi as fuseProxy } from "../abi/FuseProxy.json";
-import { abi as wsOHM } from "../abi/wsOHM.json";
+// import { abi as wsOHM } from "../abi/wsOHM.json";
 import { abi as OlympusBondDepository } from "src/abi/bonds/OlympusBondDepository.json";
 
 import { setAll } from "../helpers";
@@ -31,13 +31,13 @@ export const getBalances = createAsyncThunk(
   async ({ address, networkID, provider }: IBaseAddressAsyncThunk) => {
     console.log("address", address);
 
-    const ohmContract = new ethers.Contract(addresses[networkID].OHM_ADDRESS as string, ierc20Abi, provider) as IERC20;
+    const ohmContract = new ethers.Contract(addresses[networkID].THS_ADDRESS as string, ierc20Abi, provider) as IERC20;
     const ohmBalance = await ohmContract.balanceOf(address);
-    const daiContract = new ethers.Contract(addresses[networkID].DAI_ADDRESS as string, ierc20Abi, provider) as IERC20;
+    const daiContract = new ethers.Contract(addresses[networkID].USDT_ADDRESS as string, ierc20Abi, provider) as IERC20;
     const daiBalance = await daiContract.balanceOf(address);
 
     const sohmContract = new ethers.Contract(
-      addresses[networkID].SOHM_ADDRESS as string,
+      addresses[networkID].STHS_ADDRESS as string,
       ierc20Abi,
       provider,
     ) as IERC20;
@@ -101,15 +101,15 @@ interface IUserAccountDetails {
 export const loadAccountDetails = createAsyncThunk(
   "account/loadAccountDetails",
   async ({ networkID, provider, address }: IBaseAddressAsyncThunk, { dispatch }) => {
-    const ohmContract = new ethers.Contract(addresses[networkID].OHM_ADDRESS as string, ierc20Abi, provider) as IERC20;
+    const ohmContract = new ethers.Contract(addresses[networkID].THS_ADDRESS as string, ierc20Abi, provider) as IERC20;
     const stakeAllowance = await ohmContract.allowance(address, addresses[networkID].STAKING_HELPER_ADDRESS);
 
-    const sohmContract = new ethers.Contract(addresses[networkID].SOHM_ADDRESS as string, sOHMv2, provider) as SOhmv2;
+    const sohmContract = new ethers.Contract(addresses[networkID].STHS_ADDRESS as string, sOHMv2, provider) as SOhmv2;
     // const unstakeAllowance = await sohmContract.allowance(address, addresses[networkID].STAKING_ADDRESS);
     // const poolAllowance = await sohmContract.allowance(address, addresses[networkID].PT_PRIZE_POOL_ADDRESS);
     // const wrapAllowance = await sohmContract.allowance(address, addresses[networkID].WSOHM_ADDRESS);
 
-    const wsohmContract = new ethers.Contract(addresses[networkID].WSOHM_ADDRESS as string, wsOHM, provider) as WsOHM;
+    // const wsohmContract = new ethers.Contract(addresses[networkID].WSOHM_ADDRESS as string, wsOHM, provider) as WsOHM;
     // const unwrapAllowance = await wsohmContract.allowance(address, addresses[networkID].WSOHM_ADDRESS);
     await dispatch(getBalances({ address, networkID, provider }));
 
@@ -168,7 +168,6 @@ export const calculateUserBondDetails = createAsyncThunk(
     let allowance,
       balance = BigNumber.from(0);
     allowance = await reserveContract.allowance(address, bond.getAddressForBond(networkID));
-    console.log("ALLOWANCE", allowance)
 
     balance = await reserveContract.balanceOf(address);
     // formatEthers takes BigNumber => String
@@ -233,7 +232,6 @@ const accountSlice = createSlice({
         state.loading = true;
       })
       .addCase(loadAccountDetails.fulfilled, (state, action) => {
-        console.log("ACTIon", action)
         setAll(state, action.payload);
         state.loading = false;
       })

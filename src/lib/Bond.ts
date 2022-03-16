@@ -1,18 +1,18 @@
 import { StaticJsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
-import { ethers } from "ethers";
+import { Contract, ethers } from "ethers";
 
 import { abi as ierc20Abi } from "src/abi/IERC20.json";
 import { getTokenPrice } from "src/helpers";
 import { getBondCalculator } from "src/helpers/BondCalculator";
 import { PairContract } from "src/typechain";
-import { addresses } from "src/constants";
+import { addresses, NETWORK_CHAINID } from "src/constants";
 import React from "react";
 import { EthContract } from "src/typechain/EthContract";
 
 export enum NetworkID {
-  Mainnet = 1,
-  Testnet = 56,
+  Mainnet = 42, // NETWORK_CHAINID
 }
+
 
 export enum BondType {
   StableAsset,
@@ -26,12 +26,10 @@ export interface BondAddresses {
 
 export interface NetworkAddresses {
   [NetworkID.Mainnet]: BondAddresses;
-  [NetworkID.Testnet]: BondAddresses;
 }
 
 export interface Available {
   [NetworkID.Mainnet]?: boolean;
-  [NetworkID.Testnet]?: boolean;
 }
 
 interface BondOpts {
@@ -89,7 +87,7 @@ export abstract class Bond {
   }
   getContractForBond(networkID: NetworkID, provider: StaticJsonRpcProvider | JsonRpcSigner) {
     const bondAddress = this.getAddressForBond(networkID);
-    return new ethers.Contract(bondAddress, this.bondContractABI, provider) as EthContract;
+    return new Contract(bondAddress, this.bondContractABI, provider) as EthContract;
   }
 
   getAddressForReserve(networkID: NetworkID) {

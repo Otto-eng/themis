@@ -3,12 +3,13 @@ import { createSlice, createSelector, createAsyncThunk } from "@reduxjs/toolkit"
 import { IBaseAddressAsyncThunk } from "./interfaces";
 
 import { calcAludelDetes } from "../helpers/OhmLusdCrucible";
+import { NETWORK_CHAINID } from "src/constants";
 
 export const getLusdData = createAsyncThunk(
   "stake/getLusdData",
   async ({ address, networkID, provider }: IBaseAddressAsyncThunk) => {
     // only works on mainnet
-    if (networkID !== 1) {
+    if (networkID !== NETWORK_CHAINID) {
       // we don't have rinkeby contracts
       return { apy: 0, tvl: 0 };
     } else {

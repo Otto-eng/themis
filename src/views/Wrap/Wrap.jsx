@@ -193,7 +193,7 @@ function Wrap() {
                   <Grid item xs={12} sm={4} md={4} lg={4}>
                     <div className="wrap-wsOHM">
                       <Typography variant="h5" color="textSecondary">
-                        wsOHM Price
+                            sTHS Price
                         <InfoTooltip
                           message={
                             "wsOHM = sTHS * index\n\nThe price of wsOHM is equal to the price of THS multiplied by the current index"
@@ -293,7 +293,7 @@ function Wrap() {
                             color="primary"
                             disabled={isPendingTxn(pendingTransactions, "approve_wrapping")}
                             onClick={() => {
-                              onSeekApproval("sohm");
+                              onSeekApproval("sThs");
                             }}
                           >
                             {txnButtonText(pendingTransactions, "approve_wrapping", "Approve")}

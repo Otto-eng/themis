@@ -222,15 +222,15 @@ function InitialWalletView() {
   const [anchor, setAnchor] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
-  const SOHM_ADDRESS = addresses[chainID].SOHM_ADDRESS;
-  const OHM_ADDRESS = addresses[chainID].OHM_ADDRESS;
-  const PT_TOKEN_ADDRESS = addresses[chainID].PT_TOKEN_ADDRESS;
-  const WSOHM_ADDRESS = addresses[chainID].WSOHM_ADDRESS;
+  // const STHS_ADDRESS = addresses[chainID].STHS_ADDRESS;
+  const THS_ADDRESS = addresses[chainID].THS_ADDRESS;
+  // const PT_TOKEN_ADDRESS = addresses[chainID].PT_TOKEN_ADDRESS;
+  // const WSOHM_ADDRESS = addresses[chainID].WSOHM_ADDRESS;
 
   const ohmBalance = useSelector(state => state.account.balances?.ohm);
   const sohmBalance = useSelector(state => state.account.balances?.sohm);
-  const wsohmBalance = useSelector(state => state.account.balances?.wsohm);
-  const fsohmBalance = useSelector(state => state.account.balances?.fsohm);
+  // const wsohmBalance = useSelector(state => state.account.balances?.wsohm);
+  // const fsohmBalance = useSelector(state => state.account.balances?.fsohm);
 
   const poolBalance = useSelector(state => {
     return state.account.balances && parseFloat(state.account.balances.pool);
@@ -262,12 +262,12 @@ function InitialWalletView() {
           {isEthereumAPIAvailable ? (
             <Box>
               <Divider color="secondary" />
-              {OHM_ADDRESS && (
+              {THS_ADDRESS && (
                 <Button
                   style={{ width: "100%", fontSize: "12px" }}
                   variant="contained"
                   color="secondary"
-                  onClick={addTokenToWallet("THS", OHM_ADDRESS, address)}
+                  onClick={addTokenToWallet("THS", THS_ADDRESS, address)}
                 >
                   ADD TOKEN TO WALLET
                 </Button>
@@ -296,12 +296,12 @@ function InitialWalletView() {
             {isEthereumAPIAvailable ? (
               <Box>
                 <Divider color="secondary" />
-                {SOHM_ADDRESS && (
+                {STHS_ADDRESS && (
                   <Button
                     style={{ width: "100%", fontSize: "12px" }}
                     variant="contained"
                     color="secondary"
-                    onClick={addTokenToWallet("sTHS", SOHM_ADDRESS, address)}
+                    onClick={addTokenToWallet("sTHS", STHS_ADDRESS, address)}
                   >
                     ADD TOKEN TO WALLET
                   </Button>
@@ -311,7 +311,7 @@ function InitialWalletView() {
           </Box>
         </AccordionDetails>
       </Accordion>
-      <Accordion expanded={expanded === "wsOHM"} onChange={handleChange("wsOHM")}>
+      {/* <Accordion expanded={expanded === "wsOHM"} onChange={handleChange("wsOHM")}>
         <AccordionSummary
           expandIcon={<SvgIcon component={ArrowUpIcon} viewBox="0 0 32 32" style={{ height: "25px", width: "25px" }} />}
         >
@@ -330,7 +330,7 @@ function InitialWalletView() {
             {isEthereumAPIAvailable ? (
               <Box style={{ width: "100%", fontSize: "12px" }}>
                 <Divider color="secondary" />
-                {SOHM_ADDRESS && (
+                {STHS_ADDRESS && (
                   <Button
                     style={{ width: "100%", fontSize: "12px" }}
                     variant="contained"
@@ -344,9 +344,9 @@ function InitialWalletView() {
             ) : null}
           </Box>
         </AccordionDetails>
-      </Accordion>
+      </Accordion> */}
 
-      <Accordion expanded={expanded === "3TT"} onChange={handleChange("3TT")}>
+      {/* <Accordion expanded={expanded === "3TT"} onChange={handleChange("3TT")}>
         <AccordionSummary
           expandIcon={<SvgIcon component={ArrowUpIcon} viewBox="0 0 32 32" style={{ height: "25px", width: "25px" }} />}
         >
@@ -368,7 +368,7 @@ function InitialWalletView() {
             {isEthereumAPIAvailable ? (
               <Box style={{ width: "100%", fontSize: "12px" }}>
                 <Divider color="secondary" />
-                {SOHM_ADDRESS && (
+                {STHS_ADDRESS && (
                   <Button
                     style={{ width: "100%", fontSize: "12px" }}
                     variant="contained"
@@ -383,7 +383,7 @@ function InitialWalletView() {
           </Box>
         </AccordionDetails>
       </Accordion>
-      <Divider color="secondary" className="less-margin" />
+      <Divider color="secondary" className="less-margin" /> */}
 
       <Divider color="secondary" className="less-margin" />
 
@@ -398,7 +398,7 @@ function InitialWalletView() {
         <Box sx={{ flexWrap: "nowrap", flexDirection: "row" }}>
           <ExternalLink
             href={`https://app.sushi.com/swap?inputCurrency=${dai.getAddressForReserve(chainID)}&outputCurrency=${
-              addresses[chainID].OHM_ADDRESS
+              addresses[chainID].THS_ADDRESS
             }`}
           >
             <Button size="large" variant="contained" color="secondary">
@@ -410,7 +410,7 @@ function InitialWalletView() {
 
           {/* <ExternalLink
             href={`https://app.uniswap.org/#/swap?inputCurrency=${frax.getAddressForReserve(chainID)}&outputCurrency=${
-              addresses[chainID].OHM_ADDRESS
+              addresses[chainID].THS_ADDRESS
             }`}
           >
             <Button size="large" variant="contained" color="secondary">

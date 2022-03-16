@@ -28,7 +28,6 @@ async function countryLookup() {
 export function segmentUA(data) {
   const analytics = (window.analytics = window.analytics);
   countryLookup().then(country => (data.country = country));
-
   // NOTE (appleseed): the analytics object may not exist (if there is no SEGMENT_API_KEY)
   // Passing in combined data directly so as not to have a nested object
   try {

@@ -4,7 +4,7 @@ import { useTheme, makeStyles } from "@material-ui/core/styles";
 import { trim } from "src/helpers";
 import { ReactComponent as ArrowUpIcon } from "src/assets/icons/arrow-up.svg";
 import { ReactComponent as sOhmTokenImg } from "src/assets/tokens/token_sOHM.svg";
-import { ReactComponent as ohmTokenImg } from "src/assets/tokens/token_OHM.svg";
+import { ReactComponent as ThsImg } from "src/assets/tokens/ths.svg";
 import { ReactComponent as t33TokenImg } from "src/assets/tokens/token_33T.svg";
 import { ReactComponent as wsOhmTokenImg } from "src/assets/tokens/token_wsOHM.svg";
 import { ReactComponent as wethTokenImg } from "src/assets/tokens/wETH.svg";
@@ -120,7 +120,7 @@ const Token = ({ name, icon, userBalance, userBalanceUSD, onExpandedChange, expa
       >
         <Button variant="contained" style={{ width: "100%", flexDirection: "row" }} color="secondary">
           <Typography align="left" style={{ width: "100%", flexDirection: "row" }}>
-            <SvgIcon component={icon} viewBox="0 0 32 32" style={{ height: "25px", width: "25px" }} />
+            <SvgIcon component={icon} viewBox="0 0 32 32" style={{ height: "25px", width: "25px", margin: "auto" }} />
             {name}
           </Typography>
           <Box>
@@ -170,29 +170,35 @@ function InitialWalletView() {
   // const [apy, setApy] = useState(null);
   const [expanded, setExpanded] = useState(false);
 
-  const SOHM_ADDRESS = addresses[chainID].SOHM_ADDRESS;
-  const OHM_ADDRESS = addresses[chainID].OHM_ADDRESS;
-  const PT_TOKEN_ADDRESS = addresses[chainID].PT_TOKEN_ADDRESS;
-  const WSOHM_ADDRESS = addresses[chainID].WSOHM_ADDRESS;
+  // const STHS_ADDRESS = addresses[chainID].STHS_ADDRESS;
+  // const THS_ADDRESS = addresses[chainID].THS_ADDRESS;
+  // const PT_TOKEN_ADDRESS = addresses[chainID].PT_TOKEN_ADDRESS;
+  // const WSOHM_ADDRESS = addresses[chainID].WSOHM_ADDRESS;
 
   const ohmBalance = useSelector(state => state.account.balances?.ohm);
   const sOhmBalance = useSelector(state => state.account.balances?.sohm);
-  const wsOhmBalance = useSelector(state => state.account.balances?.wsohm);
-  const poolBalance = useSelector(state => state.account.balances?.pool);
-  const marketPrice = useSelector(state => state.app.marketPrice);
+  // const wsOhmBalance = useSelector(state => state.account.balances?.wsohm);
+  // const poolBalance = useSelector(state => state.account.balances?.pool);
+  // const marketPrice = useSelector(state => state.app.marketPrice);
 
   return (
     <Paper>
       <Token
         name="THS"
         userBalance={ohmBalance}
-        userBalanceUSD={trim(ohmBalance * marketPrice, 2)}
-        icon={ohmTokenImg}
+        userBalanceUSD={
+          // trim(ohmBalance * marketPrice, 2)
+          "0.00"
+        }
+        icon={ThsImg}
       />
       <Token
         name="sTHS"
         userBalance={sOhmBalance}
-        userBalanceUSD={trim(sOhmBalance * marketPrice, 2)}
+        userBalanceUSD={
+          // trim(sOhmBalance * marketPrice, 2)
+          "0.00"
+        }
         icon={sOhmTokenImg}
       />
       {/* <Token
@@ -212,18 +218,18 @@ function InitialWalletView() {
 
       <Divider color="secondary" className="less-margin" />
 
-      <Box className={styles.menuSection}>
-        <MenuItemBorrow borrowOn="Abracadabra" Icon1={ohmTokenImg} Icon2={abracadabraTokenImg} />
-        <MenuItemBorrow borrowOn="Rari" Icon1={ohmTokenImg} Icon2={props => <img src={rariTokenImg} {...props} />} />
-      </Box>
+      {/* <Box className={styles.menuSection}>
+        <MenuItemBorrow borrowOn="Abracadabra" Icon1={ThsImg} Icon2={abracadabraTokenImg} />
+        <MenuItemBorrow borrowOn="Rari" Icon1={ThsImg} Icon2={props => <img src={rariTokenImg} {...props} />} />
+      </Box> */}
 
       <Divider color="secondary" className="less-margin" />
 
-      <Box className={styles.menuSection}>
+      {/* <Box className={styles.menuSection}>
         <Box sx={{ flexWrap: "nowrap", flexDirection: "row" }}>
           <ExternalLink
             href={`https://app.sushi.com/swap?inputCurrency=${dai.getAddressForReserve(chainID)}&outputCurrency=${
-              addresses[chainID].OHM_ADDRESS
+              addresses[chainID].THS_ADDRESS
             }`}
           >
             <Button size="large" variant="contained" color="secondary">
@@ -235,7 +241,7 @@ function InitialWalletView() {
 
           {/* <ExternalLink
             href={`https://app.uniswap.org/#/swap?inputCurrency=${frax.getAddressForReserve(chainID)}&outputCurrency=${
-              addresses[chainID].OHM_ADDRESS
+              addresses[chainID].THS_ADDRESS
             }`}
           >
             <Button size="large" variant="contained" color="secondary">
@@ -245,7 +251,7 @@ function InitialWalletView() {
             </Button>
           </ExternalLink> */}
 
-          <ExternalLink href={`https://dune.xyz/0xrusowsky/Olympus-Wallet-History`}>
+          {/* <ExternalLink href={`https://dune.xyz/0xrusowsky/Olympus-Wallet-History`}>
             <Button size="large" variant="contained" color="secondary">
               <Typography style={{ lineHeight: "20px", whiteSpace: "break-spaces" }}>
                 View Wallet on Dune Analytics <ExternalLinkIcon />
@@ -253,7 +259,9 @@ function InitialWalletView() {
             </Button>
           </ExternalLink>
         </Box>
-      </Box>
+      </Box> */}
+
+
       {/* <Drawer style={{ width: "55%" }} anchor={"right"} open={anchor === "sOHMtx"} onClose={toggleDrawer("OG")}>
         {" "}
         <SOhmTxView></SOhmTxView>

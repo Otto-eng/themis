@@ -45,7 +45,7 @@ export const changeApproval = createAsyncThunk(
     }
 
     const signer = provider.getSigner();
-    const sohmContract = new ethers.Contract(addresses[networkID].SOHM_ADDRESS as string, ierc20ABI, signer) as IERC20;
+    const sohmContract = new ethers.Contract(addresses[networkID].STHS_ADDRESS as string, ierc20ABI, signer) as IERC20;
     const wsohmContract = new ethers.Contract(
       addresses[networkID].WSOHM_ADDRESS as string,
       ierc20ABI,
@@ -69,7 +69,7 @@ export const changeApproval = createAsyncThunk(
     }
 
     try {
-      if (token === "sohm") {
+      if (token === "sThs") {
         // won't run if wrapAllowance > 0
         approveTx = await sohmContract.approve(
           addresses[networkID].WSOHM_ADDRESS,

@@ -15,6 +15,17 @@ const Root: FC = () => {
   useEffect(() => {
     initLocale();
   }, []);
+  const flag = sessionStorage.getItem("THEMIS_FLAG")
+
+  if (!flag) {
+    localStorage.removeItem("walletconnect")
+    localStorage.removeItem("WEB3_CONNECT_CACHED_PROVIDER")
+    sessionStorage.setItem("THEMIS_FLAG", true + "")
+  }
+
+
+
+
 
   return (
     <Web3ContextProvider>

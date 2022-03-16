@@ -10,6 +10,8 @@ import ClaimDarkIcon from "../../assets/icons/claimLight@2x.png";
 import SCLightIcon from "../../assets/icons/sc@2x.png";
 import SCDarkIcon from "../../assets/icons/scLight@2x.png";
 import { Trans } from "@lingui/macro";
+import { styled } from "@material-ui/core"
+
 
 import { trim, shorten } from "../../helpers";
 import { useAddress, useWeb3Context } from "src/hooks/web3Context";
@@ -19,6 +21,15 @@ import { Skeleton } from "@material-ui/lab";
 import "./sidebar.scss";
 import { useAppSelector } from "../../hooks"
 import { THEME_LIGHT } from "src/constants";
+
+const Title = styled("div")({display: "flex",
+  justifyContent:"center",
+  alignItems: "center",
+  fontSize: "36px",
+  fontWeight: "700",
+  fontFamily: "Square"
+})
+  
 
 function NavContent() {
   const [isActive] = useState();
@@ -64,8 +75,9 @@ function NavContent() {
       <Box className="dapp-sidebar-inner" display="flex" justifyContent="space-between" flexDirection="column">
         <div className="dapp-menu-top">
           <Box className="branding-header">
-            <Link href="https://app.themis.capital" target="_blank">
-             <img src={icon.logo} style={{width: "150px", height: "98px"}}></img>
+            <Link href="https://themis.capital" target="_blank">
+              <img src={icon.logo} style={{ width: "100px", height: "72px" }}></img>
+              <Title>THEMIS</Title>
             </Link>
 
             {address && (
@@ -160,7 +172,7 @@ function NavContent() {
               >
                 <Typography style={{display: "flex", alignItems: "center"}} variant="h6">
                   <img style={{width: "20px", height: "20px", marginRight: "12px"}} src={icon.claim} />
-                  <Trans>Claim IDO Profit</Trans>
+                  <Trans>Claim Profit</Trans>
                 </Typography>
               </Link>
 

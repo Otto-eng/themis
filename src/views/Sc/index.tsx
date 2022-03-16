@@ -1,4 +1,6 @@
 import { styled } from "@material-ui/core"
+import { THEME_LIGHT } from "src/constants"
+import { useAppSelector } from "src/hooks"
 import { GridFlex } from "../Claim"
 
 const Main = styled(GridFlex)({
@@ -8,12 +10,11 @@ const Main = styled(GridFlex)({
 
 const Container = styled("div")({
 	width: "100%",
-	background: '#010101',
 	padding: "24px",
+	borderRadius: "24px"
 })
 
 const Top = styled(GridFlex)({
-	background: '#18253A',
 	padding: "16px",
 	borderRadius: '10px',
 	justifyContent: "space-around",
@@ -35,7 +36,6 @@ const CardTitle = styled(GridFlex)({
 })
 
 const Card = styled("div")({
-	background: '#18253A',
 	padding: "16px",
 	borderRadius: '10px',
 	marginTop: "16px",
@@ -43,7 +43,7 @@ const Card = styled("div")({
 
 const Item = styled(GridFlex)({
 	padding: "8px 0",
-	borderBottom: "1px solid #253449"
+	borderBottom: "1px solid rgba(127, 127, 127, 0.12)"
 })
 
 const More = styled(GridFlex)({
@@ -77,21 +77,22 @@ const Ol = styled("div")({
 })
 
 export default function Sc() {
+	const theme = useAppSelector(state => state.theme.theme)
 	return (
 		<Main>
-			<Container>
-				<Top>
-					<Title>SC Amount</Title>
+			<Container style={{ backgroundColor: theme === THEME_LIGHT ? "rgba(255, 255, 255, 0.6)" : "#010101" }}>
+				<Top style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A", color: theme === THEME_LIGHT ? "#010101" : "#768299" }}>
+					<Title >SC Amount</Title>
 					<Blance>0.00</Blance>
 				</Top>
-				<CardTitle>Pledge Earnings</CardTitle>
-				<Card>
+				<CardTitle style={{ color: theme === THEME_LIGHT ? "#010101" : "#768299" }}>Staking Earnings</CardTitle>
+				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}>
 					<Item>
 						<Ol>hash</Ol>
 						<Option>time</Option>
 						<Amount>SC amount</Amount>
 					</Item>
-					<Item>
+					{/* <Item>
 						<Ol>1</Ol>
 						<Option>{+new Date()}</Option>
 						<Amount>13231.23123</Amount>
@@ -105,18 +106,18 @@ export default function Sc() {
 						<Ol>3</Ol>
 						<Option>{+new Date()}</Option>
 						<Amount>123456.78</Amount>
-					</Item>
+					</Item> */}
 					<More>view more</More>
 				</Card>
-				<CardTitle>Invite Earnings</CardTitle>
-				<Card>
+				<CardTitle style={{ color: theme === THEME_LIGHT ? "#010101" : "#768299" }}>Invite Earnings</CardTitle>
+				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}>
 					<Item>
 						<Ol>hash</Ol>
 						<Option>time</Option>
 						<Option>invitation</Option>
 						<Amount>SC amount</Amount>
 					</Item>
-					<Item>
+					{/* <Item>
 						<Ol>1</Ol>
 						<Option>{+new Date()}</Option>
 						<Option>13231.23123</Option>
@@ -133,7 +134,7 @@ export default function Sc() {
 						<Option>{+new Date()}</Option>
 						<Option>123456.78</Option>
 						<Amount>123456.78</Amount>
-					</Item>
+					</Item> */}
 					<More>view more</More>
 				</Card>
 			</Container>

@@ -10,11 +10,10 @@ export const Graph = ({ children }) => <>{children}</>;
 export const TotalValueDepositedGraph = () => {
   const theme = useTheme();
   const { data } = useTreasuryMetrics({ refetchOnMount: false });
-
   return (
     <Chart
       type="area"
-      data={data}
+      data={[{}]}
       itemType={itemType.dollar}
       itemNames={tooltipItems.tvl}
       dataKey={["totalValueLocked"]}
@@ -35,7 +34,7 @@ export const MarketValueGraph = () => {
   return (
     <Chart
       type="stack"
-      data={data}
+      data={[{}]}
       dataKey={[
         "treasuryDaiMarketValue",
         "treasuryFraxMarketValue",
@@ -68,7 +67,7 @@ export const RiskFreeValueGraph = () => {
   return (
     <Chart
       type="stack"
-      data={data}
+      data={[{}]}
       format="currency"
       dataKey={["treasuryDaiRiskFreeValue", "treasuryFraxRiskFreeValue", "treasuryLusdRiskFreeValue"]}
       stopColor={[
@@ -97,14 +96,14 @@ export const ProtocolOwnedLiquidityGraph = () => {
     <Chart
       isPOL
       type="area"
-      data={data}
+      data={[{}]}
       dataFormat="percent"
       itemNames={tooltipItems.pol}
       itemType={itemType.percentage}
       dataKey={["treasuryOhmDaiPOL"]}
       bulletpointColors={bulletpoints.pol}
       infoTooltipMessage={tooltipInfoMessages.pol}
-      headerText="Protocol Owned Liquidity THS-DAI"
+      headerText="Protocol Owned Liquidity THS-USDT"
       expandedGraphStrokeColor={theme.palette.graphStrokeColor}
       headerSubText={`${data && trim(data[0].treasuryOhmDaiPOL, 2)}% `}
       stopColor={[["rgba(128, 204, 131, 1)", "rgba(128, 204, 131, 0)"]]}
@@ -129,7 +128,7 @@ export const OHMStakedGraph = () => {
     <Chart
       isStaked
       type="area"
-      data={staked}
+      data={[{}]} // staked
       dataKey={["staked"]}
       dataFormat="percent"
       headerText="THS Staked"
@@ -159,7 +158,7 @@ export const APYOverTimeGraph = () => {
     <Chart
       type="line"
       scale="log"
-      data={apy}
+      data={[{}]} // apy
       dataKey={["apy"]}
       dataFormat="percent"
       headerText="APY over time"
@@ -188,7 +187,7 @@ export const RunwayAvailableGraph = () => {
   return (
     <Chart
       type="multi"
-      data={runway}
+      data={[{}]} // runway
       dataKey={["runwayCurrent", "runway7dot5k", "runway5k", "runway2dot5k"]}
       color={theme.palette.text.primary}
       stroke={colors}

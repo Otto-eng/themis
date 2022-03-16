@@ -196,7 +196,7 @@ function Stake() {
                         <Trans>APY</Trans>
                       </Typography>
                       <Typography variant="h4">
-                        {stakingAPY ? (
+                        {stakingAPY || true ? (
                           <span data-testid="apy-value">
                             {"0.00"
                               // new Intl.NumberFormat("en-US").format(Number(trimmedStakingAPY))
@@ -215,7 +215,7 @@ function Stake() {
                         <Trans>Total Value Deposited</Trans>
                       </Typography>
                       <Typography variant="h4">
-                        {stakingTVL ? (
+                        {stakingTVL || true ? (
                           <span data-testid="tvl-value">
                             {"0.00"
                               // new Intl.NumberFormat("en-US", {
@@ -355,7 +355,7 @@ function Stake() {
                             color="primary"
                             disabled={isPendingTxn(pendingTransactions, "approve_staking")}
                             onClick={() => {
-                              onSeekApproval("ohm");
+                              onSeekApproval("ths");
                             }}
                           >
                             {txnButtonText(pendingTransactions, "approve_staking", t`Approve`)}
@@ -384,7 +384,7 @@ function Stake() {
                             color="primary"
                             disabled={isPendingTxn(pendingTransactions, "approve_unstaking")}
                             onClick={() => {
-                              onSeekApproval("sohm");
+                              onSeekApproval("sThs");
                             }}
                           >
                             {txnButtonText(pendingTransactions, "approve_unstaking", t`Approve`)}
@@ -478,7 +478,7 @@ function Stake() {
         </Paper>
       </Zoom>
 
-      <ExternalStakePool />
+      {/* <ExternalStakePool /> */}
     </div>
   );
 }

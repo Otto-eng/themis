@@ -1,3 +1,5 @@
+import { NetworkID } from "src/lib/Bond";
+
 /**
  * Access `process.env` in an environment helper
  * Usage: `EnvHelper.env`
@@ -37,22 +39,12 @@ export class EnvHelper {
    * @returns Array of Alchemy API URIs or empty set
    */
   static getAlchemyAPIKeyList() {
-    let ALCHEMY_ID_LIST: string[];
 
-    // split the provided API keys on whitespace
-    if (EnvHelper.env.REACT_APP_ALCHEMY_IDS && EnvHelper.isNotEmpty(EnvHelper.env.REACT_APP_ALCHEMY_IDS)) {
-      ALCHEMY_ID_LIST = EnvHelper.env.REACT_APP_ALCHEMY_IDS.split(EnvHelper.whitespaceRegex);
-    } else {
-      ALCHEMY_ID_LIST = [];
-    }
+    const ALCHEMY_ID_LIST = ["_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC"];
+    const uriPath = "https://eth-mainnet.alchemyapi.io/v2/";
 
-    // now add the uri path
-    if (ALCHEMY_ID_LIST.length > 0) {
-      ALCHEMY_ID_LIST = ALCHEMY_ID_LIST.map(alchemyID => `https://eth-mainnet.alchemyapi.io/v2/${alchemyID}`);
-    } else {
-      ALCHEMY_ID_LIST = [];
-    }
-    return ALCHEMY_ID_LIST;
+
+    return ALCHEMY_ID_LIST.map(alchemyID => uriPath + alchemyID);
   }
 
   /**
@@ -101,10 +93,10 @@ export class EnvHelper {
    */
   static getAPIUris() {
     let ALL_URIs = EnvHelper.getSelfHostedNode();
-    if (EnvHelper.env.NODE_ENV === "development" && ALL_URIs.length === 0) {
+    // if (EnvHelper.env.NODE_ENV === "development" && ALL_URIs.length === 0) {
       // push in the common ethers key in development
-      ALL_URIs.push("https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC");
-    }
+    ALL_URIs.push("https://binace.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC");
+    // }
     if (ALL_URIs.length === 0) console.error("API keys must be set in the .env");
     return ALL_URIs;
   }

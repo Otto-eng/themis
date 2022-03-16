@@ -123,7 +123,7 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
   }, [secondsToRefresh, quantity]);
 
   const onSeekApproval = async () => {
-    return;
+    // return;
     dispatch(changeApproval({ address, bond, provider, networkID: chainID }));
   };
 

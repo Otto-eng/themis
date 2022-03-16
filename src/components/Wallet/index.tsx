@@ -5,7 +5,7 @@ import { ReactComponent as WalletIcon } from "../../assets/icons/wallet.svg";
 import { useWeb3Context } from "../../hooks/web3Context";
 import InitialWalletView from "./InitialWalletView";
 import { Drawer, SvgIcon, Button, Typography, Box, IconButton, ButtonProps } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { t } from "@lingui/macro";
 
 const WalletButtonBase = (props: ButtonProps) => (
   <Button id="ohm-menu-button" size="large" variant="contained" color="secondary" {...props} />
@@ -26,7 +26,7 @@ const ConnectButton = (props: ButtonProps) => (
 );
 
 const WalletButton = ({ openWallet }: { openWallet: () => void }) => {
-  const { connect, disconnect, connected } = useWeb3Context();
+  const { connect, connected } = useWeb3Context();
   return connected ? <OpenWalletButton onClick={openWallet} /> : <ConnectButton onClick={connect} />;
 };
 
@@ -71,7 +71,7 @@ export function Wallet() {
   return (
     <>
       <WalletButton openWallet={openWallet} />
-      <Drawer style={{ width: "450px" }} anchor="right" open={isWalletOpen} onClose={closeWallet}>
+      <Drawer anchor="right" open={isWalletOpen} onClose={closeWallet}>
         <Box sx={{ display: "flex", justifyContent: "right" }}>
           <IconButton onClick={closeWallet} aria-label="close wallet">
             <SvgIcon component={CloseIcon} color="primary" />

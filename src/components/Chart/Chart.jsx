@@ -496,7 +496,7 @@ function Chart({
         ) : (
           <Box display="flex">
             <Typography variant="h4" style={{ fontWeight: 600, marginRight: 5 }}>
-              {/* {headerSubText} */}0.00
+              {headerSubText}
             </Typography>
             <Typography variant="h4" color="textSecondary" style={{ fontWeight: 400 }}>
               {type !== "multi" && "Today"}
@@ -505,14 +505,13 @@ function Chart({
         )}
       </div>
         <Box width="100%" minHeight={260} minWidth={310} className="ohm-chart">
-          0.00
-        {/* {loading || (data && data.length > 0) ? (
+        {loading || (data && data.length > 0) ? (
           <ResponsiveContainer minHeight={260} width="100%">
             {renderChart(type, false)}
           </ResponsiveContainer>
         ) : (
           <Skeleton variant="rect" width="100%" height={260} />
-        )} */}
+        )}
       </Box>
     </Box>
   );

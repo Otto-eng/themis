@@ -1,5 +1,5 @@
 import { BigNumber, ethers } from "ethers";
-import { addresses } from "../constants";
+import { addresses, NETWORK_CHAINID } from "../constants";
 import { trim } from "src/helpers";
 
 /**
@@ -64,7 +64,7 @@ export const secondsToDaysForInput = (seconds: number) => {
 export const poolTogetherUILinks = (chainID: number): Array<string> => {
   const contractAddress = addresses[chainID].PT_PRIZE_POOL_ADDRESS;
 
-  if (chainID === 56) {
+  if (chainID === NETWORK_CHAINID) {
     return [
       `https://community.pooltogether.com/pools/rinkeby/${contractAddress}/home`,
       `https://community.pooltogether.com/pools/rinkeby/${contractAddress}/manage#stats`,

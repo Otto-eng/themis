@@ -1,6 +1,8 @@
 import { minutesAgo } from "./index";
 import { EnvHelper } from "./Environment";
 import { ethers } from "ethers";
+import { StaticJsonRpcProvider } from "@ethersproject/providers";
+import { NetworkID } from "src/lib/Bond";
 
 interface ICurrentStats {
   failedConnectionCount: number;
@@ -27,7 +29,7 @@ export class NodeHelper {
 
   static currentRemovedNodes = JSON.parse(NodeHelper._storage.getItem(NodeHelper._invalidNodesKey) || "{}");
   static currentRemovedNodesURIs = Object.keys(NodeHelper.currentRemovedNodes);
-
+  
   /**
    * remove the invalidNodes list entirely
    * should be used as a failsafe IF we have invalidated ALL nodes AND we have no fallbacks
@@ -40,7 +42,23 @@ export class NodeHelper {
     ) {
       NodeHelper._storage.removeItem(NodeHelper._invalidNodesKey);
     }
-  }
+  } 
+
+  static getMainnetURI = (): string => {
+    // Shuffles the URIs for "intelligent" loadbalancing
+    const allURIs = NodeHelper.getNodesUris();
+
+    // There is no lightweight way to test each URL. so just return a random one.
+    // if (workingURI !== undefined || workingURI !== "") return workingURI as string;
+    const randomIndex = Math.floor(Math.random() * allURIs.length);
+    return allURIs[randomIndex];
+  };
+
+
+
+  static getMainnetStaticProvider = () => {
+    return new StaticJsonRpcProvider(NodeHelper.getMainnetURI());
+  };
 
   static _updateConnectionStatsForProvider(currentStats: ICurrentStats) {
     const failedAt = new Date().getTime();

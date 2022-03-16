@@ -4,7 +4,6 @@ import { Route, Redirect, Switch, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useMediaQuery } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import useTheme from "./hooks/useTheme";
 import useBonds, { IAllBondData } from "./hooks/Bonds";
 import { useAddress, useWeb3Context } from "./hooks/web3Context";
 import useSegmentAnalytics from "./hooks/useSegmentAnalytics";
@@ -31,7 +30,6 @@ import Claim from "./views/Claim";
 import { THEME_LIGHT } from "./constants";
 import Sc from "./views/Sc";
 import { useAppSelector } from "./hooks";
-
 
 // 😬 Sorry for all the console logging
 const DEBUG = false;
@@ -92,7 +90,7 @@ function App() {
   const isSmallerScreen = useMediaQuery("(max-width: 980px)");
   const isSmallScreen = useMediaQuery("(max-width: 600px)");
 
-  const { connect, hasCachedProvider, provider, chainID, connected, uri } = useWeb3Context();
+  const { connect, hasCachedProvider, provider, chainID, connected, disconnect, uri } = useWeb3Context();
   const address = useAddress();
 
   const [walletChecked, setWalletChecked] = useState(false);
@@ -116,11 +114,6 @@ function App() {
       loadAccount(loadProvider);
     }
   }
-
-  const data = useAppSelector(state => state)
-  useEffect(() => {
-    console.log("DATA", data)
-  }, [])
 
   const loadApp = useCallback(
     loadProvider => {
@@ -167,7 +160,7 @@ function App() {
       setWalletChecked(true);
     }
     if (shouldTriggerSafetyCheck()) {
-      dispatch(info("Safety Check: Always verify you're on app.themisDao.finance!"));
+      dispatch(info("Safety Check: Always verify you're on app.themis.capital!"));
     }
   }, []);
 

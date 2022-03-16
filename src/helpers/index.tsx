@@ -43,13 +43,12 @@ export function shorten(str: string) {
 }
 
 export function formatCurrency(c: number, precision = 0) {
-  return "0.00"
-  // new Intl.NumberFormat("en-US", {
-  //   style: "currency",
-  //   currency: "USD",
-  //   maximumFractionDigits: precision,
-  //   minimumFractionDigits: precision,
-  // }).format(c);
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: precision,
+    minimumFractionDigits: precision,
+  }).format(c);
 }
 
 export function trim(number = 0, precision = 0) {

@@ -95,7 +95,7 @@ export const loadAppDetails = createAsyncThunk(
     ) as OlympusStakingv2;
 
     const sohmMainContract = new ethers.Contract(
-      addresses[networkID].SOHM_ADDRESS as string,
+      addresses[networkID].STHS_ADDRESS as string,
       sOHMv2,
       provider,
     ) as SOhmv2;

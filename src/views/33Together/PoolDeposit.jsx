@@ -169,7 +169,7 @@ export const PoolDeposit = props => {
                 variant="contained"
                 color="primary"
                 disabled={isPendingTxn(pendingTransactions, "approve_pool_together")}
-                onClick={() => onSeekApproval("sohm")}
+                onClick={() => onSeekApproval("sThs")}
               >
                 {txnButtonText(pendingTransactions, "approve_pool_together", t`Approve`)}
               </Button>
