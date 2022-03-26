@@ -143,17 +143,15 @@ function NavContent() {
                   </Typography>
                   {bonds.map((bond, i) => (
                     <Link component={NavLink} to={`/bonds/${bond.name}`} key={i} className={"bond"}>
-                      {!bond.bondDiscount && false ? (
+                      {!bond.bondDiscount ? (
                         <Skeleton variant="text" width={"150px"} />
                       ) : (
                         <Typography variant="body2">
-                          {/* {bond.displayName} */}
-                        USDT
-                            <span className="bond-pair-roi">
-                              0.00%
-                            {/* {!bond.isAvailable[chainID]
+                          {bond.displayName}
+                           <span className="bond-pair-roi">
+                            {!bond.isAvailable[chainID]
                               ? "Sold Out"
-                              : `${bond.bondDiscount && trim(bond.bondDiscount * 100, 2)}%`} */}
+                              : `${bond.bondDiscount && trim(bond.bondDiscount * 100, 2)}%`}
                           </span>
                         </Typography>
                       )}

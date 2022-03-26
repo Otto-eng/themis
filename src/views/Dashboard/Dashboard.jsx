@@ -7,7 +7,7 @@ import { t, Trans } from "@lingui/macro";
 
 function Dashboard() {
   // Use marketPrice as indicator of loading.
-  const isAppLoading = useSelector(state => !state.app?.marketPrice ?? true);
+  const isAppLoading = useSelector(state => !state.app?.marketPrice);
   const marketPrice = useSelector(state => {
     return state.app.marketPrice;
   });
@@ -31,8 +31,7 @@ function Dashboard() {
                 <Trans>Price</Trans>
               </Typography>
               <Typography variant="h5">
-                0.00
-                {/* {isAppLoading ? <Skeleton width="100px" /> : `$${trim(marketPrice, 2)}`} */}
+                {isAppLoading ? <Skeleton width="100px" /> : `$${trim(marketPrice, 2)}`}
               </Typography>
             </Paper>
           </Zoom>
@@ -45,17 +44,16 @@ function Dashboard() {
                 <Trans>Market Cap</Trans>
               </Typography>
               <Typography variant="h5">
-                {/* {isAppLoading ? (
+                {isAppLoading ? (
                   <Skeleton width="160px" />
-                ) : ( */}
-                0.00
-                {/* || new Intl.NumberFormat("en-US", {
+                ) : (
+                  new Intl.NumberFormat("en-US", {
                     style: "currency",
                     currency: "USD",
                     maximumFractionDigits: 0,
                     minimumFractionDigits: 0,
-                  }).format(marketCap) */}
-                {/* )} */}
+                  }).format(marketCap)
+                )}
               </Typography>
             </Paper>
           </Zoom>
@@ -68,7 +66,7 @@ function Dashboard() {
                 <Trans>Supply (circulating/total)</Trans>
               </Typography>
               <Typography variant="h5">
-                {/* {isAppLoading ? (
+                {isAppLoading ? (
                   <Skeleton width="250px" />
                 ) : (
                   `${new Intl.NumberFormat("en-US", {
@@ -80,8 +78,7 @@ function Dashboard() {
                       maximumFractionDigits: 0,
                       minimumFractionDigits: 0,
                     }).format(totalSupply)}`
-                )} */}
-                0.00
+                )}
               </Typography>
             </Paper>
           </Zoom>

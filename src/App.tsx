@@ -3,6 +3,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Route, Redirect, Switch, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useMediaQuery } from "@material-ui/core";
+import { ethers } from "ethers";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import useBonds, { IAllBondData } from "./hooks/Bonds";
 import { useAddress, useWeb3Context } from "./hooks/web3Context";
@@ -27,9 +28,14 @@ import { light as lightTheme } from "./themes/light.js";
 import "./style.scss";
 import { useGoogleAnalytics } from "./hooks/useGoogleAnalytics";
 import Claim from "./views/Claim";
-import { THEME_LIGHT } from "./constants";
+import { addresses, THEME_LIGHT, ZERO_ADDRESS } from "./constants";
 import Sc from "./views/Sc";
 import { useAppSelector } from "./hooks";
+import Register from "./views/Register";
+
+import { abi as RelationshipABI } from "src/abi/Relationship.json";
+import { scListDetails } from "./slices/sc";
+
 
 // 😬 Sorry for all the console logging
 const DEBUG = false;
@@ -89,6 +95,7 @@ function App() {
   const [themeMode, setThemeMode] = useState(theme.theme === THEME_LIGHT ? lightTheme : darkTheme);
   const isSmallerScreen = useMediaQuery("(max-width: 980px)");
   const isSmallScreen = useMediaQuery("(max-width: 600px)");
+  const [isInvited, setIsInvited] = useState(false)
 
   const { connect, hasCachedProvider, provider, chainID, connected, disconnect, uri } = useWeb3Context();
   const address = useAddress();
@@ -189,12 +196,33 @@ function App() {
   };
 
 
+  const serachRelationship = async (account: string) => {
+    const RelationshipContract = new ethers.Contract(addresses[chainID].Relationship_ADDRESS as string, RelationshipABI, provider)
+
+    const invitedAddress = await RelationshipContract.getInviter(account)
+    setIsInvited(invitedAddress === ZERO_ADDRESS)
+  }
+
+  useEffect(() => {
+    if (address && chainID && provider && addresses) {
+      serachRelationship(address)
+      dispatch(scListDetails({ first: 10, address, networkID: chainID, provider }))
+    }
+  }, [address, chainID, provider, addresses])
+
+
   useEffect(() => {
     setThemeMode(theme.theme === THEME_LIGHT ? lightTheme : darkTheme)
   }, [theme]);
   useEffect(() => {
     if (isSidebarExpanded) handleSidebarClose();
   }, [location]);
+
+  useEffect(() => {
+    if (address && isInvited && location.pathname !== "/register") {
+      globalThis.location.pathname = "/register"
+    }
+  }, [address, isInvited, location.pathname])
 
   return (
     <ThemeProvider theme={themeMode}>
@@ -248,6 +276,9 @@ function App() {
             </Route>
             <Route path="/sc">
               <Sc />
+            </Route>
+            <Route path="/register">
+              <Register />
             </Route>
 
             <Route component={NotFound} />

@@ -1,23 +1,22 @@
 import { StableBond, NetworkID } from "src/lib/Bond";
-import { addresses } from "src/constants";
 
 import { ReactComponent as DaiImg } from "src/assets/tokens/LUSD.svg";
 
-import { abi as DaiBondContract } from "src/abi/bonds/OlympusBondDepository.json";
+import { abi as UsdtBondContract } from "src/abi/bonds/OlympusBondDepository.json";
 
 // TODO(zx): Further modularize by splitting up reserveAssets into vendor token definitions
 //   and include that in the definition of a bond
-export const dai = new StableBond({
+export const usdt = new StableBond({
   name: "usdt",
   displayName: "USDT",
   bondToken: "USDT",
   isAvailable: { [NetworkID.Mainnet]: true },
   bondIconSvg: DaiImg,
-  bondContractABI: DaiBondContract,
+  bondContractABI: UsdtBondContract,
   networkAddrs: {
     [NetworkID.Mainnet]: {
-      bondAddress: "0x3E19EbAD5C9180410598E5ed7b8c82c4Cf4A8232",
-      reserveAddress: "0x205df2b395aE13fddA5790D9fD114f3548EB8A7A",
+      bondAddress: "0x289ce758F9eCFc4C2e5f212d25e2BEab9a173Eaf",
+      reserveAddress: "0xbd8a03E74e53929DB75E30ca692e6188FabdEdE7",
     },
   },
 });
@@ -27,7 +26,7 @@ export const dai = new StableBond({
 // Is it a stableCoin bond? use `new StableBond`
 // Is it an LP Bond? use `new LPBond`
 // Add new bonds to this array!!
-export const allBonds = [dai/*, frax, eth, cvx, ohm_dai, ohm_frax, lusd, ohm_lusd, ohm_weth */];
+export const allBonds = [usdt/*, frax, eth, cvx, ohm_dai, ohm_frax, lusd, ohm_lusd, ohm_weth */];
 // TODO (appleseed-expiredBonds): there may be a smarter way to refactor this
 // export const allExpiredBonds = [cvx_expired];
 export const allBondsMap = allBonds.reduce((prevVal, bond) => {

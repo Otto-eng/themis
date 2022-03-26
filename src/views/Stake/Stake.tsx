@@ -38,7 +38,7 @@ function a11yProps(index: number) {
   };
 }
 
-const sOhmImg = getTokenImage("sohm");
+const sOhmImg = getTokenImage("sThs");
 const ohmImg = getOhmTokenImage(16, 16);
 
 function Stake() {
@@ -56,13 +56,13 @@ function Stake() {
   const fiveDayRate = useAppSelector(state => {
     return state.app.fiveDayRate;
   });
-  const ohmBalance = useAppSelector(state => {
+  const thsBalance = useAppSelector(state => {
     return state.account.balances && state.account.balances.ohm;
   });
   const oldSohmBalance = useAppSelector(state => {
     return state.account.balances && state.account.balances.oldsohm;
   });
-  const sohmBalance = useAppSelector(state => {
+  const sThsBalance = useAppSelector(state => {
     return state.account.balances && state.account.balances.sohm;
   });
   const fsohmBalance = useAppSelector(state => {
@@ -96,9 +96,9 @@ function Stake() {
 
   const setMax = () => {
     if (view === 0) {
-      setQuantity(Number(ohmBalance));
+      setQuantity(Number(Number(thsBalance).toFixed(2)));
     } else {
-      setQuantity(Number(sohmBalance));
+      setQuantity(Number(Number(sThsBalance).toFixed(2)));
     }
   };
 
@@ -115,11 +115,11 @@ function Stake() {
 
     // 1st catch if quantity > balance
     let gweiValue = ethers.utils.parseUnits(quantity.toString(), "gwei");
-    if (action === "stake" && gweiValue.gt(ethers.utils.parseUnits(ohmBalance, "gwei"))) {
+    if (action === "stake" && gweiValue.gt(ethers.utils.parseUnits(thsBalance, "gwei"))) {
       return dispatch(error(t`You cannot stake more than your THS balance.`));
     }
 
-    if (action === "unstake" && gweiValue.gt(ethers.utils.parseUnits(sohmBalance, "gwei"))) {
+    if (action === "unstake" && gweiValue.gt(ethers.utils.parseUnits(sThsBalance, "gwei"))) {
       return dispatch(error(t`You cannot unstake more than your sTHS balance.`));
     }
 
@@ -128,8 +128,8 @@ function Stake() {
 
   const hasAllowance = useCallback(
     token => {
-      if (token === "ohm") return stakeAllowance > 0;
-      if (token === "sohm") return unstakeAllowance > 0;
+      if (token === "ths") return stakeAllowance > 0;
+      if (token === "sThs") return unstakeAllowance > 0;
       return 0;
     },
     [stakeAllowance, unstakeAllowance],
@@ -150,7 +150,7 @@ function Stake() {
   };
 
   const trimmedBalance = Number(
-    [sohmBalance, fsohmBalance, wsohmAsSohm]
+    [sThsBalance, fsohmBalance, wsohmAsSohm]
       .filter(Boolean)
       .map(balance => Number(balance))
       .reduce((a, b) => a + b, 0)
@@ -198,9 +198,7 @@ function Stake() {
                       <Typography variant="h4">
                         {stakingAPY || true ? (
                           <span data-testid="apy-value">
-                            {"0.00"
-                              // new Intl.NumberFormat("en-US").format(Number(trimmedStakingAPY))
-                            }%
+                            {new Intl.NumberFormat("en-US").format(Number(trimmedStakingAPY))}%
                           </span>
                         ) : (
                           <Skeleton width="150px" data-testid="apy-loading" />
@@ -215,15 +213,15 @@ function Stake() {
                         <Trans>Total Value Deposited</Trans>
                       </Typography>
                       <Typography variant="h4">
-                        {stakingTVL || true ? (
+                        {stakingTVL ? (
                           <span data-testid="tvl-value">
-                            {"0.00"
-                              // new Intl.NumberFormat("en-US", {
-                              //   style: "currency",
-                              // currency: "USD",
-                              // maximumFractionDigits: 0,
-                              // minimumFractionDigits: 0,
-                              // }).format(stakingTVL)
+                            {
+                              new Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                                maximumFractionDigits: 0,
+                                minimumFractionDigits: 0,
+                              }).format(stakingTVL)
                             }
                           </span>
                         ) : (
@@ -239,12 +237,11 @@ function Stake() {
                         <Trans>Current Index</Trans>
                       </Typography>
                       <Typography variant="h4">
-                        0THS
-                        {/* {currentIndex ? (
+                        {currentIndex ? (
                           <span data-testid="index-value">{trim(Number(currentIndex), 1)} THS</span>
                         ) : (
                           <Skeleton width="150px" data-testid="index-loading" />
-                        )} */}
+                        )}
                       </Typography>
                     </div>
                   </Grid>
@@ -286,9 +283,9 @@ function Stake() {
                       />
                       <Tab label={t`Unstake`} {...a11yProps(1)} />
                     </Tabs>
-                    <Box className="stake-action-row " display="flex" alignItems="center">
+                      <Box className="stake-action-row " display="flex" alignItems="center">
                       {address && !isAllowanceDataLoading ? (
-                        (!hasAllowance("ohm") && view === 0) || (!hasAllowance("sohm") && view === 1) ? (
+                          (!hasAllowance("ths") && view === 0) || (!hasAllowance("sThs") && view === 1) ? (
                           <Box className="help-text">
                             <Typography variant="body1" className="stake-note" color="textSecondary">
                               {view === 0 ? (
@@ -309,7 +306,7 @@ function Stake() {
                             </Typography>
                           </Box>
                         ) : (
-                          <FormControl className="ohm-input" variant="outlined" color="primary">
+                              <FormControl className="ohm-input" variant="outlined" color="primary">
                             <InputLabel htmlFor="amount-input"></InputLabel>
                             <OutlinedInput
                               id="amount-input"
@@ -336,7 +333,7 @@ function Stake() {
                       <TabPanel value={view} index={0} className="stake-tab-panel">
                         {isAllowanceDataLoading ? (
                           <Skeleton />
-                        ) : address && hasAllowance("ohm") ? (
+                          ) : address && hasAllowance("ths") ? (
                           <Button
                             className="stake-button"
                             variant="contained"
@@ -365,7 +362,7 @@ function Stake() {
                       <TabPanel value={view} index={1} className="stake-tab-panel">
                         {isAllowanceDataLoading ? (
                           <Skeleton />
-                        ) : address && hasAllowance("sohm") ? (
+                          ) : address && hasAllowance("sThs") ? (
                           <Button
                             className="stake-button"
                             variant="contained"
@@ -400,7 +397,7 @@ function Stake() {
                         <Trans>Unstaked Balance</Trans>
                       </Typography>
                       <Typography variant="body1" id="user-balance">
-                          {isAppLoading ? <Skeleton width="80px" /> : <>{trim(Number(ohmBalance), 4)} THS</>}
+                          {isAppLoading ? <Skeleton width="80px" /> : <>{trim(Number(thsBalance), 4)} THS</>}
                       </Typography>
                     </div>
 
@@ -418,7 +415,7 @@ function Stake() {
                         <Trans>Single Staking</Trans>
                       </Typography>
                       <Typography variant="body2" color="textSecondary">
-                          {isAppLoading ? <Skeleton width="80px" /> : <>{trim(Number(sohmBalance), 4)} sTHS</>}
+                          {isAppLoading ? <Skeleton width="80px" /> : <>{trim(Number(sThsBalance), 4)} sTHS</>}
                       </Typography>
                     </div>
 

@@ -66,3 +66,12 @@ export interface IRedeemAllBondsAsyncThunk extends IBaseAsyncThunk {
   readonly address: string;
   readonly autostake: boolean;
 }
+
+
+
+export interface ISCAsyncThunk {
+  readonly address: string;
+  readonly first: number;
+  readonly networkID: NetworkID;
+  readonly provider: StaticJsonRpcProvider | JsonRpcProvider;
+}

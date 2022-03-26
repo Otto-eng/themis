@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import copy from "copy-to-clipboard"
 
 import { ReactComponent as CloseIcon } from "../../assets/icons/x.svg";
 import { ReactComponent as WalletIcon } from "../../assets/icons/wallet.svg";
-import { useWeb3Context } from "../../hooks/web3Context";
+import { useAddress, useWeb3Context } from "../../hooks/web3Context";
 import InitialWalletView from "./InitialWalletView";
-import { Drawer, SvgIcon, Button, Typography, Box, IconButton, ButtonProps } from "@material-ui/core";
-import { t } from "@lingui/macro";
+import { Drawer, SvgIcon, Button, Typography, Box, IconButton, ButtonProps, styled } from "@material-ui/core";
+import { ethers } from "ethers";
+import { addresses, ZERO_ADDRESS } from "src/constants";
+import { abi as RelationshipABI } from "src/abi/Relationship.json";
+
+
 
 const WalletButtonBase = (props: ButtonProps) => (
   <Button id="ohm-menu-button" size="large" variant="contained" color="secondary" {...props} />
@@ -24,6 +29,13 @@ const ConnectButton = (props: ButtonProps) => (
     <Typography>Connect Wallet</Typography>
   </WalletButtonBase>
 );
+
+const InitCode = styled("div")({
+  width: "100%",
+  padding: "16px 32px",
+  fontSize: "16px",
+  cursor: "pointer"
+})
 
 const WalletButton = ({ openWallet }: { openWallet: () => void }) => {
   const { connect, connected } = useWeb3Context();
@@ -61,12 +73,29 @@ const DisconnectButton = () => {
 
 export function Wallet() {
   const [isWalletOpen, setWalletOpen] = useState(false);
+  const [initCode, setInitCode] = useState("--");
   const closeWallet = () => setWalletOpen(false);
   const openWallet = () => setWalletOpen(true);
-
+  const { chainID, provider } = useWeb3Context()
+  const address = useAddress()
+  const [state, setState] = useState(false)
   // const pendingTransactions = useSelector(state => {
   //   return state.pendingTransactions;
   // }); // [{ txnHash: "3241141", text: "test" }];
+
+  const serachRelationship = async (account: string) => {
+    const RelationshipContract = new ethers.Contract(addresses[chainID].Relationship_ADDRESS as string, RelationshipABI, provider)
+
+    const info = await RelationshipContract.RegisterInfoOf(account)
+    info?.registrantCode && setInitCode(info.registrantCode)
+  }
+
+  useEffect(() => {
+    if (address && chainID && !!provider && !!addresses) {
+      serachRelationship(address)
+    }
+  }, [address, chainID, provider, addresses])
+
 
   return (
     <>
@@ -78,6 +107,14 @@ export function Wallet() {
           </IconButton>
         </Box>
         <InitialWalletView />
+        <InitCode onClick={() => {
+          if (copy(initCode)) {
+            setState(true)
+            setInterval(() => {
+              setState(false)
+            }, 2000)
+          }
+        }}>{state ? "Copied" : `Invitation code:  ${initCode}`}</InitCode>
         <DisconnectButton />
       </Drawer>
     </>

@@ -1,7 +1,21 @@
-import { styled } from "@material-ui/core"
-import { THEME_LIGHT } from "src/constants"
-import { useAppSelector } from "src/hooks"
-import { GridFlex } from "../Claim"
+import { Button, styled } from "@material-ui/core"
+import { ethers } from "ethers"
+import { useCallback, useEffect, useState } from "react"
+import { addresses, THEME_LIGHT } from "src/constants"
+import { useAppSelector, useWeb3Context } from "src/hooks"
+import { abi as ScFarmForStakerABI } from "src/abi/ScFarmForStaker.json";
+import { abi as ScFarmForInvterABI } from "src/abi/ScFarmForInvter.json";
+
+const GridFlex = styled('div')({
+	width: "100%",
+	display: "flex",
+	justifyContent: 'center',
+	alignItems: 'center',
+	fontSize: '20px',
+	textAlign: 'center'
+})
+
+
 
 const Main = styled(GridFlex)({
 	width: "100%",
@@ -22,7 +36,8 @@ const Top = styled(GridFlex)({
 })
 
 const Title = styled("div")({
-	fontSize: "14px"
+	fontSize: "14px",
+	fontWeight: 500
 })
 
 const Blance = styled("div")({
@@ -32,7 +47,8 @@ const Blance = styled("div")({
 const CardTitle = styled(GridFlex)({
 	fontSize: "20px",
 	marginTop: "24px",
-	justifyContent: "start"
+	justifyContent: "start",
+	fontWeight: 500
 })
 
 const Card = styled("div")({
@@ -76,8 +92,58 @@ const Ol = styled("div")({
 	padding: "8px 0"
 })
 
+const Left = styled("div")({
+	fontSize: "16px",
+	color: "#4E566C",
+	textAlign: "left",
+	padding: "8px 0",
+	fontWeight: 500
+
+})
+
+const Claim = styled(Button)({
+	color: "#000000",
+	padding: "16px 32px",
+	background: "#F8CC82",
+	borderRadius: "8px",
+	cursor: "pointer",
+	fontSize: "16px",
+	fontWeight: 700
+})
+
 export default function Sc() {
+	const { chainID, provider, address } = useWeb3Context()
+	const [stakValue, setStakValue] = useState(0)
+	const [invterValue, setInvterValue] = useState(0)
 	const theme = useAppSelector(state => state.theme.theme)
+
+
+	const getList = useCallback(async () => {
+		if (!!address && !!chainID && !!provider) {
+			const ScFarmForStakerContract = new ethers.Contract(addresses[chainID].ScFarmForStaker_ADDRESS, ScFarmForStakerABI, provider)
+			const ScFarmForInvterContract = new ethers.Contract(addresses[chainID].ScFarmForInvter_ADDRESS, ScFarmForInvterABI, provider)
+
+
+			const ScFarmForStakerpendingRewardValue = await ScFarmForStakerContract.pendingReward(address)
+			const stakedInfoOfList = await ScFarmForStakerContract.stakedInfoOf(address)
+
+			setStakValue(ScFarmForStakerpendingRewardValue.sub(stakedInfoOfList.earnedTotal).toNumber())
+
+			const ScFarmForInvterpendingRewardValue = await ScFarmForInvterContract.pendingReward(address)
+			const ScFarmForInvterstakedInfoOfList = await ScFarmForInvterContract.stakedInfoOf(address)
+
+			setInvterValue(ScFarmForInvterpendingRewardValue.sub(ScFarmForInvterstakedInfoOfList.earnedTotal).toNumber())
+
+		}
+
+	}, [chainID, address, provider])
+
+	useEffect(() => {
+		getList()
+	}, [chainID, address, provider])
+
+
+
 	return (
 		<Main>
 			<Container style={{ backgroundColor: theme === THEME_LIGHT ? "rgba(255, 255, 255, 0.6)" : "#010101" }}>
@@ -86,6 +152,19 @@ export default function Sc() {
 					<Blance>0.00</Blance>
 				</Top>
 				<CardTitle style={{ color: theme === THEME_LIGHT ? "#010101" : "#768299" }}>Staking Earnings</CardTitle>
+				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+					<Left style={{ color: theme === THEME_LIGHT ? "#010101" : "#768299" }}>SC Unclaimed {stakValue}</Left>
+					<Claim
+						variant="contained"
+						color="primary"
+						disabled={!stakValue}
+						onClick={() => {
+							const ScFarmForStakerContract = new ethers.Contract(addresses[chainID].ScFarmForStaker_ADDRESS, ScFarmForStakerABI, provider)
+							ScFarmForStakerContract.claim()
+						}}>
+						Claim
+					</Claim>
+				</Card>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}>
 					<Item>
 						<Ol>hash</Ol>
@@ -110,6 +189,18 @@ export default function Sc() {
 					<More>view more</More>
 				</Card>
 				<CardTitle style={{ color: theme === THEME_LIGHT ? "#010101" : "#768299" }}>Invite Earnings</CardTitle>
+				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+					<Left style={{ color: theme === THEME_LIGHT ? "#010101" : "#768299" }}>SC Unclaimed {invterValue}</Left>
+					<Claim
+						variant="contained"
+						color="primary"
+						disabled={!invterValue}
+						onClick={async () => {
+							const ScFarmForInvterContract = new ethers.Contract(addresses[chainID].ScFarmForInvter_ADDRESS, ScFarmForInvterABI, provider)
+							await ScFarmForInvterContract.claim()
+						}}>
+						Claim</Claim>
+				</Card>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}>
 					<Item>
 						<Ol>hash</Ol>

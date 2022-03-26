@@ -143,11 +143,14 @@ export const changeStake = createAsyncThunk(
     try {
       if (action === "stake") {
         uaData.type = "stake";
-        console.log("value", stakingHelper, value)
-        stakeTx = await stakingHelper.stake(ethers.utils.parseUnits(value, "gwei"));
+
+        console.log("value", stakingHelper)
+
+        stakeTx = await stakingHelper.stake(ethers.utils.parseUnits(value, "gwei"), address);
 
       } else {
         uaData.type = "unstake";
+        console.log("staking", staking)
         stakeTx = await staking.unstake(ethers.utils.parseUnits(value, "gwei"), true);
       }
       const pendingTxnType = action === "stake" ? "staking" : "unstaking";

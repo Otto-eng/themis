@@ -11,7 +11,8 @@ interface IBondingStateView {
       [key: string]: IUserBondDetails;
     };
   };
-  bonding: {
+  bonding:
+  {
     loading: Boolean;
     [key: string]: any;
   };

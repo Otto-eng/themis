@@ -59,7 +59,7 @@ function Wrap() {
     return state.app.currentIndex;
   });
 
-  const sOhmPrice = useSelector(state => {
+  const sThsPrice = useSelector(state => {
     return state.app.marketPrice;
   });
 
@@ -133,7 +133,7 @@ function Wrap() {
   const isAllowanceDataLoading = (wrapAllowance == null && view === 0) || (unwrapAllowance == null && view === 1);
 
   const isUnwrap = view === 1;
-  const convertedQuantity = isUnwrap ? (quantity * wsOhmPrice) / sOhmPrice : (quantity * sOhmPrice) / wsOhmPrice;
+  const convertedQuantity = isUnwrap ? (quantity * wsOhmPrice) / sThsPrice : (quantity * sThsPrice) / wsOhmPrice;
 
   let modalButton = [];
 
@@ -176,7 +176,7 @@ function Wrap() {
                         sTHS Price
                       </Typography>
                       <Typography variant="h4">
-                        {sOhmPrice ? formatCurrency(sOhmPrice, 2) : <Skeleton width="150px" />}
+                        {sThsPrice ? formatCurrency(sThsPrice, 2) : <Skeleton width="150px" />}
                       </Typography>
                     </div>
                   </Grid>
@@ -196,13 +196,12 @@ function Wrap() {
                             sTHS Price
                         <InfoTooltip
                           message={
-                            "wsOHM = sTHS * index\n\nThe price of wsOHM is equal to the price of THS multiplied by the current index"
+                            "sTHS = THS * index\n\nThe price of wsOHM is equal to the price of THS multiplied by the current index"
                           }
                         />
                       </Typography>
                       <Typography variant="h4">
-                        0.00
-                        {/* {wsOhmPrice ? formatCurrency(wsOhmPrice, 2) : <Skeleton width="150px" />} */}
+                        {wsOhmPrice ? formatCurrency(wsOhmPrice, 2) : <Skeleton width="150px" />}
                       </Typography>
                     </div>
                   </Grid>

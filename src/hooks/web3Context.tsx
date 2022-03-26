@@ -170,7 +170,10 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
     _initListeners(rawProvider);
 
     const connectedProvider = new Web3Provider(rawProvider, "any");
-    const connectedAddress = await connectedProvider.getSigner().getAddress();
+    const connectedSigner = await connectedProvider.getSigner()
+
+    const connectedAddress = await connectedSigner.getAddress();
+
     setAddress(connectedAddress);
     const chainId = await connectedProvider.getNetwork().then(network => {
       return network.chainId
@@ -179,7 +182,7 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
     const validNetwork = _checkNetwork(chainId);
     if (!validNetwork) {
       setAddress("")
-      console.error("Wrong network, please switch to Binance Smart Chain network");
+      console.error("Wrong network, please switch to Kovan network");
       web3Modal && web3Modal.clearCachedProvider()
       setConnected(false)
       setChainID(0)

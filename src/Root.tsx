@@ -23,15 +23,11 @@ const Root: FC = () => {
     sessionStorage.setItem("THEMIS_FLAG", true + "")
   }
 
-
-
-
-
   return (
     <Web3ContextProvider>
       <Provider store={store}>
         <I18nProvider i18n={i18n}>
-          <BrowserRouter basename={"/#"}>
+          <BrowserRouter basename={"/"}>
             <App />
           </BrowserRouter>
         </I18nProvider>

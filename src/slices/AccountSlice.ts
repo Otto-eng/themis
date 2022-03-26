@@ -31,17 +31,17 @@ export const getBalances = createAsyncThunk(
   async ({ address, networkID, provider }: IBaseAddressAsyncThunk) => {
     console.log("address", address);
 
-    const ohmContract = new ethers.Contract(addresses[networkID].THS_ADDRESS as string, ierc20Abi, provider) as IERC20;
-    const ohmBalance = await ohmContract.balanceOf(address);
-    const daiContract = new ethers.Contract(addresses[networkID].USDT_ADDRESS as string, ierc20Abi, provider) as IERC20;
-    const daiBalance = await daiContract.balanceOf(address);
+    const thsContract = new ethers.Contract(addresses[networkID].THS_ADDRESS as string, ierc20Abi, provider) as IERC20;
+    const thsBalance = await thsContract.balanceOf(address);
+    const usdtContract = new ethers.Contract(addresses[networkID].USDT_ADDRESS as string, ierc20Abi, provider) as IERC20;
+    const usdtBalance = await usdtContract.balanceOf(address);
 
-    const sohmContract = new ethers.Contract(
+    const sThsContract = new ethers.Contract(
       addresses[networkID].STHS_ADDRESS as string,
       ierc20Abi,
       provider,
     ) as IERC20;
-    const sohmBalance = await sohmContract.balanceOf(address);
+    const sThsBalance = await sThsContract.balanceOf(address);
 
     // const wsohmContract = new ethers.Contract(addresses[networkID].WSOHM_ADDRESS as string, wsOHM, provider) as WsOHM;
 
@@ -75,9 +75,9 @@ export const getBalances = createAsyncThunk(
 
     return {
       balances: {
-        ohm: ethers.utils.formatUnits(ohmBalance, "gwei"),
-        dai: ethers.utils.formatUnits(daiBalance, "gwei"),
-        sohm: ethers.utils.formatUnits(sohmBalance, "gwei"),
+        ohm: ethers.utils.formatUnits(thsBalance, "gwei"),
+        dai: ethers.utils.formatUnits(usdtBalance, "gwei"),
+        sohm: ethers.utils.formatUnits(sThsBalance, "gwei"),
         fsohm: ethers.utils.formatUnits(fsohmBalance, "gwei"),
         wsohm: "0.0", // ethers.utils.formatEther(wsohmBalance),
         wsohmAsSohm: "0.0", //ethers.utils.formatUnits(wsohmAsSohm, "gwei"),
@@ -101,13 +101,13 @@ interface IUserAccountDetails {
 export const loadAccountDetails = createAsyncThunk(
   "account/loadAccountDetails",
   async ({ networkID, provider, address }: IBaseAddressAsyncThunk, { dispatch }) => {
-    const ohmContract = new ethers.Contract(addresses[networkID].THS_ADDRESS as string, ierc20Abi, provider) as IERC20;
-    const stakeAllowance = await ohmContract.allowance(address, addresses[networkID].STAKING_HELPER_ADDRESS);
+    const thsContract = new ethers.Contract(addresses[networkID].THS_ADDRESS as string, ierc20Abi, provider) as IERC20;
+    const stakeAllowance = await thsContract.allowance(address, addresses[networkID].STAKING_HELPER_ADDRESS);
 
-    const sohmContract = new ethers.Contract(addresses[networkID].STHS_ADDRESS as string, sOHMv2, provider) as SOhmv2;
-    // const unstakeAllowance = await sohmContract.allowance(address, addresses[networkID].STAKING_ADDRESS);
-    // const poolAllowance = await sohmContract.allowance(address, addresses[networkID].PT_PRIZE_POOL_ADDRESS);
-    // const wrapAllowance = await sohmContract.allowance(address, addresses[networkID].WSOHM_ADDRESS);
+    const sThsContract = new ethers.Contract(addresses[networkID].STHS_ADDRESS as string, sOHMv2, provider) as SOhmv2;
+    const unstakeAllowance = await sThsContract.allowance(address, addresses[networkID].STAKING_ADDRESS);
+    // const poolAllowance = await sThsContract.allowance(address, addresses[networkID].PT_PRIZE_POOL_ADDRESS);
+    // const wrapAllowance = await sThsContract.allowance(address, addresses[networkID].WSOHM_ADDRESS);
 
     // const wsohmContract = new ethers.Contract(addresses[networkID].WSOHM_ADDRESS as string, wsOHM, provider) as WsOHM;
     // const unwrapAllowance = await wsohmContract.allowance(address, addresses[networkID].WSOHM_ADDRESS);
@@ -116,7 +116,7 @@ export const loadAccountDetails = createAsyncThunk(
     return {
       staking: {
         ohmStake: +stakeAllowance,
-        // ohmUnstake: +unstakeAllowance,
+        ohmUnstake: +unstakeAllowance,
       },
       wrapping: {
         // ohmWrap: +wrapAllowance,
@@ -154,21 +154,23 @@ export const calculateUserBondDetails = createAsyncThunk(
     // dispatch(fetchBondInProgress());
 
     // Calculate bond details.
-    // const bondContract = bond.getContractForBond(networkID, provider);
-    const bondContract = new ethers.Contract("0x3E19EbAD5C9180410598E5ed7b8c82c4Cf4A8232", OlympusBondDepository, provider) as EthContract;
+    const bondContract = bond.getContractForBond(networkID, provider);
+    // const bondContract = new ethers.Contract(addresses[networkID].USDT_BOND, OlympusBondDepository, provider) as EthContract;
     const reserveContract = bond.getContractForReserve(networkID, provider);
-
     let pendingPayout, bondMaturationBlock;
+
     const bondDetails = await bondContract.bondInfo(address);
+
 
     let interestDue: BigNumberish = Number(bondDetails.payout.toString()) / Math.pow(10, 9);
     bondMaturationBlock = +bondDetails.vesting + +bondDetails.lastBlock;
+
     pendingPayout = await bondContract.pendingPayoutFor(address);
 
     let allowance,
       balance = BigNumber.from(0);
     allowance = await reserveContract.allowance(address, bond.getAddressForBond(networkID));
-
+    console.log("allowance", allowance)
     balance = await reserveContract.balanceOf(address);
     // formatEthers takes BigNumber => String
     const balanceVal = ethers.utils.formatEther(balance);

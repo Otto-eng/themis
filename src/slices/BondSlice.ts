@@ -121,7 +121,7 @@ export const calcBondDetails = createAsyncThunk(
       } else {
         bondPrice = await bondContract.bondPriceInUSD();
       }
-      bondDiscount = (marketPrice * Math.pow(10, 18) - Number(bondPrice.toString())) / Number(bondPrice.toString()); // 1 - bondPrice / (bondPrice * Math.pow(10, 9));
+      bondDiscount = ((marketPrice ?? 0) * Math.pow(10, 18) - Number(bondPrice.toString())) / Number(bondPrice.toString()); // 1 - bondPrice / (bondPrice * Math.pow(10, 9));
     } catch (e) {
       console.log("error getting bondPriceInUSD", bond.name, e);
     }
@@ -192,11 +192,9 @@ export const bondAsset = createAsyncThunk(
     // const calculatePremium = await bonding.calculatePremium();
     const signer = provider.getSigner();
     const bondContract = bond.getContractForBond(networkID, signer);
-    // const bondContract = new ethers.Contract("0x3E19EbAD5C9180410598E5ed7b8c82c4Cf4A8232", OlympusBondDepository, provider) as EthContract;
-    console.log("bondContract", bondContract)
     const calculatePremium = await bondContract.bondPrice();
     // const maxPremium = Math.round(Number(calculatePremium.toString()) * (1 + acceptedSlippage));
-
+    console.log("calculatePremium", calculatePremium)
     // Deposit the bond
     let bondTx;
     let uaData = {
@@ -351,7 +349,6 @@ const bondingSlice = createSlice({
         state.loading = true;
       })
       .addCase(calcBondDetails.fulfilled, (state, action) => {
-        console.log("setBondState", state, action)
         setBondState(state, action.payload);
         state.loading = false;
       })

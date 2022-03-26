@@ -1,5 +1,6 @@
 import { ethers } from "ethers";
 import { addresses } from "../constants";
+import { abi as ierc20Abi } from "../abi/IERC20.json";
 import { abi as OlympusStakingv2ABI } from "../abi/OlympusStakingv2.json";
 import { abi as sOHMv2 } from "../abi/sOhmv2.json";
 import { setAll, getTokenPrice /*, getMarketPrice */ } from "../helpers";
@@ -7,7 +8,7 @@ import apollo from "../lib/apolloClient";
 import { createSlice, createSelector, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "src/store";
 import { IBaseAsyncThunk } from "./interfaces";
-import { OlympusStakingv2, SOhmv2 } from "../typechain";
+import { IERC20, OlympusStakingv2, SOhmv2 } from "../typechain";
 
 interface IProtocolMetrics {
   readonly timestamp: string;
@@ -54,6 +55,10 @@ export const loadAppDetails = createAsyncThunk(
       return;
     }
 
+    const thsContract = new ethers.Contract(addresses[networkID].THS_ADDRESS as string, ierc20Abi, provider) as IERC20;
+    console.log("thsContract", thsContract)
+    const num = await thsContract.totalSupply()
+    console.log("thsContract", num.toString())
     const stakingTVL = parseFloat(graphData.data.protocolMetrics[0].totalValueLocked);
     // NOTE (appleseed): marketPrice from Graph was delayed, so get CoinGecko price
     // const marketPrice = parseFloat(graphData.data.protocolMetrics[0].ohmPrice);

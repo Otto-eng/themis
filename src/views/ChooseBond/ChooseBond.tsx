@@ -79,16 +79,16 @@ function ChooseBond() {
                 <Typography variant="h5" color="textSecondary">
                   <Trans>Treasury Balance</Trans>
                 </Typography>
-                <Box>
-                  <Typography variant="h4" data-testid="treasury-balance">
+                <Box style={{ display: "flex", justifyContent: "center" }}>
+                  {/* <Typography variant="h4" data-testid="treasury-balance">
                     {new Intl.NumberFormat("en-US", {
                       style: "currency",
                       currency: "USD",
                       maximumFractionDigits: 0,
                       minimumFractionDigits: 0,
-                    }).format(Number(0))}
-                  </Typography>
-                  {/* {isAppLoading ? (
+                    }).format(Number(treasuryBalance))}
+                  </Typography> */}
+                  {isAppLoading ? (
                     <Skeleton width="180px" data-testid="treasury-balance-loading" />
                   ) : (
                     <Typography variant="h4" data-testid="treasury-balance">
@@ -97,9 +97,9 @@ function ChooseBond() {
                         currency: "USD",
                         maximumFractionDigits: 0,
                         minimumFractionDigits: 0,
-                      }).format(Number(treasuryBalance))}
+                      }).format(Number(treasuryBalance ?? 0))}
                     </Typography>
-                  )} */}
+                  )}
                 </Box>
               </Box>
             </Grid>
@@ -110,8 +110,7 @@ function ChooseBond() {
                   <Trans>THS Price</Trans>
                 </Typography>
                 <Typography variant="h4">
-                  0.00
-                  {/* {isAppLoading ? <Skeleton width="100px" /> : formatCurrency(Number(marketPrice), 2)} */}
+                  {isAppLoading ? <Skeleton width="100px" /> : formatCurrency(Number(marketPrice ?? 0), 2)}
                 </Typography>
               </Box>
             </Grid>

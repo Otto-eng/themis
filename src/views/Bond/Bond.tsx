@@ -24,8 +24,7 @@ function a11yProps(index: number) {
 }
 
 const Bond = ({ bond }: { bond: IAllBondData }) => {
-  const dispatch = useDispatch();
-  const { provider, address, chainID } = useWeb3Context();
+  const { provider, address } = useWeb3Context();
 
   const [slippage, setSlippage] = useState<number>(0.5);
   const [recipientAddress, setRecipientAddress] = useState<string>(address);
@@ -70,8 +69,8 @@ const Bond = ({ bond }: { bond: IAllBondData }) => {
                   <Typography variant="h5" color="textSecondary">
                     <Trans>Bond Price</Trans>
                   </Typography>
-                  <Typography variant="h3" className="price" color="primary">0.00
-                    {/* <>{isBondLoading ? <Skeleton width="50px" /> : <DisplayBondPrice key={bond.name} bond={bond} />}</> */}
+                  <Typography variant="h3" className="price" color="primary">
+                    <>{isBondLoading ? <Skeleton width="50px" /> : <DisplayBondPrice key={bond.name} bond={bond} />}</>
                   </Typography>
                 </div>
                 <div className="bond-price-data">
@@ -79,8 +78,7 @@ const Bond = ({ bond }: { bond: IAllBondData }) => {
                     <Trans>Market Price</Trans>
                   </Typography>
                   <Typography variant="h3" color="primary" className="price">
-                    {/* {isBondLoading ? <Skeleton /> : formatCurrency(bond.marketPrice, 2)} */}
-                    0.00
+                    {isBondLoading ? <Skeleton /> : formatCurrency(bond.marketPrice, 2)}
                   </Typography>
                 </div>
               </Box>
@@ -122,19 +120,19 @@ const Bond = ({ bond }: { bond: IAllBondData }) => {
 export const DisplayBondPrice = ({ bond }: { bond: IAllBondData }): ReactElement => {
   const { chainID }: { chainID: NetworkID } = useWeb3Context();
 
-  if (typeof bond.bondPrice === undefined || !bond.isAvailable[chainID]) {
+  if (typeof bond.bondPrice === "undefined" || !bond.isAvailable[chainID]) {
     return <Fragment>--</Fragment>;
   }
 
   return (
     <Fragment>
-      {"0.00"
-        // new Intl.NumberFormat("en-US", {
-        //   style: "currency",
-        // currency: "USD",
-        // maximumFractionDigits: 2,
-        // minimumFractionDigits: 2,
-        // }).format(bond.bondPrice)
+      {
+        new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+          maximumFractionDigits: 2,
+          minimumFractionDigits: 2,
+        }).format(bond.bondPrice)
       }
     </Fragment>
   );
@@ -142,8 +140,7 @@ export const DisplayBondPrice = ({ bond }: { bond: IAllBondData }): ReactElement
 
 export const DisplayBondDiscount = ({ bond }: { bond: IAllBondData }): ReactNode => {
   const { chainID }: { chainID: NetworkID } = useWeb3Context();
-
-  if (typeof bond.bondDiscount === undefined || !bond.isAvailable[chainID]) {
+  if ((typeof bond.bondDiscount == "undefined") || !bond.isAvailable[chainID]) {
     return <Fragment>--</Fragment>;
   }
 

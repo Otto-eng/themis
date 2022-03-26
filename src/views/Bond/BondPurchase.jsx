@@ -46,7 +46,6 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
   };
 
   async function onBond() {
-    return;
     if (quantity === "") {
       dispatch(error(t`Please enter a value!`));
     } else if (isNaN(quantity)) {
@@ -56,7 +55,6 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
         t`You have an existing bond. Bonding will reset your vesting period and forfeit rewards. We recommend claiming rewards first or using a fresh wallet. Do you still want to proceed?`,
       );
       if (shouldProceed) {
-        console.log("shouldProceed", shouldProceed)
         await dispatch(
           bondAsset({
             value: quantity,
@@ -129,7 +127,6 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
 
   const displayUnits = bond.displayUnits;
   const isAllowanceDataLoading = (bond.allowance == null);
-  // console.log("isAllowanceDataLoading", isAllowanceDataLoading, bond)
   return (
     <Box display="flex" flexDirection="column">
       <Box display="flex" justifyContent="space-around" flexWrap="wrap">
@@ -137,7 +134,7 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
           <ConnectButton />
         ) : (
             <>
-            {isAllowanceDataLoading || false ? (
+            {isAllowanceDataLoading ? (
               <Skeleton width="200px" />
             ) : (
               <>
@@ -220,14 +217,13 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
               <Trans>Your Balance</Trans>
             </Typography>{" "}
             <Typography id="bond-balance">
-              0.0 USDT
-              {/* {isBondLoading ? (
+              {isBondLoading ? (
                 <Skeleton width="100px" />
               ) : (
                 <>
                   {trim(bond.balance, 4)} {displayUnits}
                 </>
-              )} */}
+              )}
             </Typography>
           </div>
 
@@ -236,8 +232,7 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
               <Trans>You Will Get</Trans>
             </Typography>
             <Typography id="bond-value-id" className="price-data">
-              0.0 THS
-              {/* {isBondLoading || false ? <Skeleton width="100px" /> : `${trim(bond.bondQuote, 4) || "0"} THS`} */}
+              {isBondLoading ? <Skeleton width="100px" /> : `${trim(bond.bondQuote, 4) || "0"} THS`}
             </Typography>
           </div>
 
@@ -246,8 +241,7 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
               <Trans>Max You Can Buy</Trans>
             </Typography>
             <Typography id="bond-value-id" className="price-data">
-              0.00 THS
-              {/* {isBondLoading || false ? <Skeleton width="100px" /> : `${trim(bond.maxBondPrice, 4) || "0"} THS`} */}
+              {isBondLoading ? <Skeleton width="100px" /> : `${trim(bond.maxBondPrice, 4) || "0"} THS`}
             </Typography>
           </div>
 
@@ -256,8 +250,7 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
               <Trans>ROI</Trans>
             </Typography>
             <Typography>
-              0.00
-              {/* {isBondLoading || false ? <Skeleton width="100px" /> : <DisplayBondDiscount key={bond.name} bond={bond} />} */}
+              {isBondLoading ? <Skeleton width="100px" /> : <DisplayBondDiscount key={bond.name} bond={bond} />}
             </Typography>
           </div>
 
@@ -266,8 +259,7 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
               <Trans>Debt Ratio</Trans>
             </Typography>
             <Typography>
-              0%
-              {/* {isBondLoading || false ? <Skeleton width="100px" /> : `${trim(bond.debtRatio / 10000000, 2)}%`} */}
+              {isBondLoading ? <Skeleton width="100px" /> : `${trim((bond.debtRatio ?? 0) / 10000000, 2)}%`}
             </Typography>
           </div>
 
@@ -276,8 +268,7 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
               <Trans>Vesting Term</Trans>
             </Typography>
             <Typography>{
-              "0 days"
-              // isBondLoading || false ? <Skeleton width="100px" /> : vestingPeriod()
+              isBondLoading ? <Skeleton width="100px" /> : vestingPeriod()
             }</Typography>
           </div>
 
@@ -286,7 +277,7 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
               <Typography>
                 <Trans>Recipient</Trans>{" "}
               </Typography>
-              <Typography>{isBondLoading || false ? <Skeleton width="100px" /> : shorten(recipientAddress)}</Typography>
+              <Typography>{isBondLoading ? <Skeleton width="100px" /> : shorten(recipientAddress)}</Typography>
             </div>
           )}
         </Box>
