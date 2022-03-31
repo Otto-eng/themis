@@ -1,6 +1,6 @@
 import { StableBond, NetworkID } from "src/lib/Bond";
 
-import { ReactComponent as DaiImg } from "src/assets/tokens/LUSD.svg";
+import { ReactComponent as USDTImg } from "src/assets/tokens/USDT.svg";
 
 import { abi as UsdtBondContract } from "src/abi/bonds/OlympusBondDepository.json";
 
@@ -11,16 +11,16 @@ export const usdt = new StableBond({
   displayName: "USDT",
   bondToken: "USDT",
   isAvailable: { [NetworkID.Mainnet]: true },
-  bondIconSvg: DaiImg,
+  bondIconSvg: USDTImg,
   bondContractABI: UsdtBondContract,
   networkAddrs: {
     [NetworkID.Mainnet]: {
       bondAddress: "0x289ce758F9eCFc4C2e5f212d25e2BEab9a173Eaf",
       reserveAddress: "0xbd8a03E74e53929DB75E30ca692e6188FabdEdE7",
     },
+
   },
 });
-
 
 // HOW TO ADD A NEW BOND:
 // Is it a stableCoin bond? use `new StableBond`

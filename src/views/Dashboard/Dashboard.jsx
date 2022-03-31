@@ -6,10 +6,10 @@ import { Skeleton } from "@material-ui/lab";
 import { t, Trans } from "@lingui/macro";
 
 function Dashboard() {
-  // Use marketPrice as indicator of loading.
-  const isAppLoading = useSelector(state => !state.app?.marketPrice);
-  const marketPrice = useSelector(state => {
-    return state.app.marketPrice;
+  // Use thsPrice as indicator of loading.
+  const isAppLoading = useSelector(state => !state.app?.thsPrice);
+  const thsPrice = useSelector(state => {
+    return state.app.thsPrice;
   });
   const circSupply = useSelector(state => {
     return state.app.circSupply;
@@ -31,7 +31,7 @@ function Dashboard() {
                 <Trans>Price</Trans>
               </Typography>
               <Typography variant="h5">
-                {isAppLoading ? <Skeleton width="100px" /> : `$${trim(marketPrice, 2)}`}
+                {isAppLoading ? <Skeleton width="100px" /> : `$${trim(thsPrice, 2)}`}
               </Typography>
             </Paper>
           </Zoom>

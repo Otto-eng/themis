@@ -5,7 +5,55 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 import { IFrameEthereumProvider } from "@ledgerhq/iframe-provider";
 import { EnvHelper } from "../helpers/Environment";
 import { NodeHelper } from "src/helpers/NodeHelper";
-import { NETWORK_CHAINID } from "src/constants";
+import { KOVAN_URI, NetworkId, NETWORK_CHAINID } from "src/constants";
+import { Providers } from "src/helpers/providers/Providers";
+
+
+interface IGetCurrentNetwork {
+  provider: StaticJsonRpcProvider | JsonRpcProvider;
+}
+
+
+export const idFromHexString = (hexString: string) => {
+  return parseInt(hexString, 16);
+};
+
+
+export const initNetworkFunc = async ({ provider }: IGetCurrentNetwork) => {
+  try {
+    let networkName: string;
+    let uri: string;
+    let supported = true;
+    const id: number = await provider.getNetwork().then(network => network.chainId);
+    switch (id) {
+      case 42:
+        networkName = "Kovan";
+        uri = KOVAN_URI;
+        break;
+      default:
+        supported = false;
+        networkName = "Unsupported Network";
+        uri = "";
+        break;
+    }
+
+    return {
+      networkId: id,
+      networkName: networkName,
+      uri: uri,
+      initialized: supported,
+    };
+  } catch (e) {
+    console.log(e);
+    return {
+      networkId: -1,
+      networkName: "",
+      uri: "",
+      initialized: false,
+    };
+  }
+};
+
 
 /**
  * kept as function to mimic `getMainnetURI()`
@@ -30,12 +78,7 @@ const ALL_URIs = NodeHelper.getNodesUris();
  */
 function getMainnetURI(): string {
   // Shuffles the URIs for "intelligent" loadbalancing
-  const allURIs = ALL_URIs.sort(() => Math.random() - 0.5);
-
-  // There is no lightweight way to test each URL. so just return a random one.
-  // if (workingURI !== undefined || workingURI !== "") return workingURI as string;
-  const randomIndex = Math.floor(Math.random() * allURIs.length);
-  return allURIs[randomIndex];
+  return KOVAN_URI
 }
 
 /*
@@ -46,12 +89,21 @@ type onChainProvider = {
   disconnect: () => void;
   hasCachedProvider: () => boolean;
   address: string;
-  chainID: number;
   connected: boolean;
+  connectionError: IConnectionError | null;
   provider: JsonRpcProvider;
-  uri: string;
   web3Modal: Web3Modal;
+  chainID: number;
+  networkName: string;
+  uri: string;
+  providerInitialized: boolean;
 };
+
+interface IConnectionError {
+  text: string;
+  created: number;
+}
+
 
 export type Web3ContextData = {
   onChainProvider: onChainProvider;
@@ -60,23 +112,22 @@ export type Web3ContextData = {
 const Web3Context = React.createContext<Web3ContextData>(null);
 
 export const useWeb3Context = () => {
-  const web3ContextData = useContext(Web3Context);
-  if (!web3ContextData) {
+  const web3Context = useContext(Web3Context);
+  if (!web3Context) {
     throw new Error(
       "useWeb3Context() can only be used inside of <Web3ContextProvider />, " + "please declare it at a higher level.",
     );
   }
-  const { onChainProvider } = web3ContextData;
+  const { onChainProvider } = web3Context;
   return useMemo<onChainProvider>(() => {
     return { ...onChainProvider };
-  }, [web3ContextData]);
+  }, [web3Context]);
 };
 
 export const useAddress = () => {
   const { address } = useWeb3Context();
   return address;
 };
-
 
 const initModal = new Web3Modal({
   network: "kovan", // optional
@@ -86,31 +137,41 @@ const initModal = new Web3Modal({
       package: WalletConnectProvider,
       options: {
         rpc: {
-          [NETWORK_CHAINID]: getMainnetURI(),
+          42: getMainnetURI(),
         },
       },
     },
   },
 })
 
+export function checkCachedProvider(web3Modal: Web3Modal): boolean {
+  if (!web3Modal) return false;
+  const cachedProvider = web3Modal.cachedProvider;
+  if (!cachedProvider) return false;
+  return true;
+}
+
 export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ children }) => {
   const [connected, setConnected] = useState(false);
+
+  const [connectionError, setConnectionError] = useState<IConnectionError | null>(null);
+  const [address, setAddress] = useState("");
+
   // NOTE (appleseed): if you are testing on rinkeby you need to set chainId === 4 as the default for non-connected wallet testing...
   // ... you also need to set getTestnetURI() as the default uri state below
   const [chainID, setChainID] = useState(0);
-  const [address, setAddress] = useState("");
 
-  const [uri, setUri] = useState(getMainnetURI());
-
-
-  const [provider, setProvider] = useState<JsonRpcProvider>(new StaticJsonRpcProvider(uri));
+  const [networkName, setNetworkName] = useState("");
+  const [providerInitialized, setProviderInitialized] = useState(false);
+  const [uri, setUri] = useState("");
+  const [provider, setProvider] = useState<JsonRpcProvider>(Providers.getStaticProvider(NetworkId.TESTNET_KOVAN));
   const [web3Modal, setWeb3Modal] = useState<Web3Modal>(initModal);
 
-  const hasCachedProvider = (): boolean => {
-    if (!web3Modal) return false;
-    if (!web3Modal.cachedProvider) return false;
-    return true;
-  };
+  function hasCachedProvider(): boolean {
+    return checkCachedProvider(web3Modal);
+  }
+
+  console.log("provider", provider)
 
   // NOTE (appleseed): none of these listeners are needed for Backend API Providers
   // ... so I changed these listeners so that they only apply to walletProviders, eliminating
@@ -124,15 +185,15 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
         setTimeout(() => window.location.reload(), 1);
       });
 
-      rawProvider.on("chainChanged", async (chain: number) => {
-        _checkNetwork(chain);
-        setTimeout(() => window.location.reload(), 1);
-      });
-
-      rawProvider.on("network", (_newNetwork: any, oldNetwork: any) => {
-        if (!oldNetwork) return;
-
-        window.location.reload();
+      rawProvider.on("chainChanged", async (_chainId: string) => {
+        const newChainId = idFromHexString(_chainId);
+        const networkHash = await initNetworkFunc({ provider });
+        if (newChainId !== networkHash.networkId) {
+          // then provider is out of sync, reload per metamask recommendation
+          setTimeout(() => window.location.reload(), 1);
+        } else {
+          setChainID(networkHash.networkId);
+        }
       });
     },
     [provider],
@@ -163,35 +224,38 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
     if (isIframe()) {
       rawProvider = new IFrameEthereumProvider();
     } else {
-      rawProvider = await web3Modal.connect();
+      try {
+        rawProvider = await web3Modal.connect();
+      } catch (e) {
+        console.log("wallet connection status:", e);
+        if (e !== "Modal closed by user") {
+          setConnectionError({
+            created: Date.now(),
+            text: "Please check your Wallet UI for connection errors",
+          });
+        }
+        setConnected(false);
+        return;
+      }
     }
+
     // new _initListeners implementation matches Web3Modal Docs
     // ... see here: https://github.com/Web3Modal/web3modal/blob/2ff929d0e99df5edf6bb9e88cff338ba6d8a3991/example/src/App.tsx#L185
     _initListeners(rawProvider);
 
     const connectedProvider = new Web3Provider(rawProvider, "any");
-    const connectedSigner = await connectedProvider.getSigner()
+    setProvider(connectedProvider);
+    const connectedAddress = await connectedProvider.getSigner().getAddress();
 
-    const connectedAddress = await connectedSigner.getAddress();
-
-    setAddress(connectedAddress);
-    const chainId = await connectedProvider.getNetwork().then(network => {
-      return network.chainId
-    });
-
-    const validNetwork = _checkNetwork(chainId);
-    if (!validNetwork) {
-      setAddress("")
-      console.error("Wrong network, please switch to Kovan network");
-      web3Modal && web3Modal.clearCachedProvider()
-      setConnected(false)
-      setChainID(0)
-      return;
-    }
     // Save everything after we've validated the right network.
     // Eventually we'll be fine without doing network validations.
-    setProvider(connectedProvider);
-
+    setAddress(connectedAddress);
+    const networkHash = await initNetworkFunc({ provider: connectedProvider });
+    console.log("networkHash", networkHash);
+    setChainID(networkHash.networkId);
+    setNetworkName(networkHash.networkName);
+    setUri(networkHash.uri);
+    setProviderInitialized(networkHash.initialized);
     // Keep this at the bottom of the method, to ensure any repaints have the data we need
     setConnected(true);
 
@@ -199,17 +263,44 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
   }, [provider, web3Modal, connected]);
 
   const disconnect = useCallback(async () => {
-    setConnected(false);
     web3Modal.clearCachedProvider();
+    setConnectionError(null);
+    setConnected(false);
 
     setTimeout(() => {
       window.location.reload();
     }, 1);
   }, [provider, web3Modal, connected]);
 
-  const onChainProvider = useMemo<onChainProvider>(
-    () => ({ connect, disconnect, hasCachedProvider, provider, connected, address, chainID, web3Modal, uri }),
-    [connect, disconnect, hasCachedProvider, provider, connected, address, chainID, web3Modal, uri],
+  const onChainProvider = useMemo(
+    () => ({
+      connect,
+      disconnect,
+      hasCachedProvider,
+      provider,
+      connected,
+      connectionError,
+      address,
+      web3Modal,
+      chainID,
+      networkName,
+      uri,
+      providerInitialized,
+    }),
+    [
+      connect,
+      disconnect,
+      hasCachedProvider,
+      provider,
+      connected,
+      connectionError,
+      address,
+      web3Modal,
+      chainID,
+      networkName,
+      uri,
+      providerInitialized,
+    ],
   );
 
   useEffect(() => {

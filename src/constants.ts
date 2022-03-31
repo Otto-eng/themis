@@ -1,9 +1,10 @@
 
-export const THE_GRAPH_URL = "https://api.thegraph.com/subgraphs/name/shimonxie/themisdaosubgraph/graphql";
+export const THE_GRAPH_URL = "/subgraphs/name/shimonxie/themisdao";
 export const EPOCH_INTERVAL = 2200;
 
+
 // NOTE could get this from an outside source since it changes slightly over time
-export const BLOCK_RATE_SECONDS = 13.14;
+export const BLOCK_RATE_SECONDS = 4;
 
 export const TOKEN_DECIMALS = 9;
 
@@ -18,6 +19,13 @@ interface IPoolGraphURLS {
 export const POOL_GRAPH_URLS: IPoolGraphURLS = {
   NETWORK_CHAINID: "https://api.thegraph.com/subgraphs/name/pooltogether/pooltogether-v3_4_3",
 };
+
+export const KOVAN_URI = process.env.INFURA_API_KEY as string
+
+export enum NetworkId {
+  TESTNET_KOVAN = NETWORK_CHAINID,
+}
+
 
 interface IAddresses {
   [key: string]: { [key: string]: string };

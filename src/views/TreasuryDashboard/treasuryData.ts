@@ -1,39 +1,28 @@
 // TODO: add paramaterization
 export const treasuryDataQuery = `
 query {
-  protocolMetrics(first: 100, orderBy: timestamp, orderDirection: desc) {
-    id
-    timestamp
-    ohmCirculatingSupply
-    sOhmCirculatingSupply
-    totalSupply
-    ohmPrice
-    marketCap
-    totalValueLocked
-    treasuryRiskFreeValue
-    treasuryMarketValue
-    nextEpochRebase
-    nextDistributedOhm
-    treasuryDaiRiskFreeValue
-    treasuryFraxMarketValue
-    treasuryDaiMarketValue
-    treasuryFraxRiskFreeValue
-    treasuryXsushiMarketValue
-    treasuryWETHMarketValue
-    treasuryLusdRiskFreeValue
-    treasuryLusdMarketValue
-    currentAPY
-    runway10k
-    runway20k
-    runway50k
-    runway7dot5k
-    runway5k
-    runway2dot5k
-    runwayCurrent
-    holders
-    treasuryOhmDaiPOL
-    treasuryOhmFraxPOL
-  }
+    protocolMetrics(first: 100, orderBy: timestamp, orderDirection: desc) {
+        id
+        timestamp
+        thsCirculatingSupply
+        sthsCirculatingSupply
+        totalSupply
+        thsPrice
+        marketCap
+        totalValueLocked
+        treasuryRiskFreeValue
+        treasuryMarketValue
+        nextEpochRebase
+        nextDistributedThs
+        currentAPY
+        runway10k
+        runway20k
+        runway50k
+        runway7dot5k
+        runway5k
+        runway2dot5k
+        runwayCurrent
+    }
 }
 `;
 
@@ -165,9 +154,9 @@ export const bulletpoints = {
 
 export const tooltipItems = {
   tvl: ["Total Value Deposited"],
-  coin: ["DAI", "FRAX", "ETH", "SUSHI", "LUSD"],
-  rfv: ["DAI", "FRAX", "LUSD"],
-  holder: ["OHMies"],
+  coin: ["USDT"],
+  rfv: ["USDT"],
+  holder: ["THEMIS"],
   apy: ["APY"],
   runway: ["Current", "7.5K APY", "5K APY", "2.5K APY"],
   pol: ["SLP Treasury", "Market SLP"],

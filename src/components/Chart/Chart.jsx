@@ -23,13 +23,12 @@ import { format } from "date-fns";
 import "./chart.scss";
 
 const formatCurrency = c => {
-  return;
-  // new Intl.NumberFormat("en-US", {
-  //   style: "currency",
-  //   currency: "USD",
-  //   maximumFractionDigits: 0,
-  //   minimumFractionDigits: 0,
-  // }).format(c);
+  new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0,
+  }).format(c);
 };
 
 const tickCount = 3;
@@ -121,7 +120,7 @@ const renderStackedAreaChart = (
         <stop offset="0%" stopColor={stopColor[0][0]} stopOpacity={1} />
         <stop offset="90%" stopColor={stopColor[0][1]} stopOpacity={0.9} />
       </linearGradient>
-      <linearGradient id={`color-${dataKey[1]}`} x1="0" y1="0" x2="0" y2="1">
+      {/* <linearGradient id={`color-${dataKey[1]}`} x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%" stopColor={stopColor[1][0]} stopOpacity={1} />
         <stop offset="90%" stopColor={stopColor[1][1]} stopOpacity={0.9} />
       </linearGradient>
@@ -136,7 +135,7 @@ const renderStackedAreaChart = (
       <linearGradient id={`color-${dataKey[4]}`} x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%" stopColor={stopColor[4][0]} stopOpacity={1} />
         <stop offset="90%" stopColor={stopColor[4][1]} stopOpacity={0.9} />
-      </linearGradient>
+      </linearGradient> */}
     </defs>
     <XAxis
       dataKey="timestamp"
@@ -491,7 +490,7 @@ function Chart({
           />
           </Box>
           
-        {loading || true ? (
+          {loading ? (
           <Skeleton variant="text" width={100} />
         ) : (
           <Box display="flex">

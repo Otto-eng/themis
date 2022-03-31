@@ -5,9 +5,6 @@ import { trim } from "../../../../helpers";
 import { ReactComponent as ArrowUpIcon } from "../../../../assets/icons/arrow-up.svg";
 import { ReactComponent as sOhmTokenImg } from "../../../../assets/tokens/token_sOHM.svg";
 import { ReactComponent as ohmTokenImg } from "../../../../assets/tokens/token_OHM.svg";
-import { ReactComponent as t33TokenImg } from "../../../../assets/tokens/token_33T.svg";
-import { ReactComponent as wsOhmTokenImg } from "src/assets/tokens/token_wsOHM.svg";
-import { ReactComponent as wethTokenImg } from "src/assets/tokens/wETH.svg";
 import { ReactComponent as abracadabraTokenImg } from "src/assets/tokens/MIM.svg";
 import rariTokenImg from "src/assets/tokens/RARI.png";
 
@@ -19,11 +16,10 @@ import WsOhmImg from "src/assets/tokens/token_wsOHM.svg";
 import token33tImg from "src/assets/tokens/token_33T.svg";
 
 import { addresses, TOKEN_DECIMALS } from "../../../../constants";
-import SOhmLearnView from "./SOhm/SOhmLearnView";
-import SOhmTxView from "./SOhm/SOhmTxView";
-import SOhmZapView from "./SOhm/SOhmTxView";
-import Chart from "../../../../components/Chart/WalletChart.jsx";
-import apollo from "../../../../lib/apolloClient";
+// import SOhmLearnView from "./SOhm/SOhmLearnView";
+// import SOhmTxView from "./SOhm/SOhmTxView";
+// import SOhmZapView from "./SOhm/SOhmTxView";
+// import Chart from "../../../../components/Chart/WalletChart.jsx";
 import { rebasesDataQuery, bulletpoints, tooltipItems, tooltipInfoMessages, itemType } from "../../treasuryData.js";
 import { useWeb3Context } from "../../../../../src/hooks";
 import {

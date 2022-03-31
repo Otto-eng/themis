@@ -144,13 +144,10 @@ export const changeStake = createAsyncThunk(
       if (action === "stake") {
         uaData.type = "stake";
 
-        console.log("value", stakingHelper)
-
         stakeTx = await stakingHelper.stake(ethers.utils.parseUnits(value, "gwei"), address);
 
       } else {
         uaData.type = "unstake";
-        console.log("staking", staking)
         stakeTx = await staking.unstake(ethers.utils.parseUnits(value, "gwei"), true);
       }
       const pendingTxnType = action === "stake" ? "staking" : "unstaking";
@@ -165,6 +162,7 @@ export const changeStake = createAsyncThunk(
           error("You may be trying to stake more than your balance! Error code: 32603. Message: ds-math-sub-underflow"),
         );
       } else {
+        console.log("rpcError", rpcError)
         dispatch(error(rpcError.message));
       }
       return;

@@ -5,10 +5,10 @@ import { trim } from "src/helpers";
 import { ReactComponent as ArrowUpIcon } from "src/assets/icons/arrow-up.svg";
 import { ReactComponent as sOhmTokenImg } from "src/assets/tokens/token_sOHM.svg";
 import { ReactComponent as ThsImg } from "src/assets/tokens/ths.svg";
-import { ReactComponent as t33TokenImg } from "src/assets/tokens/token_33T.svg";
-import { ReactComponent as wsOhmTokenImg } from "src/assets/tokens/token_wsOHM.svg";
-import { ReactComponent as wethTokenImg } from "src/assets/tokens/wETH.svg";
-import { ReactComponent as abracadabraTokenImg } from "src/assets/tokens/MIM.svg";
+// import { ReactComponent as t33TokenImg } from "src/assets/tokens/token_33T.svg";
+// import { ReactComponent as wsOhmTokenImg } from "src/assets/tokens/token_wsOHM.svg";
+// import { ReactComponent as wethTokenImg } from "src/assets/tokens/wETH.svg";
+// import { ReactComponent as abracadabraTokenImg } from "src/assets/tokens/MIM.svg";
 import rariTokenImg from "src/assets/tokens/RARI.png";
 
 import { addresses, TOKEN_DECIMALS } from "src/constants";
@@ -33,7 +33,7 @@ import {
   Link,
 } from "@material-ui/core";
 
-import { dai /*, frax */ } from "src/helpers/AllBonds";
+import { usdt /*, frax */ } from "src/helpers/AllBonds";
 
 const useStyles = makeStyles(theme => ({
   menuContainer: {
@@ -134,27 +134,10 @@ const Token = ({ name, icon, userBalance, userBalanceUSD, onExpandedChange, expa
           <Button
             variant="contained"
             style={{ backgroundColor: "#272D36", color: "#386794", width: "33%", minHeight: "50px" }}
-            onClick={toggleDrawer("sOHMtx")}
+            onClick={toggleDrawer}
             color="secondary"
           >
             <Typography align="left"> Transaction History</Typography>
-          </Button>
-          <Button
-            variant="contained"
-            style={{ backgroundColor: "#272D36", color: "#386794", width: "33%", minHeight: "50px" }}
-            min-height="60px"
-            onClick={toggleDrawer("sOHMLHIW")}
-            color="secondary"
-          >
-            <Typography align="left"> Learn how it works</Typography>
-          </Button>
-          <Button
-            variant="contained"
-            style={{ backgroundColor: "#272D36", color: "#386794", width: "33%", minHeight: "50px" }}
-            color="secondary"
-            onClick={toggleDrawer("sOHMZaps")}
-          >
-            <Typography align="left"> Zap</Typography>
           </Button>
         </Box>
       </AccordionDetails>
@@ -175,31 +158,34 @@ function InitialWalletView() {
   // const PT_TOKEN_ADDRESS = addresses[chainID].PT_TOKEN_ADDRESS;
   // const WSOHM_ADDRESS = addresses[chainID].WSOHM_ADDRESS;
 
-  const ohmBalance = useSelector(state => state.account.balances?.ohm);
-  const sOhmBalance = useSelector(state => state.account.balances?.sohm);
+  const thsBalance = useSelector(state => state.account.balances?.ths);
+  const sThsBalance = useSelector(state => state.account.balances?.sThs);
   // const wsOhmBalance = useSelector(state => state.account.balances?.wsohm);
   // const poolBalance = useSelector(state => state.account.balances?.pool);
-  // const marketPrice = useSelector(state => state.app.marketPrice);
-
+  const marketPrice = useSelector(state => state.app.thsPrice);
   return (
     <Paper>
       <Token
         name="THS"
-        userBalance={ohmBalance}
+        userBalance={thsBalance ?? "--"}
         userBalanceUSD={
-          // trim(ohmBalance * marketPrice, 2)
-          "0.00"
+          isNaN(thsBalance) || isNaN(marketPrice) ? "--" : trim(thsBalance * marketPrice, 4)
         }
         icon={ThsImg}
+        toggleDrawer={() => {
+          window.open(`https://kovan.etherscan.io/address/${addresses[chainID].THS_ADDRESS}?fromaddress=${address}`)
+        }}
       />
       <Token
         name="sTHS"
-        userBalance={sOhmBalance}
+        userBalance={sThsBalance ?? "--"}
         userBalanceUSD={
-          // trim(sOhmBalance * marketPrice, 2)
-          "0.00"
+          isNaN(sThsBalance) || isNaN(marketPrice) ? "--" : trim(sThsBalance * marketPrice, 4)
         }
         icon={sOhmTokenImg}
+        toggleDrawer={() => {
+          window.open(`https://kovan.etherscan.io/address/${addresses[chainID].STHS_ADDRESS}?fromaddress=${address}`)
+        }}
       />
       {/* <Token
         name="wsOHM"
@@ -225,10 +211,10 @@ function InitialWalletView() {
 
       <Divider color="secondary" className="less-margin" />
 
-      {/* <Box className={styles.menuSection}>
+      <Box className={styles.menuSection}>
         <Box sx={{ flexWrap: "nowrap", flexDirection: "row" }}>
-          <ExternalLink
-            href={`https://app.sushi.com/swap?inputCurrency=${dai.getAddressForReserve(chainID)}&outputCurrency=${
+          {/* <ExternalLink
+            href={`https://app.sushi.com/swap?inputCurrency=${usdt.getAddressForReserve(chainID)}&outputCurrency=${
               addresses[chainID].THS_ADDRESS
             }`}
           >
@@ -237,19 +223,19 @@ function InitialWalletView() {
                 Buy on Sushiswap <ExternalLinkIcon />
               </Typography>
             </Button>
-          </ExternalLink>
+          </ExternalLink> */}
 
           {/* <ExternalLink
-            href={`https://app.uniswap.org/#/swap?inputCurrency=${frax.getAddressForReserve(chainID)}&outputCurrency=${
-              addresses[chainID].THS_ADDRESS
-            }`}
+            href={
+              `https://pancakeswap.finance/add/${usdt.getAddressForReserve(chainID)}/${addresses[chainID].THS_ADDRESS}`
+            }
           >
             <Button size="large" variant="contained" color="secondary">
               <Typography style={{ lineHeight: "20px", whiteSpace: "break-spaces" }}>
-                Buy on Uniswap <ExternalLinkIcon />
+                Buy on Pancakeswap <ExternalLinkIcon />
               </Typography>
             </Button>
-          </ExternalLink> */}
+          </ExternalLink>  */}
 
           {/* <ExternalLink href={`https://dune.xyz/0xrusowsky/Olympus-Wallet-History`}>
             <Button size="large" variant="contained" color="secondary">
@@ -257,9 +243,9 @@ function InitialWalletView() {
                 View Wallet on Dune Analytics <ExternalLinkIcon />
               </Typography>
             </Button>
-          </ExternalLink>
+          </ExternalLink> */}
         </Box>
-      </Box> */}
+      </Box> 
 
 
       {/* <Drawer style={{ width: "55%" }} anchor={"right"} open={anchor === "sOHMtx"} onClose={toggleDrawer("OG")}>

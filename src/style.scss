@@ -88,3 +88,15 @@ input[type="number"] {
 a:hover svg {
   color: inherit;
 }
+
+html[data-theme=light] .MuiDrawer-paper {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background-color: #FFF;
+}
+
+html[data-theme=dark] .MuiDrawer-paper {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background-color: rgb(54, 56, 64);
+}

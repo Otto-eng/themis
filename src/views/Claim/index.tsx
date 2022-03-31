@@ -9,6 +9,7 @@ import { abi as StakingRewardReleaseABI } from "src/abi/StakingRewardRelease.jso
 import { IERC20 } from "src/typechain/IERC20"
 import { error } from "src/slices/MessagesSlice"
 import { useDispatch } from "react-redux"
+import dayjs from "dayjs"
 
 const listDay = [
 	{ id: 0, value: 180, gasSc: "0" },
@@ -54,7 +55,6 @@ const Container = styled("div")({
 	width: "350px",
 	padding: "40px",
 	borderRadius: '10px',
-	background: "rgba(255, 255, 255, .5)"
 })
 
 const ReleaseTime = styled(GridFlex)({
@@ -193,6 +193,15 @@ const CardDetaileOl = styled("div")({
 	padding: "8px 0"
 })
 
+const Cost = styled("div")({
+	width: "100%",
+	fontSize: "18px",
+	color: "#83879E",
+	textAlign: "right",
+	padding: "8px 0"
+})
+
+
 interface rewardInfoList_ {
 	speedLevel: string, // 释放等级
 	recordBlock: BigNumber, // 收益产生的区块
@@ -226,11 +235,12 @@ function Claim() {
 		claim: false,
 		confrim: false
 	})
-	const [thsBalance, setThsBalance] = useState("0.00")
+	const [thsBalance, setThsBalance] = useState("0.0000")
 	const [block, setBlock] = useState<InfoListType>()
 
 	const handleClose = () => {
 		setIsOpen(false)
+		setOptionData({ id: 0, value: 180, gasSc: "0" })
 	}
 
 	const getList = useCallback(async (first: number) => {
@@ -262,7 +272,7 @@ function Claim() {
 			const thsContract = new ethers.Contract(addresses[chainID].THS_ADDRESS as string, ierc20Abi, signer) as IERC20;
 			const balanceBigNumber = await thsContract.balanceOf(address)
 			const balance = ethers.utils.formatUnits(balanceBigNumber.toString(), "gwei")
-			setThsBalance(Number(balance).toFixed(2))
+			setThsBalance(((Math.floor(Number(balance) * 10000)) / 10000) + "")
 
 		}
 	}, [chainID, address, provider])
@@ -297,13 +307,15 @@ function Claim() {
 	return (
 		<Main>
 			{isOpen && <CalimModal onClick={handleClose}>
-				<Container onClick={(event) => {
+				<Container
+					onClick={(event) => {
 					event.stopPropagation()
 				}}
-					style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}>
+					style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}
+				>
 					<ReleaseTime style={{ color: theme === THEME_LIGHT ? "#010101" : "#768299" }}>
 						<div> Release Time：{listDay[Number(block?.speedLevel)].value ?? 0}d</div>
-						<div>SC:41</div>
+						<div>SC:{listDay[Number(block?.speedLevel)].gasSc}</div>
 					</ReleaseTime>
 					<ModalTop
 					>
@@ -323,10 +335,12 @@ function Claim() {
 								>{item.value} DAY</Item>))}
 							</Select>
 						</FormControl>
+						<Cost>Cost: {optionData.gasSc}SC</Cost>
 					</ModalTop>
 					<Confrim
 						variant="contained"
 						color="primary"
+						disabled={!optionData.id}
 						onClick={async () => {
 							setPeddingStatus({
 								...peddingStatus,
@@ -354,7 +368,8 @@ function Claim() {
 						}}>{isPending(peddingStatus, "confrim", "Confrim")}</Confrim>
 				</Container>
 			</CalimModal>}
-			<Top style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A", color: theme === THEME_LIGHT ? "#010101" : "#FFF" }}>
+			<Top
+				style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A", color: theme === THEME_LIGHT ? "#010101" : "#FFF" }}>
 				<Title >THS:</Title>
 				<Blance>{thsBalance}</Blance>
 			</Top>
@@ -406,7 +421,7 @@ function Claim() {
 					<CardBottom>
 						<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "rgba(255, 255, 255, 0.6)" : "#18253A" }}>
 							<CardContainer>
-								<TopText>{+new Date(Number(item.recordTimestamp))}</TopText>
+								<TopText>UTC(+8) {dayjs(Number(item.recordTimestamp + "000")).format("YYYY-MM-DD HH:mm")}</TopText>
 								<Text>Unstable Time</Text>
 							</CardContainer>
 						</CardItem>

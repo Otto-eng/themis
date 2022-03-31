@@ -29,7 +29,6 @@ export function ClaimBondTableData({ userBond }) {
   const pendingTransactions = useSelector(state => {
     return state.pendingTransactions;
   });
-
   const vestingPeriod = () => {
     return prettyVestingPeriod(currentBlock, bond.bondMaturationBlock);
   };

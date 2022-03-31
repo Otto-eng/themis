@@ -19,8 +19,7 @@ interface IBondingStateView {
 }
 
 // Smash all the interfaces together to get the BondData Type
-export interface IAllBondData extends Bond, IBondDetails, IUserBondDetails {}
-
+export interface IAllBondData extends Bond, IBondDetails, IUserBondDetails { }
 const initialBondArray = allBonds;
 // const initialExpiredArray = allExpiredBonds;
 // Slaps together bond data within the account & bonding states
@@ -35,6 +34,8 @@ function useBonds(chainID: number) {
 
   useEffect(() => {
     let bondDetails: IAllBondData[];
+    // console.log("BONDSTATE", bondState)
+    // console.log("ACCOUNTBONDSSTATE", accountBondsState)
     bondDetails = allBonds
       .flatMap(bond => {
         if (bondState[bond.name] && bondState[bond.name].bondDiscount) {

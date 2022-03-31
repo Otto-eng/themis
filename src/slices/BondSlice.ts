@@ -1,7 +1,7 @@
 import { ethers, BigNumber, BigNumberish } from "ethers";
 import { contractForRedeemHelper } from "../helpers";
 import { getBalances, calculateUserBondDetails } from "./AccountSlice";
-import { findOrLoadMarketPrice } from "./AppSlice";
+import { loadAppDetails } from "./AppSlice";
 import { error, info } from "./MessagesSlice";
 import { clearPendingTxn, fetchPendingTxns } from "./PendingTxnsSlice";
 import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
@@ -102,9 +102,9 @@ export const calcBondDetails = createAsyncThunk(
     let marketPrice: number = 0;
     try {
       const originalPromiseResult = await dispatch(
-        findOrLoadMarketPrice({ networkID: networkID, provider: provider }),
+        loadAppDetails({ networkID: networkID, provider: provider }),
       ).unwrap();
-      marketPrice = originalPromiseResult?.marketPrice;
+      marketPrice = originalPromiseResult?.thsPrice ?? 0;
     } catch (rejectedValueOrSerializedError) {
       // handle error here
       console.error("Returned a null response from dispatch(loadMarketPrice)");

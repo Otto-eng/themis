@@ -21,21 +21,20 @@ export const MarketCap = () => {
     <Metric className="market">
       <Metric.Title>Market Cap</Metric.Title>
       <Metric.Value>
-        0.00
-        {/* {marketCap && formatCurrency(marketCap, 0)} */}
+        {marketCap && formatCurrency(marketCap, 0)}
       </Metric.Value>
     </Metric>
   );
 };
 
 export const OHMPrice = () => {
-  const marketPrice = useSelector(state => state.app.marketPrice);
+  const marketPrice = useSelector(state => state.app.thsPrice);
 
   return (
     <Metric className="price">
       <Metric.Title>THS Price</Metric.Title>
-      <Metric.Value>0.00
-        {/* {marketPrice && formatCurrency(marketPrice, 2)} */}
+      <Metric.Value>
+        {marketPrice && formatCurrency(marketPrice, 2)}
       </Metric.Value>
     </Metric>
   );
@@ -50,21 +49,21 @@ export const CircSupply = () => {
   return (
     <Metric className="circ">
       <Metric.Title>Circulating Supply (total)</Metric.Title>
-      <Metric.Value>0.00
-        {/* {isDataLoaded && parseInt(circSupply) + " / " + parseInt(totalSupply)} */}
+      <Metric.Value>
+        {isDataLoaded && parseInt(circSupply) + " / " + parseInt(totalSupply)}
       </Metric.Value>
     </Metric>
   );
 };
 
-export const BackingPerOHM = () => {
-  const backingPerOhm = useSelector(state => state.app.treasuryMarketValue / state.app.circSupply);
+export const BackingPerTHS = () => {
+  const backingPerThs = useSelector(state => state.app.treasuryMarketValue / state.app.circSupply);
 
   return (
     <Metric className="bpo">
       <Metric.Title>Backing per THS</Metric.Title>
-      <Metric.Value>0.00
-        {/* {!isNaN(backingPerOhm) && formatCurrency(backingPerOhm, 2)} */}
+      <Metric.Value>
+        {!isNaN(backingPerThs) && formatCurrency(backingPerThs, 2)}
       </Metric.Value>
     </Metric>
   );
@@ -80,28 +79,27 @@ export const CurrentIndex = () => {
         <InfoTooltip message="The current index tracks the amount of sTHS accumulated since the beginning of staking. Basically, how much sTHS one would have if they staked and held a single THS from day 1." />
       </Metric.Title>
       <Metric.Value>
-        0.00
-        {/* {currentIndex && trim(currentIndex, 2) + " sTHS"} */}
+        {currentIndex && trim(currentIndex, 2) + " sTHS"}
       </Metric.Value>
     </Metric>
   );
 };
 
 export const WSOHMPrice = () => {
-  const wsOhmPrice = useSelector(state => state.app.marketPrice * state.app.currentIndex);
+  const sThsPrice = useSelector(state => state.app.thsPrice);
 
   return (
     <Metric className="wsoprice">
       <Metric.Title>
         sTHS Price
-        <InfoTooltip
+        {/* <InfoTooltip
           message={
-            "wsOHM = sTHS * index\n\nThe price of wsOHM is equal to the price of THS multiplied by the current index"
+            "sThs = THS * index\n\nThe price of wsOHM is equal to the price of THS multiplied by the current index"
           }
-        />
+        /> */}
       </Metric.Title>
-      <Metric.Value>0.00
-        {/* {wsOhmPrice && formatCurrency(wsOhmPrice, 2)} */}
+      <Metric.Value>
+        {sThsPrice && formatCurrency(sThsPrice, 2)}
       </Metric.Value>
     </Metric>
   );

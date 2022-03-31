@@ -7,7 +7,7 @@ export const useTreasuryRebases = options => {
     "treasury_rebases",
     async () => {
       const response = await apollo(rebasesDataQuery);
-
+      console.log("response", response)
       return response.data.rebases;
     },
     options,

@@ -38,16 +38,13 @@ function a11yProps(index: number) {
   };
 }
 
-const sOhmImg = getTokenImage("sThs");
-const ohmImg = getOhmTokenImage(16, 16);
-
 function Stake() {
   const dispatch = useDispatch();
   const { provider, address, connected, connect, chainID } = useWeb3Context();
 
   const [zoomed, setZoomed] = useState(false);
   const [view, setView] = useState(0);
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState("0");
 
   const isAppLoading = useAppSelector(state => state.app.loading);
   const currentIndex = useAppSelector(state => {
@@ -57,23 +54,23 @@ function Stake() {
     return state.app.fiveDayRate;
   });
   const thsBalance = useAppSelector(state => {
-    return state.account.balances && state.account.balances.ohm;
+    return state.account.balances && state.account.balances.ths;
   });
-  const oldSohmBalance = useAppSelector(state => {
-    return state.account.balances && state.account.balances.oldsohm;
+  // const oldSohmBalance = useAppSelector(state => {
+  //   return state.account.balances && state.account.balances.oldsohm;
+  // });
+  const sThsSTakingBalance = useAppSelector(state => {
+    return state.account.balances && state.account.balances.sThsStaking;
   });
-  const sThsBalance = useAppSelector(state => {
-    return state.account.balances && state.account.balances.sohm;
-  });
-  const fsohmBalance = useAppSelector(state => {
-    return state.account.balances && state.account.balances.fsohm;
-  });
-  const wsohmBalance = useAppSelector(state => {
-    return state.account.balances && state.account.balances.wsohm;
-  });
-  const wsohmAsSohm = useAppSelector(state => {
-    return state.account.balances && state.account.balances.wsohmAsSohm;
-  });
+  // const fsohmBalance = useAppSelector(state => {
+  //   return state.account.balances && state.account.balances.fsohm;
+  // });
+  // const wsohmBalance = useAppSelector(state => {
+  //   return state.account.balances && state.account.balances.wsohm;
+  // });
+  // const wsohmAsSohm = useAppSelector(state => {
+  //   return state.account.balances && state.account.balances.wsohmAsSohm;
+  // });
   const stakeAllowance = useAppSelector(state => {
     return (state.account.staking && state.account.staking.ohmStake) || 0;
   });
@@ -96,9 +93,9 @@ function Stake() {
 
   const setMax = () => {
     if (view === 0) {
-      setQuantity(Number(Number(thsBalance).toFixed(2)));
+      setQuantity(Number(Math.floor(Number(thsBalance) * 10000) / 10000) + "");
     } else {
-      setQuantity(Number(Number(sThsBalance).toFixed(2)));
+      setQuantity(Number(Math.floor(Number(sThsSTakingBalance) * 10000) / 10000) + "");
     }
   };
 
@@ -108,7 +105,7 @@ function Stake() {
 
   const onChangeStake = async (action: string) => {
     // eslint-disable-next-line no-restricted-globals
-    if (isNaN(quantity) || quantity === 0) {
+    if (isNaN(Number(quantity)) || quantity === "0") {
       // eslint-disable-next-line no-alert
       return dispatch(error(t`Please enter a value!`));
     }
@@ -119,10 +116,9 @@ function Stake() {
       return dispatch(error(t`You cannot stake more than your THS balance.`));
     }
 
-    if (action === "unstake" && gweiValue.gt(ethers.utils.parseUnits(sThsBalance, "gwei"))) {
+    if (action === "unstake" && gweiValue.gt(ethers.utils.parseUnits(sThsSTakingBalance, "gwei"))) {
       return dispatch(error(t`You cannot unstake more than your sTHS balance.`));
     }
-
     await dispatch(changeStake({ address, action, value: quantity.toString(), provider, networkID: chainID }));
   };
 
@@ -147,10 +143,11 @@ function Stake() {
 
   const changeView = (_event: React.ChangeEvent<{}>, newView: number) => {
     setView(newView);
+    setQuantity("0")
   };
 
   const trimmedBalance = Number(
-    [sThsBalance, fsohmBalance, wsohmAsSohm]
+    [sThsSTakingBalance]
       .filter(Boolean)
       .map(balance => Number(balance))
       .reduce((a, b) => a + b, 0)
@@ -170,7 +167,7 @@ function Stake() {
                 <Typography variant="h5">Single Stake (3, 3)</Typography>
                 <RebaseTimer />
 
-                {address && Number(oldSohmBalance) > 0.01 && (
+                {/* {address && Number(oldSohmBalance) > 0.01 && (
                   <Link
                     className="migrate-sohm-button"
                     style={{ textDecoration: "none" }}
@@ -183,7 +180,7 @@ function Stake() {
                       <Trans>Migrate sTHS!</Trans>
                     </Typography>
                   </Link>
-                )}
+                )} */}
               </div>
             </Grid>
 
@@ -272,7 +269,7 @@ function Stake() {
                       onChange={changeView}
                       aria-label="stake tabs"
                       //hides the tab underline sliding animation in while <Zoom> is loading
-                      TabIndicatorProps={!zoomed ? { style: { display: "none" } } : undefined}
+                        TabIndicatorProps={!zoomed ? { style: { display: "none" } } : undefined}
                     >
                       <Tab
                         label={t({
@@ -314,7 +311,10 @@ function Stake() {
                               placeholder="Enter an amount"
                               className="stake-input"
                               value={quantity}
-                              onChange={e => setQuantity(Number(e.target.value))}
+                                  onChange={e => {
+                                    console.log("e.target.value", e.target.value, Number(e.target.value))
+                                    setQuantity(Number(e.target.value) + "")
+                                  }}
                               labelWidth={0}
                               endAdornment={
                                 <InputAdornment position="end">
@@ -410,14 +410,14 @@ function Stake() {
                       </Typography>
                     </div>
 
-                    <div className="data-row" style={{ paddingLeft: "10px" }}>
+                      {/* <div className="data-row" style={{ paddingLeft: "10px" }}>
                       <Typography variant="body2" color="textSecondary">
                         <Trans>Single Staking</Trans>
                       </Typography>
                       <Typography variant="body2" color="textSecondary">
-                          {isAppLoading ? <Skeleton width="80px" /> : <>{trim(Number(sThsBalance), 4)} sTHS</>}
+                          {isAppLoading ? <Skeleton width="80px" /> : <>{trim(Number(sThsSTakingBalance), 4)} sTHS</>}
                       </Typography>
-                    </div>
+                    </div> */}
 
                       {/* <div className="data-row" style={{ paddingLeft: "10px" }}>
                       <Typography variant="body2" color="textSecondary">
@@ -453,8 +453,7 @@ function Stake() {
                         <Trans>Next Reward Yield</Trans>
                       </Typography>
                         <Typography variant="body1">
-                          0.00%
-                          {/* {isAppLoading ? <Skeleton width="80px" /> : <>{stakingRebasePercentage}%</>} */}
+                          {isAppLoading ? <Skeleton width="80px" /> : <>{stakingRebasePercentage}%</>}
                       </Typography>
                     </div>
 
@@ -463,8 +462,7 @@ function Stake() {
                         <Trans>ROI (5-Day Rate)</Trans>
                       </Typography>
                         <Typography variant="body1">
-                          0.00%
-                          {/* {isAppLoading ? <Skeleton width="80px" /> : <>{trim(Number(fiveDayRate) * 100, 4)}%</>} */}
+                          {isAppLoading ? <Skeleton width="80px" /> : <>{trim(Number(fiveDayRate) * 100, 4)}%</>}
                       </Typography>
                     </div>
                   </div>

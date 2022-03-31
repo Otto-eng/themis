@@ -2,40 +2,43 @@ import { BigNumber, BigNumberish, ethers } from "ethers";
 import { addresses } from "../constants";
 import { abi as ierc20Abi } from "../abi/IERC20.json";
 import { abi as sOHMv2 } from "../abi/sOhmv2.json";
-import { abi as fuseProxy } from "../abi/FuseProxy.json";
 // import { abi as wsOHM } from "../abi/wsOHM.json";
-import { abi as OlympusBondDepository } from "src/abi/bonds/OlympusBondDepository.json";
+import { abi as ThemisStakingABI } from "../abi/ThemisStaking.json";
 
 import { setAll } from "../helpers";
 
 import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "src/store";
 import { IBaseAddressAsyncThunk, ICalcUserBondDetailsAsyncThunk } from "./interfaces";
-import { FuseProxy, IERC20, SOhmv2, WsOHM } from "src/typechain";
+import { FuseProxy, IERC20, OlympusStakingv2, SOhmv2, WsOHM } from "src/typechain";
 import { EthContract } from "src/typechain/EthContract";
 
 interface IUserBalances {
   balances: {
-    ohm: string;
-    sohm: string;
-    fsohm: string;
-    wsohm: string;
-    wsohmAsSohm: string;
+    ths: string;
+    sThs: string;
     pool: string;
-    dai: string;
+    usdt: string;
+    sThsStaking: string;
   };
 }
 
 export const getBalances = createAsyncThunk(
   "account/getBalances",
   async ({ address, networkID, provider }: IBaseAddressAsyncThunk) => {
-    console.log("address", address);
+    const signer = provider.getSigner();
 
-    const thsContract = new ethers.Contract(addresses[networkID].THS_ADDRESS as string, ierc20Abi, provider) as IERC20;
+    const thsContract = new ethers.Contract(addresses[networkID].THS_ADDRESS as string, ierc20Abi, signer) as IERC20;
     const thsBalance = await thsContract.balanceOf(address);
-    const usdtContract = new ethers.Contract(addresses[networkID].USDT_ADDRESS as string, ierc20Abi, provider) as IERC20;
+    const usdtContract = new ethers.Contract(addresses[networkID].USDT_ADDRESS as string, ierc20Abi, signer) as IERC20;
     const usdtBalance = await usdtContract.balanceOf(address);
 
+    const staking = new ethers.Contract(
+      addresses[networkID].STAKING_ADDRESS as string,
+      ThemisStakingABI,
+      signer,
+    ) as any;
+    const sThsStakingBalance = await staking.stakingAmountOf(address);
     const sThsContract = new ethers.Contract(
       addresses[networkID].STHS_ADDRESS as string,
       ierc20Abi,
@@ -57,30 +60,26 @@ export const getBalances = createAsyncThunk(
     // ) as IERC20;
     // const poolBalance = await poolTokenContract.balanceOf(address);
 
-    let fsohmBalance = BigNumber.from(0);
-    for (const fuseAddressKey of ["FUSE_6_SOHM", "FUSE_18_SOHM", "FUSE_36_SOHM"]) {
-      if (addresses[networkID][fuseAddressKey]) {
-        const fsohmContract = new ethers.Contract(
-          addresses[networkID][fuseAddressKey] as string,
-          fuseProxy,
-          provider.getSigner(),
-        ) as FuseProxy;
-        // fsohmContract.signer;
-        const balanceOfUnderlying = await fsohmContract.callStatic.balanceOfUnderlying(address);
-        console.log("balanceOfUnderlying", balanceOfUnderlying);
+    // let fsohmBalance = BigNumber.from(0);
+    // for (const fuseAddressKey of ["FUSE_6_SOHM", "FUSE_18_SOHM", "FUSE_36_SOHM"]) {
+    //   if (addresses[networkID][fuseAddressKey]) {
+    //     const fsohmContract = new ethers.Contract(
+    //       addresses[networkID][fuseAddressKey] as string,
+    //       fuseProxy,
+    //       provider.getSigner(),
+    //     ) as FuseProxy;
+    //     // fsohmContract.signer;
+    //     const balanceOfUnderlying = await fsohmContract.callStatic.balanceOfUnderlying(address);
 
-        fsohmBalance = balanceOfUnderlying.add(fsohmBalance);
-      }
-    }
-
+    //     fsohmBalance = balanceOfUnderlying.add(fsohmBalance);
+    //   }
+    // }
     return {
       balances: {
-        ohm: ethers.utils.formatUnits(thsBalance, "gwei"),
-        dai: ethers.utils.formatUnits(usdtBalance, "gwei"),
-        sohm: ethers.utils.formatUnits(sThsBalance, "gwei"),
-        fsohm: ethers.utils.formatUnits(fsohmBalance, "gwei"),
-        wsohm: "0.0", // ethers.utils.formatEther(wsohmBalance),
-        wsohmAsSohm: "0.0", //ethers.utils.formatUnits(wsohmAsSohm, "gwei"),
+        ths: ethers.utils.formatUnits(thsBalance, "gwei"),
+        usdt: ethers.utils.formatUnits(usdtBalance, "gwei"),
+        sThsStaking: ethers.utils.formatUnits(sThsStakingBalance, "gwei"),
+        sThs: ethers.utils.formatUnits(sThsBalance, "gwei"),
         pool: "0.0", // ethers.utils.formatUnits(poolBalance, "gwei"),
       },
     };
@@ -170,7 +169,6 @@ export const calculateUserBondDetails = createAsyncThunk(
     let allowance,
       balance = BigNumber.from(0);
     allowance = await reserveContract.allowance(address, bond.getAddressForBond(networkID));
-    console.log("allowance", allowance)
     balance = await reserveContract.balanceOf(address);
     // formatEthers takes BigNumber => String
     const balanceVal = ethers.utils.formatEther(balance);
@@ -192,14 +190,11 @@ export const calculateUserBondDetails = createAsyncThunk(
 interface IAccountSlice extends IUserAccountDetails, IUserBalances {
   bonds: { [key: string]: IUserBondDetails };
   balances: {
-    ohm: string;
-    sohm: string;
-    dai: string;
-    oldsohm: string;
-    fsohm: string;
-    wsohm: string;
-    wsohmAsSohm: string;
+    ths: string;
+    sThs: string;
+    usdt: string;
     pool: string;
+    sThsStaking: string,
   };
   loading: boolean;
   staking: {
@@ -214,7 +209,7 @@ interface IAccountSlice extends IUserAccountDetails, IUserBalances {
 const initialState: IAccountSlice = {
   loading: false,
   bonds: {},
-  balances: { ohm: "", sohm: "", dai: "", oldsohm: "", fsohm: "", wsohm: "", pool: "", wsohmAsSohm: "" },
+  balances: { ths: "", sThs: "", usdt: "", pool: "", sThsStaking: "" },
   staking: { ohmStake: 0, ohmUnstake: 0 },
   wrapping: { sohmWrap: 0, wsohmUnwrap: 0 },
   pooling: { sohmPool: 0 },

@@ -1,9 +1,8 @@
-import { useState, useEffect, useLayoutEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 
 import { Container, Grid, Button, styled } from "@material-ui/core";
-import { FormFieldsGroup, NormalInputGroupProps } from "src/components/Input";
+import { FormFieldsGroup } from "src/components/Input";
 import { useAddress, useAppSelector, useWeb3Context } from "src/hooks";
 import { getFormatedAddressForShow } from "src/utils";
 import { Title } from "./components/Title";
@@ -66,6 +65,7 @@ function Register() {
 	const [showWarn, setShowWarn] = useState<boolean>(false);
 	const [isInvited, setIsInvited] = useState<boolean>(false);
 	const [isConfig, setIsConfig] = useState<boolean>(false);
+	const [config, setConfig] = useState<boolean>(false);
 
 	function onChange(value: string, keyName: FieldNameKeys) {
 		values[keyName] = value;
@@ -105,10 +105,25 @@ function Register() {
 			defaultCode = await RelationshipContract.defaultInviteCode()
 			invitedAddress = await RelationshipContract.getInviter(address)
 		}
+
 		setIsInvited(invitedAddress !== ZERO_ADDRESS)
+		console.log("location.search", location.search)
+		let paramsObj: { [key: string]: any } = {}
+		if (location.search) {
+			const [_firstStr, nextStr] = location.search.split("?")
+			if (nextStr) {
+				const arr = nextStr.split("&")
+				arr.forEach((item) => {
+					const [key, value] = item.split("=")
+					paramsObj[key] = value
+				})
+			}
+		}
+		const invitationIdStr = paramsObj["initCode"]
+
 		updateValues({
 			...values,
-			invitationId: defaultCode
+			invitationId: invitationIdStr ?? defaultCode
 		})
 	}
 
@@ -130,21 +145,21 @@ function Register() {
 				let flag = true
 				do {
 					const add = await RelationshipContract.AddressOf(currentInvitationId)
-					console.log("add", add)
 					if (add === ZERO_ADDRESS) {
 						flag = false
 					}
 					currentInvitationId = invitationIdCode()
 				} while (flag);
-				console.log("currentInvitationId", values.invitationId, currentInvitationId)
-				console.log("RelationshipContract", RelationshipContract)
 				const info = await RelationshipContract.register(values.invitationId, currentInvitationId);
-				console.log("INFO", info)
-				// setTimeout(() => {
-				// 	setIsConfig(false)
-				// }, 2000);
+				setTimeout(() => {
+					setIsConfig(false)
+					setConfig(true)
+				}, 2000);
 			} catch (error) {
 				console.log("CONFIG", error)
+				setTimeout(() => {
+					setIsConfig(false)
+				}, 2000);
 			}
 		} else {
 			const isAddress = !values.address
@@ -206,7 +221,7 @@ function Register() {
 						className="stake-button"
 						variant="contained"
 						color="primary"
-						disabled={!!isInvited || !(!!values.invitationId && !!values.address)}
+						disabled={config || !!isInvited || !(!!values.invitationId && !!values.address)}
 						onClick={onConfirm}>
 						{isPending({ config: isConfig }, "config", "Confirm")}
 					</RegisterButton>

@@ -2,15 +2,15 @@ import { memo } from "react";
 import "./treasury-dashboard.scss";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Paper, Grid, Box, Zoom, Container, useMediaQuery } from "@material-ui/core";
-import { MarketCap, OHMPrice, WSOHMPrice, CircSupply, BackingPerOHM, CurrentIndex } from "./components/Metric/Metric";
+import { MarketCap, OHMPrice, WSOHMPrice, CircSupply, BackingPerTHS, CurrentIndex } from "./components/Metric/Metric";
 
 import {
   TotalValueDepositedGraph,
   MarketValueGraph,
   RiskFreeValueGraph,
-  ProtocolOwnedLiquidityGraph,
-  OHMStakedGraph,
-  APYOverTimeGraph,
+  // ProtocolOwnedLiquidityGraph,
+  THSStakedGraph,
+  // APYOverTimeGraph,
   RunwayAvailableGraph,
 } from "./components/Graph/Graph";
 
@@ -33,7 +33,7 @@ const TreasuryDashboard = memo(() => {
               <OHMPrice />
               <WSOHMPrice />
               <CircSupply />
-              <BackingPerOHM />
+              <BackingPerTHS />
               <CurrentIndex />
             </Box>
           </Paper>
@@ -59,11 +59,11 @@ const TreasuryDashboard = memo(() => {
               </Paper>
             </Grid>
 
-            <Grid item lg={6} md={6} sm={12} xs={12}>
+            {/* <Grid item lg={6} md={6} sm={12} xs={12}>
               <Paper className="ohm-card">
                 <ProtocolOwnedLiquidityGraph />
               </Paper>
-            </Grid>
+            </Grid> */}
 
             {/*  Temporarily removed until correct data is in the graph */}
             {/* <Grid item lg={6} md={12} sm={12} xs={12}>
@@ -92,15 +92,15 @@ const TreasuryDashboard = memo(() => {
 
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <Paper className="ohm-card">
-                <OHMStakedGraph />
+                <THSStakedGraph />
               </Paper>
             </Grid>
 
-            <Grid item lg={6} md={6} sm={12} xs={12}>
+            {/* <Grid item lg={6} md={6} sm={12} xs={12}>
               <Paper className="ohm-card">
                 <APYOverTimeGraph />
               </Paper>
-            </Grid>
+            </Grid> */}
 
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <Paper className="ohm-card">

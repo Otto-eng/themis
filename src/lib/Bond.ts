@@ -71,6 +71,7 @@ export abstract class Bond {
     this.bondContractABI = bondOpts.bondContractABI;
     this.networkAddrs = bondOpts.networkAddrs;
     this.bondToken = bondOpts.bondToken;
+    console.log("THIS", this)
   }
 
   /**

@@ -108,14 +108,14 @@ export function Wallet() {
         </Box>
         <InitialWalletView />
         <InitCode onClick={() => {
-          if (copy(initCode)) {
+          if (initCode && copy("http://122.228.226.116:25001/register?initCode=" + initCode)) {
             setState(true)
             setInterval(() => {
               setState(false)
             }, 2000)
           }
         }}>{state ? "Copied" : `Invitation code:  ${initCode}`}</InitCode>
-        <DisconnectButton />
+          <DisconnectButton />
       </Drawer>
     </>
   );

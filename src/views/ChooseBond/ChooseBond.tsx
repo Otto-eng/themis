@@ -45,8 +45,8 @@ function ChooseBond() {
     return withInterestDue;
   });
 
-  const marketPrice: number | undefined = useAppSelector(state => {
-    return state.app.marketPrice;
+  const thsPrice: number | undefined = useAppSelector(state => {
+    return state.app.thsPrice;
   });
 
   const treasuryBalance: number | undefined = useAppSelector(state => {
@@ -110,7 +110,7 @@ function ChooseBond() {
                   <Trans>THS Price</Trans>
                 </Typography>
                 <Typography variant="h4">
-                  {isAppLoading ? <Skeleton width="100px" /> : formatCurrency(Number(marketPrice ?? 0), 2)}
+                  {isAppLoading ? <Skeleton width="100px" /> : formatCurrency(Number(thsPrice ?? 0), 2)}
                 </Typography>
               </Box>
             </Grid>

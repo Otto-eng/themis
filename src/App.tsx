@@ -1,9 +1,9 @@
 import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
 import { useEffect, useState, useCallback } from "react";
-import { Route, Redirect, Switch, useLocation } from "react-router-dom";
+import { Route, Redirect, Switch, useLocation, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useMediaQuery } from "@material-ui/core";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import useBonds, { IAllBondData } from "./hooks/Bonds";
 import { useAddress, useWeb3Context } from "./hooks/web3Context";
@@ -34,7 +34,8 @@ import { useAppSelector } from "./hooks";
 import Register from "./views/Register";
 
 import { abi as RelationshipABI } from "src/abi/Relationship.json";
-import { scListDetails } from "./slices/sc";
+import { scInviterEarningsDetailsList, scStakeEarningsDetailsList } from "./slices/scSlice";
+import useTheme from "./hooks/useTheme";
 
 
 // 😬 Sorry for all the console logging
@@ -85,11 +86,13 @@ function App() {
   useGoogleAnalytics();
   const location = useLocation();
   const dispatch = useDispatch();
+  const history = useHistory()
   const theme: {
     theme: string
   } = useAppSelector(state => state.theme)
   const currentPath = location.pathname + location.search + location.hash;
   const classes = useStyles();
+
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [themeMode, setThemeMode] = useState(theme.theme === THEME_LIGHT ? lightTheme : darkTheme);
@@ -206,7 +209,8 @@ function App() {
   useEffect(() => {
     if (address && chainID && provider && addresses) {
       serachRelationship(address)
-      dispatch(scListDetails({ first: 10, address, networkID: chainID, provider }))
+      dispatch(scStakeEarningsDetailsList({ first: 10, address }))
+      dispatch(scInviterEarningsDetailsList({ first: BigNumber.from("10"), address, chainID, provider }))
     }
   }, [address, chainID, provider, addresses])
 
@@ -220,7 +224,8 @@ function App() {
 
   useEffect(() => {
     if (address && isInvited && location.pathname !== "/register") {
-      globalThis.location.pathname = "/register"
+      console.log("location.state", location.search)
+      history.replace("/register" + (location.search ?? ""))
     }
   }, [address, isInvited, location.pathname])
 
@@ -253,13 +258,6 @@ function App() {
               <Stake />
             </Route>
 
-            {/* <Route path="/wrap">
-              <Wrap />
-            </Route> */}
-
-            {/* <Route path="/33-together">
-              <PoolTogether />
-            </Route> */}
 
             <Route path="/bonds">
               {(bonds as IAllBondData[]).map(bond => {

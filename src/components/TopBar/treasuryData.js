@@ -1,15 +1,15 @@
 import apollo from "../../lib/apolloClient";
 
 // TODO: add paramaterization
-export const treasuryDataQuery = `
+export const sOhmCirculatingSupply = `
 query {
   protocolMetrics(first: 100, orderBy: timestamp, orderDirection: desc) {
     id
     timestamp
-    ohmCirculatingSupply
-    sOhmCirculatingSupply
+    thsCirculatingSupply
+    sThsCirculatingSupply
     totalSupply
-    ohmPrice
+    thsPrice
     marketCap
     totalValueLocked
     treasuryRiskFreeValue

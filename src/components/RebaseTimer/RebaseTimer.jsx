@@ -24,8 +24,9 @@ function RebaseTimer() {
   function initializeTimer() {
     const rebaseBlock = getRebaseBlock(currentBlock);
     const seconds = secondsUntilBlock(currentBlock, rebaseBlock);
+
     setSecondsToRebase(seconds);
-    const prettified = prettifySeconds(seconds);
+    const prettified = prettifySeconds(seconds * 4);
     setRebaseString(prettified !== "" ? prettified : <Trans>Less than a minute</Trans>);
   }
 

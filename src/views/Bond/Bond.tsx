@@ -143,7 +143,6 @@ export const DisplayBondDiscount = ({ bond }: { bond: IAllBondData }): ReactNode
   if ((typeof bond.bondDiscount == "undefined") || !bond.isAvailable[chainID]) {
     return <Fragment>--</Fragment>;
   }
-
   return <Fragment>{bond.bondDiscount && trim(bond.bondDiscount * 100, 2)}%</Fragment>;
 };
 export default Bond;
