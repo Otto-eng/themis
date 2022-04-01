@@ -5,6 +5,7 @@ import { addresses, THEME_LIGHT } from "src/constants"
 import { useAppSelector, useWeb3Context } from "src/hooks"
 import { abi as ScFarmForStakerABI } from "src/abi/ScFarmForStaker.json";
 import { abi as ScFarmForInvterABI } from "src/abi/ScFarmForInvter.json";
+import { abi as IERC20ABI } from "src/abi/IERC20.json";
 import dayjs from "dayjs"
 import copy from "copy-to-clipboard"
 import { useDispatch } from "react-redux"
@@ -123,6 +124,7 @@ export default function Sc() {
 	const { chainID, provider, address } = useWeb3Context()
 	const [stakValue, setStakValue] = useState("0.0000")
 	const [invterValue, setInvterValue] = useState("0.0000")
+	const [SCBanlance, setSCBanlance] = useState("0.0000")
 	const theme = useAppSelector(state => state.theme.theme)
 	const dispatch = useDispatch();
 
@@ -131,6 +133,15 @@ export default function Sc() {
 
 	const scStakeEarningsList = useAppSelector(state => state.sc.scStakeEarningsList)
 	const scInviterEarningsList = useAppSelector(state => state.sc.scInviterEarningsList)
+
+	const getScbanlance = useCallback(async () => {
+		if (!!address && !!chainID && !!provider && !!addresses[chainID].ScaleCode_ADDRESS) {
+			const ScaleCodeContract = new ethers.Contract(addresses[chainID].ScaleCode_ADDRESS, IERC20ABI, provider)
+			const banlance = await ScaleCodeContract.balanceOf(address)
+			setSCBanlance((Math.floor((Number(ethers.utils.formatUnits(banlance, "ether")) ?? 0) * 10000) / 10000) + "")
+		}
+
+	}, [chainID, address, provider])
 
 
 	const getList = useCallback(async () => {
@@ -158,6 +169,7 @@ export default function Sc() {
 
 	useEffect(() => {
 		getList()
+		getScbanlance()
 	}, [chainID, address, provider])
 
 
@@ -174,7 +186,7 @@ export default function Sc() {
 			<Container style={{ backgroundColor: theme === THEME_LIGHT ? "rgba(255, 255, 255, 0.6)" : "#010101" }}>
 				<Top style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A", color: theme === THEME_LIGHT ? "#010101" : "#768299" }}>
 					<Title >SC Amount</Title>
-					<Blance>{Number(stakValue) + Number(invterValue)}</Blance>
+					<Blance>{SCBanlance}</Blance>
 				</Top>
 				<CardTitle style={{ color: theme === THEME_LIGHT ? "#010101" : "#768299" }}>Staking Earnings</CardTitle>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A", display: "flex", justifyContent: "space-between", alignItems: "center" }}>

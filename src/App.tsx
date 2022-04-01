@@ -36,7 +36,8 @@ import Register from "./views/Register";
 import { abi as RelationshipABI } from "src/abi/Relationship.json";
 import { scInviterEarningsDetailsList, scStakeEarningsDetailsList } from "./slices/scSlice";
 import useTheme from "./hooks/useTheme";
-
+import { useWeb3React } from "@web3-react/core"
+import { Web3Provider } from "@ethersproject/providers";
 
 // 😬 Sorry for all the console logging
 const DEBUG = false;
@@ -84,12 +85,12 @@ const useStyles = makeStyles(theme => ({
 function App() {
   useSegmentAnalytics();
   useGoogleAnalytics();
+  const { account, ...rest } = useWeb3React<Web3Provider>();
+  console.log("ACCOUNT", account, rest)
   const location = useLocation();
   const dispatch = useDispatch();
   const history = useHistory()
-  const theme: {
-    theme: string
-  } = useAppSelector(state => state.theme)
+  const theme: { theme: string } = useAppSelector(state => state.theme)
   const currentPath = location.pathname + location.search + location.hash;
   const classes = useStyles();
 
@@ -101,7 +102,8 @@ function App() {
   const [isInvited, setIsInvited] = useState(false)
 
   const { connect, hasCachedProvider, provider, chainID, connected, disconnect, uri } = useWeb3Context();
-  const address = useAddress();
+  const address = useAddress(); console.log("chainID", chainID);
+
 
   const [walletChecked, setWalletChecked] = useState(false);
   // TODO (appleseed-expiredBonds): there may be a smarter way to refactor this
@@ -228,6 +230,16 @@ function App() {
       history.replace("/register" + (location.search ?? ""))
     }
   }, [address, isInvited, location.pathname])
+
+  const flag = sessionStorage.getItem("THEMIS_FLAG")
+
+  if (!flag) {
+    // localStorage.removeItem("walletconnect")
+    localStorage.removeItem("WEB3_CONNECT_CACHED_PROVIDER")
+    sessionStorage.setItem("THEMIS_FLAG", true + "")
+    console.log("DISCONNECT")
+    disconnect && disconnect()
+  }
 
   return (
     <ThemeProvider theme={themeMode}>

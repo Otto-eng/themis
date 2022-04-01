@@ -119,7 +119,6 @@ const Bond = ({ bond }: { bond: IAllBondData }) => {
 
 export const DisplayBondPrice = ({ bond }: { bond: IAllBondData }): ReactElement => {
   const { chainID }: { chainID: NetworkID } = useWeb3Context();
-
   if (typeof bond.bondPrice === "undefined" || !bond.isAvailable[chainID]) {
     return <Fragment>--</Fragment>;
   }

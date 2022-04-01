@@ -7,6 +7,7 @@ import { EnvHelper } from "../helpers/Environment";
 import { NodeHelper } from "src/helpers/NodeHelper";
 import { KOVAN_URI, NetworkId, NETWORK_CHAINID } from "src/constants";
 import { Providers } from "src/helpers/providers/Providers";
+import { ethers } from "ethers";
 
 
 interface IGetCurrentNetwork {
@@ -136,9 +137,7 @@ const initModal = new Web3Modal({
     walletconnect: {
       package: WalletConnectProvider,
       options: {
-        rpc: {
-          42: getMainnetURI(),
-        },
+        infuraId: "e48190e478114e97b88a90a7a30f5915"
       },
     },
   },
@@ -164,8 +163,8 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
   const [networkName, setNetworkName] = useState("");
   const [providerInitialized, setProviderInitialized] = useState(false);
   const [uri, setUri] = useState("");
-  const [provider, setProvider] = useState<JsonRpcProvider>(Providers.getStaticProvider(NetworkId.TESTNET_KOVAN));
-  const [web3Modal, setWeb3Modal] = useState<Web3Modal>(initModal);
+  const [provider, setProvider] = useState<any>(Providers.getStaticProvider(NetworkId.TESTNET_KOVAN));
+  const web3Modal = initModal
 
   function hasCachedProvider(): boolean {
     return checkCachedProvider(web3Modal);
@@ -194,6 +193,10 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
         } else {
           setChainID(networkHash.networkId);
         }
+      });
+
+      rawProvider.on("disconnect", async (accounts: string[]) => {
+        disconnect()
       });
     },
     [provider],
@@ -235,15 +238,20 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
           });
         }
         setConnected(false);
+        disconnect && disconnect()
         return;
       }
     }
 
+
+
+
     // new _initListeners implementation matches Web3Modal Docs
     // ... see here: https://github.com/Web3Modal/web3modal/blob/2ff929d0e99df5edf6bb9e88cff338ba6d8a3991/example/src/App.tsx#L185
-    _initListeners(rawProvider);
+    // _initListeners(rawProvider);
 
-    const connectedProvider = new Web3Provider(rawProvider, "any");
+
+    const connectedProvider = new ethers.providers.Web3Provider(rawProvider);
     setProvider(connectedProvider);
     const connectedAddress = await connectedProvider.getSigner().getAddress();
 
@@ -251,7 +259,6 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
     // Eventually we'll be fine without doing network validations.
     setAddress(connectedAddress);
     const networkHash = await initNetworkFunc({ provider: connectedProvider });
-    console.log("networkHash", networkHash);
     setChainID(networkHash.networkId);
     setNetworkName(networkHash.networkName);
     setUri(networkHash.uri);
@@ -262,10 +269,17 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
     return connectedProvider;
   }, [provider, web3Modal, connected]);
 
+  // useEffect(() => {
+  //   if (web3Modal.cachedProvider) {
+  //     connect()
+  //   }
+  // }, [connect])
+
   const disconnect = useCallback(async () => {
-    web3Modal.clearCachedProvider();
-    setConnectionError(null);
-    setConnected(false);
+    await web3Modal.clearCachedProvider()
+    if (provider?.disconnect && typeof provider.disconnect === 'function') {
+      await provider.disconnect()
+    }
 
     setTimeout(() => {
       window.location.reload();
