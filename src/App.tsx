@@ -132,8 +132,8 @@ function App() {
   const loadApp = useCallback(
     async loadProvider => {
       dispatch(loadAppDetailsContract());
-      bonds.map( bond => {
-         dispatch(calcBondDetails({ bond, value: "", provider: loadProvider, networkID: chainID }));
+      bonds.map(async bond => {
+        await dispatch(calcBondDetails({ bond, value: "", provider: loadProvider, networkID: chainID }));
       });
     },
     [connected],

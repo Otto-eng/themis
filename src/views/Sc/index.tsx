@@ -12,6 +12,7 @@ import copy from "copy-to-clipboard"
 import { useDispatch } from "react-redux"
 import { scInviterEarningsDetailsList, scStakeEarningsDetailsList } from "src/slices/scSlice"
 import { isPending } from "../Claim"
+import Skeleton from "@material-ui/lab/Skeleton/Skeleton"
 dayjs.extend(utc)
 const GridFlex = styled('div')({
 	width: "100%",
@@ -139,7 +140,7 @@ export default function Sc() {
 	const theme = useAppSelector(state => state.theme.theme)
 	const dispatch = useDispatch();
 
-	const [peddingStatus, setPeddingStatus] = useState({
+	const [pendingStatus, setPeddingStatus] = useState({
 		ScFarmForStaker: false,
 		ScFarmForInvter: false
 	})
@@ -194,7 +195,7 @@ export default function Sc() {
 			<Container style={{ backgroundColor: theme === THEME_LIGHT ? "rgba(255, 255, 255, 0.6)" : "#010101" }}>
 				<Top style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A", color: theme === THEME_LIGHT ? "#010101" : "#768299" }}>
 					<Title >SC Amount</Title>
-					<Blance>{SCBanlance}</Blance>
+					<Blance>{pendingStatus.ScFarmForInvter || pendingStatus.ScFarmForStaker ? <Skeleton width="80px" /> : SCBanlance}</Blance>
 				</Top>
 				<CardTitle style={{ color: theme === THEME_LIGHT ? "#010101" : "#768299" }}>Staking Earnings</CardTitle>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -205,7 +206,7 @@ export default function Sc() {
 						disabled={!Number(stakValue)}
 						onClick={async () => {
 							setPeddingStatus({
-								...peddingStatus,
+								...pendingStatus,
 								ScFarmForStaker: true
 							})
 							const signer = provider.getSigner();
@@ -222,12 +223,12 @@ export default function Sc() {
 							}
 							setTimeout(() => {
 								setPeddingStatus({
-									...peddingStatus,
+									...pendingStatus,
 									ScFarmForStaker: false
 								})
 							}, 500);
 						}}>
-						{isPending(peddingStatus, "ScFarmForStaker", "Claim")}
+						{isPending(pendingStatus, "ScFarmForStaker", "Claim")}
 					</Claim>
 				</Card>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}>
@@ -257,10 +258,10 @@ export default function Sc() {
 					<Claim
 						variant="contained"
 						color="primary"
-						disabled={!Number(invterValue) || peddingStatus.ScFarmForInvter}
+						disabled={!Number(invterValue) || pendingStatus.ScFarmForInvter}
 						onClick={async () => {
 							setPeddingStatus({
-								...peddingStatus,
+								...pendingStatus,
 								ScFarmForInvter: true
 							})
 							try {
@@ -275,11 +276,11 @@ export default function Sc() {
 							}
 							setTimeout(() => {
 								setPeddingStatus({
-									...peddingStatus,
+									...pendingStatus,
 									ScFarmForInvter: false
 								})
 							}, 500);
-						}}>{isPending(peddingStatus, "ScFarmForInvter", "Claim")}</Claim>
+						}}>{isPending(pendingStatus, "ScFarmForInvter", "Claim")}</Claim>
 				</Card>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}>
 					<Item>

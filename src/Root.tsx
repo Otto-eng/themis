@@ -19,13 +19,9 @@ const Root: FC = () => {
 
   }, []);
 
-  const flag = sessionStorage.getItem("THEMIS_THEME");
 
-  if (!flag) {
-    sessionStorage.setItem("THEMIS_THEME", "true")
-    const theme = localStorage.getItem("THS_THEME");
-    document.documentElement.setAttribute('data-theme', theme || THEME_LIGHT)
-  }
+  const theme = localStorage.getItem("THS_THEME");
+  document.documentElement.setAttribute('data-theme', theme || THEME_LIGHT)
 
 
   return (

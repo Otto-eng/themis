@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux"
 import dayjs from "dayjs"
 import utc from 'dayjs/plugin/utc'
 import { stakeTHSReleaseEarningsList } from "src/slices/scSlice"
+import Skeleton from "@material-ui/lab/Skeleton/Skeleton"
 dayjs.extend(utc)
 
 const listDay = [
@@ -234,11 +235,13 @@ function Claim() {
 	const [optionData, setOptionData] = useState({ id: 0, value: 180, gasSc: "0" })
 	const [len, setLen] = useState(0)
 	const [page, setPage] = useState(1)
+	const [num, setNum] = useState(0)
 	const [stakeReleaseEarningsListPage, setStakeReleaseEarningsListPage] = useState(1)
 
-	const [peddingStatus, setPeddingStatus] = useState({
+	const [pendingStatus, setPeddingStatus] = useState({
 		claim: false,
-		confrim: false
+		confrim: false,
+		banlance: false
 	})
 	const [thsBalance, setThsBalance] = useState("0.0000")
 	const [block, setBlock] = useState<InfoListType>()
@@ -271,15 +274,30 @@ function Claim() {
 
 	const getBalance = useCallback(async () => {
 		if (!!address && !!chainID && !!provider) {
-			const signer = provider.getSigner();
+			setPeddingStatus({
+				...pendingStatus,
+				banlance: true
+			})
+			try {
+				const signer = provider.getSigner();
 
-			const thsContract = new ethers.Contract(addresses[chainID].THS_ADDRESS as string, ierc20Abi, signer) as IERC20;
-			const balanceBigNumber = await thsContract.balanceOf(address)
-			const balance = ethers.utils.formatUnits(balanceBigNumber.toString(), "gwei")
-			setThsBalance(((Math.floor(Number(balance) * 10000)) / 10000) + "")
+				const thsContract = new ethers.Contract(addresses[chainID].THS_ADDRESS as string, ierc20Abi, signer) as IERC20;
+				const balanceBigNumber = await thsContract.balanceOf(address)
+				const balance = ethers.utils.formatUnits(balanceBigNumber.toString(), "gwei")
+				setThsBalance(((Math.floor(Number(balance) * 10000)) / 10000) + "")
+			} catch (error) {
+				
+			}
+
+			setTimeout(() => {
+				setPeddingStatus({
+					...pendingStatus,
+					banlance: false
+				})
+			}, 500);
 
 		}
-	}, [chainID, address, provider])
+	}, [chainID, address, provider, num])
 
 
 	const claim = async (blocakHight: BigNumber) => {
@@ -291,12 +309,13 @@ function Claim() {
 			await infoHash.wait()
 
 			const info = await StakingRewardReleaseContract.provider.getTransactionReceipt(infoHash.hash)
+			setNum(num + 1)
 		} catch (error) {
 
 		}
 		setTimeout(() => {
 			setPeddingStatus({
-				...peddingStatus,
+				...pendingStatus,
 				claim: false
 			})
 		}, 500);
@@ -304,11 +323,11 @@ function Claim() {
 
 	useEffect(() => {
 		getBalance();
-	}, [chainID, address, provider])
+	}, [chainID, address, provider, num])
 
 	useEffect(() => {
 		getList(10 * page);
-	}, [chainID, address, provider, page, peddingStatus])
+	}, [chainID, address, provider, page, pendingStatus])
 
 	useEffect(() => {
 		dispatch(stakeTHSReleaseEarningsList({ first: stakeReleaseEarningsListPage * 10, address }))
@@ -350,10 +369,10 @@ function Claim() {
 					<Confrim
 						variant="contained"
 						color="primary"
-						disabled={!optionData.id || peddingStatus.confrim}
+						disabled={!optionData.id || pendingStatus.confrim}
 						onClick={async () => {
 							setPeddingStatus({
-								...peddingStatus,
+								...pendingStatus,
 								confrim: true
 							})
 							const signer = provider.getSigner();
@@ -374,19 +393,19 @@ function Claim() {
 							}
 							setTimeout(() => {
 								setPeddingStatus({
-									...peddingStatus,
+									...pendingStatus,
 									confrim: false
 								})
 								setOptionData({ id: 0, value: 180, gasSc: "0" });
 								setIsOpen(false)
 							}, 2000);
-						}}>{isPending(peddingStatus, "confrim", "Confrim")}</Confrim>
+						}}>{isPending(pendingStatus, "confrim", "Confrim")}</Confrim>
 				</Container>
 			</CalimModal>}
 			<Top
 				style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A", color: theme === THEME_LIGHT ? "#010101" : "#FFF" }}>
 				<Title >THS:</Title>
-				<Blance>{thsBalance}</Blance>
+				<Blance>{pendingStatus.banlance ? <Skeleton width="80px" /> : thsBalance}</Blance>
 			</Top>
 			{
 				infoList.map((item, idx) => (<Card style={{ color: theme === THEME_LIGHT ? "#010101" : "#B6B7C8" }}>
@@ -405,13 +424,13 @@ function Claim() {
 								<ClaimBtn
 									variant="contained"
 									color="primary"
-									disabled={item.speedLevel === "7" || peddingStatus.confrim}
+									disabled={item.speedLevel === "7" || pendingStatus.confrim}
 									onClick={() => {
 										setIsOpen(true)
 										setBlock(item)
 										setLen(Number(item.speedLevel))
 									}}
-								>{isPending(peddingStatus, "confrim", "Accelerate")}</ClaimBtn>
+								>{isPending(pendingStatus, "confrim", "Accelerate")}</ClaimBtn>
 							</CardContainer>
 						</CardItem>
 						<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "rgba(255, 255, 255, 0.6)" : "#18253A" }}>
@@ -421,15 +440,15 @@ function Claim() {
 								<ClaimBtn
 									variant="contained"
 									color="primary"
-									disabled={!Number(item.pendingTotal) || peddingStatus.claim}
+									disabled={!Number(item.pendingTotal) || pendingStatus.claim}
 									onClick={() => {
 										setPeddingStatus({
-											...peddingStatus,
+											...pendingStatus,
 											claim: true
 										})
 										claim(item.recordBlock)
 									}}
-								>{isPending(peddingStatus, "claim", "Claim")}</ClaimBtn>
+								>{isPending(pendingStatus, "claim", "Claim")}</ClaimBtn>
 							</CardContainer>
 						</CardItem>
 					</CardTop>

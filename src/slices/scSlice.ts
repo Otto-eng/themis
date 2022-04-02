@@ -118,7 +118,7 @@ export const scInviterEarningsDetailsList = createAsyncThunk(
 	async ({ first, address }: ISCAsyncThunk) => {
 		const protocolMetricsQuery = `
 				query MyQuery {
-				  scStakeEarnings(
+				  scInviteEarnings(
 				    first: ${first},
 						orderBy: timestamp,
 						orderDirection: desc,
@@ -140,8 +140,7 @@ export const scInviterEarningsDetailsList = createAsyncThunk(
 				console.error("Returned a null response when querying TheGraph");
 				throw new Error("");
 			}
-			data = graphData.data.scStakeEarnings ?? []
-			console.log("DATA", data);
+			data = graphData.data.scInviteEarnings ?? []
 		} catch (error) {
 			data = []
 		}
