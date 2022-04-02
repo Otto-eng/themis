@@ -279,8 +279,8 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
     await web3Modal.clearCachedProvider()
     if (provider?.disconnect && typeof provider.disconnect === 'function') {
       await provider.disconnect()
+      localStorage.removeItem("walletconnect")
     }
-
     setTimeout(() => {
       window.location.reload();
     }, 1);

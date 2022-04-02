@@ -7,10 +7,11 @@ import { abi as ScFarmForStakerABI } from "src/abi/ScFarmForStaker.json";
 import { abi as ScFarmForInvterABI } from "src/abi/ScFarmForInvter.json";
 import { abi as IERC20ABI } from "src/abi/IERC20.json";
 import dayjs from "dayjs"
+import utc from 'dayjs/plugin/utc'
 import copy from "copy-to-clipboard"
 import { useDispatch } from "react-redux"
 import { scInviterEarningsDetailsList, scStakeEarningsDetailsList } from "src/slices/scSlice"
-
+dayjs.extend(utc)
 const GridFlex = styled('div')({
 	width: "100%",
 	display: "flex",
@@ -117,7 +118,15 @@ const Claim = styled(Button)({
 	borderRadius: "8px",
 	cursor: "pointer",
 	fontSize: "16px",
-	fontWeight: 700
+	fontWeight: 400
+})
+
+const Value = styled("div")({
+	fontSize: "20px",
+	paddingTop: "8px",
+	fontWeight: 600,
+	color: "#555555",
+
 })
 
 export default function Sc() {
@@ -125,6 +134,7 @@ export default function Sc() {
 	const [stakValue, setStakValue] = useState("0.0000")
 	const [invterValue, setInvterValue] = useState("0.0000")
 	const [SCBanlance, setSCBanlance] = useState("0.0000")
+	const [num, setNum] = useState(0)
 	const theme = useAppSelector(state => state.theme.theme)
 	const dispatch = useDispatch();
 
@@ -141,7 +151,7 @@ export default function Sc() {
 			setSCBanlance((Math.floor((Number(ethers.utils.formatUnits(banlance, "ether")) ?? 0) * 10000) / 10000) + "")
 		}
 
-	}, [chainID, address, provider])
+	}, [chainID, address, provider, num])
 
 
 	const getList = useCallback(async () => {
@@ -152,16 +162,12 @@ export default function Sc() {
 			console.log("ScFarmForStakerContract", ScFarmForStakerContract)
 
 			const ScFarmForStakerpendingRewardValue = await ScFarmForStakerContract.pendingReward(address)
-			// const stakedInfoOfList = await ScFarmForStakerContract.stakedInfoOf(address)
 
-			// setStakValue(ethers.utils.formatUnits(ScFarmForStakerpendingRewardValue.sub(stakedInfoOfList.earnedTotal).toString(), "ether"))
+			console.log("ScFarmForStakerpendingRewardValue", ethers.utils.formatUnits(ScFarmForStakerpendingRewardValue, "ether"));
 			setStakValue((Math.floor(Number(ethers.utils.formatUnits(ScFarmForStakerpendingRewardValue, "ether")) * 10000) / 10000) + "")
 
 			const ScFarmForInvterpendingRewardValue = await ScFarmForInvterContract.pendingReward(address)
-			// console.log("ScFarmForInvterpendingRewardValue", ScFarmForInvterpendingRewardValue)
-			// const ScFarmForInvterstakedInfoOfList = await ScFarmForInvterContract.stakedInfoOf(address)
-			// console.log("ScFarmForInvterstakedInfoOfList", ScFarmForInvterstakedInfoOfList)
-			// setInvterValue(ethers.utils.formatUnits(ScFarmForInvterpendingRewardValue.sub(ScFarmForInvterstakedInfoOfList.earnedTotal).toString(), "ether"))
+			console.log("ScFarmForInvterpendingRewardValue", ethers.utils.formatUnits(ScFarmForInvterpendingRewardValue, "ether"));
 			setInvterValue((Math.floor(Number(ethers.utils.formatUnits(ScFarmForInvterpendingRewardValue, "ether")) * 10000) / 10000) + "")
 		}
 
@@ -190,7 +196,7 @@ export default function Sc() {
 				</Top>
 				<CardTitle style={{ color: theme === THEME_LIGHT ? "#010101" : "#768299" }}>Staking Earnings</CardTitle>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-					<Left style={{ color: theme === THEME_LIGHT ? "#010101" : "#768299" }}>SC Unclaimed {stakValue}</Left>
+					<Left style={{ color: theme === THEME_LIGHT ? "#010101" : "#768299" }}><div>SC Unclaimed</div> <Value>{stakValue}</Value></Left>
 					<Claim
 						variant="contained"
 						color="primary"
@@ -199,6 +205,7 @@ export default function Sc() {
 							const signer = provider.getSigner();
 							const ScFarmForStakerContract = new ethers.Contract(addresses[chainID].ScFarmForStaker_ADDRESS, ScFarmForStakerABI, signer)
 							await ScFarmForStakerContract.claim()
+							setNum(num + 1)
 						}}>
 						Claim
 					</Claim>
@@ -214,7 +221,7 @@ export default function Sc() {
 							<Ol onClick={() => {
 								copy(item.id)
 							}} style={{ cursor: "pointer" }}>{item.id.slice(0, 7)}...{item.id.slice(item.id.length - 7)}</Ol>
-							<Option>UTC(+8) {dayjs(Number(item.timestamp + "000")).format("YYYY-MM-DD HH:mm")}</Option>
+							<Option>UTC {dayjs.unix(Number(item.timestamp)).utc().format("YYYY-MM-DD HH:mm")}</Option>
 							<Amount>{(Math.floor(Number(Number(item.amount) / Math.pow(10, 9)) * 10000) / 10000).toFixed(4)}</Amount>
 						</Item>
 					</React.Fragment>)}
@@ -224,7 +231,7 @@ export default function Sc() {
 				</Card>
 				<CardTitle style={{ color: theme === THEME_LIGHT ? "#010101" : "#768299" }}>Invite Earnings</CardTitle>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-					<Left style={{ color: theme === THEME_LIGHT ? "#010101" : "#768299" }}>SC Unclaimed {invterValue}</Left>
+					<Left style={{ color: theme === THEME_LIGHT ? "#010101" : "#768299" }}><div>SC Unclaimed </div><Value>{invterValue}</Value></Left>
 					<Claim
 						variant="contained"
 						color="primary"
@@ -232,6 +239,7 @@ export default function Sc() {
 						onClick={async () => {
 							const ScFarmForInvterContract = new ethers.Contract(addresses[chainID].ScFarmForInvter_ADDRESS, ScFarmForInvterABI, provider)
 							await ScFarmForInvterContract.claim()
+							setNum(num + 1)
 						}}>
 						Claim</Claim>
 				</Card>

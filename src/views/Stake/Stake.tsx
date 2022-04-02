@@ -193,7 +193,7 @@ function Stake() {
                         <Trans>APY</Trans>
                       </Typography>
                       <Typography variant="h4">
-                        {stakingAPY || true ? (
+                        {stakingAPY ? (
                           <span data-testid="apy-value">
                             {new Intl.NumberFormat("en-US").format(Number(trimmedStakingAPY))}%
                           </span>

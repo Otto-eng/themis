@@ -4,7 +4,7 @@ import { Box, Typography } from "@material-ui/core";
 import "./rebasetimer.scss";
 import { Skeleton } from "@material-ui/lab";
 import { useEffect, useMemo, useState } from "react";
-import { loadAppDetails } from "../../slices/AppSlice";
+import { loadAppDetailsContract } from "../../slices/AppSlice";
 import { useWeb3Context } from "../../hooks/web3Context";
 import { Trans } from "@lingui/macro";
 
@@ -49,7 +49,7 @@ function RebaseTimer() {
       // When the countdown goes negative, reload the app details and reinitialize the timer
       if (secondsToRebase < 0) {
         async function reload() {
-          await dispatch(loadAppDetails({ networkID: chainID, provider: provider }));
+          await dispatch(loadAppDetailsContract());
         }
         reload();
         setRebaseString("");
@@ -67,8 +67,8 @@ function RebaseTimer() {
   return (
     <Box className="rebase-timer">
       <Typography variant="body2">
-        {currentBlock || true ? (
-          secondsToRebase > 0 || true ? (
+        {currentBlock ? (
+          secondsToRebase ? (
             <>
               <strong>{rebaseString}&nbsp;</strong>
               <Trans>to next rebase</Trans>

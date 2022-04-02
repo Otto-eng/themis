@@ -30,10 +30,10 @@ interface ISCSlice {
 interface ISCData {
 	readonly loading: boolean;
 	readonly loadingInviter: boolean;
-
-	readonly scStakeEarningsList: ScStakeEarningsType[]
-	readonly scInviterEarningsList: ScInviterEarningsType[]
+	readonly scStakeEarningsList: ScStakeEarningsType[];
+	readonly scInviterEarningsList: ScInviterEarningsType[];
 }
+
 const setSCState = (state: ISCSlice, payload: any) => {
 	const sc = payload.key;
 	state[sc] = payload.data;
@@ -43,13 +43,14 @@ const setSCState = (state: ISCSlice, payload: any) => {
 export const scStakeEarningsDetailsList = createAsyncThunk(
 	"sc/scStakeEarningsDetailsList",
 	async ({ first, address }: ISCAsyncThunk) => {
+
 		const protocolMetricsQuery = `
 				query MyQuery {
 				  scStakeEarnings(
 				    first: ${first},
 						orderBy: timestamp,
 						orderDirection: desc,
-						 where: { themis: ${address} }
+						where: { themis: "${address.toLowerCase()}" }
 				  ) {
 						id
 						timestamp
@@ -61,15 +62,18 @@ export const scStakeEarningsDetailsList = createAsyncThunk(
 				}
 			`;
 		let data: ScStakeEarningsType[] = []
-
 		try {
 			const graphData = await apollo<any>(protocolMetricsQuery);
+			console.log("protocolMetricsQuery", graphData)
 			if (!graphData || graphData == null) {
 				console.error("Returned a null response when querying TheGraph");
 				throw new Error("");
 			}
-			data = graphData.data.scStakeEarningsfilter
-			// ((item: ScStakeEarningsType) => item.themis.id.toLowerCase() === address.toLowerCase());
+			const list = graphData.data.scStakeEarnings ?? []
+			console.log("list", list)
+			data = list.filter((item: ScStakeEarningsType) => item.themis.id.toLowerCase() === address.toLowerCase());
+			console.log("GRAPHDATA scStakeEarnings", data)
+
 		} catch (error) {
 			data = []
 		}
@@ -98,7 +102,6 @@ export const scInviterEarningsDetailsList = createAsyncThunk(
 			})
 			const invitedAddress = await RelationshipContract.getSubordinateByPage(address, BigNumber.from("0"), first)
 			data = invitedAddress.subordinateArray
-			console.log("DATA", data)
 		} catch (error) {
 			data = []
 		}

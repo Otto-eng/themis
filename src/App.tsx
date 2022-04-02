@@ -12,7 +12,7 @@ import { segmentUA } from "./helpers/userAnalyticHelpers";
 import { shouldTriggerSafetyCheck } from "./helpers";
 
 import { calcBondDetails } from "./slices/BondSlice";
-import { loadAppDetails } from "./slices/AppSlice";
+import { loadAppDetails, loadAppDetailsContract } from "./slices/AppSlice";
 import { loadAccountDetails, calculateUserBondDetails } from "./slices/AccountSlice";
 import { info } from "./slices/MessagesSlice";
 
@@ -35,9 +35,6 @@ import Register from "./views/Register";
 
 import { abi as RelationshipABI } from "src/abi/Relationship.json";
 import { scInviterEarningsDetailsList, scStakeEarningsDetailsList } from "./slices/scSlice";
-import useTheme from "./hooks/useTheme";
-import { useWeb3React } from "@web3-react/core"
-import { Web3Provider } from "@ethersproject/providers";
 
 // 😬 Sorry for all the console logging
 const DEBUG = false;
@@ -85,12 +82,13 @@ const useStyles = makeStyles(theme => ({
 function App() {
   useSegmentAnalytics();
   useGoogleAnalytics();
-  const { account, ...rest } = useWeb3React<Web3Provider>();
-  console.log("ACCOUNT", account, rest)
+
   const location = useLocation();
   const dispatch = useDispatch();
   const history = useHistory()
-  const theme: { theme: string } = useAppSelector(state => state.theme)
+  const theme: { theme: string } = useAppSelector(state => {
+    return state.theme
+  })
   const currentPath = location.pathname + location.search + location.hash;
   const classes = useStyles();
 
@@ -101,37 +99,49 @@ function App() {
   const isSmallScreen = useMediaQuery("(max-width: 600px)");
   const [isInvited, setIsInvited] = useState(false)
 
-  const { connect, hasCachedProvider, provider, chainID, connected, disconnect, uri } = useWeb3Context();
-  const address = useAddress(); console.log("chainID", chainID);
+  const { connect, hasCachedProvider, provider, chainID, connected } = useWeb3Context();
+  const address = useAddress();
 
 
   const [walletChecked, setWalletChecked] = useState(false);
   // TODO (appleseed-expiredBonds): there may be a smarter way to refactor this
   const { bonds /*, expiredBonds */ } = useBonds(chainID);
-  async function loadDetails(whichDetails: string) {
-    // NOTE (unbanksy): If you encounter the following error:
-    // Unhandled Rejection (Error): call revert exception (method="balanceOf(address)", errorArgs=null, errorName=null, errorSignature=null, reason=null, code=CALL_EXCEPTION, version=abi/5.4.0)
-    // it's because the initial provider loaded always starts with chainID=1. This causes
-    // address lookup on the wrong chain which then throws the error. To properly resolve this,
-    // we shouldn't be initializing to chainID=1 in web3Context without first listening for the
-    // network. To actually test rinkeby, change setChainID equal to 4 before testing.
-    let loadProvider = provider;
 
-    if (whichDetails === "app") {
-      loadApp(loadProvider);
-    }
+  const loadAppDetail = useCallback(
+    async () => {
+      await dispatch(loadAppDetails())
+    },
+    [],
+  )
 
-    // don't run unless provider is a Wallet...
-    if (whichDetails === "account" && address && connected) {
-      loadAccount(loadProvider);
-    }
-  }
+  useEffect(() => {
+    loadAppDetail()
+  }, [])
+
+  const loadDetails = useCallback(
+    async (whichDetails: string) => {
+      let loadProvider = provider;
+
+      if (whichDetails === "app") {
+        loadApp(loadProvider);
+      }
+
+      // don't run unless provider is a Wallet...
+      if (whichDetails === "account" && address && connected) {
+        loadAccount(loadProvider);
+      }
+    },
+    [provider, address, connected, walletChecked]
+  )
+
+
 
   const loadApp = useCallback(
-    loadProvider => {
-      dispatch(loadAppDetails({ networkID: chainID, provider: loadProvider }));
-      bonds.map(bond => {
-        dispatch(calcBondDetails({ bond, value: "", provider: loadProvider, networkID: chainID }));
+    async loadProvider => {
+      console.log("loadAppDetailsContract")
+      await dispatch(loadAppDetailsContract({ networkID: chainID, provider: loadProvider }));
+      bonds.map(async bond => {
+        await dispatch(calcBondDetails({ bond, value: "", provider: loadProvider, networkID: chainID }));
       });
     },
     [connected],
@@ -143,19 +153,11 @@ function App() {
       bonds.map(bond => {
         dispatch(calculateUserBondDetails({ address, bond, provider, networkID: chainID }));
       });
-      // expiredBonds.map(bond => {
-      //   dispatch(calculateUserBondDetails({ address, bond, provider, networkID: chainID }));
-      // });
     },
     [connected],
   );
 
-  // The next 3 useEffects handle initializing API Loads AFTER wallet is checked
-  //
-  // this useEffect checks Wallet Connection & then sets State for reload...
-  // ... we don't try to fire Api Calls on initial load because web3Context is not set yet
-  // ... if we don't wait we'll ALWAYS fire API calls via JsonRpc because provider has not
-  // ... been reloaded within App.
+
   useEffect(() => {
     if (hasCachedProvider()) {
       // then user DOES have a wallet
@@ -179,10 +181,11 @@ function App() {
   // this useEffect fires on state change from above. It will ALWAYS fire AFTER
   useEffect(() => {
     // don't load ANY details until wallet is Checked
+
     if (walletChecked) {
       loadDetails("app");
     }
-  }, [walletChecked]);
+  }, [walletChecked, address, provider]);
 
   // this useEffect picks up any time a user Connects via the button
   useEffect(() => {
@@ -190,7 +193,7 @@ function App() {
     if (connected) {
       loadDetails("account");
     }
-  }, [connected]);
+  }, [connected, address, provider]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -211,11 +214,16 @@ function App() {
   useEffect(() => {
     if (address && chainID && provider && addresses) {
       serachRelationship(address)
-      dispatch(scStakeEarningsDetailsList({ first: 10, address }))
       dispatch(scInviterEarningsDetailsList({ first: BigNumber.from("10"), address, chainID, provider }))
     }
   }, [address, chainID, provider, addresses])
 
+  useEffect(() => {
+    if (address) {
+      console.log("scStakeEarningsDetailsList", address);
+      dispatch(scStakeEarningsDetailsList({ first: 10, address }))
+    }
+  }, [address])
 
   useEffect(() => {
     setThemeMode(theme.theme === THEME_LIGHT ? lightTheme : darkTheme)
@@ -230,16 +238,6 @@ function App() {
       history.replace("/register" + (location.search ?? ""))
     }
   }, [address, isInvited, location.pathname])
-
-  const flag = sessionStorage.getItem("THEMIS_FLAG")
-
-  if (!flag) {
-    // localStorage.removeItem("walletconnect")
-    localStorage.removeItem("WEB3_CONNECT_CACHED_PROVIDER")
-    sessionStorage.setItem("THEMIS_FLAG", true + "")
-    console.log("DISCONNECT")
-    disconnect && disconnect()
-  }
 
   return (
     <ThemeProvider theme={themeMode}>

@@ -489,12 +489,12 @@ function WalletChart({
             headerSubText={headerSubText}
           />
           </Box>
-        {loading || true ? (
+          {loading ? (
           <Skeleton variant="text" width={100} />
         ) : (
           <Box display="flex">
             <Typography variant="h4" style={{ fontWeight: 600, marginRight: 5 }}>
-             0.00 {/* {headerSubText} */}
+                  {headerSubText}
             </Typography>
             <Typography variant="h4" color="textSecondary" style={{ fontWeight: 400 }}>
               {type !== "multi" && "Today"}
@@ -503,7 +503,7 @@ function WalletChart({
         )}
       </div>
       <Box width="100%" minHeight={50} minWidth={100} className="ohm-chart">
-        {loading || true || (data && data.length > 0) ? (
+          {loading || (data && data.length > 0) ? (
           <ResponsiveContainer minHeight={50} width="100%">
             {renderChart(type, false)}
           </ResponsiveContainer>

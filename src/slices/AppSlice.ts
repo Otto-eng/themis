@@ -8,8 +8,7 @@ import apollo from "../lib/apolloClient";
 import { createSlice, createSelector, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "src/store";
 import { IBaseAsyncThunk } from "./interfaces";
-import { IERC20, OlympusStakingv2, SOhmv2 } from "../typechain";
-import { error } from "./MessagesSlice";
+import { OlympusStakingv2, SOhmv2 } from "../typechain";
 
 interface IProtocolMetrics {
   readonly timestamp: string;
@@ -24,9 +23,19 @@ interface IProtocolMetrics {
   readonly nextDistributedOhm: string;
 }
 
+interface ILoadAppDetails {
+  readonly stakingTVL?: number;
+  readonly thsPrice?: number;
+  readonly marketCap?: number;
+  readonly circSupply?: number;
+  readonly totalSupply?: number;
+  readonly treasuryMarketValue?: BigNumberish;
+}
+
 export const loadAppDetails = createAsyncThunk(
   "app/loadAppDetails",
-  async ({ networkID, provider }: IBaseAsyncThunk, { dispatch }) => {
+  async () => {
+    console.log("loadAppDetails")
     const protocolMetricsQuery = `
  query MyQuery {
    protocolMetrics(first: 1, orderBy: timestamp, orderDirection: desc) {
@@ -50,59 +59,40 @@ export const loadAppDetails = createAsyncThunk(
       return;
     }
 
-    // const signer = provider.getSigner();
-
-    // const thsContract = new ethers.Contract(addresses[networkID].THS_ADDRESS as string, ierc20Abi, signer) as IERC20;
-    // console.log("thsContract", thsContract)
-
-    // thsContract.totalSupply().then(res => {
-    //   console.log("totalSupply", res)
-    // }).catch(() => {
-    //   console.log("totalSupply ERROR")
-    // })
-
-    // const num = await thsContract.totalSupply()
-    // console.log("num", num)
-    console.log("graphData.data.protocolMetrics[0]", graphData.data.protocolMetrics[0])
-
     const stakingTVL = parseFloat(graphData.data.protocolMetrics[0].totalValueLocked);
     const marketCap = parseFloat(graphData.data.protocolMetrics[0].marketCap);
     const circSupply = parseFloat(graphData.data.protocolMetrics[0].thsCirculatingSupply);
     const totalSupply = parseFloat(graphData.data.protocolMetrics[0].totalSupply);
     const thsPrice = parseFloat(graphData.data.protocolMetrics[0].thsPrice);
     const treasuryMarketValue = parseFloat(graphData.data.protocolMetrics[0].treasuryMarketValue) / Math.pow(10, 9);
-
-    console.log("treasuryMarketValue", treasuryMarketValue)
-    console.log("circSupply", circSupply)
-
     // const currentBlock = parseFloat(graphData.data._meta.block.number);
-    console.log("treasuryMarketValue", treasuryMarketValue, circSupply)
-    if (!provider) {
-      console.error("failed to connect to provider, please connect your wallet");
-      return {
-        stakingTVL,
-        thsPrice,
-        marketCap,
-        circSupply,
-        totalSupply,
-        treasuryMarketValue,
-      } as IAppData;
-    }
 
-    console.log("provider", provider)
+    return {
+      stakingTVL,
+      thsPrice,
+      marketCap,
+      circSupply,
+      totalSupply,
+      treasuryMarketValue,
+    } as ILoadAppDetails
+  }
+);
 
-
+export const loadAppDetailsContract = createAsyncThunk(
+  "app/loadAppDetailsContract",
+  async ({ networkID, provider }: IBaseAsyncThunk) => {
+    const firstDate = +new Date()
+    console.log("firstDate", firstDate)
     const currentBlock = await provider.getBlockNumber();
+    const lastDate = +new Date()
 
-    console.log("currentBlock", currentBlock);
-
+    console.log("currentBlock", currentBlock, lastDate - firstDate)
     const stakingContract = new ethers.Contract(
       addresses[networkID].STAKING_ADDRESS as string,
       OlympusStakingv2ABI,
       provider,
     ) as OlympusStakingv2;
 
-    console.log("stakingAPY", stakingContract)
 
     const sThsMainContract = new ethers.Contract(
       addresses[networkID].STHS_ADDRESS as string,
@@ -110,8 +100,6 @@ export const loadAppDetails = createAsyncThunk(
       provider,
     ) as SOhmv2;
 
-    // console.log("sThsMainContract", sThsMainContract)
-    // Calculating staking
 
     const epoch = await stakingContract.epoch();
 
@@ -122,42 +110,21 @@ export const loadAppDetails = createAsyncThunk(
     const stakingAPY = Math.pow(1 + stakingRebase, 365 * 3) - 1;
     // Current index
     const currentIndex = await stakingContract.index();
-
     return {
       currentIndex: ethers.utils.formatUnits(currentIndex, "gwei"),
       currentBlock,
       fiveDayRate,
       stakingAPY,
-      stakingTVL,
+      // stakingTVL,
       stakingRebase,
-      marketCap,
-      thsPrice,
-      circSupply,
-      totalSupply,
-      treasuryMarketValue,
+      // marketCap,
+      // thsPrice,
+      // circSupply,
+      // totalSupply,
+      // treasuryMarketValue,
     } as IAppData;
   },
 );
-
-/**
- * checks if app.slice has marketPrice already
- * if yes then simply load that state
- * if no then fetches via `loadMarketPrice`
- *
- * `usage`:
- * ```
- * const originalPromiseResult = await dispatch(
- *    findOrLoadMarketPrice({ networkID: networkID, provider: provider }),
- *  ).unwrap();
- * originalPromiseResult?.whateverValue;
- * ```
- */
-
-/**
- * - fetches the THS price from CoinGecko (via getTokenPrice)
- * - falls back to fetch marketPrice from ohm-dai contract
- * - updates the App.slice when it runs
- */
 
 interface IAppData {
   readonly circSupply?: number;
@@ -199,6 +166,17 @@ const appSlice = createSlice({
         state.loading = false;
       })
       .addCase(loadAppDetails.rejected, (state, { error }) => {
+        state.loading = false;
+        console.error(error.name, error.message, error.stack);
+      })
+      .addCase(loadAppDetailsContract.pending, state => {
+        state.loading = true;
+      })
+      .addCase(loadAppDetailsContract.fulfilled, (state, action) => {
+        setAll(state, action.payload);
+        state.loading = false;
+      })
+      .addCase(loadAppDetailsContract.rejected, (state, { error }) => {
         state.loading = false;
         console.error(error.name, error.message, error.stack);
       })

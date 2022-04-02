@@ -10,6 +10,8 @@ import { IERC20 } from "src/typechain/IERC20"
 import { error } from "src/slices/MessagesSlice"
 import { useDispatch } from "react-redux"
 import dayjs from "dayjs"
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
 
 const listDay = [
 	{ id: 0, value: 180, gasSc: "0" },
@@ -421,7 +423,7 @@ function Claim() {
 					<CardBottom>
 						<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "rgba(255, 255, 255, 0.6)" : "#18253A" }}>
 							<CardContainer>
-								<TopText>UTC(+8) {dayjs(Number(item.recordTimestamp + "000")).format("YYYY-MM-DD HH:mm")}</TopText>
+								<TopText>UTC {dayjs.unix(Number(item.recordTimestamp)).utc().format("YYYY-MM-DD HH:mm")}</TopText>
 								<Text>Unstable Time</Text>
 							</CardContainer>
 						</CardItem>
@@ -451,7 +453,7 @@ function Claim() {
 				<Item>
 					<CardDetaileOl>hash</CardDetaileOl>
 					<Option>time</Option>
-					<Amount>SC amount</Amount>
+					<Amount>THS amount</Amount>
 				</Item>
 				{detaileList.map((item) => (
 					<React.Fragment>

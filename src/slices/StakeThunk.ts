@@ -85,7 +85,6 @@ export const changeApproval = createAsyncThunk(
       const pendingTxnType = token === "ths" ? "approve_staking" : "approve_unstaking";
       if (approveTx) {
         dispatch(fetchPendingTxns({ txnHash: approveTx.hash, text, type: pendingTxnType }));
-
         await approveTx.wait();
       }
     } catch (e: unknown) {
