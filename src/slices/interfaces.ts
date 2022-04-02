@@ -75,8 +75,5 @@ export interface ISCAsyncThunk {
 
 
 export interface ISCInviterEarningAsyncThunk {
-  readonly address: string;
   readonly first: BigNumber;
-  readonly chainID: NetworkID;
-  readonly provider: StaticJsonRpcProvider | JsonRpcProvider;
 }

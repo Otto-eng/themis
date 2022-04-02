@@ -1,6 +1,5 @@
 import { BigNumberish, ethers } from "ethers";
 import { addresses } from "../constants";
-import { abi as ierc20Abi } from "../abi/IERC20.json";
 import { abi as OlympusStakingv2ABI } from "../abi/OlympusStakingv2.json";
 import { abi as sTHS } from "../abi/sThemis.json";
 import { setAll } from "../helpers";
@@ -23,6 +22,16 @@ interface IProtocolMetrics {
   readonly nextDistributedOhm: string;
 }
 
+interface IProtocolMetrics2 {
+  readonly currentAPY: string;
+  readonly days5APY: string;
+  readonly nextEpochRebase: string;
+}
+
+interface IRebases {
+  readonly index: string;
+}
+
 interface ILoadAppDetails {
   readonly stakingTVL?: number;
   readonly thsPrice?: number;
@@ -35,7 +44,6 @@ interface ILoadAppDetails {
 export const loadAppDetails = createAsyncThunk(
   "app/loadAppDetails",
   async () => {
-    console.log("loadAppDetails")
     const protocolMetricsQuery = `
  query MyQuery {
    protocolMetrics(first: 1, orderBy: timestamp, orderDirection: desc) {
@@ -80,48 +88,46 @@ export const loadAppDetails = createAsyncThunk(
 
 export const loadAppDetailsContract = createAsyncThunk(
   "app/loadAppDetailsContract",
-  async ({ networkID, provider }: IBaseAsyncThunk) => {
-    const firstDate = +new Date()
-    console.log("firstDate", firstDate)
-    const currentBlock = await provider.getBlockNumber();
-    const lastDate = +new Date()
+  async () => {
 
-    console.log("currentBlock", currentBlock, lastDate - firstDate)
-    const stakingContract = new ethers.Contract(
-      addresses[networkID].STAKING_ADDRESS as string,
-      OlympusStakingv2ABI,
-      provider,
-    ) as OlympusStakingv2;
+    const protocolMetricsQuery = `
+    query MyQuery {
+      protocolMetrics(first: 1, orderBy: timestamp, orderDirection: desc) {
+        currentAPY
+        days5APY
+        nextEpochRebase
+      },
+      rebases(first: 1, orderDirection: desc, orderBy: timestamp) {
+        index
+      }
+    }
+`;
+    const result = await fetch("https://kovan.infura.io/v3/4e658875764f4112a9cbfe92c4e93b9e", {
+      method: "POST",
+      body: JSON.stringify({
+        jsonrpc: "2.0", method: "eth_blockNumber",
+        params: [],
+        id: 1
+      })
+    })
+    const res = await result.json()
+    const graphData = await apollo<{ protocolMetrics: IProtocolMetrics2[], rebases: IRebases[] }>(protocolMetricsQuery);
+    if (!graphData || graphData == null) {
+      console.error("Returned a null response when querying TheGraph");
+      return;
+    }
 
+    const currentIndex = graphData.data.rebases[0].index;
+    const fiveDayRate = parseFloat(graphData.data.protocolMetrics[0].days5APY);
+    const stakingAPY = parseFloat(graphData.data.protocolMetrics[0].currentAPY);
+    const stakingRebase = parseFloat(graphData.data.protocolMetrics[0].nextEpochRebase);
 
-    const sThsMainContract = new ethers.Contract(
-      addresses[networkID].STHS_ADDRESS as string,
-      sTHS,
-      provider,
-    ) as SOhmv2;
-
-
-    const epoch = await stakingContract.epoch();
-
-    const stakingReward = epoch.distribute;
-    const circ = await sThsMainContract.circulatingSupply();
-    const stakingRebase = Number(stakingReward.toString()) / Number(circ.toString());
-    const fiveDayRate = Math.pow(1 + stakingRebase, 5 * 3) - 1;
-    const stakingAPY = Math.pow(1 + stakingRebase, 365 * 3) - 1;
-    // Current index
-    const currentIndex = await stakingContract.index();
     return {
-      currentIndex: ethers.utils.formatUnits(currentIndex, "gwei"),
-      currentBlock,
+      currentIndex,
+      currentBlock: Number(res.result.toString()),
       fiveDayRate,
       stakingAPY,
-      // stakingTVL,
       stakingRebase,
-      // marketCap,
-      // thsPrice,
-      // circSupply,
-      // totalSupply,
-      // treasuryMarketValue,
     } as IAppData;
   },
 );

@@ -27,7 +27,6 @@ export const getBalances = createAsyncThunk(
   "account/getBalances",
   async ({ address, networkID, provider }: IBaseAddressAsyncThunk) => {
     const signer = provider.getSigner();
-
     const thsContract = new ethers.Contract(addresses[networkID].THS_ADDRESS as string, ierc20Abi, signer) as IERC20;
     const thsBalance = await thsContract.balanceOf(address);
     const usdtContract = new ethers.Contract(addresses[networkID].USDT_ADDRESS as string, ierc20Abi, signer) as IERC20;
@@ -46,34 +45,6 @@ export const getBalances = createAsyncThunk(
     ) as IERC20;
     const sThsBalance = await sThsContract.balanceOf(address);
 
-    // const wsohmContract = new ethers.Contract(addresses[networkID].WSOHM_ADDRESS as string, wsOHM, provider) as WsOHM;
-
-    // const wsohmBalance = await wsohmContract.balanceOf(address);
-
-    // NOTE (appleseed): wsohmAsSohm is wsOHM given as a quantity of sTHS
-    // const wsohmAsSohm = await wsohmContract.wOHMTosOHM(wsohmBalance);
-
-    // const poolTokenContract = new ethers.Contract(
-    //   addresses[networkID].PT_TOKEN_ADDRESS as string,
-    //   ierc20Abi,
-    //   provider,
-    // ) as IERC20;
-    // const poolBalance = await poolTokenContract.balanceOf(address);
-
-    // let fsohmBalance = BigNumber.from(0);
-    // for (const fuseAddressKey of ["FUSE_6_SOHM", "FUSE_18_SOHM", "FUSE_36_SOHM"]) {
-    //   if (addresses[networkID][fuseAddressKey]) {
-    //     const fsohmContract = new ethers.Contract(
-    //       addresses[networkID][fuseAddressKey] as string,
-    //       fuseProxy,
-    //       provider.getSigner(),
-    //     ) as FuseProxy;
-    //     // fsohmContract.signer;
-    //     const balanceOfUnderlying = await fsohmContract.callStatic.balanceOfUnderlying(address);
-
-    //     fsohmBalance = balanceOfUnderlying.add(fsohmBalance);
-    //   }
-    // }
     return {
       balances: {
         ths: ethers.utils.formatUnits(thsBalance, "gwei"),

@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Route, Redirect, Switch, useLocation, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useMediaQuery } from "@material-ui/core";
-import { BigNumber, ethers } from "ethers";
+import { ethers } from "ethers";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import useBonds, { IAllBondData } from "./hooks/Bonds";
 import { useAddress, useWeb3Context } from "./hooks/web3Context";
@@ -34,7 +34,7 @@ import { useAppSelector } from "./hooks";
 import Register from "./views/Register";
 
 import { abi as RelationshipABI } from "src/abi/Relationship.json";
-import { scInviterEarningsDetailsList, scStakeEarningsDetailsList } from "./slices/scSlice";
+import { scInviterEarningsDetailsList, scStakeEarningsDetailsList, stakeTHSReleaseEarningsList } from "./slices/scSlice";
 
 // 😬 Sorry for all the console logging
 const DEBUG = false;
@@ -107,15 +107,8 @@ function App() {
   // TODO (appleseed-expiredBonds): there may be a smarter way to refactor this
   const { bonds /*, expiredBonds */ } = useBonds(chainID);
 
-  const loadAppDetail = useCallback(
-    async () => {
-      await dispatch(loadAppDetails())
-    },
-    [],
-  )
-
   useEffect(() => {
-    loadAppDetail()
+    dispatch(loadAppDetails())
   }, [])
 
   const loadDetails = useCallback(
@@ -138,10 +131,9 @@ function App() {
 
   const loadApp = useCallback(
     async loadProvider => {
-      console.log("loadAppDetailsContract")
-      await dispatch(loadAppDetailsContract({ networkID: chainID, provider: loadProvider }));
-      bonds.map(async bond => {
-        await dispatch(calcBondDetails({ bond, value: "", provider: loadProvider, networkID: chainID }));
+      dispatch(loadAppDetailsContract());
+      bonds.map( bond => {
+         dispatch(calcBondDetails({ bond, value: "", provider: loadProvider, networkID: chainID }));
       });
     },
     [connected],
@@ -211,19 +203,22 @@ function App() {
     setIsInvited(invitedAddress === ZERO_ADDRESS)
   }
 
+  const scData = useCallback(
+    () => {
+      dispatch(scInviterEarningsDetailsList({ first: 10, address }));
+      dispatch(scStakeEarningsDetailsList({ first: 10, address }))
+      dispatch(stakeTHSReleaseEarningsList({ first: 10, address }))
+    },
+    [address, chainID, provider, addresses],
+  )
+
   useEffect(() => {
     if (address && chainID && provider && addresses) {
       serachRelationship(address)
-      dispatch(scInviterEarningsDetailsList({ first: BigNumber.from("10"), address, chainID, provider }))
+      scData()
     }
   }, [address, chainID, provider, addresses])
 
-  useEffect(() => {
-    if (address) {
-      console.log("scStakeEarningsDetailsList", address);
-      dispatch(scStakeEarningsDetailsList({ first: 10, address }))
-    }
-  }, [address])
 
   useEffect(() => {
     setThemeMode(theme.theme === THEME_LIGHT ? lightTheme : darkTheme)

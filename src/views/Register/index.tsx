@@ -93,10 +93,8 @@ function Register() {
 
 		const RelationshipContract = new ethers.Contract(addresses[chainID].Relationship_ADDRESS as string, RelationshipABI, signer)
 		const info = await RelationshipContract.RegisterInfoOf(address)
-		console.log("INFO", info)
 		let defaultCode = "";
 		let invitedAddress = "";
-		console.log("!!info?.inviterCode && !!info.inviter", !!info?.inviterCode && !!info.inviter)
 		if (!!info?.inviterCode && !!info.inviter) {
 			// inviter
 			invitedAddress = info.inviter;

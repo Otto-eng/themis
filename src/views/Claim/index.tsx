@@ -11,6 +11,7 @@ import { error } from "src/slices/MessagesSlice"
 import { useDispatch } from "react-redux"
 import dayjs from "dayjs"
 import utc from 'dayjs/plugin/utc'
+import { stakeTHSReleaseEarningsList } from "src/slices/scSlice"
 dayjs.extend(utc)
 
 const listDay = [
@@ -228,11 +229,13 @@ function Claim() {
 	const dispatch = useDispatch();
 	const { chainID, provider, address } = useWeb3Context()
 	const [infoList, setInfoList] = useState<InfoListType[]>([])
-	const [detaileList, setDetaileList] = useState([])
+	const stakeReleaseEarningsList = useAppSelector(state => state.sc.stakeReleaseEarningsList)
 	const [isOpen, setIsOpen] = useState(false)
 	const [optionData, setOptionData] = useState({ id: 0, value: 180, gasSc: "0" })
 	const [len, setLen] = useState(0)
 	const [page, setPage] = useState(1)
+	const [stakeReleaseEarningsListPage, setStakeReleaseEarningsListPage] = useState(1)
+
 	const [peddingStatus, setPeddingStatus] = useState({
 		claim: false,
 		confrim: false
@@ -251,7 +254,6 @@ function Claim() {
 
 			const StakingRewardReleaseContract = new ethers.Contract(addresses[chainID].StakingRewardRelease_ADDRESS, StakingRewardReleaseABI, signer)
 			const info = await StakingRewardReleaseContract.getRewardByPage(address, 0, first)
-			console.log("INFO", StakingRewardReleaseContract, info)
 			const list: InfoListType[] = info?.rewardInfoList_.map((item: rewardInfoList_, idx: number) => ({
 				earnedTotal: ethers.utils.formatUnits(item.earnedTotal.toString(), "gwei"),
 				lastEarnedAmount: ethers.utils.formatUnits(item.lastEarnedAmount.toString(), "gwei"),
@@ -263,7 +265,7 @@ function Claim() {
 				recordTimestamp: item.recordTimestamp.toString()
 			})) ?? [];
 
-			setInfoList(list);
+			setInfoList(list.reverse());
 		}
 	}, [chainID, address, provider])
 
@@ -282,20 +284,22 @@ function Claim() {
 
 	const claim = async (blocakHight: BigNumber) => {
 		const signer = provider.getSigner();
+		try {
 		const StakingRewardReleaseContract = new ethers.Contract(addresses[chainID].StakingRewardRelease_ADDRESS, StakingRewardReleaseABI, signer)
-		console.log("StakingRewardReleaseContract", StakingRewardReleaseContract)
-		StakingRewardReleaseContract.claim(blocakHight).then((res: any) => {
-			console.log("RES", res)
-		}).catch(() => {
-			console.log("ERROR")
-		})
+			const infoHash = await StakingRewardReleaseContract.claim(blocakHight)
+
+			await infoHash.wait()
+
+			const info = await StakingRewardReleaseContract.provider.getTransactionReceipt(infoHash.hash)
+		} catch (error) {
+
+		}
 		setTimeout(() => {
 			setPeddingStatus({
 				...peddingStatus,
 				claim: false
 			})
-		}, 2000);
-
+		}, 500);
 	}
 
 	useEffect(() => {
@@ -305,6 +309,10 @@ function Claim() {
 	useEffect(() => {
 		getList(10 * page);
 	}, [chainID, address, provider, page, peddingStatus])
+
+	useEffect(() => {
+		dispatch(stakeTHSReleaseEarningsList({ first: stakeReleaseEarningsListPage * 10, address }))
+	}, [stakeReleaseEarningsListPage])
 
 	return (
 		<Main>
@@ -342,22 +350,27 @@ function Claim() {
 					<Confrim
 						variant="contained"
 						color="primary"
-						disabled={!optionData.id}
+						disabled={!optionData.id || peddingStatus.confrim}
 						onClick={async () => {
 							setPeddingStatus({
 								...peddingStatus,
 								confrim: true
 							})
 							const signer = provider.getSigner();
-							const StakingRewardReleaseContract = new ethers.Contract(addresses[chainID].StakingRewardRelease_ADDRESS, StakingRewardReleaseABI, signer);
-							const SCContract = new ethers.Contract(addresses[chainID].ScaleCode_ADDRESS, ierc20Abi, signer);
-							const balance = await SCContract.balanceOf(address);
-							if (ethers.utils.parseUnits(optionData.value + "", "ether").lt(balance)) {
-								const approveTx = await SCContract.approve(addresses[chainID].StakingRewardRelease_ADDRESS, ethers.utils.parseUnits(optionData.gasSc, "ether"));
-								const info = await StakingRewardReleaseContract.speedUp(block?.recordBlock!, BigNumber.from(optionData.id))
-								await approveTx.wait();
-							} else {
-								dispatch(error("SC Insufficient Balance"));
+							try {
+								const StakingRewardReleaseContract = new ethers.Contract(addresses[chainID].StakingRewardRelease_ADDRESS, StakingRewardReleaseABI, signer);
+								const SCContract = new ethers.Contract(addresses[chainID].ScaleCode_ADDRESS, ierc20Abi, signer);
+								const balance = await SCContract.balanceOf(address);
+								if (ethers.utils.parseUnits(optionData.value + "", "ether").lt(balance)) {
+									const approveTx = await SCContract.approve(addresses[chainID].StakingRewardRelease_ADDRESS, ethers.utils.parseUnits(optionData.gasSc, "ether"));
+									const infoHash = await StakingRewardReleaseContract.speedUp(block?.recordBlock!, BigNumber.from(optionData.id))
+									await approveTx.wait();
+									const info = await StakingRewardReleaseContract.provider.getTransactionReceipt(infoHash.hash)
+								} else {
+									dispatch(error("SC Insufficient Balance"));
+								}
+							} catch (error) {
+
 							}
 							setTimeout(() => {
 								setPeddingStatus({
@@ -392,7 +405,7 @@ function Claim() {
 								<ClaimBtn
 									variant="contained"
 									color="primary"
-									disabled={item.speedLevel === "7"}
+									disabled={item.speedLevel === "7" || peddingStatus.confrim}
 									onClick={() => {
 										setIsOpen(true)
 										setBlock(item)
@@ -408,7 +421,7 @@ function Claim() {
 								<ClaimBtn
 									variant="contained"
 									color="primary"
-									disabled={!Number(item.pendingTotal)}
+									disabled={!Number(item.pendingTotal) || peddingStatus.claim}
 									onClick={() => {
 										setPeddingStatus({
 											...peddingStatus,
@@ -455,26 +468,24 @@ function Claim() {
 					<Option>time</Option>
 					<Amount>THS amount</Amount>
 				</Item>
-				{detaileList.map((item) => (
+				{stakeReleaseEarningsList.map((item) => (
 					<React.Fragment>
 						<Item>
-							<CardDetaileOl>1</CardDetaileOl>
-							<Option>{+new Date()}</Option>
-							<Amount>13231.23123</Amount>
+							<CardDetaileOl>{item.id.slice(0, 4)}...{item.id.slice(item.id.length - 4)}</CardDetaileOl>
+							<Option>UTC {dayjs.unix(Number(item.timestamp)).utc().format("YYYY-MM-DD HH:mm")}</Option>
+							<Amount>{(Math.floor(Number(item.amount) * 10000) / 10000).toFixed(4)}</Amount>
 						</Item>
-						<Item>
-							<CardDetaileOl>2</CardDetaileOl>
-							<Option>{+new Date()}</Option>
-							<Amount>12.323</Amount>
-						</Item>
-						<Item>
-							<CardDetaileOl>3</CardDetaileOl>
-							<Option>{+new Date()}</Option>
-							<Amount>123456.78</Amount>
-						</Item>
+
 					</React.Fragment>
 				))}
-				{!!detaileList.length && <More style={{ backgroundColor: theme === THEME_LIGHT ? "rgba(255, 255, 255, 0.6)" : "#18253A" }}> view more</More>}
+				<More
+					style={((stakeReleaseEarningsListPage * 10) > stakeReleaseEarningsList.length) ? ({
+						display: "none",
+						backgroundColor: theme === THEME_LIGHT ? "rgba(255, 255, 255, 0.6)" : "#18253A"
+					}) : ({})}
+					onClick={() => {
+						setStakeReleaseEarningsListPage(stakeReleaseEarningsListPage + 1)
+					}} > view more</More>
 			</CardDetaile>
 
 		</Main>

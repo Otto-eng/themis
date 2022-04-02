@@ -11,20 +11,21 @@ import { initLocale } from "./locales";
 
 import App from "./App";
 import store from "./store";
-// import getLibrary from "./utils/ethers/getLibrary";
-
-
-// import Vconsole from "vconsole";
-
-// if (process.env.REACT_APP_NODE_ENV !== "production") {
-//   new Vconsole({ maxLogNumber: 5000 });
-// }
+import { THEME_LIGHT } from "./constants";
 
 const Root: FC = () => {
   useEffect(() => {
     initLocale();
 
   }, []);
+
+  const flag = sessionStorage.getItem("THEMIS_THEME");
+
+  if (!flag) {
+    sessionStorage.setItem("THEMIS_THEME", "true")
+    const theme = localStorage.getItem("THS_THEME");
+    document.documentElement.setAttribute('data-theme', theme || THEME_LIGHT)
+  }
 
 
   return (

@@ -169,9 +169,6 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
   function hasCachedProvider(): boolean {
     return checkCachedProvider(web3Modal);
   }
-
-  console.log("provider", provider)
-
   // NOTE (appleseed): none of these listeners are needed for Backend API Providers
   // ... so I changed these listeners so that they only apply to walletProviders, eliminating
   // ... polling to the backend providers for network changes
@@ -230,7 +227,6 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
       try {
         rawProvider = await web3Modal.connect();
       } catch (e) {
-        console.log("wallet connection status:", e);
         if (e !== "Modal closed by user") {
           setConnectionError({
             created: Date.now(),

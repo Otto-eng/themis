@@ -79,13 +79,9 @@ export function Wallet() {
   const { chainID, provider } = useWeb3Context()
   const address = useAddress()
   const [state, setState] = useState(false)
-  // const pendingTransactions = useSelector(state => {
-  //   return state.pendingTransactions;
-  // }); // [{ txnHash: "3241141", text: "test" }];
 
   const serachRelationship = async (account: string) => {
     const RelationshipContract = new ethers.Contract(addresses[chainID].Relationship_ADDRESS as string, RelationshipABI, provider)
-
     const info = await RelationshipContract.RegisterInfoOf(account)
     info?.registrantCode && setInitCode(info.registrantCode)
   }

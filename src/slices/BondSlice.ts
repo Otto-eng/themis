@@ -102,7 +102,7 @@ export const calcBondDetails = createAsyncThunk(
     let marketPrice: number = 0;
     try {
       const originalPromiseResult = await dispatch(
-        loadAppDetailsContract({ networkID: networkID, provider: provider }),
+        loadAppDetailsContract(),
       ).unwrap();
       marketPrice = originalPromiseResult?.thsPrice ?? 0;
     } catch (rejectedValueOrSerializedError) {
@@ -194,7 +194,6 @@ export const bondAsset = createAsyncThunk(
     const bondContract = bond.getContractForBond(networkID, signer);
     const calculatePremium = await bondContract.bondPrice();
     // const maxPremium = Math.round(Number(calculatePremium.toString()) * (1 + acceptedSlippage));
-    console.log("calculatePremium", calculatePremium)
     // Deposit the bond
     let bondTx;
     let uaData = {
@@ -208,7 +207,6 @@ export const bondAsset = createAsyncThunk(
     try {
 
       bondTx = await bondContract.deposit(valueInWei, calculatePremium, depositorAddress);
-      console.log("AWAIT")
       dispatch(
         fetchPendingTxns({ txnHash: bondTx.hash, text: "Bonding " + bond.displayName, type: "bond_" + bond.name }),
       );

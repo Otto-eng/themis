@@ -91,11 +91,11 @@ a:hover svg {
 html[data-theme=light] .MuiDrawer-paper {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    background-color: #FFF;
+    background-color: #FFF !important;
 }
 
 html[data-theme=dark] .MuiDrawer-paper {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    background-color: rgb(54, 56, 64);
+    background-color: #363840 !important;
 }

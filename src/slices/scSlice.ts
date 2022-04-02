@@ -1,12 +1,8 @@
 import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
 import apollo from "src/lib/apolloClient";
-import { ISCAsyncThunk, ISCInviterEarningAsyncThunk } from "./interfaces";
+import { ISCAsyncThunk } from "./interfaces";
 import { setAll } from "src/helpers";
 import { RootState } from "src/store";
-import { error } from "./MessagesSlice";
-import { BigNumber, ethers } from "ethers";
-import { addresses } from "src/constants";
-import { abi as RelationshipABI } from "src/abi/Relationship.json";
 
 
 interface ScStakeEarningsType {
@@ -14,13 +10,6 @@ interface ScStakeEarningsType {
 	timestamp: string
 	amount: string
 	themis: { id: string }
-}
-
-interface ScInviterEarningsType {
-	id: string
-	registrant: string
-	amount: string
-	invitation: string
 }
 
 interface ISCSlice {
@@ -31,7 +20,9 @@ interface ISCData {
 	readonly loading: boolean;
 	readonly loadingInviter: boolean;
 	readonly scStakeEarningsList: ScStakeEarningsType[];
-	readonly scInviterEarningsList: ScInviterEarningsType[];
+	readonly scInviterEarningsList: ScStakeEarningsType[];
+	readonly stakeReleaseEarningsList: ScStakeEarningsType[];
+
 }
 
 const setSCState = (state: ISCSlice, payload: any) => {
@@ -43,7 +34,6 @@ const setSCState = (state: ISCSlice, payload: any) => {
 export const scStakeEarningsDetailsList = createAsyncThunk(
 	"sc/scStakeEarningsDetailsList",
 	async ({ first, address }: ISCAsyncThunk) => {
-
 		const protocolMetricsQuery = `
 				query MyQuery {
 				  scStakeEarnings(
@@ -64,15 +54,12 @@ export const scStakeEarningsDetailsList = createAsyncThunk(
 		let data: ScStakeEarningsType[] = []
 		try {
 			const graphData = await apollo<any>(protocolMetricsQuery);
-			console.log("protocolMetricsQuery", graphData)
 			if (!graphData || graphData == null) {
 				console.error("Returned a null response when querying TheGraph");
 				throw new Error("");
 			}
 			const list = graphData.data.scStakeEarnings ?? []
-			console.log("list", list)
 			data = list.filter((item: ScStakeEarningsType) => item.themis.id.toLowerCase() === address.toLowerCase());
-			console.log("GRAPHDATA scStakeEarnings", data)
 
 		} catch (error) {
 			data = []
@@ -84,24 +71,77 @@ export const scStakeEarningsDetailsList = createAsyncThunk(
 	},
 );
 
-export const scInviterEarningsDetailsList = createAsyncThunk(
-	"sc/scInviterEarningsDetailsList",
-	async ({ first, address, chainID, provider }: ISCInviterEarningAsyncThunk, { dispatch }) => {
-		if (!provider) {
-			dispatch(error("Please connect your wallet!"));
-			return;
-		}
-		const signer = provider.getSigner();
+
+export const stakeTHSReleaseEarningsList = createAsyncThunk(
+	"sc/stakeReleaseEarningsList",
+	async ({ first, address }: ISCAsyncThunk) => {
+		// where: { themis: "${address.toLowerCase()}" }
+
+		const protocolMetricsQuery = `
+				query MyQuery {
+				  stakeReleaseEarnings(
+				    first: ${first},
+						orderBy: timestamp,
+						orderDirection: desc,
+				  ) {
+						id
+						timestamp
+						amount
+						themis {
+						  id
+						}
+  				}
+				}
+			`;
 		let data: ScStakeEarningsType[] = []
 		try {
-			const RelationshipContract = new ethers.Contract(addresses[chainID].Relationship_ADDRESS as string, RelationshipABI, signer)
-			RelationshipContract.getSubordinateByPage(address, BigNumber.from("0"), first).then((res: any) => {
-				console.log("RES", res)
-			}).catch(() => {
-				console.log("RES ERROR")
-			})
-			const invitedAddress = await RelationshipContract.getSubordinateByPage(address, BigNumber.from("0"), first)
-			data = invitedAddress.subordinateArray
+			const graphData = await apollo<any>(protocolMetricsQuery);
+			console.log("stakeReleaseEarnings", graphData)
+			if (!graphData || graphData == null) {
+				console.error("Returned a null response when querying TheGraph");
+				throw new Error("");
+			}
+			const list = graphData.data.stakeReleaseEarnings ?? []
+			data = list.filter((item: ScStakeEarningsType) => item.themis.id.toLowerCase() === address.toLowerCase());
+		} catch (error) {
+			data = []
+		}
+		return ({
+			data,
+			key: "stakeReleaseEarningsList"
+		})
+	},
+);
+
+export const scInviterEarningsDetailsList = createAsyncThunk(
+	"sc/scInviterEarningsDetailsList",
+	async ({ first, address }: ISCAsyncThunk) => {
+		const protocolMetricsQuery = `
+				query MyQuery {
+				  scStakeEarnings(
+				    first: ${first},
+						orderBy: timestamp,
+						orderDirection: desc,
+						where: { themis: "${address.toLowerCase()}" }
+				  ) {
+						id
+						timestamp
+						amount
+						themis {
+						  id
+						}
+  				}
+				}
+			`;
+		let data: ScStakeEarningsType[] = []
+		try {
+			const graphData = await apollo<any>(protocolMetricsQuery);
+			if (!graphData || graphData == null) {
+				console.error("Returned a null response when querying TheGraph");
+				throw new Error("");
+			}
+			data = graphData.data.scStakeEarnings ?? []
+			console.log("DATA", data);
 		} catch (error) {
 			data = []
 		}
@@ -116,7 +156,8 @@ const initialState: ISCData = {
 	loading: false,
 	loadingInviter: false,
 	scStakeEarningsList: [],
-	scInviterEarningsList: []
+	scInviterEarningsList: [],
+	stakeReleaseEarningsList: []
 };
 
 
@@ -141,6 +182,17 @@ const scSlice = createSlice({
 				state.loading = false;
 				console.error(error.name, error.message, error.stack);
 			})
+			.addCase(stakeTHSReleaseEarningsList.pending, (state, action) => {
+				state.loadingInviter = true;
+			})
+			.addCase(stakeTHSReleaseEarningsList.fulfilled, (state, action) => {
+				state.loadingInviter = false;
+				setSCState(state, action.payload);
+			})
+			.addCase(stakeTHSReleaseEarningsList.rejected, (state, { error }) => {
+				state.loadingInviter = false;
+				console.error(error.name, error.message, error.stack);
+			})
 			.addCase(scInviterEarningsDetailsList.pending, (state, action) => {
 				state.loadingInviter = true;
 			})
@@ -152,6 +204,7 @@ const scSlice = createSlice({
 				state.loadingInviter = false;
 				console.error(error.name, error.message, error.stack);
 			});
+
 	},
 });
 

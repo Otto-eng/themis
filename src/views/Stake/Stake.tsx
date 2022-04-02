@@ -153,7 +153,7 @@ function Stake() {
       .reduce((a, b) => a + b, 0)
       .toFixed(4),
   );
-  const trimmedStakingAPY = trim(stakingAPY * 100, 1);
+  const trimmedStakingAPY = trim(stakingAPY, 1);
   const stakingRebasePercentage = trim(stakingRebase * 100, 4);
   const nextRewardValue = trim((Number(stakingRebasePercentage) / 100) * trimmedBalance, 4);
 
@@ -312,7 +312,6 @@ function Stake() {
                               className="stake-input"
                               value={quantity}
                                   onChange={e => {
-                                    console.log("e.target.value", e.target.value, Number(e.target.value))
                                     setQuantity(Number(e.target.value) + "")
                                   }}
                               labelWidth={0}

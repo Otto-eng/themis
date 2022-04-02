@@ -1,24 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useTheme, makeStyles } from "@material-ui/core/styles";
 import { trim } from "src/helpers";
 import { ReactComponent as ArrowUpIcon } from "src/assets/icons/arrow-up.svg";
 import { ReactComponent as sOhmTokenImg } from "src/assets/tokens/token_sOHM.svg";
 import { ReactComponent as ThsImg } from "src/assets/tokens/ths.svg";
-// import { ReactComponent as t33TokenImg } from "src/assets/tokens/token_33T.svg";
-// import { ReactComponent as wsOhmTokenImg } from "src/assets/tokens/token_wsOHM.svg";
-// import { ReactComponent as wethTokenImg } from "src/assets/tokens/wETH.svg";
-// import { ReactComponent as abracadabraTokenImg } from "src/assets/tokens/MIM.svg";
-import rariTokenImg from "src/assets/tokens/RARI.png";
+import { ethers } from "ethers";
 
-import { addresses, TOKEN_DECIMALS } from "src/constants";
-// import SOhmLearnView from "./SOhm/SOhmLearnView";
-// import SOhmTxView from "./SOhm/SOhmTxView";
-// import SOhmZapView from "./SOhm/SOhmTxView";
-// import Chart from "../../../../components/Chart/WalletChart.jsx";
-// import apollo from "../../../../lib/apolloClient";
-// import { rebasesDataQuery, bulletpoints, tooltipItems, tooltipInfoMessages, itemType } from "../../treasuryData.js";
+import { addresses, } from "src/constants";
 import { useWeb3Context } from "src/hooks";
+import { abi as ierc20Abi } from "../../abi/IERC20.json";
+
 import {
   SvgIcon,
   Button,
@@ -148,28 +140,42 @@ const Token = ({ name, icon, userBalance, userBalanceUSD, onExpandedChange, expa
 function InitialWalletView() {
   const theme = useTheme();
   const styles = useStyles();
-  const { chainID, address } = useWeb3Context();
-  const isEthereumAPIAvailable = window.ethereum;
-  // const [apy, setApy] = useState(null);
-  const [expanded, setExpanded] = useState(false);
-
-  // const STHS_ADDRESS = addresses[chainID].STHS_ADDRESS;
-  // const THS_ADDRESS = addresses[chainID].THS_ADDRESS;
-  // const PT_TOKEN_ADDRESS = addresses[chainID].PT_TOKEN_ADDRESS;
-  // const WSOHM_ADDRESS = addresses[chainID].WSOHM_ADDRESS;
-
+  const { chainID, address, provider } = useWeb3Context();
   const thsBalance = useSelector(state => state.account.balances?.ths);
   const sThsBalance = useSelector(state => state.account.balances?.sThs);
-  // const wsOhmBalance = useSelector(state => state.account.balances?.wsohm);
-  // const poolBalance = useSelector(state => state.account.balances?.pool);
   const marketPrice = useSelector(state => state.app.thsPrice);
+  const [ths, setThs] = useState(thsBalance)
+  const [sThs, setSThs] = useState(sThsBalance)
+
+  const getThsBanlance = useCallback(
+    async () => {
+      const signer = provider.getSigner();
+      const thsContract = new ethers.Contract(addresses[chainID].THS_ADDRESS, ierc20Abi, signer);
+      const thsBalance = await thsContract.balanceOf(address);
+      setThs(ethers.utils.formatUnits(thsBalance, "gwei"))
+    }, [address, chainID, provider])
+  const getsThsBanlance = useCallback(
+    async () => {
+      const signer = provider.getSigner();
+      const sThsContract = new ethers.Contract(addresses[chainID].STHS_ADDRESS, ierc20Abi, signer);
+      const sThsBalance = await sThsContract.balanceOf(address);
+      setSThs(ethers.utils.formatUnits(sThsBalance, "gwei"))
+    }, [address, chainID, !!provider])
+
+  useEffect(() => {
+    if (address && chainID && provider) {
+      console.log("THS")
+      getThsBanlance()
+      getsThsBanlance()
+    }
+  }, [address, chainID, provider])
   return (
     <Paper>
       <Token
         name="THS"
-        userBalance={thsBalance ?? "--"}
+        userBalance={ths ?? "--"}
         userBalanceUSD={
-          isNaN(thsBalance) || isNaN(marketPrice) ? "--" : trim(thsBalance * marketPrice, 4)
+          !isNaN(marketPrice) ? trim((ths ?? 0) * marketPrice, 4) : "--"
         }
         icon={ThsImg}
         toggleDrawer={() => {
@@ -178,9 +184,9 @@ function InitialWalletView() {
       />
       <Token
         name="sTHS"
-        userBalance={sThsBalance ?? "--"}
+        userBalance={sThs ?? "--"}
         userBalanceUSD={
-          isNaN(sThsBalance) || isNaN(marketPrice) ? "--" : trim(sThsBalance * marketPrice, 4)
+          !isNaN(marketPrice) ? trim((sThs ?? 0) * marketPrice, 4) : "--"
         }
         icon={sOhmTokenImg}
         toggleDrawer={() => {
