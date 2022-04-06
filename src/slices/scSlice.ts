@@ -96,7 +96,6 @@ export const stakeTHSReleaseEarningsList = createAsyncThunk(
 		let data: ScStakeEarningsType[] = []
 		try {
 			const graphData = await apollo<any>(protocolMetricsQuery);
-			console.log("stakeReleaseEarnings", graphData)
 			if (!graphData || graphData == null) {
 				console.error("Returned a null response when querying TheGraph");
 				throw new Error("");

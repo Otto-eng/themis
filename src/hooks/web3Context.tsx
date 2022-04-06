@@ -71,7 +71,6 @@ function isIframe() {
   return globalThis.location !== globalThis.parent.location;
 }
 
-const ALL_URIs = NodeHelper.getNodesUris();
 
 /**
  * "intelligently" loadbalances production API Keys

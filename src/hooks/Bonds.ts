@@ -31,7 +31,6 @@ function useBonds(chainID: number) {
   const [bonds, setBonds] = useState<Bond[] | IAllBondData[]>(initialBondArray);
   // const [expiredBonds, setExpiredBonds] = useState<Bond[] | IAllBondData[]>(initialExpiredArray);
 
-
   useEffect(() => {
     let bondDetails: IAllBondData[];
     // console.log("BONDSTATE", bondState)

@@ -1,13 +1,12 @@
 import { ethers, BigNumber, BigNumberish } from "ethers";
 import { contractForRedeemHelper } from "../helpers";
 import { getBalances, calculateUserBondDetails } from "./AccountSlice";
-import { loadAppDetailsContract } from "./AppSlice";
+import { loadAppDetails } from "./AppSlice";
 import { error, info } from "./MessagesSlice";
 import { clearPendingTxn, fetchPendingTxns } from "./PendingTxnsSlice";
 import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
 import { getBondCalculator } from "src/helpers/BondCalculator";
 import { RootState } from "src/store";
-import { abi as OlympusBondDepository } from "src/abi/bonds/OlympusBondDepository.json";
 
 import {
   IApproveBondAsyncThunk,
@@ -18,7 +17,6 @@ import {
   IRedeemBondAsyncThunk,
 } from "./interfaces";
 import { segmentUA } from "../helpers/userAnalyticHelpers";
-import { EthContract } from "src/typechain/EthContract";
 
 export const changeApproval = createAsyncThunk(
   "bonding/changeApproval",
@@ -102,7 +100,7 @@ export const calcBondDetails = createAsyncThunk(
     let marketPrice: number = 0;
     try {
       const originalPromiseResult = await dispatch(
-        loadAppDetailsContract(),
+        loadAppDetails(),
       ).unwrap();
       marketPrice = originalPromiseResult?.thsPrice ?? 0;
     } catch (rejectedValueOrSerializedError) {
@@ -114,6 +112,7 @@ export const calcBondDetails = createAsyncThunk(
       // TODO (appleseed): improve this logic
       if (bond.name === "cvx") {
         let bondPriceRaw = await bondContract.bondPrice();
+
         let assetPriceUSD = await bond.getBondReservePrice(networkID, provider);
         let assetPriceBN = ethers.utils.parseUnits(assetPriceUSD.toString(), 14);
         // bondPriceRaw has 4 extra decimals, so add 14 to assetPrice, for 18 total

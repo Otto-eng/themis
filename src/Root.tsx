@@ -11,18 +11,16 @@ import { initLocale } from "./locales";
 
 import App from "./App";
 import store from "./store";
-import { THEME_LIGHT } from "./constants";
+
+// import Vconsole from "vconsole";
+// new Vconsole({ maxLogNumber: 5000 });
+
 
 const Root: FC = () => {
   useEffect(() => {
     initLocale();
 
   }, []);
-
-
-  const theme = localStorage.getItem("THS_THEME");
-  document.documentElement.setAttribute('data-theme', theme || THEME_LIGHT)
-
 
   return (
       <Web3ContextProvider>

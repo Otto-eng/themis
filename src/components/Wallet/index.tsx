@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import copy from "copy-to-clipboard"
 
 import { ReactComponent as CloseIcon } from "../../assets/icons/x.svg";
@@ -80,11 +80,15 @@ export function Wallet() {
   const address = useAddress()
   const [state, setState] = useState(false)
 
-  const serachRelationship = async (account: string) => {
-    const RelationshipContract = new ethers.Contract(addresses[chainID].Relationship_ADDRESS as string, RelationshipABI, provider)
-    const info = await RelationshipContract.RegisterInfoOf(account)
-    info?.registrantCode && setInitCode(info.registrantCode)
-  }
+  const serachRelationship = useCallback(
+    async (account: string) => {
+      const signer = provider.getSigner();
+      const RelationshipContract = new ethers.Contract(addresses[chainID].Relationship_ADDRESS as string, RelationshipABI, signer)
+      const info = await RelationshipContract.RegisterInfoOf(account)
+      info?.registrantCode && setInitCode(info.registrantCode)
+    },
+    [address, chainID, provider, addresses]
+  )
 
   useEffect(() => {
     if (address && chainID && !!provider && !!addresses) {

@@ -1,11 +1,11 @@
 import { Button, styled } from "@material-ui/core"
-import { BigNumber, ethers } from "ethers"
+import { ethers } from "ethers"
 import React, { useCallback, useEffect, useState } from "react"
 import { addresses, THEME_LIGHT } from "src/constants"
 import { useAppSelector, useWeb3Context } from "src/hooks"
 import { abi as ScFarmForStakerABI } from "src/abi/ScFarmForStaker.json";
 import { abi as ScFarmForInvterABI } from "src/abi/ScFarmForInvter.json";
-import { abi as IERC20ABI } from "src/abi/IERC20.json";
+import { abi as ScaleCodeABI } from "src/abi/ScaleCode.json";
 import dayjs from "dayjs"
 import utc from 'dayjs/plugin/utc'
 import copy from "copy-to-clipboard"
@@ -136,7 +136,9 @@ export default function Sc() {
 	const [stakValue, setStakValue] = useState("0.0000")
 	const [invterValue, setInvterValue] = useState("0.0000")
 	const [SCBanlance, setSCBanlance] = useState("0.0000")
-	const [num, setNum] = useState(0)
+	const [num, setNum] = useState(true)
+	const [stake, setStake] = useState(true)
+	const [invter, setInvter] = useState(true)
 	const theme = useAppSelector(state => state.theme.theme)
 	const dispatch = useDispatch();
 
@@ -152,34 +154,66 @@ export default function Sc() {
 	const scInviterEarningsList = useAppSelector(state => state.sc.scInviterEarningsList)
 
 	const getScbanlance = useCallback(async () => {
-		if (!!address && !!chainID && !!provider && !!addresses[chainID].ScaleCode_ADDRESS) {
-			const ScaleCodeContract = new ethers.Contract(addresses[chainID].ScaleCode_ADDRESS, IERC20ABI, provider)
-			const banlance = await ScaleCodeContract.balanceOf(address)
-			setSCBanlance((Math.floor((Number(ethers.utils.formatUnits(banlance, "ether")) ?? 0) * 10000) / 10000) + "")
+		if (!!address && !!chainID && !!provider && !!addresses[chainID].ScaleCode_ADDRESS && num) {
+			try {
+				const signer = provider.getSigner();
+				const ScaleCodeContract = new ethers.Contract(addresses[chainID].ScaleCode_ADDRESS, ScaleCodeABI, signer)
+					const banlance = await ScaleCodeContract.balanceOf(address)
+				setSCBanlance((Math.floor((Number(ethers.utils.formatUnits(banlance, "ether")) ?? 0) * 10000) / 10000) + "");
+			} finally {
+				setTimeout(() => {
+					setNum(false)
+				}, 1000);
+			}
 		}
 
 	}, [chainID, address, provider, num])
 
 
-	const getList = useCallback(async () => {
-		if (!!address && !!chainID && !!provider) {
-			const ScFarmForStakerContract = new ethers.Contract(addresses[chainID].ScFarmForStaker_ADDRESS, ScFarmForStakerABI, provider)
-			const ScFarmForInvterContract = new ethers.Contract(addresses[chainID].ScFarmForInvter_ADDRESS, ScFarmForInvterABI, provider)
+	const getStakeList = useCallback(async () => {
+		if (!!address && !!chainID && !!provider && stake) {
+			try {
+				const signer = provider.getSigner();
+				const ScFarmForStakerContract = new ethers.Contract(addresses[chainID].ScFarmForStaker_ADDRESS, ScFarmForStakerABI, signer)
+				const ScFarmForStakerpendingRewardValue = await ScFarmForStakerContract.pendingReward(address)
+				setStakValue((Math.floor(Number(ethers.utils.formatUnits(ScFarmForStakerpendingRewardValue, "ether")) * 10000) / 10000) + "")
+			} finally {
+				setTimeout(() => {
+					setStake(false)
+				}, 1000);
+			}
+		}
 
-			const ScFarmForStakerpendingRewardValue = await ScFarmForStakerContract.pendingReward(address)
+	}, [chainID, address, provider])
 
-			setStakValue((Math.floor(Number(ethers.utils.formatUnits(ScFarmForStakerpendingRewardValue, "ether")) * 10000) / 10000) + "")
+	const getInvterList = useCallback(async () => {
+		if (!!address && !!chainID && !!provider && invter) {
+			try {
+				const signer = provider.getSigner();
+				const ScFarmForInvterContract = new ethers.Contract(addresses[chainID].ScFarmForInvter_ADDRESS, ScFarmForInvterABI, signer)
 
 			const ScFarmForInvterpendingRewardValue = await ScFarmForInvterContract.pendingReward(address)
-			setInvterValue((Math.floor(Number(ethers.utils.formatUnits(ScFarmForInvterpendingRewardValue, "ether")) * 10000) / 10000) + "")
+				setInvterValue((Math.floor(Number(ethers.utils.formatUnits(ScFarmForInvterpendingRewardValue, "ether")) * 10000) / 10000) + "")
+			} finally {
+				setTimeout(() => {
+					setInvter(false)
+				}, 1000);
+			}
 		}
 
 	}, [chainID, address, provider])
 
 	useEffect(() => {
-		getList()
+		getStakeList()
+	}, [chainID, address, provider, num, stake])
+
+	useEffect(() => {
+		getInvterList()
+	}, [chainID, address, provider, num])
+
+	useEffect(() => {
 		getScbanlance()
-	}, [chainID, address, provider])
+	}, [chainID, address, provider, num])
 
 
 	useEffect(() => {
@@ -195,7 +229,7 @@ export default function Sc() {
 			<Container style={{ backgroundColor: theme === THEME_LIGHT ? "rgba(255, 255, 255, 0.6)" : "#010101" }}>
 				<Top style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A", color: theme === THEME_LIGHT ? "#010101" : "#768299" }}>
 					<Title >SC Amount</Title>
-					<Blance>{pendingStatus.ScFarmForInvter || pendingStatus.ScFarmForStaker ? <Skeleton width="80px" /> : SCBanlance}</Blance>
+					<Blance>{num ? <Skeleton width="80px" /> : SCBanlance}</Blance>
 				</Top>
 				<CardTitle style={{ color: theme === THEME_LIGHT ? "#010101" : "#768299" }}>Staking Earnings</CardTitle>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -217,16 +251,25 @@ export default function Sc() {
 								if ("hash" in infoHash) {
 									const info = await ScFarmForStakerContract.provider.getTransactionReceipt(infoHash.hash)
 								}
-								setNum(num + 1)
-							} catch (error) {
 
+								setTimeout(() => {
+									setPeddingStatus({
+										...pendingStatus,
+										ScFarmForStaker: false
+									})
+								}, 500);
+								setTimeout(() => {
+									setNum(true)
+									setStake(true)
+								}, 1000);
+							} catch (error) {
+								setTimeout(() => {
+									setPeddingStatus({
+										...pendingStatus,
+										ScFarmForStaker: false
+									})
+								}, 500);
 							}
-							setTimeout(() => {
-								setPeddingStatus({
-									...pendingStatus,
-									ScFarmForStaker: false
-								})
-							}, 500);
 						}}>
 						{isPending(pendingStatus, "ScFarmForStaker", "Claim")}
 					</Claim>
@@ -264,22 +307,33 @@ export default function Sc() {
 								...pendingStatus,
 								ScFarmForInvter: true
 							})
+							const signer = provider.getSigner();
+
 							try {
-								const ScFarmForInvterContract = new ethers.Contract(addresses[chainID].ScFarmForInvter_ADDRESS, ScFarmForInvterABI, provider)
+								const ScFarmForInvterContract = new ethers.Contract(addresses[chainID].ScFarmForInvter_ADDRESS, ScFarmForInvterABI, signer);
 								const infoHash = await ScFarmForInvterContract.claim()
 								await infoHash.wait()
 								if ("hash" in infoHash) {
 									const info = await ScFarmForInvterContract.provider.getTransactionReceipt(infoHash.hash)
 								}
-								setNum(num + 1)
+								setTimeout(() => {
+									setPeddingStatus({
+										...pendingStatus,
+										ScFarmForInvter: false
+									})
+								}, 500);
+								setTimeout(() => {
+									setNum(true)
+									setInvter(true)
+								}, 1000);
 							} catch (error) {
+								setTimeout(() => {
+									setPeddingStatus({
+										...pendingStatus,
+										ScFarmForInvter: false
+									})
+								}, 500);
 							}
-							setTimeout(() => {
-								setPeddingStatus({
-									...pendingStatus,
-									ScFarmForInvter: false
-								})
-							}, 500);
 						}}>{isPending(pendingStatus, "ScFarmForInvter", "Claim")}</Claim>
 				</Card>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}>

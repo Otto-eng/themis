@@ -239,6 +239,7 @@ export interface ScFarmForStakerInterface extends ethers.utils.Interface {
 
   events: {
     "ChangeStakeAmount(address,uint256,uint256)": EventFragment;
+    "Claim(address,uint256)": EventFragment;
     "Initalize(address,address,address,address,address,address)": EventFragment;
     "RoleAdminChanged(bytes32,bytes32,bytes32)": EventFragment;
     "RoleGranted(bytes32,address,address)": EventFragment;
@@ -246,6 +247,7 @@ export interface ScFarmForStakerInterface extends ethers.utils.Interface {
   };
 
   getEvent(nameOrSignatureOrTopic: "ChangeStakeAmount"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Claim"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initalize"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleAdminChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleGranted"): EventFragment;
@@ -259,6 +261,13 @@ export type ChangeStakeAmountEvent = TypedEvent<
 
 export type ChangeStakeAmountEventFilter =
   TypedEventFilter<ChangeStakeAmountEvent>;
+
+export type ClaimEvent = TypedEvent<
+  [string, BigNumber],
+  { staker: string; reward: BigNumber }
+>;
+
+export type ClaimEventFilter = TypedEventFilter<ClaimEvent>;
 
 export type InitalizeEvent = TypedEvent<
   [string, string, string, string, string, string],
@@ -727,6 +736,15 @@ export interface ScFarmForStaker extends BaseContract {
       oldAmount?: BigNumberish | null,
       newAmount?: BigNumberish | null
     ): ChangeStakeAmountEventFilter;
+
+    "Claim(address,uint256)"(
+      staker?: string | null,
+      reward?: BigNumberish | null
+    ): ClaimEventFilter;
+    Claim(
+      staker?: string | null,
+      reward?: BigNumberish | null
+    ): ClaimEventFilter;
 
     "Initalize(address,address,address,address,address,address)"(
       sender?: null,

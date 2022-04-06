@@ -1,8 +1,7 @@
 import { StableBond, NetworkID } from "src/lib/Bond";
 
 import { ReactComponent as USDTImg } from "src/assets/tokens/USDT.svg";
-
-import { abi as UsdtBondContract } from "src/abi/bonds/OlympusBondDepository.json";
+import { abi as UsdtBondContractABI } from "src/abi/UsdtBondDepository.json";
 
 // TODO(zx): Further modularize by splitting up reserveAssets into vendor token definitions
 //   and include that in the definition of a bond
@@ -12,7 +11,7 @@ export const usdt = new StableBond({
   bondToken: "USDT",
   isAvailable: { [NetworkID.Mainnet]: true },
   bondIconSvg: USDTImg,
-  bondContractABI: UsdtBondContract,
+  bondContractABI: UsdtBondContractABI,
   networkAddrs: {
     [NetworkID.Mainnet]: {
       bondAddress: "0x289ce758F9eCFc4C2e5f212d25e2BEab9a173Eaf",

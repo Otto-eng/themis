@@ -3,7 +3,7 @@ import { BigNumber, ethers } from "ethers"
 import React, { useCallback, useEffect, useState } from "react"
 import { addresses, THEME_LIGHT } from "src/constants"
 import { useAppSelector, useWeb3Context } from "src/hooks"
-import { abi as ierc20Abi } from "../../abi/IERC20.json";
+import { abi as ierc20Abi } from "../../abi/ThemisERC20Token.json";
 
 import { abi as StakingRewardReleaseABI } from "src/abi/StakingRewardRelease.json";
 import { IERC20 } from "src/typechain/IERC20"
@@ -297,7 +297,7 @@ function Claim() {
 			}, 500);
 
 		}
-	}, [chainID, address, provider, num])
+	}, [chainID, address, provider, num, pendingStatus])
 
 
 	const claim = async (blocakHight: BigNumber) => {
@@ -305,20 +305,27 @@ function Claim() {
 		try {
 		const StakingRewardReleaseContract = new ethers.Contract(addresses[chainID].StakingRewardRelease_ADDRESS, StakingRewardReleaseABI, signer)
 			const infoHash = await StakingRewardReleaseContract.claim(blocakHight)
-
+			console.log("infoHash", infoHash)
 			await infoHash.wait()
 
 			const info = await StakingRewardReleaseContract.provider.getTransactionReceipt(infoHash.hash)
-			setNum(num + 1)
+			setTimeout(() => {
+				setPeddingStatus({
+					...pendingStatus,
+					claim: false
+				})
+			}, 500);
+			setTimeout(() => {
+				setNum(num + 1)
+			}, 1000);
 		} catch (error) {
-
+			setTimeout(() => {
+				setPeddingStatus({
+					...pendingStatus,
+					claim: false
+				})
+			}, 500);
 		}
-		setTimeout(() => {
-			setPeddingStatus({
-				...pendingStatus,
-				claim: false
-			})
-		}, 500);
 	}
 
 	useEffect(() => {
@@ -467,7 +474,7 @@ function Claim() {
 						</CardItem>
 						<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "rgba(255, 255, 255, 0.6)" : "#18253A" }}>
 							<CardContainer>
-								<TopText>{item.lastEarnedAmount} THS</TopText>
+								<TopText>{item.earnedTotal} THS</TopText>
 								<Text>Received</Text>
 							</CardContainer>
 						</CardItem>

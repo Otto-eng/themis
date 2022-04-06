@@ -26,7 +26,6 @@ import "./stake.scss";
 import { useWeb3Context } from "src/hooks/web3Context";
 import { isPendingTxn, txnButtonText } from "src/slices/PendingTxnsSlice";
 import { Skeleton } from "@material-ui/lab";
-import ExternalStakePool from "./ExternalStakePool";
 import { error } from "../../slices/MessagesSlice";
 import { ethers } from "ethers";
 import { useAppSelector } from "src/hooks";
@@ -154,7 +153,7 @@ function Stake() {
       .toFixed(4),
   );
   const trimmedStakingAPY = trim(stakingAPY, 1);
-  const stakingRebasePercentage = trim(stakingRebase * 100, 4);
+  const stakingRebasePercentage = trim(stakingRebase, 4);
   const nextRewardValue = trim((Number(stakingRebasePercentage) / 100) * trimmedBalance, 4);
 
   return (
@@ -461,7 +460,7 @@ function Stake() {
                         <Trans>ROI (5-Day Rate)</Trans>
                       </Typography>
                         <Typography variant="body1">
-                          {isAppLoading ? <Skeleton width="80px" /> : <>{trim(Number(fiveDayRate) * 100, 4)}%</>}
+                          {isAppLoading ? <Skeleton width="80px" /> : <>{trim(Number(fiveDayRate), 4)}%</>}
                       </Typography>
                     </div>
                   </div>
@@ -472,7 +471,6 @@ function Stake() {
         </Paper>
       </Zoom>
 
-      {/* <ExternalStakePool /> */}
     </div>
   );
 }

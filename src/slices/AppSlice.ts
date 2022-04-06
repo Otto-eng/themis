@@ -1,13 +1,8 @@
-import { BigNumberish, ethers } from "ethers";
-import { addresses } from "../constants";
-import { abi as OlympusStakingv2ABI } from "../abi/OlympusStakingv2.json";
-import { abi as sTHS } from "../abi/sThemis.json";
+import { BigNumberish } from "ethers";
 import { setAll } from "../helpers";
 import apollo from "../lib/apolloClient";
 import { createSlice, createSelector, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "src/store";
-import { IBaseAsyncThunk } from "./interfaces";
-import { OlympusStakingv2, SOhmv2 } from "../typechain";
 
 interface IProtocolMetrics {
   readonly timestamp: string;
@@ -110,6 +105,7 @@ export const loadAppDetailsContract = createAsyncThunk(
         id: 1
       })
     })
+
     const res = await result.json()
     const graphData = await apollo<{ protocolMetrics: IProtocolMetrics2[], rebases: IRebases[] }>(protocolMetricsQuery);
     if (!graphData || graphData == null) {

@@ -79,7 +79,7 @@ function NavContent() {
               <img src={icon.logo} style={{ width: "100px", height: "72px" }}></img>
               <Title>THEMIS</Title>
             </Link>
-
+            <div>NETWORKID: {chainID}</div>
             {address && (
               <div className="wallet-link">
                 <Link href={`https://etherscan.io/address/${address}`} target="_blank">

@@ -12,6 +12,7 @@ import { addresses, THEME_LIGHT, ZERO_ADDRESS } from "src/constants";
 import { abi as RelationshipABI } from "src/abi/Relationship.json";
 import { invitationIdCode } from "src/utils/invitationIdCode";
 import { isPending } from "../Claim";
+import { useHistory } from "react-router-dom";
 
 
 const GridFlex = styled(Grid)({
@@ -55,7 +56,7 @@ const DEFAULT_FEILDS_VALUE = {
 };
 
 function Register() {
-
+	const history = useHistory()
 	const theme = useAppSelector(state => state.theme.theme)
 	const address = useAddress()
 	const { chainID, provider } = useWeb3Context()
@@ -82,9 +83,9 @@ function Register() {
 			v.address = address;
 			return { ...v };
 		});
-		setCorrects((v) => {
-			v.address = !!address;
-			return { ...v };
+		setCorrects({
+			...corrects,
+			address: !!address
 		});
 	}, [address, updateValues, setCorrects]);
 
@@ -148,7 +149,13 @@ function Register() {
 					}
 					currentInvitationId = invitationIdCode()
 				} while (flag);
-				const info = await RelationshipContract.register(values.invitationId, currentInvitationId);
+				const infoHash = await RelationshipContract.register(values.invitationId, currentInvitationId);
+				await infoHash.wait()
+				if ("hash" in infoHash) {
+					const info = await RelationshipContract.provider.getTransactionReceipt(infoHash.hash)
+					console.log("info", info)
+					history.replace("/stake")
+				}
 				setTimeout(() => {
 					setIsConfig(false)
 					setConfig(true)

@@ -18,7 +18,7 @@ interface MessagesState {
 }
 
 const initialState: MessagesState = {
-	theme: localStorage.getItem(THEME_KEYWORD) ?? THEME_DARK
+	theme: localStorage.getItem(THEME_KEYWORD) ?? THEME_LIGHT
 };
 
 export const toggleTheme = createAction<{ theme: string }>('user/toggleTheme')

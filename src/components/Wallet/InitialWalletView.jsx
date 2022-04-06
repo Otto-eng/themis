@@ -9,7 +9,8 @@ import { ethers } from "ethers";
 
 import { addresses, } from "src/constants";
 import { useWeb3Context } from "src/hooks";
-import { abi as ierc20Abi } from "../../abi/IERC20.json";
+import { abi as ierc20Abi } from "src/abi/ThemisERC20Token.json";
+import { abi as sTHSAbi } from "src/abi/sThemis.json"; 
 
 import {
   SvgIcon,
@@ -157,14 +158,15 @@ function InitialWalletView() {
   const getsThsBanlance = useCallback(
     async () => {
       const signer = provider.getSigner();
-      const sThsContract = new ethers.Contract(addresses[chainID].STHS_ADDRESS, ierc20Abi, signer);
+      console.log("WALLET", provider)
+      const sThsContract = new ethers.Contract(addresses[chainID].STHS_ADDRESS, sTHSAbi, signer);
       const sThsBalance = await sThsContract.balanceOf(address);
+      console.log("sThsBalance", sThsBalance)
       setSThs(ethers.utils.formatUnits(sThsBalance, "gwei"))
-    }, [address, chainID, !!provider])
+    }, [address, chainID, provider])
 
   useEffect(() => {
     if (address && chainID && provider) {
-      console.log("THS")
       getThsBanlance()
       getsThsBanlance()
     }
@@ -193,27 +195,10 @@ function InitialWalletView() {
           window.open(`https://kovan.etherscan.io/address/${addresses[chainID].STHS_ADDRESS}?fromaddress=${address}`)
         }}
       />
-      {/* <Token
-        name="wsOHM"
-        userBalance={wsOhmBalance}
-        userBalanceUSD={trim(wsOhmBalance * marketPrice, 2)}
-        icon={wsOhmTokenImg}
-      />
-      <Token
-        name="33T"
-        userBalance={poolBalance}
-        userBalanceUSD={trim(poolBalance * marketPrice, 2)}
-        icon={t33TokenImg}
-      /> */}
 
       <Divider color="secondary" className="less-margin" />
 
       <Divider color="secondary" className="less-margin" />
-
-      {/* <Box className={styles.menuSection}>
-        <MenuItemBorrow borrowOn="Abracadabra" Icon1={ThsImg} Icon2={abracadabraTokenImg} />
-        <MenuItemBorrow borrowOn="Rari" Icon1={ThsImg} Icon2={props => <img src={rariTokenImg} {...props} />} />
-      </Box> */}
 
       <Divider color="secondary" className="less-margin" />
 

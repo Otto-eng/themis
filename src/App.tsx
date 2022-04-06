@@ -197,10 +197,12 @@ function App() {
 
 
   const serachRelationship = async (account: string) => {
-    const RelationshipContract = new ethers.Contract(addresses[chainID].Relationship_ADDRESS as string, RelationshipABI, provider)
+    const signer = provider.getSigner();
+    const RelationshipContract = new ethers.Contract(addresses[chainID].Relationship_ADDRESS as string, RelationshipABI, signer)
 
-    const invitedAddress = await RelationshipContract.getInviter(account)
-    setIsInvited(invitedAddress === ZERO_ADDRESS)
+    const invitedAddress = await RelationshipContract.RegisterInfoOf(account)
+    console.log("invitedAddress", invitedAddress)
+    setIsInvited(!invitedAddress.registrantCode)
   }
 
   const scData = useCallback(
@@ -229,7 +231,6 @@ function App() {
 
   useEffect(() => {
     if (address && isInvited && location.pathname !== "/register") {
-      console.log("location.state", location.search)
       history.replace("/register" + (location.search ?? ""))
     }
   }, [address, isInvited, location.pathname])
@@ -237,7 +238,6 @@ function App() {
   return (
     <ThemeProvider theme={themeMode}>
       <CssBaseline />
-      {/* {isAppLoading && <LoadingSplash />} */}
       <div className={`app ${isSmallerScreen && "tablet"} ${isSmallScreen && "mobile"} ${theme}`}>
         <Messages />
         <TopBar z-index={9} handleDrawerToggle={handleDrawerToggle} />

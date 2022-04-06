@@ -3,10 +3,13 @@ import { getRebaseBlock, secondsUntilBlock, prettifySeconds } from "../../helper
 import { Box, Typography } from "@material-ui/core";
 import "./rebasetimer.scss";
 import { Skeleton } from "@material-ui/lab";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import { loadAppDetailsContract } from "../../slices/AppSlice";
 import { useWeb3Context } from "../../hooks/web3Context";
 import { Trans } from "@lingui/macro";
+import { addresses } from "../../constants";
+import { abi as ThemisStakingABI } from "src/abi/ThemisStaking.json";
+import { ethers } from "ethers";
 
 function RebaseTimer() {
   const dispatch = useDispatch();
@@ -15,27 +18,43 @@ function RebaseTimer() {
   const SECONDS_TO_REFRESH = 60;
   const [secondsToRebase, setSecondsToRebase] = useState(0);
   const [rebaseString, setRebaseString] = useState("");
+  const [rebaseBlock, setRebaseBlock] = useState("");
   const [secondsToRefresh, setSecondsToRefresh] = useState(SECONDS_TO_REFRESH);
 
   const currentBlock = useSelector(state => {
     return state.app.currentBlock;
   });
 
-  function initializeTimer() {
-    const rebaseBlock = getRebaseBlock(currentBlock);
-    const seconds = secondsUntilBlock(currentBlock, rebaseBlock);
+  const initializeTimer = useCallback(
+    async () => {
+      const signer = provider.getSigner();
+      let seconds = 0;
+      try {
+        const StakingContract = new ethers.Contract(
+          addresses[chainID].STAKING_ADDRESS,
+          ThemisStakingABI,
+          signer,
+        )
+        const epoch = await StakingContract.epoch()
+        const rebaseBlock = epoch.endBlock.toString();
+        setRebaseBlock(rebaseBlock)
+        seconds = secondsUntilBlock(currentBlock, Number(rebaseBlock));
+        setSecondsToRebase(seconds);
+      } catch (error) {
 
-    setSecondsToRebase(seconds);
-    const prettified = prettifySeconds(seconds * 4);
-    setRebaseString(prettified !== "" ? prettified : <Trans>Less than a minute</Trans>);
-  }
+      }
+      const prettified = prettifySeconds(seconds);
+      setRebaseString(prettified !== "" ? prettified : "Less than a minute");
+    },
+    [currentBlock, addresses, chainID, provider],
+  )
 
   // This initializes secondsToRebase as soon as currentBlock becomes available
   useMemo(() => {
-    if (currentBlock) {
+    if (currentBlock && addresses && chainID && provider) {
       initializeTimer();
     }
-  }, [currentBlock]);
+  }, [currentBlock, addresses, chainID, provider]);
 
   // After every period SECONDS_TO_REFRESH, decrement secondsToRebase by SECONDS_TO_REFRESH,
   // keeping the display up to date without requiring an on chain request to update currentBlock.
@@ -79,6 +98,8 @@ function RebaseTimer() {
         ) : (
           <Skeleton width="155px" />
         )}
+        <div>currentBlock: {currentBlock}</div>
+        <div>rebaseBlock: {rebaseBlock}</div>
       </Typography>
     </Box>
   );

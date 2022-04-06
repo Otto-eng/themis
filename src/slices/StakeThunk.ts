@@ -1,7 +1,7 @@
 import { ethers, BigNumber } from "ethers";
 import { addresses } from "../constants";
-import { abi as ierc20ABI } from "../abi/IERC20.json";
-import { abi as ThemisStakingABI } from "../abi/OlympusStakingv2.json";
+import { abi as ierc20ABI } from "../abi/IERC20.json"; // 
+import { abi as ThemisStakingABI } from "../abi/ThemisStaking.json";
 import { abi as StakingHelperABI } from "../abi/StakingHelper.json";
 import { clearPendingTxn, fetchPendingTxns, getStakingTypeText } from "./PendingTxnsSlice";
 import { createAsyncThunk } from "@reduxjs/toolkit";
@@ -9,7 +9,8 @@ import { fetchAccountSuccess, getBalances } from "./AccountSlice";
 import { error, info } from "../slices/MessagesSlice";
 import { IActionValueAsyncThunk, IChangeApprovalAsyncThunk, IJsonRPCError } from "./interfaces";
 import { segmentUA } from "../helpers/userAnalyticHelpers";
-import { IERC20, OlympusStakingv2, StakingHelper } from "src/typechain";
+import { IERC20, ThemisStaking, StakingHelper } from "src/typechain";
+import { abi as sTHSAbi } from "src/abi/sThemis.json"; 
 
 interface IUAData {
   address: string;
@@ -49,7 +50,7 @@ export const changeApproval = createAsyncThunk(
     const signer = provider.getSigner();
     const thsContract = new ethers.Contract(addresses[networkID].THS_ADDRESS as string, ierc20ABI, signer) as IERC20;
 
-    const sThsContract = new ethers.Contract(addresses[networkID].STHS_ADDRESS as string, ierc20ABI, signer) as IERC20;
+    const sThsContract = new ethers.Contract(addresses[networkID].STHS_ADDRESS as string, sTHSAbi, signer) as IERC20;
 
     let approveTx;
     let stakeAllowance = await thsContract.allowance(address, addresses[networkID].STAKING_HELPER_ADDRESS);
@@ -124,7 +125,7 @@ export const changeStake = createAsyncThunk(
       addresses[networkID].STAKING_ADDRESS as string,
       ThemisStakingABI,
       signer,
-    ) as OlympusStakingv2;
+    ) as ThemisStaking;
     const stakingHelper = new ethers.Contract(
       addresses[networkID].STAKING_HELPER_ADDRESS as string,
       StakingHelperABI,

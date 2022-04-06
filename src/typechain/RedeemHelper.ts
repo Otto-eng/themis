@@ -29,11 +29,11 @@ export interface RedeemHelperInterface extends ethers.utils.Interface {
     "addBondContract(address)": FunctionFragment;
     "bonds(uint256)": FunctionFragment;
     "policy()": FunctionFragment;
-    "pullManagement()": FunctionFragment;
-    "pushManagement(address)": FunctionFragment;
+    "pullPolicy()": FunctionFragment;
+    "pushPolicy(address)": FunctionFragment;
     "redeemAll(address,bool)": FunctionFragment;
     "removeBondContract(uint256)": FunctionFragment;
-    "renounceManagement()": FunctionFragment;
+    "renouncePolicy()": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -43,13 +43,10 @@ export interface RedeemHelperInterface extends ethers.utils.Interface {
   encodeFunctionData(functionFragment: "bonds", values: [BigNumberish]): string;
   encodeFunctionData(functionFragment: "policy", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "pullManagement",
+    functionFragment: "pullPolicy",
     values?: undefined
   ): string;
-  encodeFunctionData(
-    functionFragment: "pushManagement",
-    values: [string]
-  ): string;
+  encodeFunctionData(functionFragment: "pushPolicy", values: [string]): string;
   encodeFunctionData(
     functionFragment: "redeemAll",
     values: [string, boolean]
@@ -59,7 +56,7 @@ export interface RedeemHelperInterface extends ethers.utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "renounceManagement",
+    functionFragment: "renouncePolicy",
     values?: undefined
   ): string;
 
@@ -69,21 +66,15 @@ export interface RedeemHelperInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "bonds", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "policy", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "pullManagement",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "pushManagement",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "pullPolicy", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "pushPolicy", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "redeemAll", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "removeBondContract",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "renounceManagement",
+    functionFragment: "renouncePolicy",
     data: BytesLike
   ): Result;
 
@@ -146,12 +137,12 @@ export interface RedeemHelper extends BaseContract {
 
     policy(overrides?: CallOverrides): Promise<[string]>;
 
-    pullManagement(
+    pullPolicy(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    pushManagement(
-      newOwner_: string,
+    pushPolicy(
+      newPolicy_: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -166,7 +157,7 @@ export interface RedeemHelper extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    renounceManagement(
+    renouncePolicy(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
@@ -180,12 +171,12 @@ export interface RedeemHelper extends BaseContract {
 
   policy(overrides?: CallOverrides): Promise<string>;
 
-  pullManagement(
+  pullPolicy(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  pushManagement(
-    newOwner_: string,
+  pushPolicy(
+    newPolicy_: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -200,7 +191,7 @@ export interface RedeemHelper extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  renounceManagement(
+  renouncePolicy(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -211,9 +202,9 @@ export interface RedeemHelper extends BaseContract {
 
     policy(overrides?: CallOverrides): Promise<string>;
 
-    pullManagement(overrides?: CallOverrides): Promise<void>;
+    pullPolicy(overrides?: CallOverrides): Promise<void>;
 
-    pushManagement(newOwner_: string, overrides?: CallOverrides): Promise<void>;
+    pushPolicy(newPolicy_: string, overrides?: CallOverrides): Promise<void>;
 
     redeemAll(
       _recipient: string,
@@ -226,7 +217,7 @@ export interface RedeemHelper extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    renounceManagement(overrides?: CallOverrides): Promise<void>;
+    renouncePolicy(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -259,12 +250,12 @@ export interface RedeemHelper extends BaseContract {
 
     policy(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pullManagement(
+    pullPolicy(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    pushManagement(
-      newOwner_: string,
+    pushPolicy(
+      newPolicy_: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -279,7 +270,7 @@ export interface RedeemHelper extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    renounceManagement(
+    renouncePolicy(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
@@ -297,12 +288,12 @@ export interface RedeemHelper extends BaseContract {
 
     policy(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pullManagement(
+    pullPolicy(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    pushManagement(
-      newOwner_: string,
+    pushPolicy(
+      newPolicy_: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -317,7 +308,7 @@ export interface RedeemHelper extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    renounceManagement(
+    renouncePolicy(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };

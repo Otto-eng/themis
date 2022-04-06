@@ -1,41 +1,21 @@
 import { EPOCH_INTERVAL, BLOCK_RATE_SECONDS, addresses } from "../constants";
 import { BigNumber, ethers } from "ethers";
 import axios from "axios";
-import { abi as PairContractABI } from "../abi/PairContract.json";
 import { abi as RedeemHelperABI } from "../abi/RedeemHelper.json";
 
 import { SvgIcon } from "@material-ui/core";
 import { ReactComponent as OhmImg } from "../assets/tokens/token_OHM.svg";
 import { ReactComponent as SOhmImg } from "../assets/tokens/token_sOHM.svg";
 
-// import { ohm_dai } from "./AllBonds";
 import { JsonRpcSigner, StaticJsonRpcProvider } from "@ethersproject/providers";
-import { IBaseAsyncThunk } from "src/slices/interfaces";
-import { PairContract, RedeemHelper } from "../typechain";
-
-// export async function getMarketPrice({ networkID, provider }: IBaseAsyncThunk) {
-//   // const ohm_dai_address = ohm_dai.getAddressForReserve(networkID);
-//   // const pairContract = new ethers.Contract(ohm_dai_address, PairContractABI, provider) as PairContract;
-//   // const reserves = await pairContract.getReserves();
-//   // const marketPrice = Number(reserves[1].toString()) / Number(reserves[0].toString());
-
-//   // return marketPrice;
-// }
+import { RedeemHelper } from "../typechain";
 
 /**
  * gets price of token from coingecko
  * @param tokenId STRING taken from https://www.coingecko.com/api/documentations/v3#/coins/get_coins_list
  * @returns INTEGER usd value
  */
-export async function getTokenPrice(tokenId = "olympus") {
-  let resp;
-  try {
-    resp = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${tokenId}&vs_currencies=usd`);
-    return resp.data[tokenId].usd;
-  } catch (e) {
-    // console.log("coingecko api error: ", e);
-  }
-}
+
 
 export function shorten(str: string) {
   if (str.length < 10) return str;
@@ -70,8 +50,7 @@ export function getRebaseBlock(currentBlock: number) {
 export function secondsUntilBlock(startBlock: number, endBlock: number) {
   const blocksAway = endBlock - startBlock;
   const secondsAway = blocksAway * BLOCK_RATE_SECONDS;
-
-  return secondsAway;
+  return secondsAway >= 0 ? secondsAway : 0;
 }
 
 export function prettyVestingPeriod(currentBlock: number, vestingBlock: number) {
