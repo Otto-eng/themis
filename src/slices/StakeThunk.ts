@@ -8,7 +8,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchAccountSuccess, getBalances } from "./AccountSlice";
 import { error, info } from "../slices/MessagesSlice";
 import { IActionValueAsyncThunk, IChangeApprovalAsyncThunk, IJsonRPCError } from "./interfaces";
-import { segmentUA } from "../helpers/userAnalyticHelpers";
 import { IERC20, ThemisStaking, StakingHelper } from "src/typechain";
 import { abi as sTHSAbi } from "src/abi/sThemis.json"; 
 
@@ -168,7 +167,6 @@ export const changeStake = createAsyncThunk(
       return;
     } finally {
       if (stakeTx) {
-        segmentUA(uaData);
         dispatch(clearPendingTxn(stakeTx.hash));
       }
     }

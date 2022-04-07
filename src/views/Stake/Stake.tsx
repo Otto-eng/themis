@@ -15,6 +15,7 @@ import {
   Typography,
   Zoom,
   Divider,
+  styled
 } from "@material-ui/core";
 import { t, Trans } from "@lingui/macro";
 import NewReleases from "@material-ui/icons/NewReleases";
@@ -55,9 +56,9 @@ function Stake() {
   const thsBalance = useAppSelector(state => {
     return state.account.balances && state.account.balances.ths;
   });
-  // const oldSohmBalance = useAppSelector(state => {
-  //   return state.account.balances && state.account.balances.oldsohm;
-  // });
+  const sThsBalance = useAppSelector(state => {
+    return state.account.balances && state.account.balances.sThs;
+  });
   const sThsSTakingBalance = useAppSelector(state => {
     return state.account.balances && state.account.balances.sThsStaking;
   });
@@ -94,7 +95,7 @@ function Stake() {
     if (view === 0) {
       setQuantity(Number(Math.floor(Number(thsBalance) * 10000) / 10000) + "");
     } else {
-      setQuantity(Number(Math.floor(Number(sThsSTakingBalance) * 10000) / 10000) + "");
+      setQuantity(Number(Math.floor(Number(sThsBalance) * 10000) / 10000) + "");
     }
   };
 
@@ -115,7 +116,7 @@ function Stake() {
       return dispatch(error(t`You cannot stake more than your THS balance.`));
     }
 
-    if (action === "unstake" && gweiValue.gt(ethers.utils.parseUnits(sThsSTakingBalance, "gwei"))) {
+    if (action === "unstake" && gweiValue.gt(ethers.utils.parseUnits(sThsBalance, "gwei"))) {
       return dispatch(error(t`You cannot unstake more than your sTHS balance.`));
     }
     await dispatch(changeStake({ address, action, value: quantity.toString(), provider, networkID: chainID }));
@@ -146,7 +147,7 @@ function Stake() {
   };
 
   const trimmedBalance = Number(
-    [sThsSTakingBalance]
+    [sThsBalance]
       .filter(Boolean)
       .map(balance => Number(balance))
       .reduce((a, b) => a + b, 0)

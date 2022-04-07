@@ -162,17 +162,26 @@
 
 .stake-button {
   align-self: center;
-  width: 100%;
-  min-width: 163px !important;
-  max-width: 542px !important;
-  height: 43px !important;
+  min-width: 163px;
+  max-width: 542px;
+  height: 44px;
+  padding: 8px 32px;
 }
 
 .mobile .stake-button {
-  width: 100% !important;
   max-width: 542px;
   align-self: center;
   justify-self: center;
+  padding: 6px 32px;
+  width: 100%;
+}
+
+#root .mobile .sc-stake-button {
+  max-width: 542px;
+  align-self: center;
+  justify-self: center;
+  padding: 6px 32px;
+  width: 120px;
 }
 
 .staking-area {

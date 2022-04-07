@@ -1,4 +1,4 @@
-import { Button, FormControl, MenuItem, Select, styled } from "@material-ui/core"
+import { Button, FormControl, MenuItem, Select, styled, Zoom } from "@material-ui/core"
 import { BigNumber, ethers } from "ethers"
 import React, { useCallback, useEffect, useState } from "react"
 import { addresses, THEME_LIGHT } from "src/constants"
@@ -34,9 +34,9 @@ const GridFlex = styled('div')({
 	textAlign: 'center'
 })
 
-const Main = styled("div")({
+const Main = styled(Zoom)({
 	width: "100%",
-	// height: "100%"
+	backgroundColor: "transparent"
 })
 
 
@@ -52,7 +52,6 @@ const CalimModal = styled(GridFlex)({
 	height: "100vh",
 	zIndex: 1300,
 	transform: "translate(-50%, -50%)",
-	background: "rgba(0, 0, 0, .5)"
 })
 
 const Container = styled("div")({
@@ -76,7 +75,7 @@ const ModalTop = styled("div")({
 const Top = styled(GridFlex)({
 	padding: "16px",
 	borderRadius: '10px',
-	justifyContent: "space-between",
+	justifyContent: "space-around",
 	textAlign: "left"
 })
 
@@ -152,7 +151,6 @@ const Text = styled("div")({
 const ClaimBtn = styled(Button)({
 	marginTop: "8px",
 	backgroundColor: "#F8CC82",
-	padding: "8px",
 	color: "#000",
 	borderRadius: "8px",
 	cursor: "pointer"
@@ -161,7 +159,6 @@ const ClaimBtn = styled(Button)({
 
 const More = styled(GridFlex)({
 	margin: "16px 0",
-	color: "#4E566C",
 	fontSize: "16px",
 	padding: "16px",
 	cursor: "pointer"
@@ -177,13 +174,11 @@ const Option = styled(GridFlex)({
 	flex: 1,
 	width: "100px",
 	fontSize: "12px",
-	color: "#4E566C",
 	padding: "8px 0"
 })
 
 const Amount = styled("div")({
 	fontSize: "12px",
-	color: "#4E566C",
 	textAlign: "right",
 	padding: "8px 0",
 	width: "70px"
@@ -192,7 +187,6 @@ const Amount = styled("div")({
 const CardDetaileOl = styled("div")({
 	width: "70px",
 	fontSize: "12px",
-	color: "#4E566C",
 	textAlign: "left",
 	padding: "8px 0"
 })
@@ -200,7 +194,6 @@ const CardDetaileOl = styled("div")({
 const Cost = styled("div")({
 	width: "100%",
 	fontSize: "18px",
-	color: "#83879E",
 	textAlign: "right",
 	padding: "8px 0"
 })
@@ -252,7 +245,7 @@ function Claim() {
 	}
 
 	const getList = useCallback(async (first: number) => {
-		if (!!address && !!chainID && !!provider) {
+		if (address && chainID && provider) {
 			const signer = provider.getSigner();
 
 			const StakingRewardReleaseContract = new ethers.Contract(addresses[chainID].StakingRewardRelease_ADDRESS, StakingRewardReleaseABI, signer)
@@ -273,7 +266,7 @@ function Claim() {
 	}, [chainID, address, provider])
 
 	const getBalance = useCallback(async () => {
-		if (!!address && !!chainID && !!provider) {
+		if (address && chainID && provider) {
 			setPeddingStatus({
 				...pendingStatus,
 				banlance: true
@@ -342,6 +335,7 @@ function Claim() {
 
 	return (
 		<Main>
+			<React.Fragment>
 			{isOpen && <CalimModal onClick={handleClose}>
 				<Container
 					onClick={(event) => {
@@ -349,7 +343,7 @@ function Claim() {
 				}}
 					style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}
 				>
-					<ReleaseTime style={{ color: theme === THEME_LIGHT ? "#010101" : "#768299" }}>
+						<ReleaseTime >
 						<div> Release Time：{listDay[Number(block?.speedLevel)].value ?? 0}d</div>
 						<div>SC:{listDay[Number(block?.speedLevel)].gasSc}</div>
 					</ReleaseTime>
@@ -363,7 +357,7 @@ function Claim() {
 							>
 								{listDay.slice(len + 1).map((item) => (<Item
 									value={item.id}
-									style={{ color: theme === THEME_LIGHT ? "#010101" : "#768299", cursor: "pointer" }}
+									style={{ color: theme === THEME_LIGHT ? "#010101" : "#FCFCFC", cursor: "pointer" }}
 									onClick={async (event) => {
 										event.stopPropagation()
 										setOptionData(item)
@@ -374,6 +368,7 @@ function Claim() {
 						<Cost>Cost: {optionData.gasSc}SC</Cost>
 					</ModalTop>
 					<Confrim
+							className="stake-button sc-stake-button"
 						variant="contained"
 						color="primary"
 						disabled={!optionData.id || pendingStatus.confrim}
@@ -409,26 +404,31 @@ function Claim() {
 						}}>{isPending(pendingStatus, "confrim", "Confrim")}</Confrim>
 				</Container>
 			</CalimModal>}
-			<Top
-				style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A", color: theme === THEME_LIGHT ? "#010101" : "#FFF" }}>
-				<Title >THS:</Title>
-				<Blance>{pendingStatus.banlance ? <Skeleton width="80px" /> : thsBalance}</Blance>
-			</Top>
+
+				<Top style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}>
+						<Title >THS:</Title>
+						<Blance>{pendingStatus.banlance ? <Skeleton width="80px" /> : thsBalance}</Blance>
+					</Top>
 			{
-				infoList.map((item, idx) => (<Card style={{ color: theme === THEME_LIGHT ? "#010101" : "#B6B7C8" }}>
+					infoList.map((item, idx) => (<Card
+						style={{ backgroundColor: theme === THEME_LIGHT ? "rgba(255, 255, 255, 0.6)" : "#18253A" }}
+					>
 					<CardTop>
-						<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "rgba(255, 255, 255, 0.6)" : "#18253A" }}>
+							<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}>
 							<CardContainer>
 								<Ol>
 									{idx + 1}
 								</Ol>
 							</CardContainer>
 						</CardItem>
-						<CardItem style={{ margin: "0 4px", backgroundColor: theme === THEME_LIGHT ? "rgba(255, 255, 255, 0.6)" : "#18253A" }}>
+							<CardItem
+								style={{ margin: "0 4px", backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}
+							>
 							<CardContainer>
 								<TopText>{listDay[Number(item.speedLevel)]?.value ?? 0} day</TopText>
 								<Text>Release Time</Text>
 								<ClaimBtn
+										className="stake-button sc-stake-button"
 									variant="contained"
 									color="primary"
 									disabled={item.speedLevel === "7" || pendingStatus.confrim}
@@ -440,11 +440,12 @@ function Claim() {
 								>{isPending(pendingStatus, "confrim", "Accelerate")}</ClaimBtn>
 							</CardContainer>
 						</CardItem>
-						<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "rgba(255, 255, 255, 0.6)" : "#18253A" }}>
+							<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}>
 							<CardContainer>
 								<TopText>{item.pendingTotal} THS</TopText>
 								<Text>Unclaimed</Text>
 								<ClaimBtn
+										className="stake-button sc-stake-button"
 									variant="contained"
 									color="primary"
 									disabled={!Number(item.pendingTotal) || pendingStatus.claim}
@@ -460,19 +461,24 @@ function Claim() {
 						</CardItem>
 					</CardTop>
 					<CardBottom>
-						<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "rgba(255, 255, 255, 0.6)" : "#18253A" }}>
+							<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}>
+
 							<CardContainer>
 								<TopText>UTC {dayjs.unix(Number(item.recordTimestamp)).utc().format("YYYY-MM-DD HH:mm")}</TopText>
 								<Text>Unstable Time</Text>
 							</CardContainer>
 						</CardItem>
-						<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "rgba(255, 255, 255, 0.6)" : "#18253A", margin: "0 4px" }}>
+							<CardItem
+								style={{
+									margin: "0 4px",
+									backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A"
+								}}>
 							<CardContainer>
 								<TopText>{item.rewardTotal} THS</TopText>
 								<Text>Profit Balance</Text>
 							</CardContainer>
 						</CardItem>
-						<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "rgba(255, 255, 255, 0.6)" : "#18253A" }}>
+							<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}>
 							<CardContainer>
 								<TopText>{item.earnedTotal} THS</TopText>
 								<Text>Received</Text>
@@ -486,9 +492,12 @@ function Claim() {
 				onClick={() => {
 					setPage(page + 1)
 				}}
-				style={{ backgroundColor: theme === THEME_LIGHT ? "rgba(255, 255, 255, 0.6)" : "#18253A" }}>view more</More>}
+					style={{ backgroundColor: theme === THEME_LIGHT ? "rgba(255, 255, 255, 0.6)" : "#18253A" }}
+				>view more</More>}
 
-			<CardDetaile style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}>
+				<CardDetaile
+					style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}
+				>
 				<Item>
 					<CardDetaileOl>hash</CardDetaileOl>
 					<Option>time</Option>
@@ -512,8 +521,8 @@ function Claim() {
 					onClick={() => {
 						setStakeReleaseEarningsListPage(stakeReleaseEarningsListPage + 1)
 					}} > view more</More>
-			</CardDetaile>
-
+					</CardDetaile>
+			</React.Fragment>
 		</Main>
 	)
 }

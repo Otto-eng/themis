@@ -8,19 +8,11 @@ import { ReactComponent as ohmTokenImg } from "../../../../assets/tokens/token_O
 import { ReactComponent as abracadabraTokenImg } from "src/assets/tokens/MIM.svg";
 import rariTokenImg from "src/assets/tokens/RARI.png";
 
-import { segmentUA } from "src/helpers/userAnalyticHelpers";
-
-import OhmImg from "src/assets/tokens/token_OHM.svg";
-import SOhmImg from "src/assets/tokens/token_sOHM.svg";
-import WsOhmImg from "src/assets/tokens/token_wsOHM.svg";
-import token33tImg from "src/assets/tokens/token_33T.svg";
-
-import { addresses, TOKEN_DECIMALS } from "../../../../constants";
+import { addresses } from "../../../../constants";
 // import SOhmLearnView from "./SOhm/SOhmLearnView";
 // import SOhmTxView from "./SOhm/SOhmTxView";
 // import SOhmZapView from "./SOhm/SOhmTxView";
 // import Chart from "../../../../components/Chart/WalletChart.jsx";
-import { rebasesDataQuery, bulletpoints, tooltipItems, tooltipInfoMessages, itemType } from "../../treasuryData.js";
 import { useWeb3Context } from "../../../../../src/hooks";
 import {
   SvgIcon,
@@ -165,50 +157,6 @@ const MenuItemUserToken = ({ name, icon, userBalance, userBalanceUSD, onExpanded
   );
 };
 
-const addTokenToWallet = (tokenSymbol, tokenAddress, address) => async () => {
-  if (!window.ethereum) return;
-
-  const host = window.location.origin;
-  let tokenPath;
-  let tokenDecimals = TOKEN_DECIMALS;
-  switch (tokenSymbol) {
-    case "THS":
-      tokenPath = OhmImg;
-      break;
-    case "33T":
-      tokenPath = token33tImg;
-      break;
-    case "wsOHM":
-      tokenPath = WsOhmImg;
-      tokenDecimals = 18;
-      break;
-    default:
-      tokenPath = SOhmImg;
-  }
-  const imageURL = `${host}/${tokenPath}`;
-
-  try {
-    await window.ethereum.request({
-      method: "wallet_watchAsset",
-      params: {
-        type: "ERC20",
-        options: {
-          address: tokenAddress,
-          symbol: tokenSymbol,
-          decimals: tokenDecimals,
-          image: imageURL,
-        },
-      },
-    });
-    segmentUA({
-      address: address,
-      type: "Add Token",
-      tokenName: tokenSymbol,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
 function InitialWalletView() {
   const theme = useTheme();
   const styles = useStyles();
@@ -251,23 +199,6 @@ function InitialWalletView() {
             <Typography align="left">${trim(ohmBalance * marketPrice, 2)}</Typography>
           </Paper>
         </AccordionSummary>
-        <Box style={{ width: "100%" }}>
-          {isEthereumAPIAvailable ? (
-            <Box>
-              <Divider color="secondary" />
-              {THS_ADDRESS && (
-                <Button
-                  style={{ width: "100%", fontSize: "12px" }}
-                  variant="contained"
-                  color="secondary"
-                  onClick={addTokenToWallet("THS", THS_ADDRESS, address)}
-                >
-                  ADD TOKEN TO WALLET
-                </Button>
-              )}
-            </Box>
-          ) : null}
-        </Box>
       </Accordion>
       <Accordion expanded={expanded === "sTHS"} onChange={handleChange("sTHS")}>
         <AccordionSummary
@@ -284,25 +215,6 @@ function InitialWalletView() {
             <Typography align="left">${trim(sohmBalance * marketPrice, 2)}</Typography>
           </Paper>
         </AccordionSummary>
-        <AccordionDetails margin="auto" style={{ margin: "auto", padding: 0 }}>
-          <Box style={{ width: "100%" }}>
-            {isEthereumAPIAvailable ? (
-              <Box>
-                <Divider color="secondary" />
-                {STHS_ADDRESS && (
-                  <Button
-                    style={{ width: "100%", fontSize: "12px" }}
-                    variant="contained"
-                    color="secondary"
-                    onClick={addTokenToWallet("sTHS", STHS_ADDRESS, address)}
-                  >
-                    ADD TOKEN TO WALLET
-                  </Button>
-                )}
-              </Box>
-            ) : null}
-          </Box>
-        </AccordionDetails>
       </Accordion>
 
       <Divider color="secondary" className="less-margin" />

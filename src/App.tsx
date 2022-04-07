@@ -7,14 +7,10 @@ import { ethers } from "ethers";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import useBonds, { IAllBondData } from "./hooks/Bonds";
 import { useAddress, useWeb3Context } from "./hooks/web3Context";
-import useSegmentAnalytics from "./hooks/useSegmentAnalytics";
-import { segmentUA } from "./helpers/userAnalyticHelpers";
-import { shouldTriggerSafetyCheck } from "./helpers";
 
 import { calcBondDetails } from "./slices/BondSlice";
 import { loadAppDetails, loadAppDetailsContract } from "./slices/AppSlice";
 import { loadAccountDetails, calculateUserBondDetails } from "./slices/AccountSlice";
-import { info } from "./slices/MessagesSlice";
 
 import { Stake, ChooseBond, Bond, TreasuryDashboard } from "./views";
 import Sidebar from "./components/Sidebar/Sidebar.jsx";
@@ -26,9 +22,8 @@ import NotFound from "./views/404/NotFound";
 import { dark as darkTheme } from "./themes/dark.js";
 import { light as lightTheme } from "./themes/light.js";
 import "./style.scss";
-import { useGoogleAnalytics } from "./hooks/useGoogleAnalytics";
 import Claim from "./views/Claim";
-import { addresses, THEME_LIGHT, ZERO_ADDRESS } from "./constants";
+import { addresses, THEME_LIGHT } from "./constants";
 import Sc from "./views/Sc";
 import { useAppSelector } from "./hooks";
 import Register from "./views/Register";
@@ -80,16 +75,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function App() {
-  useSegmentAnalytics();
-  useGoogleAnalytics();
-
   const location = useLocation();
   const dispatch = useDispatch();
   const history = useHistory()
   const theme: { theme: string } = useAppSelector(state => {
     return state.theme
   })
-  const currentPath = location.pathname + location.search + location.hash;
   const classes = useStyles();
 
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
@@ -99,17 +90,12 @@ function App() {
   const isSmallScreen = useMediaQuery("(max-width: 600px)");
   const [isInvited, setIsInvited] = useState(false)
 
-  const { connect, hasCachedProvider, provider, chainID, connected } = useWeb3Context();
+  const { connect, provider, chainID, connected, disconnect } = useWeb3Context();
   const address = useAddress();
 
 
-  const [walletChecked, setWalletChecked] = useState(false);
   // TODO (appleseed-expiredBonds): there may be a smarter way to refactor this
   const { bonds /*, expiredBonds */ } = useBonds(chainID);
-
-  useEffect(() => {
-    dispatch(loadAppDetails())
-  }, [])
 
   const loadDetails = useCallback(
     async (whichDetails: string) => {
@@ -124,8 +110,15 @@ function App() {
         loadAccount(loadProvider);
       }
     },
-    [provider, address, connected, walletChecked]
+    [provider, address, connected]
   )
+
+  useEffect(() => {
+    if (connected && chainID != 42) {
+      disconnect()
+    }
+
+  }, [connected, provider, chainID, address])
 
 
 
@@ -149,35 +142,16 @@ function App() {
     [connected],
   );
 
-
-  useEffect(() => {
-    if (hasCachedProvider()) {
-      // then user DOES have a wallet
-      connect().then(() => {
-        setWalletChecked(true);
-        segmentUA({
-          type: "connect",
-          provider: provider,
-          context: currentPath,
-        });
-      });
-    } else {
-      // then user DOES NOT have a wallet
-      setWalletChecked(true);
-    }
-    if (shouldTriggerSafetyCheck()) {
-      dispatch(info("Safety Check: Always verify you're on app.themis.capital!"));
-    }
-  }, []);
-
   // this useEffect fires on state change from above. It will ALWAYS fire AFTER
   useEffect(() => {
     // don't load ANY details until wallet is Checked
-
-    if (walletChecked) {
-      loadDetails("app");
+    loadDetails("app");
+    dispatch(loadAppDetails())
+    const themisConnected = sessionStorage.getItem("THEMIS_CONNECTED")
+    if (!themisConnected || themisConnected === "true") {
+      connect()
     }
-  }, [walletChecked, address, provider]);
+  }, []);
 
   // this useEffect picks up any time a user Connects via the button
   useEffect(() => {
@@ -196,14 +170,15 @@ function App() {
   };
 
 
-  const serachRelationship = async (account: string) => {
-    const signer = provider.getSigner();
-    const RelationshipContract = new ethers.Contract(addresses[chainID].Relationship_ADDRESS as string, RelationshipABI, signer)
+  const serachRelationship = useCallback(
+    async (account: string) => {
+      const signer = provider.getSigner();
+      const RelationshipContract = new ethers.Contract(addresses[chainID].Relationship_ADDRESS as string, RelationshipABI, signer)
 
-    const invitedAddress = await RelationshipContract.RegisterInfoOf(account)
-    console.log("invitedAddress", invitedAddress)
-    setIsInvited(!invitedAddress.registrantCode)
-  }
+      const invitedAddress = await RelationshipContract.RegisterInfoOf(account)
+      setIsInvited(!invitedAddress.registrantCode)
+    }, [address, chainID, provider, addresses]
+  )
 
   const scData = useCallback(
     () => {
@@ -215,7 +190,7 @@ function App() {
   )
 
   useEffect(() => {
-    if (address && chainID && provider && addresses) {
+    if (address && chainID && provider && addresses[chainID]?.Relationship_ADDRESS) {
       serachRelationship(address)
       scData()
     }

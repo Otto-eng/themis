@@ -33,8 +33,7 @@ const Title = styled("div")({display: "flex",
 
 function NavContent() {
   const [isActive] = useState();
-  const address = useAddress();
-  const { chainID } = useWeb3Context();
+  const { chainID, address, provider } = useWeb3Context();
   const { bonds } = useBonds(chainID);
   const [icon, setIcon] = useState({claim: ClaimDarkIcon, logo: THSDarkPng, sc: SCDarkIcon})
 
@@ -69,6 +68,7 @@ function NavContent() {
     }
     return false;
   }, []);
+
 
   return (
     <Paper className="dapp-sidebar">

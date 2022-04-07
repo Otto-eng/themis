@@ -26,8 +26,6 @@ import {
   Link,
 } from "@material-ui/core";
 
-import { usdt /*, frax */ } from "src/helpers/AllBonds";
-
 const useStyles = makeStyles(theme => ({
   menuContainer: {
     padding: "16px",
@@ -151,22 +149,20 @@ function InitialWalletView() {
   const getThsBanlance = useCallback(
     async () => {
       const signer = provider.getSigner();
+
       const thsContract = new ethers.Contract(addresses[chainID].THS_ADDRESS, ierc20Abi, signer);
       const thsBalance = await thsContract.balanceOf(address);
       setThs(ethers.utils.formatUnits(thsBalance, "gwei"))
-    }, [address, chainID, provider])
+    }, [address, chainID, provider, addresses])
   const getsThsBanlance = useCallback(
     async () => {
       const signer = provider.getSigner();
-      console.log("WALLET", provider)
       const sThsContract = new ethers.Contract(addresses[chainID].STHS_ADDRESS, sTHSAbi, signer);
       const sThsBalance = await sThsContract.balanceOf(address);
-      console.log("sThsBalance", sThsBalance)
       setSThs(ethers.utils.formatUnits(sThsBalance, "gwei"))
-    }, [address, chainID, provider])
-
+    }, [address, chainID, provider, addresses])
   useEffect(() => {
-    if (address && chainID && provider) {
+    if (address && chainID && provider && addresses[chainID]?.THS_ADDRESS && addresses[chainID]?.STHS_ADDRESS) {
       getThsBanlance()
       getsThsBanlance()
     }

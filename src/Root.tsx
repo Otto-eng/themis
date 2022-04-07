@@ -2,7 +2,7 @@
 import { FC, useEffect } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { Web3ContextProvider } from "./hooks/web3Context";
+import { useAddress, Web3ContextProvider } from "./hooks/web3Context";
 // import { Web3ReactProvider } from "@web3-react/core";
 
 import { i18n } from "@lingui/core";
@@ -17,10 +17,12 @@ import store from "./store";
 
 
 const Root: FC = () => {
+
   useEffect(() => {
     initLocale();
 
   }, []);
+
 
   return (
       <Web3ContextProvider>

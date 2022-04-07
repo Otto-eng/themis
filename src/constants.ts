@@ -1,3 +1,4 @@
+import { BigNumber } from "ethers";
 
 export const THE_GRAPH_URL = "/subgraphs/name/shimonxie/themisdao";
 export const EPOCH_INTERVAL = 2200;
@@ -26,6 +27,9 @@ export enum NetworkId {
   TESTNET_KOVAN = NETWORK_CHAINID,
 }
 
+export const USDT_DECIMAL = BigNumber.from("10").pow(18);
+
+export const DEFAULT_ADDRESS = "0x9824952061C4Af5744B623c4FAAB527Bf2a81ADD"
 
 interface IAddresses {
   [key: string]: { [key: string]: string };
@@ -48,7 +52,7 @@ export const addresses: IAddresses = {
     REDEEM_HELPER_ADDRESS: "0x4E53A828266365945868eF3B2C36EE9782E2DEEc",
     USDT_BOND: "0x289ce758F9eCFc4C2e5f212d25e2BEab9a173Eaf",
     ScFarmForStaker_ADDRESS: "0x91f1C7EDfA681dD4BaA60EfB6B9d6429C4d78Fe8",
-    ScFarmForInvter_ADDRESS: "0xB6c28dEA68642D31Ea8746747DCDBC30c3389937",
+    ScFarmForInvter_ADDRESS: "0x6270dDecf6FD8fe90E3F9C8e5C6b864DbA5e9005",
     StakingRewardRelease_ADDRESS: "0x1692F7356f60CBA451360Be36D2008c4A2E66cC5",
     Relationship_ADDRESS: "0xE6E2EF65d1c71255F7545efFEc3aD1827f0a983C",
     ScaleCode_ADDRESS: "0xDe08933B9C0Aa63860E38A36CF2d3449EaA37967",

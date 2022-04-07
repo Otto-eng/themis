@@ -108,7 +108,7 @@ export const loadAppDetailsContract = createAsyncThunk(
 
     const res = await result.json()
     const graphData = await apollo<{ protocolMetrics: IProtocolMetrics2[], rebases: IRebases[] }>(protocolMetricsQuery);
-    if (!graphData || graphData == null) {
+    if (!graphData || !res || res == null || graphData == null) {
       console.error("Returned a null response when querying TheGraph");
       return;
     }
@@ -117,7 +117,6 @@ export const loadAppDetailsContract = createAsyncThunk(
     const fiveDayRate = parseFloat(graphData.data.protocolMetrics[0].days5APY);
     const stakingAPY = parseFloat(graphData.data.protocolMetrics[0].currentAPY);
     const stakingRebase = parseFloat(graphData.data.protocolMetrics[0].nextEpochRebase);
-
     return {
       currentIndex,
       currentBlock: Number(res.result.toString()),

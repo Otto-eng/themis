@@ -1,6 +1,5 @@
 import { EPOCH_INTERVAL, BLOCK_RATE_SECONDS, addresses } from "../constants";
 import { BigNumber, ethers } from "ethers";
-import axios from "axios";
 import { abi as RedeemHelperABI } from "../abi/RedeemHelper.json";
 
 import { SvgIcon } from "@material-ui/core";

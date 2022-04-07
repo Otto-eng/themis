@@ -88,6 +88,7 @@ export abstract class Bond {
   }
 
   getAddressForReserve(networkID: NetworkID) {
+    console.trace()
     return this.networkAddrs[networkID].reserveAddress;
   }
   getContractForReserve(networkID: NetworkID, provider: StaticJsonRpcProvider | JsonRpcSigner) {
@@ -99,8 +100,7 @@ export abstract class Bond {
   async getBondReservePrice(networkID: NetworkID, provider: StaticJsonRpcProvider | JsonRpcSigner) {
     let marketPrice: number = 0;
     const pairContract = this.getContractForBond(networkID, provider);
-    console.log("pairContract", pairContract)
-    //   const reserves = await pairContract.getReserves();
+    // const reserves = await pairContract.getReserves();
     // console.log("reserves", reserves)
     // marketPrice = Number(reserves[1].toString()) / Number(reserves[0].toString()) / 10 ** 9;
 

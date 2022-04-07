@@ -4,7 +4,6 @@ import { THEME_KEYWORD, THEME_DARK, THEME_LIGHT } from "../constants"
 function useTheme(): any {
   const [theme, setTheme] = useState<string>(localStorage.getItem(THEME_KEYWORD) ?? THEME_LIGHT)
   const [num, setNum] = useState<string>("0")
-  console.log("THSTheme", theme)
 
   useEffect(() => {
     const THSTheme = localStorage.getItem(THEME_KEYWORD)

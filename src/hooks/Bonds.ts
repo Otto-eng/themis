@@ -33,8 +33,6 @@ function useBonds(chainID: number) {
 
   useEffect(() => {
     let bondDetails: IAllBondData[];
-    // console.log("BONDSTATE", bondState)
-    // console.log("ACCOUNTBONDSSTATE", accountBondsState)
     bondDetails = allBonds
       .flatMap(bond => {
         if (bondState[bond.name] && bondState[bond.name].bondDiscount) {
@@ -75,7 +73,6 @@ function useBonds(chainID: number) {
   }, [bondState, accountBondsState, bondLoading]);
 
   // Debug Log:
-  // console.log(bonds);
   return { bonds, loading: bondLoading /*, expiredBonds */ };
 }
 

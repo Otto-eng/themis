@@ -3,8 +3,6 @@ import Web3Modal from "web3modal";
 import { StaticJsonRpcProvider, JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { IFrameEthereumProvider } from "@ledgerhq/iframe-provider";
-import { EnvHelper } from "../helpers/Environment";
-import { NodeHelper } from "src/helpers/NodeHelper";
 import { KOVAN_URI, NetworkId, NETWORK_CHAINID } from "src/constants";
 import { Providers } from "src/helpers/providers/Providers";
 import { ethers } from "ethers";
@@ -60,9 +58,6 @@ export const initNetworkFunc = async ({ provider }: IGetCurrentNetwork) => {
  * kept as function to mimic `getMainnetURI()`
  * @returns string
  */
-function getTestnetURI() {
-  return EnvHelper.alchemyTestnetURI;
-}
 
 /**
  * determine if in IFrame for Ledger Live
@@ -136,7 +131,7 @@ const initModal = new Web3Modal({
     walletconnect: {
       package: WalletConnectProvider,
       options: {
-        infuraId: "e48190e478114e97b88a90a7a30f5915"
+        infuraId: "4e658875764f4112a9cbfe92c4e93b9e"
       },
     },
   },
@@ -157,14 +152,14 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
 
   // NOTE (appleseed): if you are testing on rinkeby you need to set chainId === 4 as the default for non-connected wallet testing...
   // ... you also need to set getTestnetURI() as the default uri state below
-  const [chainID, setChainID] = useState(0);
+  const [chainID, setChainID] = useState(42);
 
   const [networkName, setNetworkName] = useState("");
   const [providerInitialized, setProviderInitialized] = useState(false);
   const [uri, setUri] = useState("");
   const [provider, setProvider] = useState<any>(Providers.getStaticProvider(NetworkId.TESTNET_KOVAN));
-  const web3Modal = initModal
-
+  const web3Modal = initModal;
+  
   function hasCachedProvider(): boolean {
     return checkCachedProvider(web3Modal);
   }
@@ -243,10 +238,11 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
 
     // new _initListeners implementation matches Web3Modal Docs
     // ... see here: https://github.com/Web3Modal/web3modal/blob/2ff929d0e99df5edf6bb9e88cff338ba6d8a3991/example/src/App.tsx#L185
-    // _initListeners(rawProvider);
+    _initListeners(rawProvider);
 
 
-    const connectedProvider = new ethers.providers.Web3Provider(rawProvider);
+    const connectedProvider = new ethers.providers.Web3Provider(rawProvider, "any");
+    connectedProvider.pollingInterval = 60000;
     setProvider(connectedProvider);
     const connectedAddress = await connectedProvider.getSigner().getAddress();
 
@@ -254,28 +250,24 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
     // Eventually we'll be fine without doing network validations.
     setAddress(connectedAddress);
     const networkHash = await initNetworkFunc({ provider: connectedProvider });
+    _checkNetwork(networkHash.networkId)
     setChainID(networkHash.networkId);
     setNetworkName(networkHash.networkName);
     setUri(networkHash.uri);
     setProviderInitialized(networkHash.initialized);
     // Keep this at the bottom of the method, to ensure any repaints have the data we need
     setConnected(true);
+    sessionStorage.setItem("THEMIS_CONNECTED", "true")
 
     return connectedProvider;
   }, [provider, web3Modal, connected]);
-
-  // useEffect(() => {
-  //   if (web3Modal.cachedProvider) {
-  //     connect()
-  //   }
-  // }, [connect])
 
   const disconnect = useCallback(async () => {
     await web3Modal.clearCachedProvider()
     if (provider?.disconnect && typeof provider.disconnect === 'function') {
       await provider.disconnect()
-      localStorage.removeItem("walletconnect")
     }
+    sessionStorage.setItem("THEMIS_CONNECTED", "false")
     setTimeout(() => {
       window.location.reload();
     }, 1);
@@ -311,19 +303,6 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
       providerInitialized,
     ],
   );
-
-  useEffect(() => {
-    // logs non-functioning nodes && returns an array of working mainnet nodes
-    NodeHelper.checkAllNodesStatus().then((validNodes: any) => {
-      validNodes = validNodes.filter((url: boolean | string) => url !== false);
-      if (!validNodes.includes(uri) && NodeHelper.retryOnInvalid()) {
-        // force new provider...
-        setTimeout(() => {
-          window.location.reload();
-        }, 1);
-      }
-    });
-  }, []);
 
   return <Web3Context.Provider value={{ onChainProvider }}>{children}</Web3Context.Provider>;
 };

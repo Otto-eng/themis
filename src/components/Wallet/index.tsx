@@ -7,7 +7,7 @@ import { useAddress, useWeb3Context } from "../../hooks/web3Context";
 import InitialWalletView from "./InitialWalletView";
 import { Drawer, SvgIcon, Button, Typography, Box, IconButton, ButtonProps, styled } from "@material-ui/core";
 import { ethers } from "ethers";
-import { addresses, ZERO_ADDRESS } from "src/constants";
+import { addresses } from "src/constants";
 import { abi as RelationshipABI } from "src/abi/Relationship.json";
 
 
@@ -80,20 +80,22 @@ export function Wallet() {
   const address = useAddress()
   const [state, setState] = useState(false)
 
+
   const serachRelationship = useCallback(
+
     async (account: string) => {
-      const signer = provider.getSigner();
-      const RelationshipContract = new ethers.Contract(addresses[chainID].Relationship_ADDRESS as string, RelationshipABI, signer)
-      const info = await RelationshipContract.RegisterInfoOf(account)
-      info?.registrantCode && setInitCode(info.registrantCode)
-    },
-    [address, chainID, provider, addresses]
+      if (address && chainID && provider && addresses[chainID]?.Relationship_ADDRESS) {
+        const signer = provider.getSigner();
+        const RelationshipContract = new ethers.Contract(addresses[chainID].Relationship_ADDRESS as string, RelationshipABI, signer)
+        const info = await RelationshipContract.RegisterInfoOf(account)
+        info?.registrantCode && setInitCode(info.registrantCode)
+      }
+
+    }, [address, chainID, provider, addresses]
   )
 
   useEffect(() => {
-    if (address && chainID && !!provider && !!addresses) {
-      serachRelationship(address)
-    }
+    serachRelationship(address)
   }, [address, chainID, provider, addresses])
 
 
