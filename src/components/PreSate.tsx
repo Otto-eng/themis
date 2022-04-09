@@ -1,35 +1,24 @@
 import styled from "styled-components";
-import PreSate1 from "../../images/home/jieduan@2x.png";
 import { GridFlex } from "./Grid";
 
 const Main = styled(GridFlex)`
 	justify-content: center;
 	align-items: center;
+	div {
+		border: 1px solid #FFFFFF;
+		border-radius: 30px;
+		padding: 8px 16px;
+		color: #FFF;
+		font-size: 14px;
+	}
 `
 
-const Img = styled(GridFlex) <{ width?: string, height?: string, margin?: string, color?: string, fontSize?: string }>`
-	background-image: ${`url(${PreSate1})`};
-	background-size: 100% 100%;
-	width: ${({ width }) => width ?? "124px"};
-	height: ${({ height }) => height ?? "34px"};
-	margin: ${({ margin }) => margin ?? "24px auto"};
-	justify-content: center;
-	align-items: center;
-	color: ${({ color }) => color ?? "#FFF"};
-	font-size: ${({ fontSize }) => fontSize ?? "18px"};
-`;
-function PreSate({
-	width,
-	margin,
-	height,
-	color,
-	fontSize
-}: { width?: string, margin?: string, height?: string, color?: string, fontSize?: string }) {
+function PreSate() {
 	return (
 		<Main>
-			<Img width={width} margin={margin} height={height} color={color} fontSize={fontSize}>
-				Pre-sale 3
-			</Img>
+			<div>
+				{"PreSale 1"}
+			</div>
 		</Main>
 	)
 }

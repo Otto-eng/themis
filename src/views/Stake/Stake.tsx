@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   Box,
@@ -95,7 +95,7 @@ function Stake() {
     if (view === 0) {
       setQuantity(Number(Math.floor(Number(thsBalance) * 10000) / 10000) + "");
     } else {
-      setQuantity(Number(Math.floor(Number(sThsBalance) * 10000) / 10000) + "");
+      setQuantity(Number(Math.floor(Number(sThsSTakingBalance) * 10000) / 10000) + "");
     }
   };
 
@@ -156,6 +156,7 @@ function Stake() {
   const trimmedStakingAPY = trim(stakingAPY, 1);
   const stakingRebasePercentage = trim(stakingRebase, 4);
   const nextRewardValue = trim((Number(stakingRebasePercentage) / 100) * trimmedBalance, 4);
+  const stakeAmount = Math.floor(((Number(sThsBalance) || 0) - (Number(sThsSTakingBalance) || 0)) * 10000) / 10000
 
   return (
     <div id="stake-view">
@@ -405,36 +406,18 @@ function Stake() {
                         <Trans>Staked Balance</Trans>
                       </Typography>
                       <Typography variant="body1" id="user-staked-balance">
-                          {isAppLoading ? <Skeleton width="80px" /> : <>{trimmedBalance} sTHS</>}
+                          {isAppLoading ? <Skeleton width="80px" /> : <>{sThsSTakingBalance} sTHS</>}
                       </Typography>
-                    </div>
-
-                      {/* <div className="data-row" style={{ paddingLeft: "10px" }}>
-                      <Typography variant="body2" color="textSecondary">
-                        <Trans>Single Staking</Trans>
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary">
-                          {isAppLoading ? <Skeleton width="80px" /> : <>{trim(Number(sThsSTakingBalance), 4)} sTHS</>}
-                      </Typography>
-                    </div> */}
-
-                      {/* <div className="data-row" style={{ paddingLeft: "10px" }}>
-                      <Typography variant="body2" color="textSecondary">
-                        <Trans>Staked Balance in Fuse</Trans>
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary">
-                        {isAppLoading ? <Skeleton width="80px" /> : <>{trim(Number(fsohmBalance), 4)} fsOHM</>}
-                      </Typography>
-                    </div> */}
-
-                      {/* <div className="data-row" style={{ paddingLeft: "10px" }}>
-                      <Typography variant="body2" color="textSecondary">
-                        <Trans>Wrapped Balance</Trans>
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary">
-                        {isAppLoading ? <Skeleton width="80px" /> : <>{trim(Number(wsohmBalance), 4)} wsOHM</>}
-                      </Typography>
-                    </div> */}
+                      </div>
+                      
+                      <div className="data-row">
+                        <Typography variant="body1">
+                          <Trans>Yield Amount</Trans>
+                        </Typography>
+                        <Typography variant="body1" id="user-staked-balance">
+                          {isAppLoading ? <Skeleton width="80px" /> : <>{stakeAmount >= 0 ? stakeAmount : 0} sTHS</>}
+                        </Typography>
+                      </div>
 
                     <Divider color="secondary" />
 

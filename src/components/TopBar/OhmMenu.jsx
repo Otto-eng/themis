@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import { ReactComponent as ArrowUpIcon } from "../../assets/icons/x.svg";
-import { ReactComponent as WalletIcon } from "../../assets/icons/wallet.svg";
+import { ReactComponent as ArrowUpIcon } from "../../asstes/icons/x.svg";
+import { ReactComponent as WalletIcon } from "../../asstes/icons/wallet.svg";
 import "./ohmmenu.scss";
 import { useWeb3Context } from "../../hooks/web3Context";
 import InitialWalletView from "./OhmMenuViews/walletViews/InitialWalletView";

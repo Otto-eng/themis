@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ReactComponent as Info } from "../../assets/icons/info.svg";
+import { ReactComponent as Info } from "../../asstes/icons/info.svg";
 import { SvgIcon, Paper, Typography, Box, Popper } from "@material-ui/core";
 import "./infotooltip.scss";
 

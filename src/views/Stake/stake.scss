@@ -168,6 +168,10 @@
   padding: 8px 32px;
 }
 
+#root .stake-button {
+  font-size: 20px;
+}
+
 .mobile .stake-button {
   max-width: 542px;
   align-self: center;
@@ -177,11 +181,11 @@
 }
 
 #root .mobile .sc-stake-button {
-  max-width: 542px;
   align-self: center;
   justify-self: center;
-  padding: 6px 32px;
-  width: 120px;
+  padding: 6px 8px;
+  max-width: 120px;
+  font-size: 14px;
 }
 
 .staking-area {

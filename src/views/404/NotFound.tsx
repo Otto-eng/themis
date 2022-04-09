@@ -1,4 +1,4 @@
-import OlympusLogo from "../../assets/Olympus Logo.svg";
+import OlympusLogo from "../../asstes/Olympus Logo.svg";
 import "./notfound.scss";
 import { Trans } from "@lingui/macro";
 

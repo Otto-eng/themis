@@ -2,9 +2,9 @@ import { useState, useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useTheme, makeStyles } from "@material-ui/core/styles";
 import { trim } from "src/helpers";
-import { ReactComponent as ArrowUpIcon } from "src/assets/icons/arrow-up.svg";
-import { ReactComponent as sOhmTokenImg } from "src/assets/tokens/token_sOHM.svg";
-import { ReactComponent as ThsImg } from "src/assets/tokens/ths.svg";
+import { ReactComponent as ArrowUpIcon } from "src/asstes/icons/arrow-up.svg";
+import { ReactComponent as sOhmTokenImg } from "src/asstes/tokens/token_sOHM.svg";
+import { ReactComponent as ThsImg } from "src/asstes/tokens/ths.svg";
 import { ethers } from "ethers";
 
 import { addresses, } from "src/constants";

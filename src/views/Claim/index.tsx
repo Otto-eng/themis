@@ -334,14 +334,14 @@ function Claim() {
 	}, [stakeReleaseEarningsListPage])
 
 	return (
-		<Main>
+		<Main >
 			<React.Fragment>
 			{isOpen && <CalimModal onClick={handleClose}>
 				<Container
 					onClick={(event) => {
 					event.stopPropagation()
 				}}
-					style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}
+						style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}
 				>
 						<ReleaseTime >
 						<div> Release Time：{listDay[Number(block?.speedLevel)].value ?? 0}d</div>
@@ -368,7 +368,7 @@ function Claim() {
 						<Cost>Cost: {optionData.gasSc}SC</Cost>
 					</ModalTop>
 					<Confrim
-							className="stake-button sc-stake-button"
+						className="stake-button sc-stake-button"
 						variant="contained"
 						color="primary"
 						disabled={!optionData.id || pendingStatus.confrim}
@@ -405,16 +405,14 @@ function Claim() {
 				</Container>
 			</CalimModal>}
 
-				<Top style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}>
+				<Top style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}>
 						<Title >THS:</Title>
-						<Blance>{pendingStatus.banlance ? <Skeleton width="80px" /> : thsBalance}</Blance>
+					<Blance>{pendingStatus.banlance ? <Skeleton width="80px" /> : Number(thsBalance).toFixed(4)}</Blance>
 					</Top>
 			{
-					infoList.map((item, idx) => (<Card
-						style={{ backgroundColor: theme === THEME_LIGHT ? "rgba(255, 255, 255, 0.6)" : "#18253A" }}
-					>
+					infoList.map((item, idx) => (<Card>
 					<CardTop>
-							<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}>
+							<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}>
 							<CardContainer>
 								<Ol>
 									{idx + 1}
@@ -422,7 +420,7 @@ function Claim() {
 							</CardContainer>
 						</CardItem>
 							<CardItem
-								style={{ margin: "0 4px", backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}
+								style={{ margin: "0 4px", backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}
 							>
 							<CardContainer>
 								<TopText>{listDay[Number(item.speedLevel)]?.value ?? 0} day</TopText>
@@ -440,12 +438,12 @@ function Claim() {
 								>{isPending(pendingStatus, "confrim", "Accelerate")}</ClaimBtn>
 							</CardContainer>
 						</CardItem>
-							<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}>
+							<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}>
 							<CardContainer>
 								<TopText>{item.pendingTotal} THS</TopText>
 								<Text>Unclaimed</Text>
 								<ClaimBtn
-										className="stake-button sc-stake-button"
+									className="stake-button sc-stake-button"
 									variant="contained"
 									color="primary"
 									disabled={!Number(item.pendingTotal) || pendingStatus.claim}
@@ -461,7 +459,7 @@ function Claim() {
 						</CardItem>
 					</CardTop>
 					<CardBottom>
-							<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}>
+							<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}>
 
 							<CardContainer>
 								<TopText>UTC {dayjs.unix(Number(item.recordTimestamp)).utc().format("YYYY-MM-DD HH:mm")}</TopText>
@@ -471,14 +469,14 @@ function Claim() {
 							<CardItem
 								style={{
 									margin: "0 4px",
-									backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A"
+									backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A"
 								}}>
 							<CardContainer>
 								<TopText>{item.rewardTotal} THS</TopText>
 								<Text>Profit Balance</Text>
 							</CardContainer>
 						</CardItem>
-							<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}>
+							<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}>
 							<CardContainer>
 								<TopText>{item.earnedTotal} THS</TopText>
 								<Text>Received</Text>
@@ -496,7 +494,7 @@ function Claim() {
 				>view more</More>}
 
 				<CardDetaile
-					style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}
+					style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}
 				>
 				<Item>
 					<CardDetaileOl>hash</CardDetaileOl>
@@ -523,7 +521,7 @@ function Claim() {
 					}} > view more</More>
 					</CardDetaile>
 			</React.Fragment>
-		</Main>
+			</Main>
 	)
 }
 export default Claim

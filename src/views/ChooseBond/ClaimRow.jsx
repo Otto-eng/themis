@@ -5,7 +5,7 @@ import { shorten, trim, prettyVestingPeriod } from "../../helpers";
 import { redeemBond } from "../../slices/BondSlice";
 import BondLogo from "../../components/BondLogo";
 import { Box, Button, Link, Paper, Typography, TableRow, TableCell, SvgIcon, Slide } from "@material-ui/core";
-import { ReactComponent as ArrowUp } from "../../assets/icons/arrow-up.svg";
+import { ReactComponent as ArrowUp } from "../../asstes/icons/arrow-up.svg";
 import { NavLink } from "react-router-dom";
 import "./choosebond.scss";
 import { Skeleton } from "@material-ui/lab";
@@ -15,7 +15,7 @@ import { isPendingTxn, txnButtonTextGeneralPending } from "src/slices/PendingTxn
 export function ClaimBondTableData({ userBond }) {
   const dispatch = useDispatch();
   const { address, chainID, provider } = useWeb3Context();
-  const { bonds, expiredBonds } = useBonds(chainID);
+  const { bonds, /* expiredBonds */ } = useBonds(chainID);
 
   const bond = userBond[1];
   const bondName = bond.bond;
@@ -75,7 +75,7 @@ export function ClaimBondTableData({ userBond }) {
 export function ClaimBondCardData({ userBond }) {
   const dispatch = useDispatch();
   const { address, chainID, provider } = useWeb3Context();
-  const { bonds, expiredBonds } = useBonds(chainID);
+  const { bonds } = useBonds(chainID);
 
   const bond = userBond[1];
   const bondName = bond.bond;
@@ -94,7 +94,7 @@ export function ClaimBondCardData({ userBond }) {
 
   async function onRedeem({ autostake }) {
     // TODO (appleseed-expiredBonds): there may be a smarter way to refactor this
-    let currentBond = [...bonds, ...expiredBonds].find(bnd => bnd.name === bondName);
+    let currentBond = [...bonds, /* ...expiredBonds */].find(bnd => bnd.name === bondName);
     await dispatch(redeemBond({ address, bond: currentBond, networkID: chainID, provider, autostake }));
   }
 
@@ -125,6 +125,7 @@ export function ClaimBondCardData({ userBond }) {
         <Button
           variant="outlined"
           color="primary"
+          className="stake-button"
           disabled={isPendingTxn(pendingTransactions, "redeem_bond_" + bondName)}
           onClick={() => onRedeem({ autostake: false })}
         >
@@ -132,7 +133,7 @@ export function ClaimBondCardData({ userBond }) {
             {txnButtonTextGeneralPending(pendingTransactions, "redeem_bond_" + bondName, t`Claim`)}
           </Typography>
         </Button>
-        <Button variant="outlined" color="primary" onClick={() => onRedeem({ autostake: true })}>
+        <Button className="stake-button" variant="outlined" color="primary" onClick={() => onRedeem({ autostake: true })}>
           <Typography variant="h5">
             {txnButtonTextGeneralPending(
               pendingTransactions,

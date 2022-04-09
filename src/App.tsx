@@ -30,6 +30,7 @@ import Register from "./views/Register";
 
 import { abi as RelationshipABI } from "src/abi/Relationship.json";
 import { scInviterEarningsDetailsList, scStakeEarningsDetailsList, stakeTHSReleaseEarningsList } from "./slices/scSlice";
+import { IDO } from "./views/IDO";
 
 // 😬 Sorry for all the console logging
 const DEBUG = false;
@@ -210,6 +211,15 @@ function App() {
     }
   }, [address, isInvited, location.pathname])
 
+  useEffect(() => {
+    const height = document.body.scrollHeight;
+    window.onresize = () => {
+      if (document.body.scrollHeight < height) {
+        document.body.style.height = height + "px"
+      }
+    }
+  }, [])
+
   return (
     <ThemeProvider theme={themeMode}>
       <CssBaseline />
@@ -231,24 +241,25 @@ function App() {
             </Route>
 
             <Route exact path="/">
-              <Redirect to="/stake" />
+              <Redirect to="/dashboard" />
             </Route>
 
-            <Route path="/stake">
+            <Route exact path="/stake">
               <Stake />
             </Route>
-
-
+            {(bonds as IAllBondData[]).map(bond => {
+              return (
+                <Route exact key={bond.name} path={`/bonds/${bond.name}`}>
+                  <Bond bond={bond} />
+                </Route>
+              );
+            })}
             <Route path="/bonds">
-              {(bonds as IAllBondData[]).map(bond => {
-                return (
-                  <Route exact key={bond.name} path={`/bonds/${bond.name}`}>
-                    <Bond bond={bond} />
-                  </Route>
-                );
-              })}
               <ChooseBond />
             </Route>
+            {/* <Route exact path="/ido">
+              <IDO />
+            </Route> */}
             <Route path="/claim">
               <Claim />
             </Route>

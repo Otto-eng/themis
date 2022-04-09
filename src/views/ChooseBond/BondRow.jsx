@@ -1,7 +1,7 @@
 import BondLogo from "../../components/BondLogo";
 import { DisplayBondPrice, DisplayBondDiscount } from "../Bond/Bond";
 import { Box, Button, Link, Paper, Typography, TableRow, TableCell, SvgIcon, Slide } from "@material-ui/core";
-import { ReactComponent as ArrowUp } from "../../assets/icons/arrow-up.svg";
+import { ReactComponent as ArrowUp } from "../../asstes/icons/arrow-up.svg";
 import { NavLink } from "react-router-dom";
 import "./choosebond.scss";
 import { t, Trans } from "@lingui/macro";
@@ -69,7 +69,7 @@ export function BondDataCard({ bond }) {
           </Typography>
         </div>
         <Link component={NavLink} to={`/bonds/${bond.name}`}>
-          <Button variant="outlined" color="primary" fullWidth disabled={!bond.isAvailable[chainID]}>
+          <Button className="stake-button" variant="outlined" color="primary" fullWidth disabled={!bond.isAvailable[chainID]}>
             <Typography variant="h5">
               {!bond.isAvailable[chainID] ? t`Sold Out` : t`Bond ${bond.displayName}`}
             </Typography>
@@ -127,7 +127,7 @@ export function BondTableData({ bond }) {
       </TableCell>
       <TableCell>
         <Link component={NavLink} to={`/bonds/${bond.name}`}>
-          <Button variant="outlined" color="primary" disabled={!bond.isAvailable[chainID]}>
+          <Button className="stake-button" variant="outlined" color="primary" disabled={!bond.isAvailable[chainID]}>
             <Typography variant="h6">{!bond.isAvailable[chainID] ? t`Sold Out` : t`do_bond`}</Typography>
           </Button>
         </Link>

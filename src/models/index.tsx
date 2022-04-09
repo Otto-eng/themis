@@ -10,7 +10,7 @@ import { Dialog, DialogTitle, ButtonProps, Button, DialogContent, DialogActions 
 import Box from "@material-ui/core/Box/Box";
 import Typography from "@material-ui/core/Typography/Typography";
 
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 
 
 export interface DialogActionsStruct {
@@ -52,7 +52,7 @@ const StyledDialog = styled(Dialog) <{ background?: string }>`
   }
 `;
 
-const secondaryTheme = createMuiTheme({
+const secondaryTheme = createTheme({
 	typography: {
 		button: {
 			textTransform: "none",

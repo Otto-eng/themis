@@ -1,6 +1,6 @@
 import { StableBond, NetworkID } from "src/lib/Bond";
 
-import { ReactComponent as USDTImg } from "src/assets/tokens/USDT.svg";
+import { ReactComponent as USDTImg } from "src/asstes/tokens/USDT.svg";
 import { abi as UsdtBondContractABI } from "src/abi/UsdtBondDepository.json";
 
 // TODO(zx): Further modularize by splitting up reserveAssets into vendor token definitions

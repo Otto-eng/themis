@@ -2,7 +2,7 @@ import CustomTooltip from "./CustomTooltip";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import ExpandedChart from "./ExpandedChart";
 import { useEffect, useState } from "react";
-import { ReactComponent as Fullscreen } from "../../assets/icons/fullscreen.svg";
+import { ReactComponent as Fullscreen } from "../../asstes/icons/fullscreen.svg";
 import {
   ResponsiveContainer,
   BarChart,

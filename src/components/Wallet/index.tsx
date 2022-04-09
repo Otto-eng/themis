@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import copy from "copy-to-clipboard"
 
-import { ReactComponent as CloseIcon } from "../../assets/icons/x.svg";
-import { ReactComponent as WalletIcon } from "../../assets/icons/wallet.svg";
+import { ReactComponent as CloseIcon } from "../../asstes/icons/x.svg";
+import { ReactComponent as WalletIcon } from "../../asstes/icons/wallet.svg";
 import { useAddress, useWeb3Context } from "../../hooks/web3Context";
 import InitialWalletView from "./InitialWalletView";
 import { Drawer, SvgIcon, Button, Typography, Box, IconButton, ButtonProps, styled } from "@material-ui/core";

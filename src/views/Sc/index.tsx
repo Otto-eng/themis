@@ -112,7 +112,6 @@ const Claim = styled(Button)({
 	background: "#F8CC82",
 	borderRadius: "8px",
 	cursor: "pointer",
-	fontSize: "16px",
 	fontWeight: 400,
 	width: "120px"
 })
@@ -218,12 +217,12 @@ export default function Sc() {
 	return (
 		<Main>
 			<Container >
-				<Top style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}>
+				<Top style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}>
 						<Title >SC Amount</Title>
 						<Blance>{num ? <Skeleton width="80px" /> : SCBanlance}</Blance>
 					</Top>
 				<CardTitle>Staking Earnings</CardTitle>
-					<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 					<Left ><div>SC Unclaimed</div> <Value>{stakValue === "0" ? "0.0000" : stakValue}</Value></Left>
 						<Claim
 						className="stake-button sc-stake-button"
@@ -266,7 +265,7 @@ export default function Sc() {
 							{isPending(pendingStatus, "ScFarmForStaker", "Claim")}
 						</Claim>
 					</Card>
-					<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}>
+				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}>
 						<Item>
 							<Ol>hash</Ol>
 							<Option>time</Option>
@@ -288,7 +287,7 @@ export default function Sc() {
 						}}>view more</More>
 					</Card>
 				<CardTitle >Invite Earnings</CardTitle>
-					<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 					<Left ><div>SC Unclaimed </div><Value>{invterValue === "0" ? "0.0000" : invterValue}</Value></Left>
 						<Claim
 						className="stake-button sc-stake-button"
@@ -329,7 +328,7 @@ export default function Sc() {
 								}
 							}}>{isPending(pendingStatus, "ScFarmForInvter", "Claim")}</Claim>
 					</Card>
-					<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFAEF" : "#18253A" }}>
+				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}>
 						<Item>
 							<Ol>hash</Ol>
 							<Option>time</Option>

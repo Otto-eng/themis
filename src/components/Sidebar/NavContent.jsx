@@ -1,14 +1,14 @@
 import { useCallback, useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { ReactComponent as StakeIcon } from "../../assets/icons/stake.svg";
-import { ReactComponent as BondIcon } from "../../assets/icons/bond.svg";
-import { ReactComponent as DashboardIcon } from "../../assets/icons/dashboard.svg";
-import THSLightPng from "../../assets/icons/THS_light@2x.png";
-import THSDarkPng from "../../assets/icons/THS_dark@2x.png";
-import ClaimLightIcon from "../../assets/icons/claim@2x.png";
-import ClaimDarkIcon from "../../assets/icons/claimLight@2x.png";
-import SCLightIcon from "../../assets/icons/sc@2x.png";
-import SCDarkIcon from "../../assets/icons/scLight@2x.png";
+import { ReactComponent as StakeIcon } from "../../asstes/icons/stake.svg";
+import { ReactComponent as BondIcon } from "../../asstes/icons/bond.svg";
+import { ReactComponent as DashboardIcon } from "../../asstes/icons/dashboard.svg";
+import THSLightPng from "../../asstes/icons/THS_light@2x.png";
+import THSDarkPng from "../../asstes/icons/THS_dark@2x.png";
+import ClaimLightIcon from "../../asstes/icons/claim@2x.png";
+import ClaimDarkIcon from "../../asstes/icons/claimLight@2x.png";
+import SCLightIcon from "../../asstes/icons/sc@2x.png";
+import SCDarkIcon from "../../asstes/icons/scLight@2x.png";
 import { Trans } from "@lingui/macro";
 import { styled } from "@material-ui/core"
 
@@ -109,7 +109,7 @@ function NavContent() {
               <Link
                 component={NavLink}
                 id="stake-nav"
-                to="/"
+                to="/stake"
                 isActive={(match, location) => {
                   return checkPage(match, location, "stake");
                 }}
@@ -159,6 +159,20 @@ function NavContent() {
                   ))}
                 </div>
               </div>
+              {/* <Link
+                component={NavLink}
+                id="bond-nav"
+                to="/ido"
+                isActive={(match, location) => {
+                  return checkPage(match, location, "bonds");
+                }}
+                className={`button-dapp-menu ${isActive ? "active" : ""}`}
+              >
+                <Typography variant="h6">
+                  <SvgIcon color="primary" component={BondIcon} />
+                  <Trans>IDO</Trans>
+                </Typography>
+              </Link> */}
               <Link
                 component={NavLink}
                 id="claim-nav"

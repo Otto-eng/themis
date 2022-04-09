@@ -3,8 +3,8 @@ import { BigNumber, ethers } from "ethers";
 import { abi as RedeemHelperABI } from "../abi/RedeemHelper.json";
 
 import { SvgIcon } from "@material-ui/core";
-import { ReactComponent as OhmImg } from "../assets/tokens/token_OHM.svg";
-import { ReactComponent as SOhmImg } from "../assets/tokens/token_sOHM.svg";
+import { ReactComponent as OhmImg } from "../asstes/tokens/token_OHM.svg";
+import { ReactComponent as SOhmImg } from "../asstes/tokens/token_sOHM.svg";
 
 import { JsonRpcSigner, StaticJsonRpcProvider } from "@ethersproject/providers";
 import { RedeemHelper } from "../typechain";

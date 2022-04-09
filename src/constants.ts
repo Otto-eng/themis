@@ -35,6 +35,7 @@ interface IAddresses {
   [key: string]: { [key: string]: string };
 }
 
+
 export const addresses: IAddresses = {
   [NETWORK_CHAINID]: {
     USDT_ADDRESS: "0xbd8a03E74e53929DB75E30ca692e6188FabdEdE7",
@@ -52,7 +53,7 @@ export const addresses: IAddresses = {
     REDEEM_HELPER_ADDRESS: "0x4E53A828266365945868eF3B2C36EE9782E2DEEc",
     USDT_BOND: "0x289ce758F9eCFc4C2e5f212d25e2BEab9a173Eaf",
     ScFarmForStaker_ADDRESS: "0x91f1C7EDfA681dD4BaA60EfB6B9d6429C4d78Fe8",
-    ScFarmForInvter_ADDRESS: "0x6270dDecf6FD8fe90E3F9C8e5C6b864DbA5e9005",
+    ScFarmForInvter_ADDRESS: "0x816D6821f68ecB7024E4AdD514ddBAE1a3196Eb0",
     StakingRewardRelease_ADDRESS: "0x1692F7356f60CBA451360Be36D2008c4A2E66cC5",
     Relationship_ADDRESS: "0xE6E2EF65d1c71255F7545efFEc3aD1827f0a983C",
     ScaleCode_ADDRESS: "0xDe08933B9C0Aa63860E38A36CF2d3449EaA37967",

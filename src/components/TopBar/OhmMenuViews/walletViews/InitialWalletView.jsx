@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useTheme, makeStyles } from "@material-ui/core/styles";
 import { trim } from "../../../../helpers";
-import { ReactComponent as ArrowUpIcon } from "../../../../assets/icons/arrow-up.svg";
-import { ReactComponent as sOhmTokenImg } from "../../../../assets/tokens/token_sOHM.svg";
-import { ReactComponent as ohmTokenImg } from "../../../../assets/tokens/token_OHM.svg";
-import { ReactComponent as abracadabraTokenImg } from "src/assets/tokens/MIM.svg";
-import rariTokenImg from "src/assets/tokens/RARI.png";
+import { ReactComponent as ArrowUpIcon } from "../../../../asstes/icons/arrow-up.svg";
+import { ReactComponent as sOhmTokenImg } from "../../../../asstes/tokens/token_sOHM.svg";
+import { ReactComponent as ohmTokenImg } from "../../../../asstes/tokens/token_OHM.svg";
+import { ReactComponent as abracadabraTokenImg } from "src/asstes/tokens/MIM.svg";
+import rariTokenImg from "src/asstes/tokens/RARI.png";
 
 import { addresses } from "../../../../constants";
 // import SOhmLearnView from "./SOhm/SOhmLearnView";

@@ -39,11 +39,8 @@ export const useBuyFtn = () => {
 	const tetherContract = useTetherContract(chainID, provider);
 	const ftnTokenContract = useSYNTokenContract(chainID, provider);
 	return useCallback(
-		async (amount1: string, amount2: string) => {
+		async (amount1: string) => {
 			const balance1 = BigNumber.from(Math.floor(parseFloat(amount1) * 100).toString())
-				.mul(USDT_DECIMAL)
-				.div(BigNumber.from("100"));
-			const balance2 = BigNumber.from(Math.floor(parseFloat(amount2) * 100).toString())
 				.mul(USDT_DECIMAL)
 				.div(BigNumber.from("100"));
 			// 	if (!ftnTokenContract || !library /*|| !contract1 */ || !contract2 || !tetherContract) {

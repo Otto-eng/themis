@@ -99,3 +99,15 @@ html[data-theme=dark] .MuiDrawer-paper {
     -webkit-backdrop-filter: none;
     background-color: #363840 !important;
 }
+
+#ido-view .MuiPaper-root {
+    background-color: transparent;
+}
+
+input{
+
+    -webkit-appearance: none;
+
+    border-radius: 0;
+
+}

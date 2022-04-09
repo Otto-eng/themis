@@ -8,7 +8,7 @@ const lightTheme = {
   gray: "#A3A3A3",
   blueish_gray: "#768299",
   textHighlightColor: "#93AEBC", // "#F4D092",
-  backgroundColor: "#AFCDE9",
+  // backgroundColor: "#AFCDE9",
   // background: "linear-gradient(180deg, #AFCDE9 1%, #F7FBE7 100%)",
   background: "linear-gradient(180deg, #B6B7C8 0%, #DEDCE1 100%)",
   boxshadow: "0px 5px 16px 1px rgba(0, 0, 0, 0.1607843137254902)",
