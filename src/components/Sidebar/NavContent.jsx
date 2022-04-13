@@ -9,12 +9,17 @@ import ClaimLightIcon from "../../asstes/icons/claim@2x.png";
 import ClaimDarkIcon from "../../asstes/icons/claimLight@2x.png";
 import SCLightIcon from "../../asstes/icons/sc@2x.png";
 import SCDarkIcon from "../../asstes/icons/scLight@2x.png";
+import openBetaLightIcon from "../../asstes/icons/openBeta@2x.png";
+import openBetaDarkIcon from "../../asstes/icons/openBetaLight@2x.png";
+import idoLightIcon from "../../asstes/icons/ido@2x.png";
+import idoDarkIcon from "../../asstes/icons/idoLight@2x.png";
 import { Trans } from "@lingui/macro";
 import { styled } from "@material-ui/core"
 
 
+
 import { trim, shorten } from "../../helpers";
-import { useAddress, useWeb3Context } from "src/hooks/web3Context";
+import { useWeb3Context } from "src/hooks/web3Context";
 import useBonds from "../../hooks/Bonds";
 import { Paper, Link, Box, Typography, SvgIcon } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
@@ -35,7 +40,7 @@ function NavContent() {
   const [isActive] = useState();
   const { chainID, address, provider } = useWeb3Context();
   const { bonds } = useBonds(chainID);
-  const [icon, setIcon] = useState({claim: ClaimDarkIcon, logo: THSDarkPng, sc: SCDarkIcon})
+  const [icon, setIcon] = useState({ claim: ClaimDarkIcon, logo: THSDarkPng, sc: SCDarkIcon, openBeta: openBetaDarkIcon, ido: idoDarkIcon })
 
   const theme = useAppSelector(state => state.theme.theme)
 
@@ -44,10 +49,12 @@ function NavContent() {
       setIcon({
         claim: ClaimLightIcon,
         sc: SCLightIcon,
-        logo: THSLightPng
+        logo: THSLightPng,
+        openBeta: openBetaLightIcon,
+        ido: idoLightIcon
       })
     } else {
-      setIcon({claim: ClaimDarkIcon, sc: SCDarkIcon, logo: THSDarkPng})
+      setIcon({ claim: ClaimDarkIcon, sc: SCDarkIcon, logo: THSDarkPng, openBeta: openBetaDarkIcon, ido: idoDarkIcon })
     }
   }, [theme])
 
@@ -91,6 +98,20 @@ function NavContent() {
 
           <div className="dapp-menu-links">
             <div className="dapp-nav" id="navbarNav">
+              <Link
+                component={NavLink}
+                id="openBeta-nav"
+                to="/openBeta"
+                isActive={(match, location) => {
+                  return checkPage(match, location, "openBeta");
+                }}
+                className={`button-dapp-menu ${isActive ? "active" : ""}`}
+              >
+                <Typography style={{ display: "flex", alignItems: "center" }} variant="h6">
+                  <img style={{ width: "20px", height: "20px", marginRight: "12px" }} src={icon.openBeta} />
+                  <Trans>Open Beta</Trans>
+                </Typography>
+              </Link>
               <Link
                 component={NavLink}
                 id="dash-nav"
@@ -159,20 +180,21 @@ function NavContent() {
                   ))}
                 </div>
               </div>
-              {/* <Link
+              <Link
                 component={NavLink}
-                id="bond-nav"
+                id="ido-nav"
                 to="/ido"
                 isActive={(match, location) => {
-                  return checkPage(match, location, "bonds");
+                  return checkPage(match, location, "ido");
                 }}
                 className={`button-dapp-menu ${isActive ? "active" : ""}`}
               >
-                <Typography variant="h6">
-                  <SvgIcon color="primary" component={BondIcon} />
+                <Typography style={{ display: "flex", alignItems: "center" }} variant="h6">
+                  <img style={{ width: "20px", height: "20px", marginRight: "12px" }} src={icon.ido} />
                   <Trans>IDO</Trans>
                 </Typography>
-              </Link> */}
+              </Link>
+
               <Link
                 component={NavLink}
                 id="claim-nav"
@@ -200,6 +222,20 @@ function NavContent() {
                 <Typography style={{display: "flex", alignItems: "center"}} variant="h6">
                   <img style={{width: "20px", height: "20px", marginRight: "12px"}} src={icon.sc} />
                   <Trans>SC</Trans>
+                </Typography>
+              </Link>
+              <Link
+                component={NavLink}
+                id="ido-release-nav"
+                to="/IDORelease"
+                isActive={(match, location) => {
+                  return checkPage(match, location, "sc");
+                }}
+                className={`button-dapp-menu ${isActive ? "active" : ""}`}
+              >
+                <Typography style={{ display: "flex", alignItems: "center" }} variant="h6">
+                  <img style={{ width: "20px", height: "20px", marginRight: "12px" }} src={icon.sc} />
+                  <Trans>IDO Release</Trans>
                 </Typography>
               </Link>
             </div>

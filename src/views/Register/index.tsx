@@ -67,6 +67,7 @@ function Register() {
 	const [isInvited, setIsInvited] = useState<boolean>(false);
 	const [isConfig, setIsConfig] = useState<boolean>(false);
 	const [config, setConfig] = useState<boolean>(false);
+	const [userRegisterInvitedCode, setUserRegisterInvitedCode] = useState("");
 
 	function onChange(value: string, keyName: FieldNameKeys) {
 		values[keyName] = value;
@@ -100,6 +101,7 @@ function Register() {
 			// inviter
 			invitedAddress = info.inviter;
 			defaultCode = info.inviterCode;
+			setUserRegisterInvitedCode(defaultCode)
 		} else {
 			defaultCode = await RelationshipContract.defaultInviteCode()
 			invitedAddress = await RelationshipContract.getInviter(address)
@@ -228,7 +230,7 @@ function Register() {
 						color="primary"
 						disabled={config || !!isInvited || !(!!values.invitationId && !!values.address)}
 						onClick={onConfirm}>
-						{isPending({ config: isConfig }, "config", "Confirm")}
+						{isPending({ config: isConfig }, "config", userRegisterInvitedCode ? "Success" : "Confirm")}
 					</RegisterButton>
 				</Confirm>
 			</StyledGrid>

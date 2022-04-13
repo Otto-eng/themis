@@ -108,7 +108,7 @@ function LinearCard() {
 			id: 'name', label: "Phase"
 		},
 		{
-			id: 'total', label: "PHS per USDT"
+			id: 'total', label: "THS per USDT"
 		},
 		{
 			id: 'price',
@@ -118,15 +118,15 @@ function LinearCard() {
 		},
 		{
 			id: 'addNum',
-			label: "PHS per 1000 USDT",
+			label: "THS per 1000 USDT",
 
 			align: 'right',
 		}
 	];
 
 	const rows = [
-		createData("Pre-Sale 1", "4U", "90,000", 250),
-		createData("Pre-Sale 2", "5U", "90,000", 200),
+		createData("Pre-Sale 1", "4U", "500,000", 250),
+		// createData("Pre-Sale 2", "5U", "90,000", 200),
 	];
 
 

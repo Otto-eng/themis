@@ -93,7 +93,7 @@ function LinearReleaseRule() {
 				<Content>
 					<Item>
 						<Text>
-							{"eg. if one user has 12000 PHS tokens leftover, of which 100 tokens will be released every day and needs 120 days to release all."}
+							{"eg. if one user has 12000 THS tokens leftover, of which 100 tokens will be released every day and needs 120 days to release all."}
 						</Text>
 					</Item>
 				</Content>

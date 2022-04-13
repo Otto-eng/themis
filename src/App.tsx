@@ -31,6 +31,9 @@ import Register from "./views/Register";
 import { abi as RelationshipABI } from "src/abi/Relationship.json";
 import { scInviterEarningsDetailsList, scStakeEarningsDetailsList, stakeTHSReleaseEarningsList } from "./slices/scSlice";
 import { IDO } from "./views/IDO";
+import OpenBeta from "./views/OpenBeta";
+import IDORelease from "./views/IDORelease";
+import { idoRelease30List, idoRelease70List } from "./slices/idoReleaseSlice";
 
 // 😬 Sorry for all the console logging
 const DEBUG = false;
@@ -186,6 +189,8 @@ function App() {
       dispatch(scInviterEarningsDetailsList({ first: 10, address }));
       dispatch(scStakeEarningsDetailsList({ first: 10, address }))
       dispatch(stakeTHSReleaseEarningsList({ first: 10, address }))
+      dispatch(idoRelease30List({ first: 1, address }))
+      dispatch(idoRelease70List({ first: 10, address }))
     },
     [address, chainID, provider, addresses],
   )
@@ -257,18 +262,26 @@ function App() {
             <Route path="/bonds">
               <ChooseBond />
             </Route>
-            {/* <Route exact path="/ido">
+            <Route path="/openBeta">
+              <OpenBeta />
+            </Route>
+            <Route exact path="/ido">
               <IDO />
-            </Route> */}
+            </Route>
             <Route path="/claim">
               <Claim />
             </Route>
             <Route path="/sc">
               <Sc />
             </Route>
+            <Route path="/IDORelease">
+              <IDORelease />
+            </Route>
             <Route path="/register">
               <Register />
             </Route>
+
+
 
             <Route component={NotFound} />
           </Switch>

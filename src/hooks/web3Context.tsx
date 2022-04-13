@@ -268,6 +268,7 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
       await provider.disconnect()
     }
     sessionStorage.setItem("THEMIS_CONNECTED", "false")
+    localStorage.removeItem("walletconnect")
     setTimeout(() => {
       window.location.reload();
     }, 1);

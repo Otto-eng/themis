@@ -8,23 +8,29 @@ import PreSate1 from "./component/PreSate1";
 import Progress from "./component/Progress";
 import ProgressCard from "./component/ProgressCard";
 import React, { useLayoutEffect, useCallback, useState, useEffect } from "react"
-import { useWeb3React } from "@web3-react/core"
-import { Web3Provider } from "@ethersproject/providers";
 import copy from "copy-to-clipboard"
 import useModel from "flooks";
 import { GlobalAttentionDialog } from "../../models";
 import LinearReleaseRule from "./component/LinearReleaseRule";
 import BuyPHS from "./component/BuyPHS";
 import BuyPHSProgress from "./component/BuyPHSProgress";
-import Footer from "./component/Footer";
 import { GridFlex } from "src/components/Grid";
 import Zoom from "@material-ui/core/Zoom/Zoom";
+import { useWeb3Context } from "src/hooks";
+import { abi as PresaleContractABI } from "src/abi/PresaleContract.json";
+import { ethers } from "ethers";
+import { addresses } from "src/constants";
 
 
-export const ratio = [0.15, 0.2, 0.3]
+export const ratio = [4]
 
-const Container = styled.div`
+const Ido = styled.div`
   width: 100%;
+  padding: 0 15%;
+  @media (max-width: 750px) {
+    width: 100%;
+      padding: 0;
+  }
 `
 
 const Main = styled.div`
@@ -81,65 +87,107 @@ const Copy = styled(GridFlex)`
 `
 
 export interface AccountBuyHisType { amount: number, stage: number }
+export interface TermInfoOfType {
+  termId: string, // 期号
+  eachUserBuyMax: number, // ido 预售最大值 
+  saleAmountMax: number, // 本期每个用户购买购买份额最大值
+  soldAmount: number, // 本期已销售preTHS份额(指被销售的token)
+  endTimestamp: number, // 本期IDO周期的结束时间戳
+  startTimestamp: number, // 本期已销售preTHS份额(指被销售的token)
+}
 
 export const IDO = () => {
-  const { account } = useWeb3React<Web3Provider>();
+  const { provider, chainID, address } = useWeb3Context();
   const [totalBuy, setTotalBuy] = useState<number>(0)
   const [myTotalContr, setMyTotalContr] = useState<number>(0)
   const [isDIs, setIsDis] = useState<boolean>(false)
-  const [overflow, setOverflow] = useState<boolean>(false)
-  const [isHandleSend, setIsHandleSend] = useState<boolean>(false)
-  const [hash, setHash] = useState<string>("")
+  const [hash, setHash] = useState<string>("1")
   const [currentBuyTotal, setCurrentBuyTotal] = useState<number>(0)
   const [num, setNum] = useState<number>(1)
+  const [isExperiencerAddress, setIsExperiencerAddress] = useState(false)
+  const [isExperiencerAddressBuy, setIsExperiencerAddressBuy] = useState(false)
+
+  const [termInfoOf, setTermInfoOf] = useState<TermInfoOfType>({
+    termId: "1",
+    eachUserBuyMax: 0,
+    saleAmountMax: 0,
+    soldAmount: 0,
+    endTimestamp: 0,
+    startTimestamp: 0
+  })
 
   const total = useCallback(
-    () => {
-      // setTimeout(async () => {
-      //   if (account && count) {
-      //     const result = await getMcdaoIgoTotal(account);
-      //     const { data: { totalBuy: totalBuyNow, accountBuyHis, code } } = result
-      //     const currentTotal = accountBuyHis[0]["amount"] ?? 0
-      //     if (code === 200) {
-      //       const list: AccountBuyHisType[] = accountBuyHis
-      //       const totalContr = list.reduce((prev: number, item, index) => {
-      //         return prev + item.amount
-      //       }, 0)
-      //       if (currentTotal && Math.floor(CBT) === Math.floor(totalContr)) {
-      //         setNum(count + 1);
-      //       } else {
-      //         setNum(0)
-      //         setIsHandleSend(false)
-      //         setMyTotalContr(totalContr);
-      //         setCurrentBuyTotal(currentTotal)
-      //         setTotalBuy(Number(totalBuyNow));
-      //         setOverflow((currentTotal >= 2801 && account !== DEFAULT_ADDRESS) || totalBuy >= 499801)
-      //       }
-      //     }
-      //   }
-
-      // }, 5000);
+    async () => {
+      const signer = provider.getSigner();
+      const PresaleContractContract = new ethers.Contract(addresses[chainID].IDO_PRESALECONTRACT_ADDRESS as string, PresaleContractABI, signer);
+      console.log("PresaleContractContract", PresaleContractContract);
+      const userBuyTotal = await PresaleContractContract.getUserBuyTotal(address)
+      const soldPreThsTotal = await PresaleContractContract.soldPreThsTotal()
+      console.log(Number(ethers.utils.formatUnits(userBuyTotal, "gwei")), address, "NUMBER")
+      setMyTotalContr(Number(ethers.utils.formatUnits(userBuyTotal, "gwei")) || 0)
+      setTotalBuy(Number(ethers.utils.formatUnits(soldPreThsTotal, "gwei") || 0))
     },
-    [account],
+    [provider, chainID, address, addresses],
   )
 
   useEffect(() => {
-    setNum(1)
+    setNum(num + 1)
+    console.log("hash", hash)
   }, [hash])
 
   useLayoutEffect(() => {
-    total()
-  }, [account, num])
+    if (provider && chainID && address && addresses[chainID].IDO_PRESALECONTRACT_ADDRESS) {
+      total()
+    }
+  }, [provider, chainID, address, addresses, num])
 
+  const isBuy = useCallback(
+    async () => {
+      const signer = provider.getSigner();
+      const PresaleContractContract = new ethers.Contract(addresses[chainID].IDO_PRESALECONTRACT_ADDRESS as string, PresaleContractABI, signer);
+      // 众筹期数
+      const isStart = await PresaleContractContract.termInfoOf(1)
+
+      setTermInfoOf({
+        eachUserBuyMax: Number(ethers.utils.formatUnits(isStart.eachUserBuyMax, "gwei") || 0),
+        endTimestamp: Number(isStart.endTimestamp.toString()),
+        saleAmountMax: Number(ethers.utils.formatUnits(isStart.saleAmountMax, "gwei") || 0),
+        soldAmount: Number(ethers.utils.formatUnits(isStart.soldAmount, "gwei") || 0),
+        termId: isStart.termId.toString(),
+        startTimestamp: Number(isStart.startTimestamp.toString())
+      })
+      // 白名单购买结束时间
+      let timer: any = setInterval(async () => {
+        const experienceEndTimestamp = await PresaleContractContract.experienceEndTimestamp()
+        const now = +new Date() / 1000
+        setIsExperiencerAddressBuy(
+          (now < Number(experienceEndTimestamp.toString()))
+          &&
+          (now > Number(isStart.startTimestamp.toString()))
+        )
+        timer = null;
+      }, 5000)
+
+      // 是否白名单
+      const isExperiencer = await PresaleContractContract.isExperiencer(address)
+      setIsExperiencerAddress(isExperiencer)
+    },
+    [provider, chainID, address, addresses],
+  )
+
+  useLayoutEffect(() => {
+    if (provider && chainID && address && addresses[chainID].IDO_PRESALECONTRACT_ADDRESS) {
+      isBuy()
+    }
+  }, [provider, chainID, address, addresses])
 
   return (
-    <>
+    <Ido>
       <Main>
-        <PreSate></PreSate>
+        {/* <PreSate></PreSate> */}
         <Title>{"Only Now Cheaper"}</Title>
         <Title>{"Than Public Launch !"}</Title>
-
-        <CountDownTime isStart={isDIs || overflow} setIsStart={setIsDis} />
+        <CountDownTime startTimestamp={termInfoOf.startTimestamp} endTimestamp={termInfoOf.endTimestamp} setIsStart={setIsDis} />
       </Main>
       <Detail>
         <React.Fragment>
@@ -147,10 +195,9 @@ export const IDO = () => {
             <Text>
               {"Themis IDO"}
             </Text>
-
           </DetailTitle>
           <Progress totalBuy={totalBuy} />
-          <PreSate1 setIsHandleSend={setIsHandleSend} isHandleSend={isHandleSend} currentBuyTotal={currentBuyTotal} totalBuy={totalBuy} setHash={setHash} isStart={isDIs || overflow} accountBuy={myTotalContr} />
+          <PreSate1 isExperiencerAddressBuy={isExperiencerAddressBuy} isExperiencerAddress={isExperiencerAddress} currentBuyTotal={currentBuyTotal} totalBuy={totalBuy} setHash={setHash} isStart={isDIs} accountBuy={myTotalContr} />
           <LinearCard />
           {/* <LinkCard /> */}
           <ProgressCard totalBuy={totalBuy} />
@@ -159,7 +206,7 @@ export const IDO = () => {
           <BuyPHSProgress />
         </React.Fragment>
       </Detail>
-      <Footer />
-    </>
+      {/* <Footer /> */}
+    </Ido>
   );
 };

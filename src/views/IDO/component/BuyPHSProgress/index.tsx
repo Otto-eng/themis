@@ -100,7 +100,7 @@ function BuyPHSProgress() {
 			<Box>
 				<Ol>2.</Ol>
 				<span>
-					{"Open PHS IDO Page on Trust Wallet"}
+					{"Open THS IDO Page on Trust Wallet"}
 				</span>
 			</Box>
 			<Box margin={"0"}>
@@ -108,13 +108,13 @@ function BuyPHSProgress() {
 					<Item>
 						<TextA>
 							{"Open the \"Dapp\" tab on Trust Wallet, and type "}
-							<a href="https://app.themis.capital/ido" target="black"> https://app.themis.capital/ido </a>
+							<a href="https://beta.themis.capital/ido" target="black"> https://beta.themis.capital/ido </a>
 							{" in the search box, then click the enter to jump to the connect page."}
 						</TextA>
 					</Item>
 					<Item>
 						<Text>
-							{"Click \"Connect\" to make your wallet connect to the PHS offering page."}
+							{"Click \"Connect\" to make your wallet connect to the THS offering page."}
 						</Text>
 					</Item>
 					<Item>
@@ -127,7 +127,7 @@ function BuyPHSProgress() {
 			<Box>
 				<Ol>3.</Ol>
 				<span>
-					{"Start to Buy PHS Token"}
+					{"Start to Buy THS Token"}
 				</span>
 			</Box>
 			<Content>

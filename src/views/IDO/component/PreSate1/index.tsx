@@ -12,6 +12,11 @@ import useSingleCase from "../../../../hooks/useSingleCase"
 import BgMain from "src/components/BgMain"
 import { useBuyFtn } from "src/hooks/useBuyFtn"
 import { useAttentionDialog } from "src/models"
+import { useDispatch } from "react-redux"
+import { error } from "src/slices/MessagesSlice"
+import { useWeb3Context } from "src/hooks"
+import { isPending } from "src/views/Claim"
+import Skeleton from "@material-ui/lab/Skeleton/Skeleton"
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -24,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 		},
 		input: {
-			marginLeft: theme.spacing(1),
+			paddingLeft: "16px",
 			flex: 1,
 			fontSize: "14px",
 			background: "rgba(248, 248, 248, 0.39)",
@@ -60,18 +65,6 @@ const BlockPrice = styled.div`
   font-size: 14px;
 `
 
-const PreInput = styled(Input)`
-	margin-top: 16px;
-	background-image: ${`url(${ipt})`};
-	background-size: 100% 100%;
-	width: 100%;
-	height: 50px;
-	padding: 0 8px;
-	&:after {
-		border-bottom: 0 none;
-	}
-`
-
 const Send = styled(GridFlex) <{ disbaled?: boolean }>`
 	margin-top: 16px;
 	background-color: ${({ disbaled }) => disbaled ? `rgba(0, 0, 0, 0.39)` : `#000`};
@@ -84,17 +77,22 @@ const Send = styled(GridFlex) <{ disbaled?: boolean }>`
 	font-size: 20px;
 	font-weight: 700;
 	text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
+	cursor: pointer;
 `
 
-const Total = styled(Grid)`
+const Total = styled(GridFlex)`
+	justify-content: center;
+	align-items: center;
   margin-top: 10px;
 	width: 100%;
 	text-align: center;
 `
-const BanlanceU = styled(Grid)`
+const BanlanceU = styled(GridFlex)`
   margin: 10px 0;
 	width: 100%;
 	text-align: center;
+	justify-content: center;
+	align-items: center;
 	font-weight: bold;
 	font-size: 24px;
 	color: #341B17;
@@ -110,36 +108,44 @@ export const DivisionDash = styled.div`
 interface PreSate2Props {
 	accountBuy: number
 	isStart: boolean
+	isExperiencerAddressBuy: boolean
+	isExperiencerAddress: boolean
 	totalBuy: number
-	isHandleSend: boolean
 	currentBuyTotal: number
 	setHash: Dispatch<SetStateAction<string>>
-	setIsHandleSend: Dispatch<SetStateAction<boolean>>
 }
 
 
-function PreSate1({ accountBuy, setIsHandleSend, currentBuyTotal, setHash, isHandleSend, isStart, totalBuy }: PreSate2Props) {
+function PreSate1({ accountBuy, currentBuyTotal, setHash, isStart, isExperiencerAddressBuy, isExperiencerAddress, totalBuy }: PreSate2Props) {
+	const dispatch = useDispatch()
 	const [value, setValue] = useState<string | undefined>(undefined)
-	// const { t } = useTranslation()
-	const { infoHash, setHash: addHash } = useSingleCase({ key: "igo" })
-	const [dis, setDis] = useState<boolean>(!!infoHash.length)
 	const buyFtn = useBuyFtn()
-	const { toggle: toast } = useAttentionDialog();
-	const { account } = useWeb3React<Web3Provider>();
+	const { address } = useWeb3Context();
 	const [participated, setParticipated] = useState<string>("0.00");
+	const [isBuy, setIsBuy] = useState(false);
+	const [pendingStatus, setPendingStatus] = useState({ send: false });
 	const classes = useStyles();
 
 	useEffect(() => {
+		console.log("isStart, isExperiencerAddressBuy, isExperiencerAddress", isStart, isExperiencerAddressBuy, isExperiencerAddress)
+		if (isStart) {
+			if (isExperiencerAddressBuy) {
+				if (isExperiencerAddress) {
+					setIsBuy(true)
+				}
+			} else {
+				setIsBuy(true)
+			}
+		} else {
+			setIsBuy(false)
+		}
+
+	}, [isStart, isExperiencerAddressBuy, isExperiencerAddress])
+
+	useEffect(() => {
+		setPendingStatus({ send: false })
 		setParticipated(accountBuy.toFixed(2))
 	}, [accountBuy])
-
-	useLayoutEffect(() => {
-		if (!infoHash.length) {
-			setDis(false);
-			setIsHandleSend(true);
-			setHash(+new Date() + "")
-		}
-	}, [infoHash, account])
 
 	return (
 		<Container id="ido-view">
@@ -151,49 +157,49 @@ function PreSate1({ accountBuy, setIsHandleSend, currentBuyTotal, setHash, isHan
 				<InputBase
 					className={classes.input}
 					inputProps={{ 'aria-label': 'search google maps' }}
-					type="number" onChange={(e) => {
+					type="number"
+					onChange={(e) => {
 						const strN = e.target.value
 						setValue(strN)
 					}}
 					value={value}
-					placeholder={"Please enter 200-3000 USDT(BEP20)"}
-					disabled={isStart || dis}
+					placeholder={"Please enter 100-1000 USDT(BEP20)"}
+					disabled={!isBuy}
 				/>
 			</Paper>
 			<Send
-				key={dis + ""}
-				disbaled={isHandleSend || isStart || dis}
+				disbaled={!isBuy}
 				onClick={async () => {
-					if (isHandleSend || isStart || dis) return
+					if (!isBuy) return
 					const num = Number(value)
-					if (account && !isNaN(num) && num >= 200 && num <= 3000) {
+					if (address && !isNaN(num) && num >= 100 && num <= 1000) {
 						if (totalBuy + Number(value) > 500000) {
-							toast("Insufficient MCT or already sold out")
+							dispatch(error("Insufficient MCT or already sold out"))
 						} else {
-							if (((currentBuyTotal + num) > 3000) && (account !== DEFAULT_ADDRESS)) {
-								return toast("Your maximum purchase amount is 3000 USDT (BEP20)")
+							if ((currentBuyTotal + num) > 1000) {
+								return dispatch(error("Your maximum purchase amount is 1000 USDT (BEP20)"))
 							} else {
-								setDis(true)
+								setPendingStatus({ send: true })
 								buyFtn(num.toString()).then((res: any) => {
-									addHash(res?.hash)
+									console.log("RES", res)
+									setHash(res?.transactionHash || "")
 								}).catch(() => {
-									setTimeout(() => {
-										setDis(false)
-									}, 5000);
+									setPendingStatus({ send: false })
+									console.log("ERROR")
 								})
 							}
 						}
 					} else {
-						toast("Please enter at least 200 USDT(BEP20) and no more than 3000 USDT(BEP20)")
+						dispatch(error("Please enter at least 100 USDT (BEP20) and no more than 1000 USDT (BEP20)"))
 					}
 				}}
-			> {"Send"}
+			> {isPending(pendingStatus, "send", "Send")}
 				<BgMain imgsrc={right} style={{ width: "20px", height: "20px", marginLeft: "8px" }}>
 
 				</BgMain>
 			</Send >
-			<Total>{"Your Total Contribution(USDT):"}</Total>
-			<BanlanceU>{participated}</BanlanceU>
+			<Total>{"Your Total Contribution(THS):"}</Total>
+			<BanlanceU>{pendingStatus.send ? <Skeleton width="100px" /> : participated}</BanlanceU>
 		</Container >
 
 	)

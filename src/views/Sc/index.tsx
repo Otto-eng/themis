@@ -1,4 +1,4 @@
-import { Button, styled, Zoom } from "@material-ui/core"
+import { Button, styled } from "@material-ui/core"
 import { ethers } from "ethers"
 import React, { useCallback, useEffect, useState } from "react"
 import { addresses, THEME_LIGHT } from "src/constants"
@@ -227,9 +227,11 @@ export default function Sc() {
 						<Claim
 						className="stake-button sc-stake-button"
 							variant="contained"
-							color="primary"
-							disabled={!Number(stakValue)}
+						color="primary"
+						key={pendingStatus.ScFarmForStaker + ""}
+						disabled={!Number(stakValue) || pendingStatus.ScFarmForStaker}
 							onClick={async () => {
+								if (pendingStatus.ScFarmForStaker) return;
 								setPeddingStatus({
 									...pendingStatus,
 									ScFarmForStaker: true
@@ -290,11 +292,14 @@ export default function Sc() {
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 					<Left ><div>SC Unclaimed </div><Value>{invterValue === "0" ? "0.0000" : invterValue}</Value></Left>
 						<Claim
-						className="stake-button sc-stake-button"
+							className="stake-button sc-stake-button"
 							variant="contained"
 							color="primary"
+							key={pendingStatus.ScFarmForInvter + ""}
 							disabled={!Number(invterValue) || pendingStatus.ScFarmForInvter}
 							onClick={async () => {
+								if (pendingStatus.ScFarmForInvter) return;
+
 								setPeddingStatus({
 									...pendingStatus,
 									ScFarmForInvter: true

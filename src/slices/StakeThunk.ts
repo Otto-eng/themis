@@ -161,7 +161,6 @@ export const changeStake = createAsyncThunk(
           error("You may be trying to stake more than your balance! Error code: 32603. Message: ds-math-sub-underflow"),
         );
       } else {
-        console.log("rpcError", rpcError)
         dispatch(error(rpcError.message));
       }
       return;

@@ -6,8 +6,8 @@ import { LinearProgressWithLabel } from "../Progress"
 const data: LinearProgresstype[] = [{
 	topLeftText: "Pre-Sale 1",
 	// status: "ing",
-	status: "unstart",
-	totalU: 90000,
+	status: "ing",
+	totalU: 500000,
 	hot: 1,
 	progressBgColor: true,
 	value: 100,
@@ -15,18 +15,20 @@ const data: LinearProgresstype[] = [{
 		usdt: "4",
 		THS: "1"
 	}
-}, {
-	topLeftText: "Pre-Sale 2",
-	status: "unstart",
-	totalU: 90000,
-	hot: 1,
-	progressBgColor: false,
-	value: 100,
-	uPrice: {
-		usdt: "5",
-		THS: "1"
-	}
-}]
+}
+	// , {
+	// topLeftText: "Pre-Sale 2",
+	// status: "unstart",
+	// totalU: 90000,
+	// hot: 1,
+	// progressBgColor: false,
+	// value: 100,
+	// uPrice: {
+	// 	usdt: "5",
+	// 	THS: "1"
+	// }
+	// }
+]
 
 const Main = styled.div`
   width: 100%;
@@ -116,7 +118,7 @@ zoom: 0.8;
 font-size: 12px;
 font-weight: 400;
 padding: 2px 8px;
-border: ${({ status }) => `1px solid ${status !== "ing" ? "#ccc" : "#000"}`};
+border: ${({ status }) => `1px solid ${status !== "ing" ? "#777" : "#000"}`};
 color: ${({ status }) => status !== "ing" ? "#ccc" : "#000"};
 background: ${({ status }) => status !== "ing" ? "rgba(0, 0, 0, 0.08)" : "rgba(117, 62, 30, 0.39)"};
 `
@@ -175,6 +177,7 @@ const LinearProgress = ({
 					height: "14px",
 					background: "rgba(89, 66, 52, 0.39)",
 					borderRadius: "50px",
+					marginTop: "8px"
 				}}
 					classes={{
 						barColorPrimary: "a"
@@ -191,7 +194,7 @@ interface PropsType {
 }
 
 function ProgressCard({ totalBuy }: PropsType) {
-	const ratio = totalBuy / 500000 * 100
+	const ratio = totalBuy * 4 / 500000 * 100
 	return (
 		<Main key={totalBuy}>
 			<LinearTitle>

@@ -30,6 +30,7 @@ import { Skeleton } from "@material-ui/lab";
 import { error } from "../../slices/MessagesSlice";
 import { ethers } from "ethers";
 import { useAppSelector } from "src/hooks";
+import { debounce } from "src/utils/debounce";
 
 function a11yProps(index: number) {
   return {
@@ -104,6 +105,7 @@ function Stake() {
   };
 
   const onChangeStake = async (action: string) => {
+    console.log("action", action)
     // eslint-disable-next-line no-restricted-globals
     if (isNaN(Number(quantity)) || quantity === "0") {
       // eslint-disable-next-line no-alert
@@ -339,8 +341,9 @@ function Stake() {
                             variant="contained"
                             color="primary"
                             disabled={isPendingTxn(pendingTransactions, "staking")}
+                                key={!!isPendingTxn(pendingTransactions, "staking") + ""}
                             onClick={() => {
-                              onChangeStake("stake");
+                              debounce(onChangeStake, 1000, "stake");
                             }}
                           >
                                 {txnButtonText(pendingTransactions, "staking", t`Stake THS`)}
@@ -352,7 +355,7 @@ function Stake() {
                             color="primary"
                             disabled={isPendingTxn(pendingTransactions, "approve_staking")}
                             onClick={() => {
-                              onSeekApproval("ths");
+                              debounce(onSeekApproval, 1000, "ths");
                             }}
                           >
                             {txnButtonText(pendingTransactions, "approve_staking", t`Approve`)}
@@ -369,7 +372,7 @@ function Stake() {
                             color="primary"
                             disabled={isPendingTxn(pendingTransactions, "unstaking")}
                             onClick={() => {
-                              onChangeStake("unstake");
+                              debounce(onChangeStake, 1000, "unstake");
                             }}
                           >
                                 {txnButtonText(pendingTransactions, "unstaking", t`Unstake THS`)}
@@ -381,7 +384,7 @@ function Stake() {
                             color="primary"
                             disabled={isPendingTxn(pendingTransactions, "approve_unstaking")}
                             onClick={() => {
-                              onSeekApproval("sThs");
+                             debounce(onSeekApproval, 1000, "sThs");
                             }}
                           >
                             {txnButtonText(pendingTransactions, "approve_unstaking", t`Approve`)}

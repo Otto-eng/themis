@@ -49,7 +49,7 @@ interface PropsType {
 }
 
 function Progress({ totalBuy }: PropsType) {
-	const total = totalBuy
+	const total = totalBuy * 4
 	const ratio = total / 500000 * 100
 
 	return (

@@ -1,12 +1,9 @@
-import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { t, Trans } from "@lingui/macro";
-import { shorten, trim, prettyVestingPeriod } from "../../helpers";
+import { t } from "@lingui/macro";
+import { trim, prettyVestingPeriod } from "../../helpers";
 import { redeemBond } from "../../slices/BondSlice";
 import BondLogo from "../../components/BondLogo";
-import { Box, Button, Link, Paper, Typography, TableRow, TableCell, SvgIcon, Slide } from "@material-ui/core";
-import { ReactComponent as ArrowUp } from "../../asstes/icons/arrow-up.svg";
-import { NavLink } from "react-router-dom";
+import { Box, Button, Typography, TableRow, TableCell } from "@material-ui/core";
 import "./choosebond.scss";
 import { Skeleton } from "@material-ui/lab";
 import { useWeb3Context, useBonds } from "src/hooks";

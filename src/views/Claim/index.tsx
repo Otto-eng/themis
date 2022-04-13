@@ -3,7 +3,8 @@ import { BigNumber, ethers } from "ethers"
 import React, { useCallback, useEffect, useState } from "react"
 import { addresses, THEME_LIGHT } from "src/constants"
 import { useAppSelector, useWeb3Context } from "src/hooks"
-import { abi as ierc20Abi } from "../../abi/ThemisERC20Token.json";
+import { abi as ThemisERC20TokenABI } from "../../abi/ThemisERC20Token.json";
+import { abi as ScaleCodeABI } from "src/abi/ScaleCode.json";
 
 import { abi as StakingRewardReleaseABI } from "src/abi/StakingRewardRelease.json";
 import { IERC20 } from "src/typechain/IERC20"
@@ -228,7 +229,8 @@ function Claim() {
 	const [optionData, setOptionData] = useState({ id: 0, value: 180, gasSc: "0" })
 	const [len, setLen] = useState(0)
 	const [page, setPage] = useState(1)
-	const [num, setNum] = useState(0)
+	const [num, setNum] = useState(true)
+	const [SCBanlance, setSCBanlance] = useState("0.0000")
 	const [stakeReleaseEarningsListPage, setStakeReleaseEarningsListPage] = useState(1)
 
 	const [pendingStatus, setPeddingStatus] = useState({
@@ -267,6 +269,8 @@ function Claim() {
 
 	const getBalance = useCallback(async () => {
 		if (address && chainID && provider) {
+			if (pendingStatus.banlance) return;
+
 			setPeddingStatus({
 				...pendingStatus,
 				banlance: true
@@ -274,7 +278,7 @@ function Claim() {
 			try {
 				const signer = provider.getSigner();
 
-				const thsContract = new ethers.Contract(addresses[chainID].THS_ADDRESS as string, ierc20Abi, signer) as IERC20;
+				const thsContract = new ethers.Contract(addresses[chainID].THS_ADDRESS as string, ThemisERC20TokenABI, signer) as IERC20;
 				const balanceBigNumber = await thsContract.balanceOf(address)
 				const balance = ethers.utils.formatUnits(balanceBigNumber.toString(), "gwei")
 				setThsBalance(((Math.floor(Number(balance) * 10000)) / 10000) + "")
@@ -291,6 +295,22 @@ function Claim() {
 
 		}
 	}, [chainID, address, provider, num, pendingStatus])
+
+	const getScbanlance = useCallback(async () => {
+		if (address && chainID && provider && addresses && num) {
+			try {
+				const signer = provider.getSigner();
+				const ScaleCodeContract = new ethers.Contract(addresses[chainID].ScaleCode_ADDRESS, ScaleCodeABI, signer)
+				const banlance = await ScaleCodeContract.balanceOf(address)
+				setSCBanlance((Math.floor((Number(ethers.utils.formatUnits(banlance, "ether")) ?? 0) * 10000) / 10000) + "");
+			} finally {
+				setTimeout(() => {
+					setNum(false)
+				}, 1000);
+			}
+		}
+
+	}, [chainID, address, provider, num])
 
 
 	const claim = async (blocakHight: BigNumber) => {
@@ -309,7 +329,7 @@ function Claim() {
 				})
 			}, 500);
 			setTimeout(() => {
-				setNum(num + 1)
+				setNum(true)
 			}, 1000);
 		} catch (error) {
 			setTimeout(() => {
@@ -323,6 +343,7 @@ function Claim() {
 
 	useEffect(() => {
 		getBalance();
+		getScbanlance()
 	}, [chainID, address, provider, num])
 
 	useEffect(() => {
@@ -345,7 +366,7 @@ function Claim() {
 				>
 						<ReleaseTime >
 						<div> Release Time：{listDay[Number(block?.speedLevel)].value ?? 0}d</div>
-						<div>SC:{listDay[Number(block?.speedLevel)].gasSc}</div>
+							<div>SC:{num ? <Skeleton width="80px" /> : SCBanlance}</div>
 					</ReleaseTime>
 					<ModalTop
 					>
@@ -371,8 +392,11 @@ function Claim() {
 						className="stake-button sc-stake-button"
 						variant="contained"
 						color="primary"
+							key={pendingStatus.confrim + ""}
 						disabled={!optionData.id || pendingStatus.confrim}
-						onClick={async () => {
+							onClick={async () => {
+								if (pendingStatus.confrim) return;
+
 							setPeddingStatus({
 								...pendingStatus,
 								confrim: true
@@ -380,7 +404,7 @@ function Claim() {
 							const signer = provider.getSigner();
 							try {
 								const StakingRewardReleaseContract = new ethers.Contract(addresses[chainID].StakingRewardRelease_ADDRESS, StakingRewardReleaseABI, signer);
-								const SCContract = new ethers.Contract(addresses[chainID].ScaleCode_ADDRESS, ierc20Abi, signer);
+								const SCContract = new ethers.Contract(addresses[chainID].ScaleCode_ADDRESS, ThemisERC20TokenABI, signer);
 								const balance = await SCContract.balanceOf(address);
 								if (ethers.utils.parseUnits(optionData.value + "", "ether").lt(balance)) {
 									const approveTx = await SCContract.approve(addresses[chainID].StakingRewardRelease_ADDRESS, ethers.utils.parseUnits(optionData.gasSc, "ether"));
@@ -426,10 +450,11 @@ function Claim() {
 								<TopText>{listDay[Number(item.speedLevel)]?.value ?? 0} day</TopText>
 								<Text>Release Time</Text>
 								<ClaimBtn
-										className="stake-button sc-stake-button"
+									className="stake-button sc-stake-button"
 									variant="contained"
 									color="primary"
 									disabled={item.speedLevel === "7" || pendingStatus.confrim}
+										key={pendingStatus.confrim + ""}
 									onClick={() => {
 										setIsOpen(true)
 										setBlock(item)
@@ -446,8 +471,11 @@ function Claim() {
 									className="stake-button sc-stake-button"
 									variant="contained"
 									color="primary"
+										key={pendingStatus.claim + ""}
 									disabled={!Number(item.pendingTotal) || pendingStatus.claim}
-									onClick={() => {
+										onClick={() => {
+											if (pendingStatus.claim) return;
+
 										setPeddingStatus({
 											...pendingStatus,
 											claim: true

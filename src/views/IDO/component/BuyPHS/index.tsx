@@ -42,10 +42,10 @@ function BuyPHS() {
 	return (
 		<Main>
 			<LinearTitle>
-				<Left ><span>{"How to buy PHS?"}</span></Left>
+				<Left ><span>{"How to buy THS?"}</span></Left>
 			</LinearTitle>
 			<Box>
-				{"Users can use MetaMask， TokenPocket， and imTokent wallet to purchase PHS, make sure you have USDT(BEP20) on balance and use the Binance Smart Chain network. Enter the amount, click the send button, the smart contract will automatically complete the transaction. Please refer to the tutorial below."}
+				{"Users can use MetaMask， TokenPocket， and imTokent wallet to purchase THS, make sure you have USDT(BEP20) on balance and use the Binance Smart Chain network. Enter the amount, click the send button, the smart contract will automatically complete the transaction. Please refer to the tutorial below."}
 			</Box>
 		</Main>
 	)

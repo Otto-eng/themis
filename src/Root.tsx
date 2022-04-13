@@ -12,8 +12,8 @@ import { initLocale } from "./locales";
 import App from "./App";
 import store from "./store";
 
-import Vconsole from "vconsole";
-new Vconsole({ maxLogNumber: 5000 });
+// import Vconsole from "vconsole";
+// new Vconsole({ maxLogNumber: 5000 });
 
 
 const Root: FC = () => {

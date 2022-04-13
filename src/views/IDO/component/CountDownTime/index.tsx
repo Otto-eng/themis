@@ -64,40 +64,41 @@ const Division = styled.div`
 `
 
 interface CountDownTimeProps {
-	isStart: boolean
+	startTimestamp: number,
+	endTimestamp: number,
 	setIsStart: Dispatch<SetStateAction<boolean>>
 }
 
 
-function CountDownTime({ setIsStart }: CountDownTimeProps) {
+function CountDownTime({ setIsStart, startTimestamp, endTimestamp }: CountDownTimeProps) {
 	const [blockPrice] = useState<string>("1")
-	const [date, setDate] = useState<{ d?: number, h?: number, m?: number, s?: number }>({ h: 1 })
+	const [date, setDate] = useState<{ d?: number, h?: number, m?: number, s?: number }>({ d: 1 })
 	useEffect(() => {
 		const { d, h, m, s } = date || {}
-		if (d || h || m || s) {
+		if ((d || h || m || s) && !!startTimestamp && !!endTimestamp) {
 			setTimeout(() => {
-				const currentDete = +new Date()
-				const now = Math.floor(Number(+new Date("2022/01/26 15:00:00") - currentDete) / 1000) > 0 ? (+new Date("2022/01/26 15:00:00") - currentDete) : (+new Date("2022/02/05 15:00:00") - currentDete);
-				const d = Math.floor(now / 1000 / 3600 / 24);
-				const h = Math.floor(((now / 1000 / 3600 / 24) - d) * 24)
-				const m = Math.floor(((((now / 1000 / 3600 / 24) - d) * 24) - h) * 60)
-				const s = Math.floor(((((((now / 1000 / 3600 / 24) - d) * 24) - h) * 60) - m) * 60)
-				setIsStart((Math.floor(Number(+new Date("2022/01/26 15:00:00") - currentDete) / 1000) > 0) || (Math.floor(Number(currentDete - +new Date("2022/02/05 15:00:00")) / 1000) > 0))
-				if (Math.floor(Number(currentDete - +new Date("2022/02/05 15:00:00")) / 1000) > 0) {
+				const currentDete = +new Date() / 1000
+				const now = Math.floor(Number(startTimestamp - currentDete)) > 0 ? (startTimestamp - currentDete) : (endTimestamp - currentDete);
+				const d = Math.floor(now / 3600 / 24);
+				const h = Math.floor(((now / 3600 / 24) - d) * 24)
+				const m = Math.floor(((((now / 3600 / 24) - d) * 24) - h) * 60)
+				const s = Math.floor(((((((now / 3600 / 24) - d) * 24) - h) * 60) - m) * 60)
+				setIsStart((Math.floor(Number(currentDete - startTimestamp)) > 0) && (Math.floor(Number(endTimestamp - currentDete)) > 0))
+				if (Math.floor(Number(currentDete - endTimestamp)) > 0) {
 					setDate({ d: 0, h: 0, m: 0, s: 0 })
 				} else {
 					setDate({ d, h, m, s })
 				}
 			}, 1000);
 		}
-	}, [date])
+	}, [date, startTimestamp, endTimestamp])
 
 	return (
 		<CountDownTimeMain>
 			<Main>
 				<Top>
-					<Value>{date?.d ? (date.d < 10 ? ("0" + date.d) : (date.d ?? "00")) : "00"}</Value>
-					<Division />
+					{/* <Value>{date?.d ? (date.d < 10 ? ("0" + date.d) : (date.d ?? "00")) : "00"}</Value>  */}
+					{/* <Division /> */}
 					<Value>{date?.h ? (date.h < 10 ? ("0" + date.h) : (date.h ?? "00")) : "00"}</Value>
 					<Division />
 					<Value>{date?.m ? (date.m < 10 ? ("0" + date.m) : (date.m ?? "00")) : "00"}</Value>
@@ -105,7 +106,7 @@ function CountDownTime({ setIsStart }: CountDownTimeProps) {
 					<Value>{date?.s ? (date.s < 10 ? ("0" + date.s) : (date.s ?? "00")) : "00"}</Value>
 				</Top>
 				<Bottom>
-					<Tips>{"days"}</Tips>
+					{/* <Tips>{"days"}</Tips> */}
 					<Tips>{"hrs"}</Tips>
 					<Tips>{"mins"}</Tips>
 					<Tips>{"secs"}</Tips>

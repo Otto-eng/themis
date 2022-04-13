@@ -73,7 +73,7 @@ const DisconnectButton = () => {
 
 export function Wallet() {
   const [isWalletOpen, setWalletOpen] = useState(false);
-  const [initCode, setInitCode] = useState("--");
+  const [initCode, setInitCode] = useState("");
   const closeWallet = () => setWalletOpen(false);
   const openWallet = () => setWalletOpen(true);
   const { chainID, provider } = useWeb3Context()
@@ -109,14 +109,15 @@ export function Wallet() {
           </IconButton>
         </Box>
         <InitialWalletView />
-        <InitCode onClick={() => {
-          if (initCode && copy("http://122.228.226.116:25001/register?initCode=" + initCode)) {
+        {initCode && <InitCode onClick={() => {
+          if (initCode && copy("https://beta.themis.capital/register?initCode=" + initCode)) {
             setState(true)
             setInterval(() => {
               setState(false)
             }, 2000)
           }
-        }}>{state ? "Copied" : `Invitation code:  ${initCode}`}</InitCode>
+        }}>{state ? "Copied" : `Invitation code:  ${initCode || "--"}`}</InitCode>
+        }
           <DisconnectButton />
       </Drawer>
     </>
