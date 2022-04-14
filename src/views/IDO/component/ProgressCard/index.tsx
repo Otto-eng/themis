@@ -4,7 +4,7 @@ import hotImg from "../../../../asstes/images/home/hot@2x.png"
 import { LinearProgressWithLabel } from "../Progress"
 
 const data: LinearProgresstype[] = [{
-	topLeftText: "Pre-Sale 1",
+	topLeftText: "Pre-Sale",
 	// status: "ing",
 	status: "ing",
 	totalU: 500000,

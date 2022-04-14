@@ -31,9 +31,10 @@ import Register from "./views/Register";
 import { abi as RelationshipABI } from "src/abi/Relationship.json";
 import { scInviterEarningsDetailsList, scStakeEarningsDetailsList, stakeTHSReleaseEarningsList } from "./slices/scSlice";
 import { IDO } from "./views/IDO";
-import OpenBeta from "./views/OpenBeta";
+// import OpenBeta from "./views/OpenBeta";
 import IDORelease from "./views/IDORelease";
 import { idoRelease30List, idoRelease70List } from "./slices/idoReleaseSlice";
+import { info } from "./slices/MessagesSlice";
 
 // 😬 Sorry for all the console logging
 const DEBUG = false;
@@ -118,7 +119,7 @@ function App() {
   )
 
   useEffect(() => {
-    if (connected && chainID != 42) {
+    if (connected && (chainID != 56)) {
       disconnect()
     }
 
@@ -186,9 +187,9 @@ function App() {
 
   const scData = useCallback(
     () => {
-      dispatch(scInviterEarningsDetailsList({ first: 10, address }));
-      dispatch(scStakeEarningsDetailsList({ first: 10, address }))
-      dispatch(stakeTHSReleaseEarningsList({ first: 10, address }))
+      // dispatch(scInviterEarningsDetailsList({ first: 10, address }));
+      // dispatch(scStakeEarningsDetailsList({ first: 10, address }))
+      // dispatch(stakeTHSReleaseEarningsList({ first: 10, address }))
       dispatch(idoRelease30List({ first: 1, address }))
       dispatch(idoRelease70List({ first: 10, address }))
     },
@@ -197,7 +198,7 @@ function App() {
 
   useEffect(() => {
     if (address && chainID && provider && addresses[chainID]?.Relationship_ADDRESS) {
-      serachRelationship(address)
+      // serachRelationship(address)
       scData()
     }
   }, [address, chainID, provider, addresses])
@@ -211,10 +212,17 @@ function App() {
   }, [location]);
 
   useEffect(() => {
-    if (address && isInvited && location.pathname !== "/register") {
+    if (address && isInvited && (["/claim", "/stake", "/sc", "/bonds", "/bonds/usdt"].includes(location.pathname))) {
       history.replace("/register" + (location.search ?? ""))
     }
   }, [address, isInvited, location.pathname])
+
+  useEffect(() => {
+    if (["/dashboard", "/claim", "/stake", "/sc", "/bonds", "/bonds/usdt"].includes(location.pathname)) {
+      history.replace("/ido")
+      dispatch(info("Themis systerm will be launched at 11:00 on April 16, utc time."));
+    }
+  }, [location.pathname])
 
   useEffect(() => {
     const height = document.body.scrollHeight;
@@ -246,7 +254,7 @@ function App() {
             </Route>
 
             <Route exact path="/">
-              <Redirect to="/dashboard" />
+              <Redirect to="/ido" />
             </Route>
 
             <Route exact path="/stake">
@@ -262,9 +270,9 @@ function App() {
             <Route path="/bonds">
               <ChooseBond />
             </Route>
-            <Route path="/openBeta">
+            {/* <Route path="/openBeta">
               <OpenBeta />
-            </Route>
+            </Route> */}
             <Route exact path="/ido">
               <IDO />
             </Route>

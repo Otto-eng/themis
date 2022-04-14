@@ -1,32 +1,28 @@
 import styled from "styled-components"
 import { GridFlex } from "../../../../components/Grid"
-import ipt from "../../../../asstes/images/home/输入框@2x.png"
-import right from "../../../../asstes/images/ido/right@2x.png"
-import PreSate from "../../../../components/PreSate"
-import { Dispatch, SetStateAction, useEffect, useLayoutEffect, useState } from "react"
-import { createStyles, Grid, IconButton, Input, InputBase, makeStyles, Paper, Theme } from "@material-ui/core"
-import { useWeb3React } from "@web3-react/core"
-import { Web3Provider } from "@ethersproject/providers";
-import { DEFAULT_ADDRESS } from "../../../../constants"
-import useSingleCase from "../../../../hooks/useSingleCase"
-import BgMain from "src/components/BgMain"
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react"
+import { createStyles, InputBase, makeStyles, Paper, Theme, Button } from "@material-ui/core"
 import { useBuyFtn } from "src/hooks/useBuyFtn"
-import { useAttentionDialog } from "src/models"
 import { useDispatch } from "react-redux"
 import { error } from "src/slices/MessagesSlice"
 import { useWeb3Context } from "src/hooks"
 import { isPending } from "src/views/Claim"
 import Skeleton from "@material-ui/lab/Skeleton/Skeleton"
+import { ethers } from "ethers"
+import { addresses } from "src/constants"
+import { IERC20 } from "src/typechain"
+import { abi as ierc20Abi } from "src/abi/IERC20.json";
+import { debounce } from "src/utils/debounce"
+
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		root: {
-			padding: '2px 4px',
+			padding: '2px 0',
 			display: 'flex',
 			alignItems: 'center',
 			width: "100%",
-			marginTop: "16px",
-
+			margin: "16px 0",
 		},
 		input: {
 			paddingLeft: "16px",
@@ -65,20 +61,13 @@ const BlockPrice = styled.div`
   font-size: 14px;
 `
 
-const Send = styled(GridFlex) <{ disbaled?: boolean }>`
-	margin-top: 16px;
-	background-color: ${({ disbaled }) => disbaled ? `rgba(0, 0, 0, 0.39)` : `#000`};
-	width: 100%;
-	height: 50px;
-	border-radius: 10px;
-	justify-content: center;
-	align-items: center;
-	color: #FFFFFF;
-	font-size: 20px;
-	font-weight: 700;
-	text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
-	cursor: pointer;
-`
+const Send = styled(Button)({
+	width: "100%",
+	padding: "16px",
+	borderRadius: "6px",
+	backgroundColor: "#F8CC82",
+	color: "#000"
+})
 
 const Total = styled(GridFlex)`
 	justify-content: center;
@@ -111,27 +100,28 @@ interface PreSate2Props {
 	isExperiencerAddressBuy: boolean
 	isExperiencerAddress: boolean
 	totalBuy: number
-	currentBuyTotal: number
 	setHash: Dispatch<SetStateAction<string>>
 }
 
 
-function PreSate1({ accountBuy, currentBuyTotal, setHash, isStart, isExperiencerAddressBuy, isExperiencerAddress, totalBuy }: PreSate2Props) {
+function PreSate1({ accountBuy, setHash, isStart, isExperiencerAddressBuy, isExperiencerAddress, totalBuy }: PreSate2Props) {
 	const dispatch = useDispatch()
 	const [value, setValue] = useState<string | undefined>(undefined)
 	const buyFtn = useBuyFtn()
-	const { address } = useWeb3Context();
 	const [participated, setParticipated] = useState<string>("0.00");
 	const [isBuy, setIsBuy] = useState(false);
+	const [approveHash, setApproveHash] = useState("");
+	const [pendingTransactions, setPendingTransactions] = useState(false);
 	const [pendingStatus, setPendingStatus] = useState({ send: false });
 	const classes = useStyles();
-
+	const { provider, chainID, address } = useWeb3Context();
 	useEffect(() => {
-		console.log("isStart, isExperiencerAddressBuy, isExperiencerAddress", isStart, isExperiencerAddressBuy, isExperiencerAddress)
 		if (isStart) {
 			if (isExperiencerAddressBuy) {
 				if (isExperiencerAddress) {
 					setIsBuy(true)
+				} else {
+					setIsBuy(false)
 				}
 			} else {
 				setIsBuy(true)
@@ -141,11 +131,74 @@ function PreSate1({ accountBuy, currentBuyTotal, setHash, isStart, isExperiencer
 		}
 
 	}, [isStart, isExperiencerAddressBuy, isExperiencerAddress])
-
 	useEffect(() => {
 		setPendingStatus({ send: false })
 		setParticipated(accountBuy.toFixed(2))
 	}, [accountBuy])
+
+	const isApprove = useCallback(
+		async () => {
+			const signer = provider.getSigner();
+			const usdtContract = new ethers.Contract(addresses[chainID].USDT_ADDRESS as string, ierc20Abi, signer) as IERC20;
+			const approveBig = await usdtContract.allowance(address, addresses[chainID].IDO_PRESALECONTRACT_ADDRESS)
+			setPendingTransactions(!!Number(ethers.utils.formatUnits(approveBig, "ether")))
+			setPendingStatus({ send: false })
+		}, [provider, chainID, address, addresses, approveHash]
+	)
+
+	const userApprove = useCallback(
+		async () => {
+			const signer = provider.getSigner();
+			try {
+				const usdtContract = new ethers.Contract(addresses[chainID].USDT_ADDRESS as string, ierc20Abi, signer) as IERC20;
+				const infoHash = await usdtContract.approve(addresses[chainID].IDO_PRESALECONTRACT_ADDRESS, ethers.utils.parseUnits("1000", "ether").toString());
+				await infoHash.wait()
+				await usdtContract.provider.getTransactionReceipt(infoHash.hash)
+				setApproveHash(infoHash.hash)
+			} catch (error) {
+				setPendingStatus({ send: false })
+			}
+		}, [provider, chainID, address, addresses]
+	)
+
+	const buyIdo = useCallback(
+		async () => {
+			if (!isBuy || pendingStatus.send) return
+			setPendingStatus({ send: true })
+			const num = Number(value)
+			if (pendingTransactions) {
+				if (address && !isNaN(num) && num >= 100 && num <= 1000) {
+					if ((totalBuy * 4 + Number(value)) > 500000) {
+						dispatch(error("Insufficient MCT or already sold out"))
+					} else {
+						if ((accountBuy * 4 + num) > 1000) {
+							return dispatch(error("Your maximum purchase amount is 1000 USDT (BEP20)"))
+						} else {
+							setPendingStatus({ send: true })
+							buyFtn(num.toString()).then((res: any) => {
+								console.log("RES", res)
+								setHash(res?.transactionHash || "")
+							}).catch(() => {
+								setPendingStatus({ send: false })
+							})
+						}
+					}
+				} else {
+					setPendingStatus({ send: false })
+					dispatch(error("Please enter at least 100 USDT (BEP20) and no more than 1000 USDT (BEP20)"))
+				}
+			} else {
+				userApprove()
+			}
+		},
+		[pendingTransactions, accountBuy, address, totalBuy, value, error, isBuy]
+	)
+
+	useEffect(() => {
+		if (provider && chainID && address && addresses[chainID]?.USDT_ADDRESS) {
+			isApprove()
+		}
+	}, [provider, chainID, address, addresses, approveHash])
 
 	return (
 		<Container id="ido-view">
@@ -164,39 +217,17 @@ function PreSate1({ accountBuy, currentBuyTotal, setHash, isStart, isExperiencer
 					}}
 					value={value}
 					placeholder={"Please enter 100-1000 USDT(BEP20)"}
-					disabled={!isBuy}
+					disabled={!isBuy || pendingStatus.send}
 				/>
 			</Paper>
 			<Send
-				disbaled={!isBuy}
-				onClick={async () => {
-					if (!isBuy) return
-					const num = Number(value)
-					if (address && !isNaN(num) && num >= 100 && num <= 1000) {
-						if (totalBuy + Number(value) > 500000) {
-							dispatch(error("Insufficient MCT or already sold out"))
-						} else {
-							if ((currentBuyTotal + num) > 1000) {
-								return dispatch(error("Your maximum purchase amount is 1000 USDT (BEP20)"))
-							} else {
-								setPendingStatus({ send: true })
-								buyFtn(num.toString()).then((res: any) => {
-									console.log("RES", res)
-									setHash(res?.transactionHash || "")
-								}).catch(() => {
-									setPendingStatus({ send: false })
-									console.log("ERROR")
-								})
-							}
-						}
-					} else {
-						dispatch(error("Please enter at least 100 USDT (BEP20) and no more than 1000 USDT (BEP20)"))
-					}
-				}}
-			> {isPending(pendingStatus, "send", "Send")}
-				<BgMain imgsrc={right} style={{ width: "20px", height: "20px", marginLeft: "8px" }}>
-
-				</BgMain>
+				variant="contained"
+				color="primary"
+				disabled={!isBuy || pendingStatus.send}
+				key={pendingStatus.send + "pendingStatus"}
+				onClick={() => debounce(buyIdo, 1000)}
+			>
+				{isPending(pendingStatus, "send", pendingTransactions ? "Send" : "Approve")}
 			</Send >
 			<Total>{"Your Total Contribution(THS):"}</Total>
 			<BanlanceU>{pendingStatus.send ? <Skeleton width="100px" /> : participated}</BanlanceU>

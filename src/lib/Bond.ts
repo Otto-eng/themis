@@ -7,7 +7,7 @@ import React from "react";
 import { EthContract } from "src/typechain/EthContract";
 
 export enum NetworkID {
-  Mainnet = 42, // NETWORK_CHAINID
+  Mainnet = 56, // NETWORK_CHAINID
 }
 
 

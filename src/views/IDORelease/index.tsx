@@ -9,11 +9,11 @@ import dayjs from "dayjs"
 import utc from 'dayjs/plugin/utc'
 import copy from "copy-to-clipboard"
 import { useDispatch } from "react-redux"
-import { scInviterEarningsDetailsList, scStakeEarningsDetailsList } from "src/slices/scSlice"
+import { abi as PreThemisERC20ABI } from "src/abi/PreThemisERC20.json";
 import { isPending } from "../Claim"
 import Skeleton from "@material-ui/lab/Skeleton/Skeleton"
 import { ThemisERC20Token } from "src/typechain"
-import { idoRelease30List, idoRelease70List } from "src/slices/idoReleaseSlice"
+import { idoRelease70List } from "src/slices/idoReleaseSlice"
 dayjs.extend(utc)
 const GridFlex = styled("div")({
 	width: "100%",
@@ -128,7 +128,9 @@ export default function IDORelease() {
 	const [stakValue, setStakValue] = useState("0.0000")
 	const [invterValue, setInvterValue] = useState("0.0000")
 	const [SCBanlance, setSCBanlance] = useState("0.0000")
-	const [num, setNum] = useState(true)
+	// const [num, setNum] = useState(true)
+	const [num, setNum] = useState(false)
+
 	const [stake, setStake] = useState(true)
 	const [invter, setInvter] = useState(true)
 	const theme = useAppSelector(state => state.theme.theme)
@@ -144,8 +146,8 @@ export default function IDORelease() {
 	const ido30List = useAppSelector(state => state.ido.ido30List)
 	const ido70List = useAppSelector(state => state.ido.ido70List)
 
-	const getScbanlance = useCallback(async () => {
-		if (address && chainID && provider && addresses && num) {
+	const getThsBanlance = useCallback(async () => {
+		if (address && chainID && provider && addresses && num && addresses[chainID]?.THS_ADDRESS) {
 			try {
 				const signer = provider.getSigner();
 				const thsContract = new ethers.Contract(addresses[chainID].THS_ADDRESS as string, ThemisERC20TokenABI, signer) as ThemisERC20Token;
@@ -162,12 +164,14 @@ export default function IDORelease() {
 
 
 	const getStakeList = useCallback(async () => {
-		if (address && chainID && provider && !!stake) {
+		if (address && chainID && provider && !!stake && addresses[chainID]?.IDO_PRESALERELEASE_ADDRESS) {
 			try {
 				const signer = provider.getSigner();
 				const PresaleReleaseContract = new ethers.Contract(addresses[chainID].IDO_PRESALERELEASE_ADDRESS, PresaleReleaseABI, signer)
+				console.log("PresaleReleaseContract", PresaleReleaseContract)
 				const PresaleRelease30 = await PresaleReleaseContract.getpendingPart1(address)
-				setStakValue((Math.floor(Number(ethers.utils.formatUnits(PresaleRelease30, "ether")) * 10000) / 10000) + "")
+				console.log("PresaleRelease30", PresaleRelease30)
+				setStakValue((Math.floor(Number(ethers.utils.formatUnits(PresaleRelease30, "gwei")) * 10000) / 10000) + "")
 			} finally {
 				setTimeout(() => {
 					setStake(false)
@@ -178,13 +182,12 @@ export default function IDORelease() {
 	}, [chainID, address, provider, stake])
 
 	const getInvterList = useCallback(async () => {
-		if (address && chainID && provider && !!invter) {
+		if (address && chainID && addresses[chainID]?.IDO_PRESALERELEASE_ADDRESS && provider && !!invter) {
 			try {
 				const signer = provider.getSigner();
 				const PresaleReleaseContract = new ethers.Contract(addresses[chainID].IDO_PRESALERELEASE_ADDRESS, PresaleReleaseABI, signer)
-				console.log("PresaleReleaseContract", PresaleReleaseContract)
 				const PresaleRelease70 = await PresaleReleaseContract.getpendingPart2(address)
-				setInvterValue((Math.floor(Number(ethers.utils.formatUnits(PresaleRelease70, "ether")) * 10000) / 10000) + "")
+				setInvterValue((Math.floor(Number(ethers.utils.formatUnits(PresaleRelease70, "gwei")) * 10000) / 10000) + "")
 			} finally {
 				setTimeout(() => {
 					setInvter(false)
@@ -195,15 +198,15 @@ export default function IDORelease() {
 	}, [chainID, address, provider, invter])
 
 	useEffect(() => {
-		getStakeList()
+		// getStakeList()
 	}, [chainID, address, provider, num, stake])
 
 	useEffect(() => {
-		getInvterList()
+		// getInvterList()
 	}, [chainID, address, provider, num, invter])
 
 	useEffect(() => {
-		getScbanlance()
+		// getThsBanlance()
 	}, [chainID, address, provider, num])
 
 
@@ -218,7 +221,7 @@ export default function IDORelease() {
 					<Title >THS Amount</Title>
 					<Blance>{num ? <Skeleton width="80px" /> : SCBanlance}</Blance>
 				</Top>
-				<CardTitle>IDO Release 30%</CardTitle>
+				<CardTitle>IDO Release 35%</CardTitle>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 					<Left ><div>THS Unclaimed</div> <Value>{stakValue === "0" ? "0.0000" : stakValue}</Value></Left>
 					<Claim
@@ -235,7 +238,9 @@ export default function IDORelease() {
 							})
 							const signer = provider.getSigner();
 							try {
-								const PresaleReleaseContract = new ethers.Contract(addresses[chainID].ScFarmForStaker_ADDRESS, PresaleReleaseABI, signer)
+								const PresaleReleaseContract = new ethers.Contract(addresses[chainID].IDO_PRESALERELEASE_ADDRESS, PresaleReleaseABI, signer);
+								const preThsContract = new ethers.Contract(addresses[chainID].PRETHS_ADDRESS as string, PreThemisERC20ABI, signer);
+								await preThsContract.approve(addresses[chainID].IDO_PRESALERELEASE_ADDRESS, ethers.utils.parseUnits("1000", "gwei").toString());
 								const infoHash = await PresaleReleaseContract.claimPart1()
 								await infoHash.wait()
 								if ("hash" in infoHash) {
@@ -276,11 +281,11 @@ export default function IDORelease() {
 								copy(item.id)
 							}} style={{ cursor: "pointer" }}>{item.id.slice(0, 4)}...{item.id.slice(item.id.length - 4)}</Ol>
 							<Option>UTC {dayjs.unix(Number(item.timestamp)).utc().format("YYYY-MM-DD HH:mm")}</Option>
-							<Amount>{(Math.floor(Number(Number(item.amount) / Math.pow(10, 9)) * 10000) / 10000).toFixed(4)}</Amount>
+							<Amount>{(Math.floor(Number(Number(item.amount)) * 10000) / 10000).toFixed(4)}</Amount>
 						</Item>
 					</React.Fragment>)}
 				</Card>
-				<CardTitle >IDO Release 70%</CardTitle>
+				<CardTitle >IDO Release 65%</CardTitle>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 					<Left ><div>THS Unclaimed </div><Value>{invterValue === "0" ? "0.0000" : invterValue}</Value></Left>
 					<Claim
@@ -299,7 +304,9 @@ export default function IDORelease() {
 							const signer = provider.getSigner();
 
 							try {
-								const PresaleReleaseContract = new ethers.Contract(addresses[chainID].ScFarmForInvter_ADDRESS, PresaleReleaseABI, signer);
+								const PresaleReleaseContract = new ethers.Contract(addresses[chainID].IDO_PRESALERELEASE_ADDRESS, PresaleReleaseABI, signer);
+								const preThsContract = new ethers.Contract(addresses[chainID].PRETHS_ADDRESS as string, PreThemisERC20ABI, signer);
+								await preThsContract.approve(addresses[chainID].IDO_PRESALERELEASE_ADDRESS, ethers.utils.parseUnits("1000", "gwei").toString());
 								const infoHash = await PresaleReleaseContract.claimPart2()
 								await infoHash.wait()
 								if ("hash" in infoHash) {
@@ -336,7 +343,7 @@ export default function IDORelease() {
 							copy(item.id)
 						}} style={{ cursor: "pointer" }}>{item.id.slice(0, 4)}...{item.id.slice(item.id.length - 4)}</Ol>
 						<Option>UTC {dayjs.unix(Number(item.timestamp)).utc().format("YYYY-MM-DD HH:mm")}</Option>
-						<Amount>{(Math.floor(Number(Number(item.amount) / Math.pow(10, 9)) * 10000) / 10000).toFixed(4)}</Amount>
+						<Amount>{(Math.floor(Number(Number(item.amount)) * Math.pow(10, 8)) / Math.pow(10, 8)).toFixed(8)}</Amount>
 					</Item>))}
 					<More
 						style={((idoRelease70DetailsPage * 10) > ido70List.length) ? ({ display: "none" }) : ({})}

@@ -454,7 +454,7 @@ function Claim() {
 									variant="contained"
 									color="primary"
 									disabled={item.speedLevel === "7" || pendingStatus.confrim}
-										key={pendingStatus.confrim + ""}
+									key={pendingStatus.confrim + ""}
 									onClick={() => {
 										setIsOpen(true)
 										setBlock(item)

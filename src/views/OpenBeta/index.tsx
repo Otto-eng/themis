@@ -120,7 +120,7 @@ export default function OpenBeta() {
 
 
 	useEffect(() => {
-		if (address && provider && chainID && addresses[chainID].RegisterForm_ADDRESS) {
+		if (address && provider && chainID && addresses[chainID]?.RegisterForm_ADDRESS) {
 			registerForm()
 		}
 	}, [address, provider, chainID, addresses, num])

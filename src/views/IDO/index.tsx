@@ -1,16 +1,11 @@
 import styled from "styled-components";
-import PreSate from "../../components/PreSate";
-import bgImg from "../../asstes/images/ido/bg01@2x.png"
-import invite from "../../asstes/images/ido/邀请@2x.png"
+import bgImg from "../../asstes/images/ido/bg01@2x.jpg"
 import CountDownTime from "./component/CountDownTime";
 import LinearCard from "./component/LinearCard";
 import PreSate1 from "./component/PreSate1";
 import Progress from "./component/Progress";
 import ProgressCard from "./component/ProgressCard";
 import React, { useLayoutEffect, useCallback, useState, useEffect } from "react"
-import copy from "copy-to-clipboard"
-import useModel from "flooks";
-import { GlobalAttentionDialog } from "../../models";
 import LinearReleaseRule from "./component/LinearReleaseRule";
 import BuyPHS from "./component/BuyPHS";
 import BuyPHSProgress from "./component/BuyPHSProgress";
@@ -20,6 +15,7 @@ import { useWeb3Context } from "src/hooks";
 import { abi as PresaleContractABI } from "src/abi/PresaleContract.json";
 import { ethers } from "ethers";
 import { addresses } from "src/constants";
+import Footer from "./component/Footer";
 
 
 export const ratio = [4]
@@ -29,7 +25,7 @@ const Ido = styled.div`
   padding: 0 15%;
   @media (max-width: 750px) {
     width: 100%;
-      padding: 0;
+    padding: 0;
   }
 `
 
@@ -100,12 +96,12 @@ export const IDO = () => {
   const { provider, chainID, address } = useWeb3Context();
   const [totalBuy, setTotalBuy] = useState<number>(0)
   const [myTotalContr, setMyTotalContr] = useState<number>(0)
-  const [isDIs, setIsDis] = useState<boolean>(false)
+  const [isDIs, setIsDis] = useState<boolean>(true)
+  const [isBuyMax, setIsBuyMax] = useState<boolean>(false)
   const [hash, setHash] = useState<string>("1")
-  const [currentBuyTotal, setCurrentBuyTotal] = useState<number>(0)
   const [num, setNum] = useState<number>(1)
   const [isExperiencerAddress, setIsExperiencerAddress] = useState(false)
-  const [isExperiencerAddressBuy, setIsExperiencerAddressBuy] = useState(false)
+  const [isExperiencerAddressBuy, setIsExperiencerAddressBuy] = useState(true)
 
   const [termInfoOf, setTermInfoOf] = useState<TermInfoOfType>({
     termId: "1",
@@ -120,10 +116,8 @@ export const IDO = () => {
     async () => {
       const signer = provider.getSigner();
       const PresaleContractContract = new ethers.Contract(addresses[chainID].IDO_PRESALECONTRACT_ADDRESS as string, PresaleContractABI, signer);
-      console.log("PresaleContractContract", PresaleContractContract);
       const userBuyTotal = await PresaleContractContract.getUserBuyTotal(address)
       const soldPreThsTotal = await PresaleContractContract.soldPreThsTotal()
-      console.log(Number(ethers.utils.formatUnits(userBuyTotal, "gwei")), address, "NUMBER")
       setMyTotalContr(Number(ethers.utils.formatUnits(userBuyTotal, "gwei")) || 0)
       setTotalBuy(Number(ethers.utils.formatUnits(soldPreThsTotal, "gwei") || 0))
     },
@@ -131,12 +125,17 @@ export const IDO = () => {
   )
 
   useEffect(() => {
+    if ((myTotalContr >= 250) || (totalBuy >= 0)) {
+      setIsBuyMax(true)
+    }
+  }, [myTotalContr, totalBuy])
+
+  useEffect(() => {
     setNum(num + 1)
-    console.log("hash", hash)
   }, [hash])
 
   useLayoutEffect(() => {
-    if (provider && chainID && address && addresses[chainID].IDO_PRESALECONTRACT_ADDRESS) {
+    if (provider && chainID && address && addresses[chainID]?.IDO_PRESALECONTRACT_ADDRESS) {
       total()
     }
   }, [provider, chainID, address, addresses, num])
@@ -157,8 +156,8 @@ export const IDO = () => {
         startTimestamp: Number(isStart.startTimestamp.toString())
       })
       // 白名单购买结束时间
+      const experienceEndTimestamp = await PresaleContractContract.experienceEndTimestamp()
       let timer: any = setInterval(async () => {
-        const experienceEndTimestamp = await PresaleContractContract.experienceEndTimestamp()
         const now = +new Date() / 1000
         setIsExperiencerAddressBuy(
           (now < Number(experienceEndTimestamp.toString()))
@@ -176,11 +175,10 @@ export const IDO = () => {
   )
 
   useLayoutEffect(() => {
-    if (provider && chainID && address && addresses[chainID].IDO_PRESALECONTRACT_ADDRESS) {
+    if (provider && chainID && address && addresses[chainID]?.IDO_PRESALECONTRACT_ADDRESS) {
       isBuy()
     }
   }, [provider, chainID, address, addresses])
-
   return (
     <Ido>
       <Main>
@@ -197,7 +195,7 @@ export const IDO = () => {
             </Text>
           </DetailTitle>
           <Progress totalBuy={totalBuy} />
-          <PreSate1 isExperiencerAddressBuy={isExperiencerAddressBuy} isExperiencerAddress={isExperiencerAddress} currentBuyTotal={currentBuyTotal} totalBuy={totalBuy} setHash={setHash} isStart={isDIs} accountBuy={myTotalContr} />
+          <PreSate1 isExperiencerAddressBuy={isExperiencerAddressBuy} isExperiencerAddress={isExperiencerAddress} totalBuy={totalBuy} setHash={setHash} isStart={isDIs && !isBuyMax} accountBuy={myTotalContr} />
           <LinearCard />
           {/* <LinkCard /> */}
           <ProgressCard totalBuy={totalBuy} />
@@ -205,8 +203,8 @@ export const IDO = () => {
           <BuyPHS />
           <BuyPHSProgress />
         </React.Fragment>
-      </Detail>
-      {/* <Footer /> */}
-    </Ido>
+        </Detail>
+      <Footer />
+      </Ido>
   );
 };

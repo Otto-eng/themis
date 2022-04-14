@@ -69,11 +69,11 @@ const useStyles = makeStyles({
 		padding: "8px",
 		fontSize: "12px",
 		textAlign: "center",
-		border: "1px solid #FFF",
+		border: "1px solid #E6DEED",
 	},
 	container: {
 		maxHeight: 440,
-		textAlign: "center"
+		textAlign: "center",
 	},
 	td: {
 		padding: "8px",
@@ -81,7 +81,7 @@ const useStyles = makeStyles({
 		background: "transparent",
 		textAlign: "center",
 		margin: "-1px -1px 0 0",
-		border: "1px solid #FFF",
+		border: "1px solid #E6DEED",
 		borderTop: "0 none",
 	}
 });
@@ -92,16 +92,6 @@ function LinearCard() {
 
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(10);
-
-	const handleChangePage = (event: unknown, newPage: number) => {
-		setPage(newPage);
-	};
-
-	const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setRowsPerPage(+event.target.value);
-		setPage(0);
-	};
-
 
 	const columns: Column[] = [
 		{
@@ -125,8 +115,7 @@ function LinearCard() {
 	];
 
 	const rows = [
-		createData("Pre-Sale 1", "4U", "500,000", 250),
-		// createData("Pre-Sale 2", "5U", "90,000", 200),
+		createData("Pre-Sale", "4U", "125,000", 250),
 	];
 
 
@@ -153,7 +142,7 @@ function LinearCard() {
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+							{rows.map((row) => {
 								return (
 									<TableRow hover role="checkbox" tabIndex={-1} key={row.name}>
 										{columns.map((column, tdIdx) => {

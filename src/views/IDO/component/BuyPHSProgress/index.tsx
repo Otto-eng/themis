@@ -1,3 +1,6 @@
+import { LightRawTheme } from "material-ui/styles"
+import { THEME_LIGHT } from "src/constants"
+import { useAppSelector } from "src/hooks"
 import styled from "styled-components"
 import { GridFlex } from "../../../../components/Grid"
 
@@ -40,15 +43,16 @@ const TextA = styled.div`
 	}
 `
 
-const Ol = styled(GridFlex)`
+const Ol = styled(GridFlex) <{ theme: boolean }>`
 	width: 42px;
 	height: 42px;
-	background: rgba(238, 238, 238, 0.39);
+	background: ${({ theme }) => theme ? "#253449" : "#FFF"};
+	color: ${({ theme }) => theme ? "#FFF" : "#253449"};
 	justify-content: center;
 	align-items: center;
 	font-weight: 700;
 	margin-right: 10px;
-	border-radius: 7px;
+	border-radius: 50%;
 	font-size: 24px;
 	line-height: 29px;
 `
@@ -66,11 +70,12 @@ const Content = styled.div`
 `
 
 function BuyPHSProgress() {
+	const theme = useAppSelector(state => state.theme.theme === THEME_LIGHT)
 
 	return (
 		<Main>
 			<Box>
-				<Ol>1.</Ol>
+				<Ol theme={theme}>1</Ol>
 				<span>
 					{"Create a Wallet"}
 				</span>
@@ -98,7 +103,7 @@ function BuyPHSProgress() {
 				</Item>
 			</Content>
 			<Box>
-				<Ol>2.</Ol>
+				<Ol theme={theme}>2</Ol>
 				<span>
 					{"Open THS IDO Page on Trust Wallet"}
 				</span>
@@ -108,7 +113,7 @@ function BuyPHSProgress() {
 					<Item>
 						<TextA>
 							{"Open the \"Dapp\" tab on Trust Wallet, and type "}
-							<a href="https://beta.themis.capital/ido" target="black"> https://beta.themis.capital/ido </a>
+							<a href="https://app.themis.capital/ido" target="black"> https://app.themis.capital/ido </a>
 							{" in the search box, then click the enter to jump to the connect page."}
 						</TextA>
 					</Item>
@@ -125,15 +130,15 @@ function BuyPHSProgress() {
 				</Content>
 			</Box>
 			<Box>
-				<Ol>3.</Ol>
+				<Ol theme={theme}>3</Ol>
 				<span>
 					{"Start to Buy THS Token"}
 				</span>
 			</Box>
-			<Content>
+			<Content style={{ borderLeft: "2px solid transparent" }}>
 				<Box>
 					<Text>
-						{"Enter the USDT(BEP20) amount (At Least 200~3000 USDT(BEP20)) you want to participate in this offering."}
+						{"Enter the USDT(BEP20) amount (At Least 100~1000 USDT(BEP20)) you want to participate in this offering."}
 					</Text>
 				</Box>
 			</Content>

@@ -7,8 +7,12 @@ const Main = styled(GridFlex)`
 	width: 100%;
 	justify-content: center;
 	align-items: center;
-	background-color: #000;
+	background-color: #0D1026;
 	padding: 16px 0;
+	@media (max-width: 750px) {
+    width: 100vw;
+    margin: 0 -8px -8px;
+  }
 `
 
 function Footer() {

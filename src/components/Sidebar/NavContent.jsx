@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { ReactComponent as StakeIcon } from "../../asstes/icons/stake.svg";
 import { ReactComponent as BondIcon } from "../../asstes/icons/bond.svg";
@@ -7,6 +7,8 @@ import THSLightPng from "../../asstes/icons/THS_light@2x.png";
 import THSDarkPng from "../../asstes/icons/THS_dark@2x.png";
 import ClaimLightIcon from "../../asstes/icons/claim@2x.png";
 import ClaimDarkIcon from "../../asstes/icons/claimLight@2x.png";
+import idoReleaseDarkIcon from "../../asstes/icons/idoReleaseLight@2x.png";
+import idoReleaseLightIcon from "../../asstes/icons/idoRelease@2x.png";
 import SCLightIcon from "../../asstes/icons/sc@2x.png";
 import SCDarkIcon from "../../asstes/icons/scLight@2x.png";
 import openBetaLightIcon from "../../asstes/icons/openBeta@2x.png";
@@ -15,7 +17,8 @@ import idoLightIcon from "../../asstes/icons/ido@2x.png";
 import idoDarkIcon from "../../asstes/icons/idoLight@2x.png";
 import { Trans } from "@lingui/macro";
 import { styled } from "@material-ui/core"
-
+import { useDispatch } from "react-redux";
+import { info } from "../../slices/MessagesSlice";
 
 
 import { trim, shorten } from "../../helpers";
@@ -40,7 +43,8 @@ function NavContent() {
   const [isActive] = useState();
   const { chainID, address, provider } = useWeb3Context();
   const { bonds } = useBonds(chainID);
-  const [icon, setIcon] = useState({ claim: ClaimDarkIcon, logo: THSDarkPng, sc: SCDarkIcon, openBeta: openBetaDarkIcon, ido: idoDarkIcon })
+  const [icon, setIcon] = useState({ claim: ClaimDarkIcon, logo: THSDarkPng, sc: SCDarkIcon, openBeta: openBetaDarkIcon, ido: idoDarkIcon, idoRelease: idoReleaseDarkIcon })
+  const dispatch = useDispatch()
 
   const theme = useAppSelector(state => state.theme.theme)
 
@@ -51,10 +55,11 @@ function NavContent() {
         sc: SCLightIcon,
         logo: THSLightPng,
         openBeta: openBetaLightIcon,
-        ido: idoLightIcon
+        ido: idoLightIcon,
+        idoRelease: idoReleaseLightIcon
       })
     } else {
-      setIcon({ claim: ClaimDarkIcon, sc: SCDarkIcon, logo: THSDarkPng, openBeta: openBetaDarkIcon, ido: idoDarkIcon })
+      setIcon({ claim: ClaimDarkIcon, sc: SCDarkIcon, logo: THSDarkPng, openBeta: openBetaDarkIcon, ido: idoDarkIcon, idoRelease: idoReleaseDarkIcon })
     }
   }, [theme])
 
@@ -98,7 +103,7 @@ function NavContent() {
 
           <div className="dapp-menu-links">
             <div className="dapp-nav" id="navbarNav">
-              <Link
+              {/* <Link
                 component={NavLink}
                 id="openBeta-nav"
                 to="/openBeta"
@@ -111,15 +116,46 @@ function NavContent() {
                   <img style={{ width: "20px", height: "20px", marginRight: "12px" }} src={icon.openBeta} />
                   <Trans>Open Beta</Trans>
                 </Typography>
+              </Link> */}
+              <Link
+                component={NavLink}
+                id="ido-nav"
+                to="/ido"
+                isActive={(match, location) => {
+                  return checkPage(match, location, "ido");
+                }}
+                className={`button-dapp-menu ${isActive ? "active" : ""}`}
+              >
+                <Typography style={{ display: "flex", alignItems: "center" }} variant="h6">
+                  <img style={{ width: "20px", height: "20px", marginRight: "12px" }} src={icon.ido} />
+                  <Trans>IDO</Trans>
+                </Typography>
               </Link>
               <Link
                 component={NavLink}
+                id="ido-release-nav"
+                to="/IDORelease"
+                isActive={(match, location) => {
+                  return checkPage(match, location, "sc");
+                }}
+                className={`button-dapp-menu ${isActive ? "active" : ""}`}
+              >
+                <Typography style={{ display: "flex", alignItems: "center" }} variant="h6">
+                  <img style={{ width: "20px", height: "20px", marginRight: "12px" }} src={icon.idoRelease} />
+                  <Trans>IDO Release</Trans>
+                </Typography>
+              </Link>
+              <Link
+                // component={NavLink}
                 id="dash-nav"
                 to="/dashboard"
                 isActive={(match, location) => {
                   return checkPage(match, location, "dashboard");
                 }}
                 className={`button-dapp-menu ${isActive ? "active" : ""}`}
+                onClick={() => {
+                  dispatch(info("Themis systerm will be launched at 11:00 on April 16, utc time."));
+                }}
               >
                 <Typography variant="h6">
                   <SvgIcon color="primary" component={DashboardIcon} />
@@ -128,11 +164,14 @@ function NavContent() {
               </Link>
 
               <Link
-                component={NavLink}
+                // component={NavLink}
                 id="stake-nav"
                 to="/stake"
                 isActive={(match, location) => {
                   return checkPage(match, location, "stake");
+                }}
+                onClick={() => {
+                  dispatch(info("Themis systerm will be launched at 11:00 on April 16, utc time."));
                 }}
                 className={`button-dapp-menu ${isActive ? "active" : ""}`}
               >
@@ -143,9 +182,12 @@ function NavContent() {
               </Link>
 
               <Link
-                component={NavLink}
+                // component={NavLink}
                 id="bond-nav"
                 to="/bonds"
+                onClick={() => {
+                  dispatch(info("Themis systerm will be launched at 11:00 on April 16, utc time."));
+                }}
                 isActive={(match, location) => {
                   return checkPage(match, location, "bonds");
                 }}
@@ -163,9 +205,17 @@ function NavContent() {
                     <Trans>Bond discounts</Trans>
                   </Typography>
                   {bonds.map((bond, i) => (
-                    <Link component={NavLink} to={`/bonds/${bond.name}`} key={i} className={"bond"}>
+                    <Link
+                      // component={NavLink}
+                      onClick={() => {
+                        dispatch(info("Themis systerm will be launched at 11:00 on April 16, utc time."));
+                      }}
+                      to={`/bonds/${bond.name}`} key={i} className={"bond"}>
                       {!bond.bondDiscount ? (
-                        <Skeleton variant="text" width={"150px"} />
+                        <React.Fragment>
+                          {null}
+                          {/* <Skeleton variant="text" width={"150px"} /> */}
+                        </React.Fragment>
                       ) : (
                         <Typography variant="body2">
                           {bond.displayName}
@@ -180,27 +230,17 @@ function NavContent() {
                   ))}
                 </div>
               </div>
-              <Link
-                component={NavLink}
-                id="ido-nav"
-                to="/ido"
-                isActive={(match, location) => {
-                  return checkPage(match, location, "ido");
-                }}
-                className={`button-dapp-menu ${isActive ? "active" : ""}`}
-              >
-                <Typography style={{ display: "flex", alignItems: "center" }} variant="h6">
-                  <img style={{ width: "20px", height: "20px", marginRight: "12px" }} src={icon.ido} />
-                  <Trans>IDO</Trans>
-                </Typography>
-              </Link>
+
 
               <Link
-                component={NavLink}
+                // component={NavLink}
                 id="claim-nav"
                 to="/claim"
                 isActive={(match, location) => {
                   return checkPage(match, location, "claim");
+                }}
+                onClick={() => {
+                  dispatch(info("Themis systerm will be launched at 11:00 on April 16, utc time."));
                 }}
                 className={`button-dapp-menu ${isActive ? "active" : ""}`}
               >
@@ -211,11 +251,14 @@ function NavContent() {
               </Link>
 
               <Link
-                component={NavLink}
+                // component={NavLink}
                 id="sc-nav"
                 to="/sc"
                 isActive={(match, location) => {
                   return checkPage(match, location, "sc");
+                }}
+                onClick={() => {
+                  dispatch(info("Themis systerm will be launched at 11:00 on April 16, utc time."));
                 }}
                 className={`button-dapp-menu ${isActive ? "active" : ""}`}
               >
@@ -224,38 +267,10 @@ function NavContent() {
                   <Trans>SC</Trans>
                 </Typography>
               </Link>
-              <Link
-                component={NavLink}
-                id="ido-release-nav"
-                to="/IDORelease"
-                isActive={(match, location) => {
-                  return checkPage(match, location, "sc");
-                }}
-                className={`button-dapp-menu ${isActive ? "active" : ""}`}
-              >
-                <Typography style={{ display: "flex", alignItems: "center" }} variant="h6">
-                  <img style={{ width: "20px", height: "20px", marginRight: "12px" }} src={icon.sc} />
-                  <Trans>IDO Release</Trans>
-                </Typography>
-              </Link>
+
             </div>
           </div>
         </div>
-        {/* <Box className="dapp-menu-bottom" display="flex" justifyContent="space-between" flexDirection="column">
-          <div className="dapp-menu-external-links">
-            {Object.keys(externalUrls).map((link, i) => {
-              return (
-                <Link key={i} href={`${externalUrls[link].url}`} target="_blank">
-                  <Typography variant="h6">{externalUrls[link].icon}</Typography>
-                  <Typography variant="h6">{externalUrls[link].title}</Typography>
-                </Link>
-              );
-            })}
-          </div>
-          <div className="dapp-menu-social">
-            <Social />
-          </div>
-        </Box> */}
       </Box>
     </Paper>
   );

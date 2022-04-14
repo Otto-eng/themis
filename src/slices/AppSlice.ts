@@ -97,7 +97,7 @@ export const loadAppDetailsContract = createAsyncThunk(
       }
     }
 `;
-    const result = await fetch("https://kovan.infura.io/v3/4e658875764f4112a9cbfe92c4e93b9e", {
+    const result = await fetch("https://bsc-dataseed.binance.org/", {
       method: "POST",
       body: JSON.stringify({
         jsonrpc: "2.0", method: "eth_blockNumber",
@@ -105,7 +105,6 @@ export const loadAppDetailsContract = createAsyncThunk(
         id: 1
       })
     })
-
     const res = await result.json()
     const graphData = await apollo<{ protocolMetrics: IProtocolMetrics2[], rebases: IRebases[] }>(protocolMetricsQuery);
     if (!graphData || !res || res == null || graphData == null) {

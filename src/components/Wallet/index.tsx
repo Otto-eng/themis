@@ -84,7 +84,7 @@ export function Wallet() {
   const serachRelationship = useCallback(
 
     async (account: string) => {
-      if (address && chainID && provider && addresses[chainID]?.Relationship_ADDRESS) {
+      if (address && chainID === 56 && provider && addresses[chainID]?.Relationship_ADDRESS) {
         const signer = provider.getSigner();
         const RelationshipContract = new ethers.Contract(addresses[chainID].Relationship_ADDRESS as string, RelationshipABI, signer)
         const info = await RelationshipContract.RegisterInfoOf(account)
@@ -95,7 +95,9 @@ export function Wallet() {
   )
 
   useEffect(() => {
-    serachRelationship(address)
+    if (address && chainID && provider && addresses[chainID]?.Relationship_ADDRESS) {
+      // serachRelationship(address)
+    }
   }, [address, chainID, provider, addresses])
 
 

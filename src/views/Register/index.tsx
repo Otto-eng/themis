@@ -129,8 +129,8 @@ function Register() {
 	}
 
 	useEffect(() => {
-		if (address && chainID && provider && addresses) {
-			serachRelationship(provider)
+		if (address && chainID && provider && addresses[chainID]?.Relationship_ADDRESS) {
+			// serachRelationship(provider)
 		}
 	}, [address, chainID, provider, addresses])
 

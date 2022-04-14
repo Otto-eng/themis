@@ -1,12 +1,15 @@
 import styled from "styled-components"
 import { GridFlex } from "../../../../components/Grid"
-import bgImg from "../../../../asstes/images/ido/bg02@2x.png"
+import bgImg from "../../../../asstes/images/ido/bg02@2x.jpg"
 import img1 from "../../../../asstes/images/ido/lock@2x.png"
 import img2 from "../../../../asstes/images/ido/square@2x.png"
 import img3 from "../../../../asstes/images/ido/piechart@2x.png"
 import BgMain from "src/components/BgMain"
 
 const Main = styled.div`
+	position: relative;
+	top: 0;
+	left: 0;
 	background-image: ${`url(${bgImg})`};
   background-size: 100% 100%;
 	background-repeat: no-repeat;
@@ -83,7 +86,7 @@ function LinearReleaseRule() {
 			</LinearTitle>
 			<Box>
 				<Text>
-					{"Release 20% of the total participated amount first, the leftover will release an equal amount every day."}
+					{"Release 35% of the total participated amount first, the leftover will release an equal amount every day."}
 				</Text>
 				<BgMain imgsrc={img1} style={{ width: "56px", marginLeft: "16px", height: "56px" }} />
 			</Box>
@@ -93,7 +96,7 @@ function LinearReleaseRule() {
 				<Content>
 					<Item>
 						<Text>
-							{"eg. if one user has 12000 THS tokens leftover, of which 100 tokens will be released every day and needs 120 days to release all."}
+							{"eg. if one user has 10000 THS tokens leftover, of which 100 tokens will be released every day and needs 100 days to release all."}
 						</Text>
 					</Item>
 				</Content>

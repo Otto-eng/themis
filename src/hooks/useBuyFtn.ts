@@ -22,12 +22,6 @@ export const useBuyFtn = () => {
 
 			const PresaleContractContract = new ethers.Contract(addresses[chainID].IDO_PRESALECONTRACT_ADDRESS as string, PresaleContractABI, signer);
 			console.log("PresaleContractContract", PresaleContractContract);
-
-			const usdtContract = new ethers.Contract(addresses[chainID].USDT_ADDRESS as string, ierc20Abi, signer) as IERC20;
-			console.log("usdtContract", usdtContract)
-			const usdtInfo = await usdtContract.approve(addresses[chainID].IDO_PRESALECONTRACT_ADDRESS, ethers.utils.parseUnits("1000000000", "ether").toString());
-
-			console.log("usdtInfo", usdtInfo, balance1)
 			
 			const infoHash = await PresaleContractContract.buyPreTHS(addresses[chainID].USDT_ADDRESS, balance1)
 			console.log("infoHash", infoHash)

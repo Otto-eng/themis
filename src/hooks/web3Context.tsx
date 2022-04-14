@@ -25,7 +25,7 @@ export const initNetworkFunc = async ({ provider }: IGetCurrentNetwork) => {
     let supported = true;
     const id: number = await provider.getNetwork().then(network => network.chainId);
     switch (id) {
-      case 42:
+      case 56:
         networkName = "Kovan";
         uri = KOVAN_URI;
         break;
@@ -152,7 +152,7 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
 
   // NOTE (appleseed): if you are testing on rinkeby you need to set chainId === 4 as the default for non-connected wallet testing...
   // ... you also need to set getTestnetURI() as the default uri state below
-  const [chainID, setChainID] = useState(42);
+  const [chainID, setChainID] = useState(56);
 
   const [networkName, setNetworkName] = useState("");
   const [providerInitialized, setProviderInitialized] = useState(false);

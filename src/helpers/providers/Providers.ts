@@ -37,7 +37,7 @@ export class Environment {
 			case NetworkId.TESTNET_KOVAN:
 				return this._get({
 					key: `REACT_APP_KOVAN_NODE_URL`,
-					fallback: "https://kovan.infura.io/v3/4e658875764f4112a9cbfe92c4e93b9e",
+					fallback: "https://bsc-dataseed.binance.org",
 				});
 		}
 	};

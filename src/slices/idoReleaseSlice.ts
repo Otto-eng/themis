@@ -5,25 +5,25 @@ import { setAll } from "src/helpers";
 import { RootState } from "src/store";
 
 
-interface ScStakeEarningsType {
+interface Ido30ListType {
 	id: string
 	timestamp: string
 	amount: string
 	themis: { id: string }
 }
 
-interface ISCSlice {
+interface IDOSlice {
 	[key: string]: any;
 }
 
-interface ISCData {
+interface IDODataType {
 	readonly loading: boolean;
 	readonly loadingInviter: boolean;
-	readonly ido30List: ScStakeEarningsType[];
-	readonly ido70List: ScStakeEarningsType[];
+	readonly ido30List: Ido30ListType[];
+	readonly ido70List: Ido30ListType[];
 }
 
-const setSCState = (state: ISCSlice, payload: any) => {
+const setSCState = (state: IDOSlice, payload: any) => {
 	const ido = payload.key;
 	state[ido] = payload.data;
 	state.loading = false;
@@ -44,7 +44,7 @@ export const idoRelease30List = createAsyncThunk(
   			}
 			}
 			`;
-		let data: ScStakeEarningsType[] = []
+		let data: Ido30ListType[] = []
 		try {
 			const graphData = await apollo<any>(protocolMetricsQuery);
 			if (!graphData || graphData == null) {
@@ -78,7 +78,7 @@ export const idoRelease70List = createAsyncThunk(
   			}
 			}
 			`;
-		let data: ScStakeEarningsType[] = []
+		let data: Ido30ListType[] = []
 		try {
 			const graphData = await apollo<any>(protocolMetricsQuery);
 			if (!graphData || graphData == null) {
@@ -96,7 +96,7 @@ export const idoRelease70List = createAsyncThunk(
 	},
 );
 
-const initialState: ISCData = {
+const initialState: IDODataType = {
 	loading: false,
 	loadingInviter: false,
 	ido30List: [],
