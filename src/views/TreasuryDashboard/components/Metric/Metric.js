@@ -27,7 +27,7 @@ export const MarketCap = () => {
   );
 };
 
-export const OHMPrice = () => {
+export const THSPrice = () => {
   const marketPrice = useSelector(state => state.app.thsPrice);
 
   return (
@@ -85,7 +85,7 @@ export const CurrentIndex = () => {
   );
 };
 
-export const WSOHMPrice = () => {
+export const STHSPrice = () => {
   const sThsPrice = useSelector(state => state.app.thsPrice);
 
   return (

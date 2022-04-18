@@ -268,7 +268,7 @@ function Claim() {
 	}, [chainID, address, provider])
 
 	const getBalance = useCallback(async () => {
-		if (address && chainID && provider) {
+		if (address && chainID && provider && addresses[chainID]?.THS_ADDRESS) {
 			if (pendingStatus.banlance) return;
 
 			setPeddingStatus({
@@ -278,7 +278,7 @@ function Claim() {
 			try {
 				const signer = provider.getSigner();
 
-				const thsContract = new ethers.Contract(addresses[chainID].THS_ADDRESS as string, ThemisERC20TokenABI, signer) as IERC20;
+				const thsContract = new ethers.Contract(addresses[chainID]?.THS_ADDRESS as string, ThemisERC20TokenABI, signer) as IERC20;
 				const balanceBigNumber = await thsContract.balanceOf(address)
 				const balance = ethers.utils.formatUnits(balanceBigNumber.toString(), "gwei")
 				setThsBalance(((Math.floor(Number(balance) * 10000)) / 10000) + "")
@@ -318,7 +318,6 @@ function Claim() {
 		try {
 		const StakingRewardReleaseContract = new ethers.Contract(addresses[chainID].StakingRewardRelease_ADDRESS, StakingRewardReleaseABI, signer)
 			const infoHash = await StakingRewardReleaseContract.claim(blocakHight)
-			console.log("infoHash", infoHash)
 			await infoHash.wait()
 
 			const info = await StakingRewardReleaseContract.provider.getTransactionReceipt(infoHash.hash)

@@ -1,8 +1,11 @@
-import { BigNumberish } from "ethers";
+import { BigNumberish, ethers } from "ethers";
 import { setAll } from "../helpers";
 import apollo from "../lib/apolloClient";
 import { createSlice, createSelector, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "src/store";
+import { addresses, BINANCE_URI /*, KOVAN_URI */, NetworkId } from "src/constants";
+import { StaticJsonRpcProvider } from "@ethersproject/providers";
+import { abi as THSUSDTPAIRABI } from "src/abi/THSUSDTPair.json";
 
 interface IProtocolMetrics {
   readonly timestamp: string;
@@ -38,7 +41,7 @@ interface ILoadAppDetails {
 
 export const loadAppDetails = createAsyncThunk(
   "app/loadAppDetails",
-  async () => {
+  async ({ provider, chainID }: { provider: StaticJsonRpcProvider, chainID: number }, { dispatch }) => {
     const protocolMetricsQuery = `
  query MyQuery {
    protocolMetrics(first: 1, orderBy: timestamp, orderDirection: desc) {
@@ -55,21 +58,32 @@ export const loadAppDetails = createAsyncThunk(
         }
     }
 `;
+    
+    let graphData: any = []
+    try {
+      graphData = await apollo<{ protocolMetrics: IProtocolMetrics[] }>(protocolMetricsQuery);
+    } catch (error) {
 
-    const graphData = await apollo<{ protocolMetrics: IProtocolMetrics[] }>(protocolMetricsQuery);
+    }
     if (!graphData || graphData == null) {
       console.error("Returned a null response when querying TheGraph");
       return;
     }
 
-    const stakingTVL = parseFloat(graphData.data.protocolMetrics[0].totalValueLocked);
-    const marketCap = parseFloat(graphData.data.protocolMetrics[0].marketCap);
-    const circSupply = parseFloat(graphData.data.protocolMetrics[0].thsCirculatingSupply);
-    const totalSupply = parseFloat(graphData.data.protocolMetrics[0].totalSupply);
-    const thsPrice = parseFloat(graphData.data.protocolMetrics[0].thsPrice);
-    const treasuryMarketValue = parseFloat(graphData.data.protocolMetrics[0].treasuryMarketValue) / Math.pow(10, 9);
-    // const currentBlock = parseFloat(graphData.data._meta.block.number);
+    // try {
+    const THSUSDTPairContract = new ethers.Contract(addresses[chainID]?.THS_USDT_PAIR_ADDRESS, THSUSDTPAIRABI, provider);
+    const [thsBanlance, usdtBanlance] = await THSUSDTPairContract.getReserves()
+    const thsPrice = Number(ethers.utils.formatUnits(thsBanlance, "ether")) / Number(ethers.utils.formatUnits(usdtBanlance, "gwei"))
+    // } catch (error) {
+    //   thsPrice = parseFloat(graphData?.data?.protocolMetrics[0]?.thsPrice ?? 0);
+    // }
 
+    const stakingTVL = parseFloat(graphData?.data?.protocolMetrics[0]?.totalValueLocked ?? 0);
+    const marketCap = parseFloat(graphData?.data?.protocolMetrics[0]?.marketCap ?? 0);
+    const circSupply = parseFloat(graphData?.data?.protocolMetrics[0]?.thsCirculatingSupply ?? 0);
+    const totalSupply = parseFloat(graphData?.data?.protocolMetrics[0]?.totalSupply ?? 0);
+    const treasuryMarketValue = parseFloat(graphData?.data?.protocolMetrics[0]?.treasuryMarketValue ?? 0) / Math.pow(10, 9);
+    // const currentBlock = parseFloat(graphData.data._meta.block.number ?? 0);
     return {
       stakingTVL,
       thsPrice,
@@ -83,7 +97,7 @@ export const loadAppDetails = createAsyncThunk(
 
 export const loadAppDetailsContract = createAsyncThunk(
   "app/loadAppDetailsContract",
-  async () => {
+  async (chainID: NetworkId) => {
 
     const protocolMetricsQuery = `
     query MyQuery {
@@ -97,7 +111,8 @@ export const loadAppDetailsContract = createAsyncThunk(
       }
     }
 `;
-    const result = await fetch("https://bsc-dataseed.binance.org/", {
+    // const result = await fetch("https://kovan.infura.io/v3/4e658875764f4112a9cbfe92c4e93b9e/", {
+    const result = await fetch(BINANCE_URI, {
       method: "POST",
       body: JSON.stringify({
         jsonrpc: "2.0", method: "eth_blockNumber",
@@ -106,16 +121,20 @@ export const loadAppDetailsContract = createAsyncThunk(
       })
     })
     const res = await result.json()
-    const graphData = await apollo<{ protocolMetrics: IProtocolMetrics2[], rebases: IRebases[] }>(protocolMetricsQuery);
+    let graphData: any = []
+    try {
+      graphData = await apollo<{ protocolMetrics: IProtocolMetrics2[], rebases: IRebases[] }>(protocolMetricsQuery);
+    } catch (error) {
+
+    }
     if (!graphData || !res || res == null || graphData == null) {
       console.error("Returned a null response when querying TheGraph");
       return;
     }
-
-    const currentIndex = graphData.data.rebases[0].index;
-    const fiveDayRate = parseFloat(graphData.data.protocolMetrics[0].days5APY);
-    const stakingAPY = parseFloat(graphData.data.protocolMetrics[0].currentAPY);
-    const stakingRebase = parseFloat(graphData.data.protocolMetrics[0].nextEpochRebase);
+    const currentIndex = graphData?.data?.rebases[0]?.index ?? "0";
+    const fiveDayRate = parseFloat(graphData?.data?.protocolMetrics[0]?.days5APY ?? 0);
+    const stakingAPY = parseFloat(graphData?.data?.protocolMetrics[0]?.currentAPY ?? 0);
+    const stakingRebase = parseFloat(graphData?.data?.protocolMetrics[0]?.nextEpochRebase ?? 0);
     return {
       currentIndex,
       currentBlock: Number(res.result.toString()),
@@ -190,3 +209,4 @@ export default appSlice.reducer;
 export const { fetchAppSuccess } = appSlice.actions;
 
 export const getAppState = createSelector(baseInfo, app => app);
+

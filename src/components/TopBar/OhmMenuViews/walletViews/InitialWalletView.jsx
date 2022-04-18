@@ -164,7 +164,7 @@ function InitialWalletView() {
   const isEthereumAPIAvailable = window.ethereum;
   const [expanded, setExpanded] = useState(false);
 
-  const THS_ADDRESS = addresses[chainID].THS_ADDRESS;
+  const THS_ADDRESS = addresses[chainID]?.THS_ADDRESS;
   // const PT_TOKEN_ADDRESS = addresses[chainID].PT_TOKEN_ADDRESS;
   // const WSOHM_ADDRESS = addresses[chainID].WSOHM_ADDRESS;
 
@@ -230,7 +230,7 @@ function InitialWalletView() {
         <Box sx={{ flexWrap: "nowrap", flexDirection: "row" }}>
           <ExternalLink
             href={`https://app.sushi.com/swap?inputCurrency=${dai.getAddressForReserve(chainID)}&outputCurrency=${
-              addresses[chainID].THS_ADDRESS
+              addresses[chainID]?.THS_ADDRESS
             }`}
           >
             <Button size="large" variant="contained" color="secondary">
@@ -242,7 +242,7 @@ function InitialWalletView() {
 
           {/* <ExternalLink
             href={`https://app.uniswap.org/#/swap?inputCurrency=${frax.getAddressForReserve(chainID)}&outputCurrency=${
-              addresses[chainID].THS_ADDRESS
+              addresses[chainID]?.THS_ADDRESS
             }`}
           >
             <Button size="large" variant="contained" color="secondary">

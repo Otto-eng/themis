@@ -11,9 +11,7 @@ export const useTreasuryMetrics = options => {
       return response.data.protocolMetrics.map(metric =>
         Object.entries(metric).reduce((obj, [key, value]) => {
           obj[key] = parseFloat(value);
-          if (key === "treasuryRiskFreeValue" || key === "treasuryMarketValue") {
-            obj[key] = parseFloat(value) / Math.pow(10, 9);
-          }
+
           return obj
         }, {}),
       );

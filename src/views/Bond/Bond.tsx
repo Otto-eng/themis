@@ -78,7 +78,7 @@ const Bond = ({ bond }: { bond: IAllBondData }) => {
                     <Trans>Market Price</Trans>
                   </Typography>
                   <Typography variant="h3" color="primary" className="price">
-                    {isBondLoading ? <Skeleton /> : formatCurrency(bond.marketPrice, 2)}
+                    {isBondLoading ? <Skeleton /> : formatCurrency(bond.marketPrice ?? 0, 2)}
                   </Typography>
                 </div>
               </Box>

@@ -125,7 +125,7 @@ export const IDO = () => {
   )
 
   useEffect(() => {
-    if ((myTotalContr >= 250) || (totalBuy >= 0)) {
+    if ((myTotalContr >= 250) || (totalBuy >= 125000)) {
       setIsBuyMax(true)
     }
   }, [myTotalContr, totalBuy])
@@ -156,16 +156,16 @@ export const IDO = () => {
         startTimestamp: Number(isStart.startTimestamp.toString())
       })
       // 白名单购买结束时间
-      const experienceEndTimestamp = await PresaleContractContract.experienceEndTimestamp()
-      let timer: any = setInterval(async () => {
-        const now = +new Date() / 1000
-        setIsExperiencerAddressBuy(
-          (now < Number(experienceEndTimestamp.toString()))
-          &&
-          (now > Number(isStart.startTimestamp.toString()))
-        )
-        timer = null;
-      }, 5000)
+      // const experienceEndTimestamp = await PresaleContractContract.experienceEndTimestamp()
+      // let timer: any = setInterval(async () => {
+      //   const now = +new Date() / 1000
+      //   setIsExperiencerAddressBuy(
+      //     (now < Number(experienceEndTimestamp.toString()))
+      //     &&
+      //     (now > Number(isStart.startTimestamp.toString()))
+      //   )
+      //   timer = null;
+      // }, 5000)
 
       // 是否白名单
       const isExperiencer = await PresaleContractContract.isExperiencer(address)
@@ -179,12 +179,14 @@ export const IDO = () => {
       isBuy()
     }
   }, [provider, chainID, address, addresses])
+
+
   return (
     <Ido>
       <Main>
         {/* <PreSate></PreSate> */}
-        <Title>{"Only Now Cheaper"}</Title>
-        <Title>{"Than Public Launch !"}</Title>
+        <Title>{"IDO ended at 10:00 UTC"}</Title>
+        <Title>{"on April 15, 2022"}</Title>
         <CountDownTime startTimestamp={termInfoOf.startTimestamp} endTimestamp={termInfoOf.endTimestamp} setIsStart={setIsDis} />
       </Main>
       <Detail>
@@ -197,7 +199,6 @@ export const IDO = () => {
           <Progress totalBuy={totalBuy} />
           <PreSate1 isExperiencerAddressBuy={isExperiencerAddressBuy} isExperiencerAddress={isExperiencerAddress} totalBuy={totalBuy} setHash={setHash} isStart={isDIs && !isBuyMax} accountBuy={myTotalContr} />
           <LinearCard />
-          {/* <LinkCard /> */}
           <ProgressCard totalBuy={totalBuy} />
           <LinearReleaseRule />
           <BuyPHS />
@@ -205,6 +206,6 @@ export const IDO = () => {
         </React.Fragment>
         </Detail>
       <Footer />
-      </Ido>
+    </Ido>
   );
 };

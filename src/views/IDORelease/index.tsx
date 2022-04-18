@@ -13,7 +13,7 @@ import { abi as PreThemisERC20ABI } from "src/abi/PreThemisERC20.json";
 import { isPending } from "../Claim"
 import Skeleton from "@material-ui/lab/Skeleton/Skeleton"
 import { ThemisERC20Token } from "src/typechain"
-import { idoRelease70List } from "src/slices/idoReleaseSlice"
+import { idoRelease65List } from "src/slices/idoReleaseSlice"
 dayjs.extend(utc)
 const GridFlex = styled("div")({
 	width: "100%",
@@ -128,8 +128,8 @@ export default function IDORelease() {
 	const [stakValue, setStakValue] = useState("0.0000")
 	const [invterValue, setInvterValue] = useState("0.0000")
 	const [SCBanlance, setSCBanlance] = useState("0.0000")
-	// const [num, setNum] = useState(true)
-	const [num, setNum] = useState(false)
+	const [flag, setFlag] = useState(true)
+	// const [flag, setFlag] = useState(false)
 
 	const [stake, setStake] = useState(true)
 	const [invter, setInvter] = useState(true)
@@ -143,24 +143,24 @@ export default function IDORelease() {
 
 	const [idoRelease70DetailsPage, setIdoRelease70DetailsPage] = useState(1)
 
-	const ido30List = useAppSelector(state => state.ido.ido30List)
-	const ido70List = useAppSelector(state => state.ido.ido70List)
+	const ido35List = useAppSelector(state => state.ido.ido35List)
+	const ido65List = useAppSelector(state => state.ido.ido65List)
 
 	const getThsBanlance = useCallback(async () => {
-		if (address && chainID && provider && addresses && num && addresses[chainID]?.THS_ADDRESS) {
+		if (address && chainID && provider && addresses && flag && addresses[chainID]?.THS_ADDRESS) {
 			try {
 				const signer = provider.getSigner();
-				const thsContract = new ethers.Contract(addresses[chainID].THS_ADDRESS as string, ThemisERC20TokenABI, signer) as ThemisERC20Token;
+				const thsContract = new ethers.Contract(addresses[chainID]?.THS_ADDRESS as string, ThemisERC20TokenABI, signer) as ThemisERC20Token;
 				const balanceBigNumber = await thsContract.balanceOf(address)
 				setSCBanlance((Math.floor((Number(ethers.utils.formatUnits(balanceBigNumber, "gwei")) ?? 0) * 10000) / 10000).toFixed(4) + "");
 			} finally {
 				setTimeout(() => {
-					setNum(false)
+					setFlag(false)
 				}, 1000);
 			}
 		}
 
-	}, [chainID, address, provider, num])
+	}, [chainID, address, provider, flag])
 
 
 	const getStakeList = useCallback(async () => {
@@ -168,10 +168,8 @@ export default function IDORelease() {
 			try {
 				const signer = provider.getSigner();
 				const PresaleReleaseContract = new ethers.Contract(addresses[chainID].IDO_PRESALERELEASE_ADDRESS, PresaleReleaseABI, signer)
-				console.log("PresaleReleaseContract", PresaleReleaseContract)
-				const PresaleRelease30 = await PresaleReleaseContract.getpendingPart1(address)
-				console.log("PresaleRelease30", PresaleRelease30)
-				setStakValue((Math.floor(Number(ethers.utils.formatUnits(PresaleRelease30, "gwei")) * 10000) / 10000) + "")
+				const PresaleRelease35 = await PresaleReleaseContract.getpendingPart1(address)
+				setStakValue((Math.floor(Number(ethers.utils.formatUnits(PresaleRelease35, "gwei")) * 10000) / 10000) + "")
 			} finally {
 				setTimeout(() => {
 					setStake(false)
@@ -198,20 +196,20 @@ export default function IDORelease() {
 	}, [chainID, address, provider, invter])
 
 	useEffect(() => {
-		// getStakeList()
-	}, [chainID, address, provider, num, stake])
+		getStakeList()
+	}, [chainID, address, provider, flag, stake])
 
 	useEffect(() => {
-		// getInvterList()
-	}, [chainID, address, provider, num, invter])
+		getInvterList()
+	}, [chainID, address, provider, flag, invter])
 
 	useEffect(() => {
-		// getThsBanlance()
-	}, [chainID, address, provider, num])
+		getThsBanlance()
+	}, [chainID, address, provider, flag])
 
 
 	useEffect(() => {
-		dispatch(idoRelease70List({ first: idoRelease70DetailsPage * 10, address }))
+		dispatch(idoRelease65List({ first: idoRelease70DetailsPage * 10, address }))
 	}, [idoRelease70DetailsPage])
 
 	return (
@@ -219,7 +217,7 @@ export default function IDORelease() {
 			<Container >
 				<Top style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}>
 					<Title >THS Amount</Title>
-					<Blance>{num ? <Skeleton width="80px" /> : SCBanlance}</Blance>
+					<Blance>{flag ? <Skeleton width="80px" /> : SCBanlance}</Blance>
 				</Top>
 				<CardTitle>IDO Release 35%</CardTitle>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -254,7 +252,7 @@ export default function IDORelease() {
 									})
 								}, 500);
 								setTimeout(() => {
-									setNum(true)
+									setFlag(true)
 									setStake(true)
 								}, 1000);
 							} catch (error) {
@@ -275,7 +273,7 @@ export default function IDORelease() {
 						<Option>time</Option>
 						<Amount>THS amount</Amount>
 					</Item>
-					{ido30List.map((item) => <React.Fragment>
+					{ido35List.map((item) => <React.Fragment>
 						<Item>
 							<Ol onClick={() => {
 								copy(item.id)
@@ -319,7 +317,7 @@ export default function IDORelease() {
 									})
 								}, 500);
 								setTimeout(() => {
-									setNum(true)
+									setFlag(true)
 									setInvter(true)
 								}, 1000);
 							} catch (error) {
@@ -338,7 +336,7 @@ export default function IDORelease() {
 						<Option>time</Option>
 						<Amount>THS amount</Amount>
 					</Item>
-					{ido70List.map((item, _idx) => (<Item>
+					{ido65List.map((item, _idx) => (<Item>
 						<Ol onClick={() => {
 							copy(item.id)
 						}} style={{ cursor: "pointer" }}>{item.id.slice(0, 4)}...{item.id.slice(item.id.length - 4)}</Ol>
@@ -346,7 +344,7 @@ export default function IDORelease() {
 						<Amount>{(Math.floor(Number(Number(item.amount)) * Math.pow(10, 8)) / Math.pow(10, 8)).toFixed(8)}</Amount>
 					</Item>))}
 					<More
-						style={((idoRelease70DetailsPage * 10) > ido70List.length) ? ({ display: "none" }) : ({})}
+						style={((idoRelease70DetailsPage * 10) > ido65List.length) ? ({ display: "none" }) : ({})}
 						onClick={() => {
 							setIdoRelease70DetailsPage(idoRelease70DetailsPage + 1)
 						}}>view more</More>

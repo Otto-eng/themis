@@ -85,7 +85,7 @@ function CountDownTime({ setIsStart, startTimestamp, endTimestamp }: CountDownTi
 	// 			if (Math.floor(Number(currentDete - endTimestamp)) > 0) {
 	// 				setDate({ d: 0, h: 0, m: 0, s: 0 })
 	// 			} else {
-	// 				setDate({ d, h, m, s })
+	// 				setDate({ d, h : h + 24 * d, m, s })
 	// 			}
 	// 		}, 1000);
 	// 	}
@@ -97,8 +97,7 @@ function CountDownTime({ setIsStart, startTimestamp, endTimestamp }: CountDownTi
 				<Top>
 					{/* <Value>{date?.d ? (date.d < 10 ? ("0" + date.d) : (date.d ?? "00")) : "00"}</Value>  */}
 					{/* <Division /> */}
-					{/* <Value>{date?.h ? (date.h < 10 ? ("0" + date.h) : (date.h ?? "00")) : "00"}</Value> */}
-					<Value>{"23"}</Value>
+					<Value>{date?.h ? (date.h < 10 ? ("0" + date.h) : (date.h ?? "00")) : "00"}</Value>
 					<Division />
 					<Value>{date?.m ? (date.m < 10 ? ("0" + date.m) : (date.m ?? "00")) : "00"}</Value>
 					<Division />

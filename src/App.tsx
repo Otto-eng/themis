@@ -29,12 +29,15 @@ import { useAppSelector } from "./hooks";
 import Register from "./views/Register";
 
 import { abi as RelationshipABI } from "src/abi/Relationship.json";
+import { abi as ThemisERC20TokenABI } from "src/abi/ThemisERC20Token.json";
 import { scInviterEarningsDetailsList, scStakeEarningsDetailsList, stakeTHSReleaseEarningsList } from "./slices/scSlice";
 import { IDO } from "./views/IDO";
 // import OpenBeta from "./views/OpenBeta";
 import IDORelease from "./views/IDORelease";
-import { idoRelease30List, idoRelease70List } from "./slices/idoReleaseSlice";
+import { idoRelease35List, idoRelease65List } from "./slices/idoReleaseSlice";
 import { info } from "./slices/MessagesSlice";
+import Admin from "./views/Admin";
+import DaoProfit from "./views/DaoProfit";
 
 // 😬 Sorry for all the console logging
 const DEBUG = false;
@@ -94,18 +97,18 @@ function App() {
   const isSmallerScreen = useMediaQuery("(max-width: 980px)");
   const isSmallScreen = useMediaQuery("(max-width: 600px)");
   const [isInvited, setIsInvited] = useState(false)
+  const [adminAddress, setAdminAddress] = useState("hash")
 
   const { connect, provider, chainID, connected, disconnect } = useWeb3Context();
   const address = useAddress();
 
 
-  // TODO (appleseed-expiredBonds): there may be a smarter way to refactor this
+  // TODO: (appleseed-expiredBonds): there may be a smarter way to refactor this
   const { bonds /*, expiredBonds */ } = useBonds(chainID);
 
   const loadDetails = useCallback(
     async (whichDetails: string) => {
       let loadProvider = provider;
-
       if (whichDetails === "app") {
         loadApp(loadProvider);
       }
@@ -115,26 +118,36 @@ function App() {
         loadAccount(loadProvider);
       }
     },
-    [provider, address, connected]
+    [provider, address, connected, chainID]
+  )
+
+  const getloadAppDetails = useCallback(
+    async () => {
+      console.log(111)
+      await dispatch(loadAppDetails({ provider, chainID }))
+    },
+    [provider, chainID],
   )
 
   useEffect(() => {
-    if (connected && (chainID != 56)) {
+    if (connected /* && ((chainID != 42) */ && (chainID != 56)) {
       disconnect()
+    }
+    if (address && connected && provider && chainID && chainID === 56) {
+      getloadAppDetails()
     }
 
   }, [connected, provider, chainID, address])
 
 
-
   const loadApp = useCallback(
     async loadProvider => {
-      dispatch(loadAppDetailsContract());
+      dispatch(loadAppDetailsContract(chainID));
       bonds.map(async bond => {
         await dispatch(calcBondDetails({ bond, value: "", provider: loadProvider, networkID: chainID }));
       });
     },
-    [connected],
+    [connected, chainID],
   );
 
   const loadAccount = useCallback(
@@ -144,19 +157,19 @@ function App() {
         dispatch(calculateUserBondDetails({ address, bond, provider, networkID: chainID }));
       });
     },
-    [connected],
+    [connected, chainID],
   );
 
   // this useEffect fires on state change from above. It will ALWAYS fire AFTER
   useEffect(() => {
     // don't load ANY details until wallet is Checked
     loadDetails("app");
-    dispatch(loadAppDetails())
     const themisConnected = sessionStorage.getItem("THEMIS_CONNECTED")
-    if (!themisConnected || themisConnected === "true") {
+    if ((!themisConnected || themisConnected === "true") && !connected) {
       connect()
     }
-  }, []);
+  }, [chainID]);
+
 
   // this useEffect picks up any time a user Connects via the button
   useEffect(() => {
@@ -187,19 +200,36 @@ function App() {
 
   const scData = useCallback(
     () => {
-      // dispatch(scInviterEarningsDetailsList({ first: 10, address }));
-      // dispatch(scStakeEarningsDetailsList({ first: 10, address }))
-      // dispatch(stakeTHSReleaseEarningsList({ first: 10, address }))
-      dispatch(idoRelease30List({ first: 1, address }))
-      dispatch(idoRelease70List({ first: 10, address }))
+      dispatch(scInviterEarningsDetailsList({ first: 10, address }));
+      dispatch(scStakeEarningsDetailsList({ first: 10, address }))
+      dispatch(stakeTHSReleaseEarningsList({ first: 10, address }))
+      dispatch(idoRelease35List({ first: 1, address }))
+      dispatch(idoRelease65List({ first: 10, address }))
     },
     [address, chainID, provider, addresses],
   )
 
   useEffect(() => {
     if (address && chainID && provider && addresses[chainID]?.Relationship_ADDRESS) {
-      // serachRelationship(address)
+      serachRelationship(address)
       scData()
+    }
+  }, [address, chainID, provider, addresses])
+
+  const setRoot = useCallback(
+    async () => {
+      const signer = provider.getSigner();
+      try {
+        const thsContract = new ethers.Contract(addresses[chainID]?.THS_ADDRESS, ThemisERC20TokenABI, signer);
+        const info = await thsContract.robotManager()
+        setAdminAddress(info)
+      } catch (error) {
+      }
+    }, [address, chainID, provider, addresses])
+
+  useEffect(() => {
+    if (address && chainID && provider && addresses[chainID]?.THS_ADDRESS) {
+      setRoot()
     }
   }, [address, chainID, provider, addresses])
 
@@ -211,18 +241,18 @@ function App() {
     if (isSidebarExpanded) handleSidebarClose();
   }, [location]);
 
-  useEffect(() => {
-    if (address && isInvited && (["/claim", "/stake", "/sc", "/bonds", "/bonds/usdt"].includes(location.pathname))) {
-      history.replace("/register" + (location.search ?? ""))
-    }
-  }, [address, isInvited, location.pathname])
+  // useEffect(() => {
+  //   if (address && isInvited && (["/bonds", "/stake"].some(item => location.pathname.includes(item)))) {
+  //     history.replace("/register" + (location.search ?? ""))
+  //   }
+  // }, [address, isInvited, location.pathname])
 
-  useEffect(() => {
-    if (["/dashboard", "/claim", "/stake", "/sc", "/bonds", "/bonds/usdt"].includes(location.pathname)) {
-      history.replace("/ido")
-      dispatch(info("Themis systerm will be launched at 11:00 on April 16, utc time."));
-    }
-  }, [location.pathname])
+  // useEffect(() => {
+  //   if (address && isInvited && (["/bonds", "/stake"].some(item => location.pathname.includes(item)))) {
+  //     // history.replace("/dashboard")
+  //     dispatch(info("Themis systerm will be launched at 11:00 on April 16, utc time."));
+  //   }
+  // }, [location.pathname])
 
   useEffect(() => {
     const height = document.body.scrollHeight;
@@ -254,7 +284,7 @@ function App() {
             </Route>
 
             <Route exact path="/">
-              <Redirect to="/ido" />
+              <Redirect to="/dashboard" />
             </Route>
 
             <Route exact path="/stake">
@@ -282,13 +312,21 @@ function App() {
             <Route path="/sc">
               <Sc />
             </Route>
+            <Route path="/daoProfit">
+              <DaoProfit />
+            </Route>
+
             <Route path="/IDORelease">
               <IDORelease />
             </Route>
             <Route path="/register">
               <Register />
             </Route>
-
+            {
+              address.toLowerCase() === adminAddress.toLowerCase() ? <Route path="/admin">
+                <Admin />
+              </Route> : null
+            }
 
 
             <Route component={NotFound} />

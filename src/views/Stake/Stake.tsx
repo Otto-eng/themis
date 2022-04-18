@@ -237,7 +237,7 @@ function Stake() {
                         <Trans>Current Index</Trans>
                       </Typography>
                       <Typography variant="h4">
-                        {currentIndex ? (
+                        {currentIndex || currentIndex === "0" ? (
                           <span data-testid="index-value">{trim(Number(currentIndex), 1)} THS</span>
                         ) : (
                           <Skeleton width="150px" data-testid="index-loading" />
@@ -343,7 +343,7 @@ function Stake() {
                             disabled={isPendingTxn(pendingTransactions, "staking")}
                                 key={!!isPendingTxn(pendingTransactions, "staking") + ""}
                             onClick={() => {
-                              debounce(onChangeStake, 1000, "stake");
+                              debounce(onChangeStake, 500, "stake");
                             }}
                           >
                                 {txnButtonText(pendingTransactions, "staking", t`Stake THS`)}
@@ -355,7 +355,7 @@ function Stake() {
                             color="primary"
                             disabled={isPendingTxn(pendingTransactions, "approve_staking")}
                             onClick={() => {
-                              debounce(onSeekApproval, 1000, "ths");
+                              debounce(onSeekApproval, 500, "ths");
                             }}
                           >
                             {txnButtonText(pendingTransactions, "approve_staking", t`Approve`)}
@@ -372,7 +372,7 @@ function Stake() {
                             color="primary"
                             disabled={isPendingTxn(pendingTransactions, "unstaking")}
                             onClick={() => {
-                              debounce(onChangeStake, 1000, "unstake");
+                              debounce(onChangeStake, 500, "unstake");
                             }}
                           >
                                 {txnButtonText(pendingTransactions, "unstaking", t`Unstake THS`)}
@@ -384,7 +384,7 @@ function Stake() {
                             color="primary"
                             disabled={isPendingTxn(pendingTransactions, "approve_unstaking")}
                             onClick={() => {
-                             debounce(onSeekApproval, 1000, "sThs");
+                              debounce(onSeekApproval, 500, "sThs");
                             }}
                           >
                             {txnButtonText(pendingTransactions, "approve_unstaking", t`Approve`)}

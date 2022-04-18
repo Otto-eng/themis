@@ -138,7 +138,7 @@ function ChooseBond() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {bonds.map(bond => (
+                    {bonds.slice(0,1).map(bond => (
                       <BondTableData key={bond.name} bond={bond} />
                     ))}
                   </TableBody>

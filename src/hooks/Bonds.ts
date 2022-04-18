@@ -70,7 +70,7 @@ function useBonds(chainID: number) {
     //     return bond;
     //   });
     // setExpiredBonds(expiredDetails);
-  }, [bondState, accountBondsState, bondLoading]);
+  }, [bondState, accountBondsState, bondLoading, chainID]);
 
   // Debug Log:
   return { bonds, loading: bondLoading /*, expiredBonds */ };

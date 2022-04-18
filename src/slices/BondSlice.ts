@@ -7,6 +7,7 @@ import { clearPendingTxn, fetchPendingTxns } from "./PendingTxnsSlice";
 import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
 import { getBondCalculator } from "src/helpers/BondCalculator";
 import { RootState } from "src/store";
+import { abi as THSUSDTPAIRABI } from "src/abi/THSUSDTPair.json";
 
 import {
   IApproveBondAsyncThunk,
@@ -16,6 +17,7 @@ import {
   IRedeemAllBondsAsyncThunk,
   IRedeemBondAsyncThunk,
 } from "./interfaces";
+import { addresses } from "src/constants";
 
 export const changeApproval = createAsyncThunk(
   "bonding/changeApproval",
@@ -77,6 +79,7 @@ export const calcBondDetails = createAsyncThunk(
     if (!value || value === "") {
       value = "0";
     }
+
     const amountInWei = ethers.utils.parseEther(value);
     let bondPrice = BigNumber.from(0),
       bondDiscount = 0,
@@ -85,8 +88,8 @@ export const calcBondDetails = createAsyncThunk(
     const bondContract = bond.getContractForBond(networkID, provider);
     const bondCalcContract = getBondCalculator(networkID, provider);
 
-    const terms = await bondContract.terms();
     const maxBondPrice = await bondContract.maxPayout();
+    const terms = await bondContract.terms();
     let debtRatio: BigNumberish;
     // TODO (appleseed): improve this logic
     if (bond.name === "cvx") {
@@ -98,10 +101,14 @@ export const calcBondDetails = createAsyncThunk(
 
     let marketPrice: number = 0;
     try {
+      // const THSUSDTPairContract = new ethers.Contract(addresses[networkID]?.THS_USDT_PAIR_ADDRESS, THSUSDTPAIRABI, provider);
+      // const [thsBanlance, usdtBanlance] = await THSUSDTPairContract.getReserves()
+      // const thsPrice = Number(ethers.utils.formatUnits(thsBanlance, "ether")) / Number(ethers.utils.formatUnits(usdtBanlance, "gwei"))
       const originalPromiseResult = await dispatch(
-        loadAppDetails(),
+        loadAppDetails({ provider, chainID: networkID }),
       ).unwrap();
       marketPrice = originalPromiseResult?.thsPrice ?? 0;
+          // const marketPrice = thsPrice ?? 0;
     } catch (rejectedValueOrSerializedError) {
       // handle error here
       console.error("Returned a null response from dispatch(loadMarketPrice)");

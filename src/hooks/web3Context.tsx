@@ -3,7 +3,7 @@ import Web3Modal from "web3modal";
 import { StaticJsonRpcProvider, JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { IFrameEthereumProvider } from "@ledgerhq/iframe-provider";
-import { KOVAN_URI, NetworkId, NETWORK_CHAINID } from "src/constants";
+import { /* KOVAN_URI, */ BINANCE_URI, NetworkId, NETWORK_CHAINID, addresses /*, NETWORK_TEST_CHAINID */ } from "src/constants";
 import { Providers } from "src/helpers/providers/Providers";
 import { ethers } from "ethers";
 
@@ -26,9 +26,13 @@ export const initNetworkFunc = async ({ provider }: IGetCurrentNetwork) => {
     const id: number = await provider.getNetwork().then(network => network.chainId);
     switch (id) {
       case 56:
-        networkName = "Kovan";
-        uri = KOVAN_URI;
+        networkName = "Binance";
+        uri = BINANCE_URI;
         break;
+      // case 42:
+      //   networkName = "Kovan";
+      //   uri = KOVAN_URI;
+      //   break;
       default:
         supported = false;
         networkName = "Unsupported Network";
@@ -71,9 +75,14 @@ function isIframe() {
  * "intelligently" loadbalances production API Keys
  * @returns string
  */
+// function getTestnetURI(): string {
+//   // Shuffles the URIs for "intelligent" loadbalancing
+//   return KOVAN_URI
+// }
+
 function getMainnetURI(): string {
   // Shuffles the URIs for "intelligent" loadbalancing
-  return KOVAN_URI
+  return BINANCE_URI
 }
 
 /*
@@ -125,13 +134,16 @@ export const useAddress = () => {
 };
 
 const initModal = new Web3Modal({
-  network: "kovan", // optional
+  network: "binance", // optional
   cacheProvider: true, // optional
   providerOptions: {
     walletconnect: {
       package: WalletConnectProvider,
       options: {
-        infuraId: "4e658875764f4112a9cbfe92c4e93b9e"
+        rpc: {
+          // 42: addresses[42].uri,
+          56: addresses[56].uri,
+        },
       },
     },
   },
@@ -157,7 +169,7 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
   const [networkName, setNetworkName] = useState("");
   const [providerInitialized, setProviderInitialized] = useState(false);
   const [uri, setUri] = useState("");
-  const [provider, setProvider] = useState<any>(Providers.getStaticProvider(NetworkId.TESTNET_KOVAN));
+  const [provider, setProvider] = useState<any>(Providers.getStaticProvider(NetworkId.MAIN_BINANCE));
   const web3Modal = initModal;
   
   function hasCachedProvider(): boolean {
@@ -199,7 +211,7 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
   const _checkNetwork = (otherChainID: number): boolean => {
     if (chainID !== otherChainID) {
       console.warn("You are switching networks");
-      if (otherChainID === NETWORK_CHAINID) {
+      if (otherChainID === NETWORK_CHAINID/* || otherChainID === NETWORK_TEST_CHAINID */) {
         setChainID(otherChainID);
         // otherChainID === NETWORK_CHAINID ?
         setUri(getMainnetURI())
@@ -269,6 +281,7 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
     }
     sessionStorage.setItem("THEMIS_CONNECTED", "false")
     localStorage.removeItem("walletconnect")
+    setChainID(0)
     setTimeout(() => {
       window.location.reload();
     }, 1);

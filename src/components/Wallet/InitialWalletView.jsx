@@ -150,7 +150,7 @@ function InitialWalletView() {
     async () => {
       const signer = provider.getSigner();
 
-      const thsContract = new ethers.Contract(addresses[chainID].THS_ADDRESS, ierc20Abi, signer);
+      const thsContract = new ethers.Contract(addresses[chainID]?.THS_ADDRESS, ierc20Abi, signer);
       const thsBalance = await thsContract.balanceOf(address);
       setThs(ethers.utils.formatUnits(thsBalance, "gwei"))
     }, [address, chainID, provider, addresses])
@@ -177,7 +177,7 @@ function InitialWalletView() {
         }
         icon={ThsImg}
         toggleDrawer={() => {
-          window.open(`https://kovan.etherscan.io/address/${addresses[chainID].THS_ADDRESS}?fromaddress=${address}`)
+          window.open(`https://kovan.etherscan.io/address/${addresses[chainID]?.THS_ADDRESS}?fromaddress=${address}`)
         }}
       />
       <Token
@@ -202,7 +202,7 @@ function InitialWalletView() {
         <Box sx={{ flexWrap: "nowrap", flexDirection: "row" }}>
           {/* <ExternalLink
             href={`https://app.sushi.com/swap?inputCurrency=${usdt.getAddressForReserve(chainID)}&outputCurrency=${
-              addresses[chainID].THS_ADDRESS
+              addresses[chainID]?.THS_ADDRESS
             }`}
           >
             <Button size="large" variant="contained" color="secondary">
@@ -214,7 +214,7 @@ function InitialWalletView() {
 
           {/* <ExternalLink
             href={
-              `https://pancakeswap.finance/add/${usdt.getAddressForReserve(chainID)}/${addresses[chainID].THS_ADDRESS}`
+              `https://pancakeswap.finance/add/${usdt.getAddressForReserve(chainID)}/${addresses[chainID]?.THS_ADDRESS}`
             }
           >
             <Button size="large" variant="contained" color="secondary">

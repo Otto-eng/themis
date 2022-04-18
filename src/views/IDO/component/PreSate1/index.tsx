@@ -225,7 +225,7 @@ function PreSate1({ accountBuy, setHash, isStart, isExperiencerAddressBuy, isExp
 				color="primary"
 				disabled={!isBuy || pendingStatus.send}
 				key={pendingStatus.send + "pendingStatus"}
-				onClick={() => debounce(buyIdo, 1000)}
+				onClick={() => debounce(buyIdo, 500)}
 			>
 				{isPending(pendingStatus, "send", pendingTransactions ? "Send" : "Approve")}
 			</Send >

@@ -22,9 +22,11 @@ query {
         runway5k
         runway2dot5k
         runwayCurrent
+        treasuryUsdtThsPOL
     }
 }
 `;
+
 
 export const rebasesDataQuery = `
 query {
@@ -154,8 +156,8 @@ export const bulletpoints = {
 
 export const tooltipItems = {
   tvl: ["Total Value Deposited"],
-  coin: ["USDT"],
-  rfv: ["USDT"],
+  coin: ["THS_USDT"],
+  rfv: ["THS_USDT"],
   holder: ["THEMIS"],
   apy: ["APY"],
   runway: ["Current", "7.5K APY", "5K APY", "2.5K APY"],

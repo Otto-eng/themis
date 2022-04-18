@@ -108,7 +108,6 @@ function Register() {
 		}
 
 		setIsInvited(invitedAddress !== ZERO_ADDRESS)
-		console.log("location.search", location.search)
 		let paramsObj: { [key: string]: any } = {}
 		if (location.search) {
 			const [_firstStr, nextStr] = location.search.split("?")
@@ -130,7 +129,7 @@ function Register() {
 
 	useEffect(() => {
 		if (address && chainID && provider && addresses[chainID]?.Relationship_ADDRESS) {
-			// serachRelationship(provider)
+			serachRelationship(provider)
 		}
 	}, [address, chainID, provider, addresses])
 
@@ -155,7 +154,6 @@ function Register() {
 				await infoHash.wait()
 				if ("hash" in infoHash) {
 					const info = await RelationshipContract.provider.getTransactionReceipt(infoHash.hash)
-					console.log("info", info)
 					history.replace("/stake")
 				}
 				setTimeout(() => {

@@ -22,7 +22,7 @@ export const TotalValueDepositedGraph = () => {
       bulletpointColors={bulletpoints.tvl}
       infoTooltipMessage={tooltipInfoMessages.tvl}
       expandedGraphStrokeColor={theme.palette.graphStrokeColor}
-      headerSubText={`${data && formatCurrency(data[0].totalValueLocked)}`}
+      headerSubText={`${data && formatCurrency(data[0]?.totalValueLocked ?? 0)}`}
     />
   );
 };
@@ -45,7 +45,7 @@ export const MarketValueGraph = () => {
         // ["#ff758f", "#c9184a"],
       ]}
       headerText="Market Value of Treasury Assets"
-      headerSubText={`${data && formatCurrency(data[0].treasuryMarketValue)}`}
+      headerSubText={`${data && formatCurrency(data[0]?.treasuryMarketValue ?? 0)}`}
       bulletpointColors={bulletpoints.coin}
       itemNames={tooltipItems.coin}
       itemType={itemType.dollar}
@@ -67,13 +67,9 @@ export const RiskFreeValueGraph = () => {
       dataKey={["treasuryRiskFreeValue"]}
       stopColor={[
         ["#F5AC37", "#EA9276"],
-        ["#768299", "#98B3E9"],
-        ["#ff758f", "#c9184a"],
-        ["#000", "#fff"],
-        ["#000", "#fff"],
       ]}
       headerText="Risk Free Value of Treasury Assets"
-      headerSubText={`${data && formatCurrency(data[0].treasuryRiskFreeValue)}`}
+      headerSubText={`${data && formatCurrency(data[0]?.treasuryRiskFreeValue ?? 0)}`}
       bulletpointColors={bulletpoints.rfv}
       itemNames={tooltipItems.rfv}
       itemType={itemType.dollar}
@@ -83,28 +79,28 @@ export const RiskFreeValueGraph = () => {
   );
 };
 
-// export const ProtocolOwnedLiquidityGraph = () => {
-//   const theme = useTheme();
-//   const { data } = useTreasuryMetrics({ refetchOnMount: false });
+export const ProtocolOwnedLiquidityGraph = () => {
+  const theme = useTheme();
+  const { data } = useTreasuryMetrics({ refetchOnMount: false });
 
-//   return (
-//     <Chart
-//       isPOL
-//       type="area"
-//       data={[{}]}
-//       dataFormat="percent"
-//       itemNames={tooltipItems.pol}
-//       itemType={itemType.percentage}
-//       dataKey={["treasuryOhmDaiPOL"]}
-//       bulletpointColors={bulletpoints.pol}
-//       infoTooltipMessage={tooltipInfoMessages.pol}
-//       headerText="Protocol Owned Liquidity THS-USDT"
-//       expandedGraphStrokeColor={theme.palette.graphStrokeColor}
-//       headerSubText={`${data && trim(data[0].treasuryOhmDaiPOL, 2)}% `}
-//       stopColor={[["rgba(128, 204, 131, 1)", "rgba(128, 204, 131, 0)"]]}
-//     />
-//   );
-// };
+  return (
+    <Chart
+      isPOL
+      type="area"
+      data={data}
+      dataFormat="percent"
+      itemNames={tooltipItems.pol}
+      itemType={itemType.percentage}
+      dataKey={["treasuryUsdtThsPOL"]}
+      bulletpointColors={bulletpoints.pol}
+      infoTooltipMessage={tooltipInfoMessages.pol}
+      headerText="Protocol Owned Liquidity THS-USDT"
+      expandedGraphStrokeColor={theme.palette.graphStrokeColor}
+      headerSubText={`${data && trim(data[0]?.treasuryUsdtThsPOL ?? 0, 2)}% `}
+      stopColor={[["rgba(128, 204, 131, 1)", "rgba(128, 204, 131, 0)"]]}
+    />
+  );
+};
 
 export const THSStakedGraph = () => {
   const theme = useTheme();
@@ -184,7 +180,7 @@ export const RunwayAvailableGraph = () => {
       color={theme.palette.text.primary}
       stroke={colors}
       headerText="Runway Available"
-      headerSubText={`${data && trim(data[0].runwayCurrent, 1)} Days`}
+      headerSubText={`${data && trim(data[0]?.runwayCurrent ?? 0, 1)} Days`}
       dataFormat="days"
       bulletpointColors={runwayBulletpoints}
       itemNames={tooltipItems.runway}

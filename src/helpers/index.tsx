@@ -1,4 +1,4 @@
-import { EPOCH_INTERVAL, BLOCK_RATE_SECONDS, addresses } from "../constants";
+import { BLOCK_RATE_SECONDS, addresses } from "../constants";
 import { BigNumber, ethers } from "ethers";
 import { abi as RedeemHelperABI } from "../abi/RedeemHelper.json";
 
@@ -40,10 +40,6 @@ export function trim(number = 0, precision = 0) {
   array.push(poppedNumber.substring(0, precision));
   const trimmedNumber = array.join(".");
   return trimmedNumber;
-}
-
-export function getRebaseBlock(currentBlock: number) {
-  return currentBlock + EPOCH_INTERVAL - (currentBlock % EPOCH_INTERVAL);
 }
 
 export function secondsUntilBlock(startBlock: number, endBlock: number) {

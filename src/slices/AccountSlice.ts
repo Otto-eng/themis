@@ -109,7 +109,7 @@ export const calculateUserBondDetails = createAsyncThunk(
       return {
         bond: "",
         displayName: "",
-        bondIconSvg: "",
+        // bondIconSvg: "",
         isLP: false,
         allowance: 0,
         balance: "0",
@@ -144,7 +144,7 @@ export const calculateUserBondDetails = createAsyncThunk(
     return {
       bond: bond.name,
       displayName: bond.displayName,
-      bondIconSvg: bond.bondIconSvg,
+      // bondIconSvg: bond.bondIconSvg,
       isLP: bond.isLP,
       allowance: Number(allowance.toString()),
       balance: balanceVal,

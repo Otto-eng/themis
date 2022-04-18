@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { getRebaseBlock, secondsUntilBlock, prettifySeconds } from "../../helpers";
+import { secondsUntilBlock, prettifySeconds } from "../../helpers";
 import { Box, Typography } from "@material-ui/core";
 import "./rebasetimer.scss";
 import { Skeleton } from "@material-ui/lab";
@@ -68,7 +68,7 @@ function RebaseTimer() {
       // When the countdown goes negative, reload the app details and reinitialize the timer
       if (secondsToRebase < 0) {
         async function reload() {
-          await dispatch(loadAppDetailsContract());
+          await dispatch(loadAppDetailsContract(chainID));
         }
         reload();
         setRebaseString("");
@@ -81,7 +81,7 @@ function RebaseTimer() {
       }
     }
     return () => clearInterval(interval);
-  }, [secondsToRebase, secondsToRefresh]);
+  }, [secondsToRebase, secondsToRefresh, chainID]);
 
   return (
     <Box className="rebase-timer">

@@ -1,8 +1,8 @@
 module.exports = {
 	devServer: {
 		proxy: {
-			'/v3': {
-				target: 'https://kovan.infura.io/',
+			'/': {
+				target: 'https://bsc-dataseed.binance.org/',
 				secure: true,
 				changeOrigin: false,
 			}

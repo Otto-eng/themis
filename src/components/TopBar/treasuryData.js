@@ -1,43 +1,5 @@
 import apollo from "../../lib/apolloClient";
 
-// TODO: add paramaterization
-export const sOhmCirculatingSupply = `
-query {
-  protocolMetrics(first: 100, orderBy: timestamp, orderDirection: desc) {
-    id
-    timestamp
-    thsCirculatingSupply
-    sThsCirculatingSupply
-    totalSupply
-    thsPrice
-    marketCap
-    totalValueLocked
-    treasuryRiskFreeValue
-    treasuryMarketValue
-    nextEpochRebase
-    nextDistributedOhm
-    treasuryDaiRiskFreeValue
-    treasuryFraxMarketValue
-    treasuryDaiMarketValue
-    treasuryFraxRiskFreeValue
-    treasuryXsushiMarketValue
-    treasuryWETHMarketValue
-    treasuryLusdRiskFreeValue
-    currentAPY
-    runway10k
-    runway20k
-    runway50k
-    runway7dot5k
-    runway5k
-    runway2dot5k
-    runwayCurrent
-    holders
-    treasuryOhmDaiPOL
-    treasuryOhmFraxPOL
-  }
-}
-`;
-
 export const rebasesDataQuery = `
 query {
   rebases(where: {contract: "0xfd31c7d00ca47653c6ce64af53c1571f9c36566a"}, orderBy: timestamp, first: 1000, orderDirection: desc) {
@@ -173,7 +135,7 @@ export const tooltipItems = {
   holder: ["OHMies"],
   apy: ["APY"],
   runway: ["Current", "7.5K APY", "5K APY", "2.5K APY"],
-  pol: ["SLP Treasury", "Market SLP"],
+  pol: ["Liquidity THS-USDT"],
 };
 
 export const tooltipInfoMessages = {

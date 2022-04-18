@@ -5,7 +5,7 @@ import { setAll } from "src/helpers";
 import { RootState } from "src/store";
 
 
-interface Ido30ListType {
+interface IdoListType {
 	id: string
 	timestamp: string
 	amount: string
@@ -19,8 +19,8 @@ interface IDOSlice {
 interface IDODataType {
 	readonly loading: boolean;
 	readonly loadingInviter: boolean;
-	readonly ido30List: Ido30ListType[];
-	readonly ido70List: Ido30ListType[];
+	readonly ido35List: IdoListType[];
+	readonly ido65List: IdoListType[];
 }
 
 const setSCState = (state: IDOSlice, payload: any) => {
@@ -29,8 +29,8 @@ const setSCState = (state: IDOSlice, payload: any) => {
 	state.loading = false;
 };
 
-export const idoRelease30List = createAsyncThunk(
-	"ido/idoRelease30List",
+export const idoRelease35List = createAsyncThunk(
+	"ido/idoRelease35List",
 	async ({ first, address }: ISCAsyncThunk) => {
 		const protocolMetricsQuery = `
 			query MyQuery {
@@ -44,7 +44,7 @@ export const idoRelease30List = createAsyncThunk(
   			}
 			}
 			`;
-		let data: Ido30ListType[] = []
+		let data: IdoListType[] = []
 		try {
 			const graphData = await apollo<any>(protocolMetricsQuery);
 			if (!graphData || graphData == null) {
@@ -58,13 +58,13 @@ export const idoRelease30List = createAsyncThunk(
 		}
 		return ({
 			data,
-			key: "ido30List"
+			key: "ido35List"
 		})
 	},
 );
 
-export const idoRelease70List = createAsyncThunk(
-	"ido/idoRelease70List",
+export const idoRelease65List = createAsyncThunk(
+	"ido/idoRelease65List",
 	async ({ first, address }: ISCAsyncThunk) => {
 		const protocolMetricsQuery = `
 				query MyQuery {
@@ -78,7 +78,7 @@ export const idoRelease70List = createAsyncThunk(
   			}
 			}
 			`;
-		let data: Ido30ListType[] = []
+		let data: IdoListType[] = []
 		try {
 			const graphData = await apollo<any>(protocolMetricsQuery);
 			if (!graphData || graphData == null) {
@@ -91,7 +91,7 @@ export const idoRelease70List = createAsyncThunk(
 		}
 		return ({
 			data,
-			key: "ido70List"
+			key: "ido65List"
 		})
 	},
 );
@@ -99,8 +99,8 @@ export const idoRelease70List = createAsyncThunk(
 const initialState: IDODataType = {
 	loading: false,
 	loadingInviter: false,
-	ido30List: [],
-	ido70List: [],
+	ido35List: [],
+	ido65List: [],
 };
 
 
@@ -114,25 +114,25 @@ const idoReleaseSlice = createSlice({
 	},
 	extraReducers: builder => {
 		builder
-			.addCase(idoRelease30List.pending, state => {
+			.addCase(idoRelease35List.pending, state => {
 				state.loading = true;
 			})
-			.addCase(idoRelease30List.fulfilled, (state, action) => {
+			.addCase(idoRelease35List.fulfilled, (state, action) => {
 				state.loading = false;
 				setSCState(state, action.payload);
 			})
-			.addCase(idoRelease30List.rejected, (state, { error }) => {
+			.addCase(idoRelease35List.rejected, (state, { error }) => {
 				state.loading = false;
 				console.error(error.name, error.message, error.stack);
 			})
-			.addCase(idoRelease70List.pending, (state, action) => {
+			.addCase(idoRelease65List.pending, (state, action) => {
 				state.loadingInviter = true;
 			})
-			.addCase(idoRelease70List.fulfilled, (state, action) => {
+			.addCase(idoRelease65List.fulfilled, (state, action) => {
 				state.loadingInviter = false;
 				setSCState(state, action.payload);
 			})
-			.addCase(idoRelease70List.rejected, (state, { error }) => {
+			.addCase(idoRelease65List.rejected, (state, { error }) => {
 				state.loadingInviter = false;
 				console.error(error.name, error.message, error.stack);
 			})

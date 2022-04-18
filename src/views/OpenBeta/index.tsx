@@ -166,7 +166,6 @@ export default function OpenBeta() {
 								console.log("infoHash", infoHash)
 								await infoHash.wait();
 								const info = await RegisterFormContract.provider.getTransactionReceipt(infoHash.hash)
-								console.log("info", info)
 								setNum(num + 1)
 							} else {
 								dispatch(error("Please enter the Telegram Username"));

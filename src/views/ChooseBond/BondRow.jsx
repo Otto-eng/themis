@@ -22,7 +22,7 @@ export function BondDataCard({ bond }) {
           <BondLogo bond={bond} />
           <div className="bond-name">
             <Typography>{bond.displayName}</Typography>
-            {bond.isLP && (
+            {/* {bond.isLP && (
               <div>
                 <Link href={bond.lpUrl} target="_blank">
                   <Typography variant="body1">
@@ -31,7 +31,7 @@ export function BondDataCard({ bond }) {
                   </Typography>
                 </Link>
               </div>
-            )}
+            )} */}
           </div>
         </div>
         <div className="data-row">
@@ -95,14 +95,14 @@ export function BondTableData({ bond }) {
         <BondLogo bond={bond} />
         <div className="bond-name">
           <Typography variant="body1">{bond.displayName}</Typography>
-          {bond.isLP && (
+          {/* {bond.isLP && (
             <Link color="primary" href={bond.lpUrl} target="_blank">
               <Typography variant="body1">
                 <Trans>View Contract</Trans>
                 <SvgIcon component={ArrowUp} htmlColor="#A3A3A3" />
               </Typography>
             </Link>
-          )}
+          )} */}
         </div>
       </TableCell>
       <TableCell align="left">
