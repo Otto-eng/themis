@@ -16,6 +16,7 @@ import { abi as PresaleContractABI } from "src/abi/PresaleContract.json";
 import { ethers } from "ethers";
 import { addresses } from "src/constants";
 import Footer from "./component/Footer";
+import { Trans } from "@lingui/macro";
 
 
 export const ratio = [4]
@@ -185,15 +186,17 @@ export const IDO = () => {
     <Ido>
       <Main>
         {/* <PreSate></PreSate> */}
-        <Title>{"IDO ended at 10:00 UTC"}</Title>
-        <Title>{"on April 15, 2022"}</Title>
+        <Trans>
+          <Title>IDO ended at 10:00 UTC</Title>
+          <Title>on April 15, 2022</Title>
+        </Trans>
         <CountDownTime startTimestamp={termInfoOf.startTimestamp} endTimestamp={termInfoOf.endTimestamp} setIsStart={setIsDis} />
       </Main>
       <Detail>
         <React.Fragment>
           <DetailTitle>
             <Text>
-              {"Themis IDO"}
+              <Trans>Themis IDO</Trans>
             </Text>
           </DetailTitle>
           <Progress totalBuy={totalBuy} />

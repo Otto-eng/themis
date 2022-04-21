@@ -18,12 +18,13 @@ import {
   IRedeemBondAsyncThunk,
 } from "./interfaces";
 import { addresses } from "src/constants";
+import { t } from "@lingui/macro";
 
 export const changeApproval = createAsyncThunk(
   "bonding/changeApproval",
   async ({ address, bond, provider, networkID }: IApproveBondAsyncThunk, { dispatch }) => {
     if (!provider) {
-      dispatch(error("Please connect your wallet!"));
+      dispatch(error(t`Please connect your wallet!`));
       return;
     }
 
@@ -225,7 +226,7 @@ export const bondAsset = createAsyncThunk(
       const rpcError = e as IJsonRPCError;
       if (rpcError.code === -32603 && rpcError.message.indexOf("ds-math-sub-underflow") >= 0) {
         dispatch(
-          error("You may be trying to bond more than your balance! Error code: 32603. Message: ds-math-sub-underflow"),
+          error(t`You may be trying to bond more than your balance! Error code: 32603. Message: ds-math-sub-underflow`),
         );
       } else dispatch(error(rpcError.message));
     } finally {
@@ -240,7 +241,7 @@ export const redeemBond = createAsyncThunk(
   "bonding/redeemBond",
   async ({ address, bond, networkID, provider, autostake }: IRedeemBondAsyncThunk, { dispatch }) => {
     if (!provider) {
-      dispatch(error("Please connect your wallet!"));
+      dispatch(error(t`Please connect your wallet!`));
       return;
     }
 
@@ -283,7 +284,7 @@ export const redeemAllBonds = createAsyncThunk(
   "bonding/redeemAllBonds",
   async ({ bonds, address, networkID, provider, autostake }: IRedeemAllBondsAsyncThunk, { dispatch }) => {
     if (!provider) {
-      dispatch(error("Please connect your wallet!"));
+      dispatch(error(t`Please connect your wallet!`));
       return;
     }
 

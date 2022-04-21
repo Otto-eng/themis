@@ -5,7 +5,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
-"Language: en\n"
+"Language: de\n"
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: \n"
@@ -30,7 +30,7 @@ msgstr "7.5K APY"
 
 #: src/views/IDO/index.tsx:189
 msgid "<0>IDO ended at 10:00 UTC</0><1>on April 15, 2022</1>"
-msgstr "<0>IDO ended at 10:00 UTC</0><1>on April 15, 2022</1>"
+msgstr "<0>IDO endete bei 10:00 UTC</0><1>am April 15, 2022</1>"
 
 #: src/components/TopBar/treasuryData.js:137
 #: src/views/Stake/Stake.tsx:196
@@ -44,18 +44,18 @@ msgstr "Admin"
 
 #: src/views/Bond/BondPurchase.jsx:160
 msgid "Amount"
-msgstr "Amount"
+msgstr "Betrag"
 
 #: src/components/TopBar/treasuryData.js:149
 #: src/views/TreasuryDashboard/treasuryData.ts:176
 msgid "Annual Percentage Yield, is the normalized representation of an interest rate, based on a compounding period over one year. Note that APYs provided are rather ballpark level indicators and not so much precise future results."
-msgstr "Annual Percentage Yield, is the normalized representation of an interest rate, based on a compounding period over one year. Note that APYs provided are rather ballpark level indicators and not so much precise future results."
+msgstr "Jährliche prozentuale Rendite, ist die normalisierte Darstellung eines Zinssatzes, basierend auf einem Mischzeitraum über ein Jahr. Beachten Sie, dass APYs eher Ballpark-Level-Indikatoren sind und nicht so sehr genaue zukünftige Ergebnisse."
 
 #: src/views/IDO/component/PreSate1/index.tsx:231
 #: src/views/Stake/Stake.tsx:361
 #: src/views/Stake/Stake.tsx:390
 msgid "Approve"
-msgstr "Approve"
+msgstr "Genehmigen"
 
 #: src/views/TreasuryDashboard/components/Metric/Metric.js:65
 msgid "Backing per THS"
@@ -63,42 +63,42 @@ msgstr "Backing per THS"
 
 #: src/views/Register/index.tsx:197
 msgid "Bind Invitation ID"
-msgstr "Bind Invitation ID"
+msgstr "Einladungs-ID binden"
 
 #: src/components/Sidebar/NavContent.jsx:189
 #: src/views/ChooseBond/ChooseBond.tsx:73
 #: src/views/ChooseBond/ChooseBond.tsx:127
 #: src/views/ChooseBond/ClaimBonds.jsx:74
 msgid "Bond"
-msgstr "Bond"
+msgstr "Bindung"
 
 #: src/views/Bond/Bond.tsx:70
 msgid "Bond Price"
-msgstr "Bond Price"
+msgstr "Bindung Price"
 
 #: src/components/Sidebar/NavContent.jsx:196
 msgid "Bond discounts"
-msgstr "Bond discounts"
+msgstr "Bindung Rabatte"
 
 #: src/views/ChooseBond/BondRow.jsx:74
 msgid "Bond {0}"
-msgstr "Bond {0}"
+msgstr "Bindung {0}"
 
 #: src/components/TopBar/ThemeSwitch.jsx:17
 msgid "Change Theme"
-msgstr "Change Theme"
+msgstr "Thema ändern"
 
 #: src/components/TopBar/LocaleSwitch.tsx:37
 msgid "Change locale"
-msgstr "Change locale"
+msgstr "Gebietsschema ändern"
 
 #: src/views/Bond/AdvancedSettings.jsx:63
 msgid "Choose recipient address. By default, this is your currently connected address"
-msgstr "Choose recipient address. By default, this is your currently connected address"
+msgstr "Empfängeradresse auswählen. Standardmäßig ist dies Ihre aktuell verbundene Adresse"
 
 #: src/views/TreasuryDashboard/components/Metric/Metric.js:52
 msgid "Circulating Supply (total)"
-msgstr "Circulating Supply (total)"
+msgstr "Umlaufangebot (insgesamt)"
 
 #: src/views/Bond/BondRedeem.jsx:71
 #: src/views/ChooseBond/ClaimRow.jsx:130
@@ -109,15 +109,15 @@ msgstr "Circulating Supply (total)"
 #: src/views/Sc/index.tsx:268
 #: src/views/Sc/index.tsx:335
 msgid "Claim"
-msgstr "Claim"
+msgstr "Anspruch"
 
 #: src/components/Sidebar/NavContent.jsx:233
 msgid "Claim Profit"
-msgstr "Claim Profit"
+msgstr "Forderungsgewinn"
 
 #: src/views/ChooseBond/ClaimBonds.jsx:117
 msgid "Claim all"
-msgstr "Claim all"
+msgstr "Alle beanspruchen"
 
 #: src/views/ChooseBond/ClaimBonds.jsx:134
 msgid "Claim all and Stake"
@@ -125,63 +125,63 @@ msgstr "Claim all and Stake"
 
 #: src/views/Bond/BondRedeem.jsx:87
 msgid "Claim and Autostake"
-msgstr "Claim and Autostake"
+msgstr "Forderung und Autostake"
 
 #: src/views/ChooseBond/ClaimRow.jsx:138
 msgid "Claim and Stake"
-msgstr "Claim and Stake"
+msgstr "Forderung und Einsatz"
 
 #: src/views/ChooseBond/ClaimBonds.jsx:77
 msgid "Claimable"
-msgstr "Claimable"
+msgstr "Anspruchsfähig"
 
 #: src/views/Bond/BondRedeem.jsx:104
 msgid "Claimable Rewards"
-msgstr "Claimable Rewards"
+msgstr "Anspruchsfähige Prämien"
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:123
 msgid "Click \\\"Connect\\\" to make your wallet connect to the THS offering page."
-msgstr "Click \\\"Connect\\\" to make your wallet connect to the THS offering page."
+msgstr "Klicken Sie auf \"Verbinden\", um Ihre Wallet mit der THS-Angebotsseite zu verbinden."
 
 #: src/views/Register/index.tsx:239
 msgid "Confirm"
-msgstr "Confirm"
+msgstr "Bestätigen"
 
 #: src/components/ConnectButton.jsx:9
 #: src/components/TopBar/ConnectMenu.jsx:23
 #: src/components/Wallet/index.tsx:30
 #: src/views/Stake/Stake.tsx:142
 msgid "Connect Wallet"
-msgstr "Connect Wallet"
+msgstr "Wallet verbinden"
 
 #: src/views/Stake/Stake.tsx:259
 msgid "Connect your wallet to stake THS"
-msgstr "Connect your wallet to stake THS"
+msgstr "Verbinden Sie Ihr Wallet, um THS zu setzen"
 
 #: src/views/Claim/index.tsx:389
 msgid "Cost:"
-msgstr "Cost:"
+msgstr "Kosten:"
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:81
 msgid "Create a Wallet"
-msgstr "Create a Wallet"
+msgstr "Wallet erstellen"
 
 #: src/components/TopBar/treasuryData.js:138
 #: src/views/TreasuryDashboard/treasuryData.ts:165
 msgid "Current"
-msgstr "Current"
+msgstr "Aktuell"
 
 #: src/views/Stake/Stake.tsx:237
 msgid "Current Index"
-msgstr "Current Index"
+msgstr "Aktueller Index"
 
 #: src/views/TreasuryDashboard/components/Metric/Metric.js:78
 msgid "Current Index<0/>"
-msgstr "Current Index<0/>"
+msgstr "Aktueller Index<0/>"
 
 #: src/components/Sidebar/NavContent.jsx:263
 msgid "DAO Rewards"
-msgstr "DAO Rewards"
+msgstr "DAO-Prämien"
 
 #: src/components/Sidebar/NavContent.jsx:159
 msgid "Dashboard"
@@ -190,37 +190,37 @@ msgstr "Dashboard"
 #: src/views/Bond/BondPurchase.jsx:264
 #: src/views/Bond/BondRedeem.jsx:130
 msgid "Debt Ratio"
-msgstr "Debt Ratio"
+msgstr "Schuldenquote"
 
 #: src/components/TopBar/ConnectMenu.jsx:31
 #: src/components/TopBar/ConnectMenu.jsx:111
 #: src/components/Wallet/index.tsx:70
 msgid "Disconnect"
-msgstr "Disconnect"
+msgstr "Trennen"
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:92
 msgid "Download Trust Wallet from this page."
-msgstr "Download Trust Wallet from this page."
+msgstr "Laden Sie Trust Wallet von dieser Seite herunter."
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:142
 msgid "Enter the USDT(BEP20) amount (At Least 100~1000 USDT(BEP20)) you want to participate in this offering."
-msgstr "Enter the USDT(BEP20) amount (At Least 100~1000 USDT(BEP20)) you want to participate in this offering."
+msgstr "Geben Sie den USDT(BEP20)-Betrag (Mindestens 100~1000 USDT(BEP20)) ein, den Sie an diesem Angebot teilnehmen möchten."
 
 #: src/views/Bond/BondPurchase.jsx:151
 msgid "First time bonding"
-msgstr "First time bonding"
+msgstr "Erstmalige Bindung"
 
 #: src/views/Stake/Stake.tsx:293
 msgid "First time staking"
-msgstr "First time staking"
+msgstr "Erster Einsatz"
 
 #: src/views/Stake/Stake.tsx:300
 msgid "First time unstaking"
-msgstr "First time unstaking"
+msgstr "Erstmalige Abnahme"
 
 #: src/views/ChooseBond/ClaimBonds.jsx:83
 msgid "Fully Vested"
-msgstr "Fully Vested"
+msgstr "Voll bekleidet"
 
 #: src/views/Claim/index.tsx:528
 #: src/views/DaoProfit/index.tsx:239
@@ -234,11 +234,11 @@ msgstr "Hash"
 #: src/components/TopBar/treasuryData.js:147
 #: src/views/TreasuryDashboard/treasuryData.ts:174
 msgid "Holders, represents the total number of Themis (sTHS holders)"
-msgstr "Holders, represents the total number of Themis (sTHS holders)"
+msgstr "Halter, repräsentiert die Gesamtzahl der Themis (sTHS-Inhaber)"
 
 #: src/views/IDO/component/BuyPHS/index.tsx:46
 msgid "How to buy THS?"
-msgstr "How to buy THS?"
+msgstr "Wie kann man THS kaufen?"
 
 #: src/components/Sidebar/NavContent.jsx:291
 msgid "IDO"
@@ -246,70 +246,70 @@ msgstr "IDO"
 
 #: src/components/Sidebar/NavContent.jsx:277
 msgid "IDO Release"
-msgstr "IDO Release"
+msgstr "IDO Freigabe"
 
 #: src/views/IDORelease/index.tsx:223
 msgid "IDO Release 35%"
-msgstr "IDO Release 35%"
+msgstr "IDO Freigabe 35%"
 
 #: src/views/IDORelease/index.tsx:287
 msgid "IDO Release 65%"
-msgstr "IDO Release 65%"
+msgstr "IDO Freigabe 65%"
 
 #: src/views/IDO/component/LinearCard/index.tsx:123
 msgid "IDO Rules"
-msgstr "IDO Rules"
+msgstr "IDO Regeln"
 
 #: src/components/TopBar/ConnectMenu.jsx:36
 msgid "In progress"
-msgstr "In progress"
+msgstr "In Bearbeitung"
 
 #: src/views/IDO/component/PreSate1/index.tsx:173
 msgid "Insufficient THS or already sold out"
-msgstr "Insufficient THS or already sold out"
+msgstr "Unzureichende THS oder bereits ausverkauft"
 
 #: src/views/Register/index.tsx:222
 #: src/views/Register/index.tsx:223
 msgid "Invitation ID"
-msgstr "Invitation ID"
+msgstr "Einladungs-ID"
 
 #: src/views/DaoProfit/index.tsx:196
 #: src/views/Sc/index.tsx:292
 msgid "Invite Earnings"
-msgstr "Invite Earnings"
+msgstr "Einkünfte einladen"
 
 #: src/components/RebaseTimer/RebaseTimer.jsx:80
 msgid "Less than a minute"
-msgstr "Less than a minute"
+msgstr "Weniger als eine Minute"
 
 #: src/views/IDO/component/LinearReleaseRule/index.tsx:86
 msgid "Linear Release Rules"
-msgstr "Linear Release Rules"
+msgstr "Lineare Freigaberegeln"
 
 #: src/components/TopBar/treasuryData.js:139
 msgid "Liquidity THS-USDT"
-msgstr "Liquidity THS-USDT"
+msgstr "Liquidität THS-USDT"
 
 #: src/views/TreasuryDashboard/components/Metric/Metric.js:23
 msgid "Market Cap"
-msgstr "Market Cap"
+msgstr "Marktobergrenze"
 
 #: src/views/Bond/Bond.tsx:78
 msgid "Market Price"
-msgstr "Market Price"
+msgstr "Marktpreis"
 
 #: src/views/TreasuryDashboard/treasuryData.ts:166
 msgid "Market SLP"
-msgstr "Market SLP"
+msgstr "MarktSLP"
 
 #: src/views/TreasuryDashboard/components/Graph/Graph.js:48
 msgid "Market Value of Treasury Assets"
-msgstr "Market Value of Treasury Assets"
+msgstr "Marktwert der Staatsanleihen"
 
 #: src/components/TopBar/treasuryData.js:144
 #: src/views/TreasuryDashboard/treasuryData.ts:171
 msgid "Market Value of Treasury Assets, is the sum of the value (in dollars) of all assets held by the treasury."
-msgstr "Market Value of Treasury Assets, is the sum of the value (in dollars) of all assets held by the treasury."
+msgstr "Marktwert von Treasury Assets ist die Summe des Werts (in Dollar) aller Vermögenswerte, die vom Treasury gehalten werden."
 
 #: src/views/Bond/BondPurchase.jsx:172
 #: src/views/Stake/Stake.tsx:324
@@ -322,40 +322,40 @@ msgstr "Max You Can Buy"
 
 #: src/views/Stake/Stake.tsx:429
 msgid "Next Reward Amount"
-msgstr "Next Reward Amount"
+msgstr "Nächster Prämienbetrag"
 
 #: src/views/Stake/Stake.tsx:438
 msgid "Next Reward Yield"
-msgstr "Next Reward Yield"
+msgstr "Nächste Belohnung Ertrag"
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:109
 msgid "Open THS IDO Page on Trust Wallet"
-msgstr "Open THS IDO Page on Trust Wallet"
+msgstr "Öffnen Sie THS IDO Seite auf Trust Wallet"
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:116
 msgid "Open the \\\"Dapp\\\" tab on Trust Wallet, and type"
-msgstr "Open the \\\"Dapp\\\" tab on Trust Wallet, and type"
+msgstr "Öffnen Sie die Registerkarte \"Dapp\" auf Trust Wallet und geben Sie"
 
 #: src/views/404/NotFound.tsx:10
 msgid "Page not found"
-msgstr "Page not found"
+msgstr "Seite nicht gefunden"
 
 #: src/views/IDO/component/LinearReleaseRule/index.tsx:107
 msgid "Part of IDO release rules won’t be affected by other staking rules."
-msgstr "Part of IDO release rules won’t be affected by other staking rules."
+msgstr "Ein Teil der IDO-Freigabe-Regeln wird von anderen Staking-Regeln nicht beeinflusst."
 
 #: src/views/ChooseBond/ClaimBonds.jsx:80
 msgid "Pending"
-msgstr "Pending"
+msgstr "Ausstehend"
 
 #: src/views/Bond/BondRedeem.jsx:96
 msgid "Pending Rewards"
-msgstr "Pending Rewards"
+msgstr "Ausstehende Belohnungen"
 
 #: src/slices/PendingTxnsSlice.ts:41
 #: src/slices/PendingTxnsSlice.ts:45
 msgid "Pending..."
-msgstr "Pending..."
+msgstr "Ausstehend..."
 
 #: src/views/IDO/component/LinearCard/index.tsx:96
 msgid "Phase"
@@ -365,11 +365,11 @@ msgstr "Phase"
 #: src/views/Stake/Stake.tsx:295
 #: src/views/Stake/Stake.tsx:302
 msgid "Please approve Themis Dao to use your"
-msgstr "Please approve Themis Dao to use your"
+msgstr "Bitte genehmigen Sie Themis Dao, Ihre"
 
 #: src/views/Register/index.tsx:210
 msgid "Please connect wallet"
-msgstr "Please connect wallet"
+msgstr "Bitte verbinden Sie Wallet"
 
 #: src/slices/BondSlice.ts:27
 #: src/slices/BondSlice.ts:244
@@ -377,46 +377,46 @@ msgstr "Please connect wallet"
 #: src/slices/StakeThunk.ts:45
 #: src/slices/StakeThunk.ts:119
 msgid "Please connect your wallet!"
-msgstr "Please connect your wallet!"
+msgstr "Bitte verbinden Sie Ihre Brieftasche!"
 
 #: src/views/IDO/component/PreSate1/index.tsx:220
 msgid "Please enter 100-1000 USDT(BEP20)"
-msgstr "Please enter 100-1000 USDT(BEP20)"
+msgstr "Bitte geben Sie 100-1000 USDT(BEP20) ein"
 
 #: src/views/Bond/BondPurchase.jsx:52
 msgid "Please enter a valid value!"
-msgstr "Please enter a valid value!"
+msgstr "Bitte geben Sie einen gültigen Wert ein!"
 
 #: src/views/Bond/BondPurchase.jsx:50
 #: src/views/Stake/Stake.tsx:112
 #: src/views/Stake/Stake.tsx:112
 msgid "Please enter a value!"
-msgstr "Please enter a value!"
+msgstr "Bitte geben Sie einen Wert ein!"
 
 #: src/views/Admin/index.tsx:135
 msgid "Please enter address!"
-msgstr "Please enter address!"
+msgstr "Bitte Adresse eingeben!"
 
 #: src/views/IDO/component/PreSate1/index.tsx:189
 msgid "Please enter at least 100 USDT (BEP20) and no more than 1000 USDT (BEP20)"
-msgstr "Please enter at least 100 USDT (BEP20) and no more than 1000 USDT (BEP20)"
+msgstr "Bitte geben Sie mindestens 100 USDT (BEP20) und nicht mehr als 1000 USDT (BEP20) ein"
 
 #: src/views/OpenBeta/index.tsx:172
 msgid "Please enter the Telegram Username"
-msgstr "Please enter the Telegram Username"
+msgstr "Bitte geben Sie den Telegram Benutzernamen ein"
 
 #: src/views/Register/index.tsx:224
 msgid "Please enter the correct invitation ID"
-msgstr "Please enter the correct invitation ID"
+msgstr "Bitte geben Sie die richtige Einladungs-ID ein"
 
 #: src/views/IDO/component/LinearCard/index.tsx:116
 msgid "Pre-Sale"
-msgstr "Pre-Sale"
+msgstr "Vorverkauf"
 
 #: src/views/ChooseBond/BondRow.jsx:39
 #: src/views/ChooseBond/ChooseBond.tsx:130
 msgid "Price"
-msgstr "Price"
+msgstr "Preis"
 
 #: src/views/Claim/index.tsx:504
 msgid "Profit Balance"
@@ -424,21 +424,21 @@ msgstr "Profit Balance"
 
 #: src/views/IDO/component/Progress/index.tsx:70
 msgid "Progress"
-msgstr "Progress"
+msgstr "Fortschritte"
 
 #: src/views/TreasuryDashboard/components/Graph/Graph.js:98
 msgid "Protocol Owned Liquidity THS-USDT"
-msgstr "Protocol Owned Liquidity THS-USDT"
+msgstr "Protokolleigene Liquidität THS-USDT"
 
 #: src/components/TopBar/treasuryData.js:146
 #: src/views/TreasuryDashboard/treasuryData.ts:173
 msgid "Protocol Owned Liquidity, is the amount of LP the treasury owns and controls. The more POL the better for the protocol and its users."
-msgstr "Protocol Owned Liquidity, is the amount of LP the treasury owns and controls. The more POL the better for the protocol and its users."
+msgstr "Protokoll Owned Liquidity ist der Betrag der LP, die das Treasury besitzt und kontrolliert. Je mehr POL, desto besser für das Protokoll und seine Benutzer."
 
 #: src/views/ChooseBond/BondRow.jsx:56
 #: src/views/ChooseBond/ChooseBond.tsx:136
 msgid "Purchased"
-msgstr "Purchased"
+msgstr "Gekauft"
 
 #: src/views/Bond/BondPurchase.jsx:255
 #: src/views/Bond/BondRedeem.jsx:121
@@ -449,53 +449,53 @@ msgstr "ROI"
 
 #: src/views/Stake/Stake.tsx:447
 msgid "ROI (5-Day Rate)"
-msgstr "ROI (5-Day Rate)"
+msgstr "ROI (5-Tage-Tarif)"
 
 #: src/views/Claim/index.tsx:510
 msgid "Received"
-msgstr "Received"
+msgstr "Empfangen"
 
 #: src/views/Bond/BondPurchase.jsx:283
 msgid "Recipient"
-msgstr "Recipient"
+msgstr "Empfänger"
 
 #: src/views/Bond/AdvancedSettings.jsx:57
 msgid "Recipient Address"
-msgstr "Recipient Address"
+msgstr "Empfänger Address"
 
 #: src/views/Bond/Bond.tsx:102
 msgid "Redeem"
-msgstr "Redeem"
+msgstr "Einlösen"
 
 #: src/views/IDO/component/LinearReleaseRule/index.tsx:90
 msgid "Release 35% of the total participated amount first, the leftover will release an equal amount every day."
-msgstr "Release 35% of the total participated amount first, the leftover will release an equal amount every day."
+msgstr "Geben Sie zuerst 35% des gesamten Teilnahmebetrags frei, der Rest wird jeden Tag einen gleichen Betrag freigeben."
 
 #: src/views/Claim/index.tsx:451
 msgid "Release Time"
-msgstr "Release Time"
+msgstr "Veröffentlichungszeit"
 
 #: src/views/Claim/index.tsx:368
 msgid "Release Time："
-msgstr "Release Time："
+msgstr "Veröffentlichungszeit："
 
 #: src/views/TreasuryDashboard/components/Graph/Graph.js:72
 msgid "Risk Free Value of Treasury Assets"
-msgstr "Risk Free Value of Treasury Assets"
+msgstr "Risikofreier Wert von Treasury Assets"
 
 #: src/components/TopBar/treasuryData.js:145
 #: src/views/TreasuryDashboard/treasuryData.ts:172
 msgid "Risk Free Value, is the amount of funds the treasury guarantees to use for backing THS."
-msgstr "Risk Free Value, is the amount of funds the treasury guarantees to use for backing THS."
+msgstr "Risikofreier Wert ist der Betrag der Mittel, die das Treasury garantiert, um THS zu unterstützen."
 
 #: src/views/TreasuryDashboard/components/Graph/Graph.js:183
 msgid "Runway Available"
-msgstr "Runway Available"
+msgstr "Start-und Landebahn verfügbar"
 
 #: src/components/TopBar/treasuryData.js:150
 #: src/views/TreasuryDashboard/treasuryData.ts:177
 msgid "Runway, is the number of days sTHS emissions can be sustained at a given rate. Lower APY = longer runway"
-msgstr "Runway, is the number of days sTHS emissions can be sustained at a given rate. Lower APY = longer runway"
+msgstr "Start-und Landebahn ist die Anzahl der Tage, an denen sTHS-Emissionen mit einer bestimmten Geschwindigkeit aufrechterhalten werden können. Unterer APY = längere Landebahn"
 
 #: src/components/Sidebar/NavContent.jsx:248
 msgid "SC"
@@ -503,29 +503,29 @@ msgstr "SC"
 
 #: src/views/Sc/index.tsx:222
 msgid "SC Amount"
-msgstr "SC Amount"
+msgstr "SC Betrag"
 
 #: src/views/Claim/index.tsx:415
 msgid "SC Insufficient Balance"
-msgstr "SC Insufficient Balance"
+msgstr "SC Unzureichendes Gleichgewicht"
 
 #: src/views/Sc/index.tsx:227
 #: src/views/Sc/index.tsx:294
 msgid "SC Unclaimed"
-msgstr "SC Unclaimed"
+msgstr "SC Nicht beansprucht"
 
 #: src/views/Sc/index.tsx:275
 #: src/views/Sc/index.tsx:341
 msgid "SC amount"
-msgstr "SC amount"
+msgstr "SC betrag"
 
 #: src/views/TreasuryDashboard/treasuryData.ts:166
 msgid "SLP Treasury"
-msgstr "SLP Treasury"
+msgstr "SLP Staatskasse"
 
 #: src/views/IDO/component/PreSate1/index.tsx:231
 msgid "Send"
-msgstr "Send"
+msgstr "Senden"
 
 #: src/views/Stake/Stake.tsx:170
 msgid "Single Stake"
@@ -533,29 +533,29 @@ msgstr "Single Stake"
 
 #: src/views/Bond/AdvancedSettings.jsx:37
 msgid "Slippage"
-msgstr "Slippage"
+msgstr "Rutschen"
 
 #: src/views/Bond/BondPurchase.jsx:187
 #: src/views/ChooseBond/BondRow.jsx:74
 #: src/views/ChooseBond/BondRow.jsx:131
 msgid "Sold Out"
-msgstr "Sold Out"
+msgstr "Ausverkauft"
 
 #: src/components/Sidebar/NavContent.jsx:174
 msgid "Stake"
-msgstr "Stake"
+msgstr "Pfahl"
 
 #: src/views/Stake/Stake.tsx:349
 msgid "Stake THS"
-msgstr "Stake THS"
+msgstr "Pfahl THS"
 
 #: src/views/Stake/Stake.tsx:409
 msgid "Staked Balance"
-msgstr "Staked Balance"
+msgstr "Eingesetzte Saldo"
 
 #: src/views/Sc/index.tsx:225
 msgid "Staking Earnings"
-msgstr "Staking Earnings"
+msgstr "Einsätze"
 
 #: src/slices/PendingTxnsSlice.ts:29
 msgid "Staking THS"
@@ -563,43 +563,43 @@ msgstr "Staking THS"
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:136
 msgid "Start to Buy THS Token"
-msgstr "Start to Buy THS Token"
+msgstr "Beginnen Sie mit dem Kauf von THS Token"
 
 #: src/views/Register/index.tsx:239
 msgid "Success"
-msgstr "Success"
+msgstr "Erfolg"
 
 #: src/views/DaoProfit/index.tsx:193
 #: src/views/IDORelease/index.tsx:220
 msgid "THS Amount"
-msgstr "THS Amount"
+msgstr "THS Betrag"
 
 #: src/views/ChooseBond/ChooseBond.tsx:111
 #: src/views/TreasuryDashboard/components/Metric/Metric.js:36
 msgid "THS Price"
-msgstr "THS Price"
+msgstr "THS Preis"
 
 #: src/views/TreasuryDashboard/components/Graph/Graph.js:125
 msgid "THS Staked"
-msgstr "THS Staked"
+msgstr "THS Gestäfelt"
 
 #: src/components/TopBar/treasuryData.js:148
 #: src/views/TreasuryDashboard/treasuryData.ts:175
 msgid "THS Staked, is the ratio of sTHS to THS (staked vs unstaked)"
-msgstr "THS Staked, is the ratio of sTHS to THS (staked vs unstaked)"
+msgstr "THS Staked, ist das Verhältnis von sTHS zu THS (staked vs untaked)"
 
 #: src/views/DaoProfit/index.tsx:198
 #: src/views/IDORelease/index.tsx:225
 #: src/views/IDORelease/index.tsx:289
 msgid "THS Unclaimed"
-msgstr "THS Unclaimed"
+msgstr "THS Nicht beansprucht"
 
 #: src/views/Claim/index.tsx:530
 #: src/views/DaoProfit/index.tsx:241
 #: src/views/IDORelease/index.tsx:275
 #: src/views/IDORelease/index.tsx:338
 msgid "THS amount"
-msgstr "THS amount"
+msgstr "THS betrag"
 
 #: src/views/IDO/component/LinearCard/index.tsx:109
 msgid "THS per 1000 USDT"
@@ -611,16 +611,16 @@ msgstr "THS per USDT"
 
 #: src/views/OpenBeta/index.tsx:175
 msgid "The Telegram ID have been register"
-msgstr "The Telegram ID have been register"
+msgstr "Die Telegram ID wurde registriert"
 
 #: src/views/TreasuryDashboard/components/Metric/Metric.js:80
 msgid "The current index tracks the amount of sTHS accumulated since the beginning of staking. Basically, how much sTHS one would have if they staked and held a single THS from day 1."
-msgstr "The current index tracks the amount of sTHS accumulated since the beginning of staking. Basically, how much sTHS one would have if they staked and held a single THS from day 1."
+msgstr "Der aktuelle Index verfolgt die Menge an sTHS, die seit Beginn des Staking angesammelt wurde. Grundsätzlich, wie viel sTHS man haben würde, wenn sie ab Tag 1 ein einziges THS gesetzt und gehalten hätten."
 
 #: src/App.tsx:255
 #: src/components/Sidebar/NavContent.jsx:258
 msgid "The launch time of DAO Rewards is waiting for the DAO voting."
-msgstr "The launch time of DAO Rewards is waiting for the DAO voting."
+msgstr "Die Startzeit von DAO Rewards wartet auf die DAO Abstimmung."
 
 #: src/views/IDO/index.tsx:199
 msgid "Themis IDO"
@@ -628,79 +628,79 @@ msgstr "Themis IDO"
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:97
 msgid "Then create your own wallet  (Keep your seed phrase and private key safety. Don’t share them with anyone and  store them in a safe place. )"
-msgstr "Then create your own wallet  (Keep your seed phrase and private key safety. Don’t share them with anyone and  store them in a safe place. )"
+msgstr "Erstellen Sie dann Ihre eigene Brieftasche (Bewahren Sie Ihre Seed-Phrase und Ihren privaten Schlüssel sicher auf, teilen Sie sie mit niemandem und bewahren Sie sie an einem sicheren Ort auf.)"
 
 #: src/views/Bond/BondRedeem.jsx:112
 msgid "Time until fully vested"
-msgstr "Time until fully vested"
+msgstr "Zeit bis zur vollständigen Übertragung"
 
 #: src/views/IDO/component/ProgressCard/index.tsx:202
 msgid "Token Sales Progress"
-msgstr "Token Sales Progress"
+msgstr "Token-Verkaufsfortschritt"
 
 #: src/views/IDO/component/LinearCard/index.tsx:103
 msgid "Token Supply"
-msgstr "Token Supply"
+msgstr "Token-Versorgung"
 
 #: src/views/IDO/component/ProgressCard/index.tsx:176
 msgid "Total"
-msgstr "Total"
+msgstr "Insgesamt"
 
 #: src/components/TopBar/treasuryData.js:133
 #: src/views/Stake/Stake.tsx:213
 #: src/views/TreasuryDashboard/components/Graph/Graph.js:21
 #: src/views/TreasuryDashboard/treasuryData.ts:160
 msgid "Total Value Deposited"
-msgstr "Total Value Deposited"
+msgstr "Depotierter Gesamtwert"
 
 #: src/components/TopBar/treasuryData.js:143
 #: src/views/TreasuryDashboard/treasuryData.ts:170
 msgid "Total Value Deposited, is the dollar amount of all THS staked in the protocol. This metric is often used as growth or health indicator in DeFi projects."
-msgstr "Total Value Deposited, is the dollar amount of all THS staked in the protocol. This metric is often used as growth or health indicator in DeFi projects."
+msgstr "Depotierter Gesamtwert, ist der Dollarbetrag aller THS im Protokoll. Diese Kennzahl wird häufig als Wachstums- oder Gesundheitsindikator in DeFi-Projekten verwendet."
 
 #: src/views/Bond/AdvancedSettings.jsx:51
 msgid "Transaction may revert if price changes by more than slippage %"
-msgstr "Transaction may revert if price changes by more than slippage %"
+msgstr "Transaktion kann rückgängig gemacht werden, wenn sich der Preis um mehr als Slippage ändert%"
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:102
 msgid "Transfer USDT(BEP20) from other wallets or Exchanges to your USDT(BEP20) wallet address on Trust Wallet."
-msgstr "Transfer USDT(BEP20) from other wallets or Exchanges to your USDT(BEP20) wallet address on Trust Wallet."
+msgstr "Übertragen Sie USDT(BEP20) von anderen Wallets oder Börsen auf Ihre USDT(BEP20)-Wallet-Adresse auf Trust Wallet."
 
 #: src/views/ChooseBond/ChooseBond.tsx:81
 msgid "Treasury Balance"
-msgstr "Treasury Balance"
+msgstr "Staatskasse Saldo"
 
 #: src/views/Claim/index.tsx:469
 msgid "Unclaimed"
-msgstr "Unclaimed"
+msgstr "Nicht beansprucht"
 
 #: src/views/Claim/index.tsx:494
 msgid "Unstable Time"
-msgstr "Unstable Time"
+msgstr "Instabile Zeit"
 
 #: src/views/Stake/Stake.tsx:284
 msgid "Unstake"
-msgstr "Unstake"
+msgstr "Entnehmen"
 
 #: src/views/Stake/Stake.tsx:378
 msgid "Unstake THS"
-msgstr "Unstake THS"
+msgstr "Entnehmen THS"
 
 #: src/views/Stake/Stake.tsx:400
 msgid "Unstaked Balance"
-msgstr "Unstaked Balance"
+msgstr "Nicht eingenommener Saldo"
 
 #: src/slices/PendingTxnsSlice.ts:29
 msgid "Unstaking sTHS"
-msgstr "Unstaking sTHS"
+msgstr "Entnahme sTHS"
 
 #: src/slices/PendingTxnsSlice.ts:33
 msgid "Unwrapping sTHS"
-msgstr "Unwrapping sTHS"
+msgstr "Entpacken sTHS"
 
 #: src/views/IDO/component/BuyPHS/index.tsx:49
 msgid "Users can use MetaMask， TokenPocket， and imTokent wallet to purchase THS, make sure you have USDT(BEP20) on balance and use the Binance Smart Chain network. Enter the amount, click the send button, the smart contract will automatically complete the transaction. Please refer to the tutorial below."
-msgstr "Users can use MetaMask， TokenPocket， and imTokent wallet to purchase THS, make sure you have USDT(BEP20) on balance and use the Binance Smart Chain network. Enter the amount, click the send button, the smart contract will automatically complete the transaction. Please refer to the tutorial below."
+msgstr "Benutzer können MetaMask, TokenPocket und imTokent Wallet verwenden, um THS zu kaufen, stellen Sie sicher, dass Sie USDT(BEP20) im Gleichgewicht haben und verwenden Sie das Binance Smart Chain Netzwerk. Geben Sie den Betrag ein, klicken Sie auf die Schaltfläche Senden, der Smart Contract schließt die Transaktion automatisch ab. Bitte beachten Sie das Tutorial unten."
 
 #: src/views/Bond/BondPurchase.jsx:273
 #: src/views/Bond/BondRedeem.jsx:139
@@ -709,62 +709,62 @@ msgstr "Vesting Term"
 
 #: src/components/Wallet/index.tsx:23
 msgid "Wallet"
-msgstr "Wallet"
+msgstr "Geldbörse"
 
 #: src/views/Register/index.tsx:208
 msgid "Wallet Address"
-msgstr "Wallet Address"
+msgstr "Wallet-Adresse"
 
 #: src/views/Register/index.tsx:209
 msgid "Wallet address"
-msgstr "Wallet address"
+msgstr "Wallet-adresse"
 
 #: src/slices/PendingTxnsSlice.ts:33
 msgid "Wrapping THS"
-msgstr "Wrapping THS"
+msgstr "Umschlag THS"
 
 #: src/views/Stake/Stake.tsx:418
 msgid "Yield Amount"
-msgstr "Yield Amount"
+msgstr "Ertragsbetrag"
 
 #: src/views/Bond/BondPurchase.jsx:237
 msgid "You Will Get"
-msgstr "You Will Get"
+msgstr "Du wirst bekommen"
 
 #: src/views/Stake/Stake.tsx:118
 #: src/views/Stake/Stake.tsx:118
 msgid "You cannot stake more than your THS balance."
-msgstr "You cannot stake more than your THS balance."
+msgstr "Sie können nicht mehr als Ihr THS-Guthaben einsetzen."
 
 #: src/views/Stake/Stake.tsx:122
 #: src/views/Stake/Stake.tsx:122
 msgid "You cannot unstake more than your sTHS balance."
-msgstr "You cannot unstake more than your sTHS balance."
+msgstr "Sie können nicht mehr als Ihr THS-Guthaben aufheben"
 
 #: src/views/Bond/BondPurchase.jsx:55
 msgid "You have an existing bond. Bonding will reset your vesting period and forfeit rewards. We recommend claiming rewards first or using a fresh wallet. Do you still want to proceed?"
-msgstr "You have an existing bond. Bonding will reset your vesting period and forfeit rewards. We recommend claiming rewards first or using a fresh wallet. Do you still want to proceed?"
+msgstr "Du hast eine bestehende Bindung. Bonding setzt deine Vesting-Periode zurück und verfällt Belohnungen. Wir empfehlen, zuerst Prämien einzufordern oder eine neue Geldbörse zu verwenden. Wollen Sie noch weitermachen?"
 
 #: src/slices/BondSlice.ts:229
 msgid "You may be trying to bond more than your balance! Error code: 32603. Message: ds-math-sub-underflow"
-msgstr "You may be trying to bond more than your balance! Error code: 32603. Message: ds-math-sub-underflow"
+msgstr "Vielleicht versuchst du, mehr als dein Gleichgewicht zu verbinden! Fehlercode: 32603. Nachricht: ds-math-sub-underflow"
 
 #: src/views/Bond/BondPurchase.jsx:222
 msgid "Your Balance"
-msgstr "Your Balance"
+msgstr "Ihr Guthaben"
 
 #: src/views/IDO/component/PreSate1/index.tsx:233
 msgid "Your Total Contribution(THS):"
-msgstr "Your Total Contribution(THS):"
+msgstr "Ihr Gesamtbetrag(THS):"
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:128
 msgid "Your asset balance will display on the offering page once connected."
-msgstr "Your asset balance will display on the offering page once connected."
+msgstr "Ihr Asset-Guthaben wird auf der Angebotsseite angezeigt, sobald Sie verbunden sind."
 
 #: src/views/IDO/component/PreSate1/index.tsx:176
 #: src/views/IDO/component/PreSate1/index.tsx:176
 msgid "Your maximum purchase amount is 1000 USDT (BEP20)"
-msgstr "Your maximum purchase amount is 1000 USDT (BEP20)"
+msgstr "Ihr maximaler Kaufbetrag beträgt 1000 USDT (BEP20)"
 
 #. The action of bonding (verb)
 #: src/views/Bond/Bond.tsx:96
@@ -779,19 +779,19 @@ msgstr "Stake"
 
 #: src/views/IDO/component/LinearReleaseRule/index.tsx:100
 msgid "eg. if one user has 10000 THS tokens leftover, of which 100 tokens will be released every day and needs 100 days to release all."
-msgstr "eg. if one user has 10000 THS tokens leftover, of which 100 tokens will be released every day and needs 100 days to release all."
+msgstr "z. B. wenn ein Benutzer 10000 THS Token übrig hat, von denen 100 Token jeden Tag veröffentlicht werden und 100 Tage benötigt, um alle freizugeben."
 
 #: src/views/Bond/BondPurchase.jsx:153
 msgid "for bonding"
-msgstr "for bonding"
+msgstr "zum Verkleben"
 
 #: src/views/Stake/Stake.tsx:296
 msgid "for staking"
-msgstr "for staking"
+msgstr "für Staking"
 
 #: src/views/Stake/Stake.tsx:303
 msgid "for unstaking"
-msgstr "for unstaking"
+msgstr "für Entnahme"
 
 #: src/views/Claim/index.tsx:528
 #: src/views/DaoProfit/index.tsx:239
@@ -804,31 +804,31 @@ msgstr "for unstaking"
 
 #: src/views/IDO/component/CountDownTime/index.tsx:109
 msgid "hrs"
-msgstr "hrs"
+msgstr "Stunde"
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:118
 msgid "in the search box, then click the enter to jump to the connect page."
-msgstr "in the search box, then click the enter to jump to the connect page."
+msgstr "Klicken Sie im Suchfeld auf die Eingabetaste, um zur Verbindungsseite zu springen."
 
 #: src/views/Register/index.tsx:217
 msgid "invitationId"
-msgstr "invitationId"
+msgstr "EinladungsId"
 
 #: src/views/IDO/component/LinkCard/index.tsx:102
 msgid "inviteLink"
-msgstr "inviteLink"
+msgstr "EinladenLink"
 
 #: src/views/IDO/component/CountDownTime/index.tsx:110
 msgid "mins"
-msgstr "mins"
+msgstr "Minute"
 
 #: src/views/TreasuryDashboard/components/Metric/Metric.js:94
 msgid "sTHS Price"
-msgstr "sTHS Price"
+msgstr "sTHS Preis"
 
 #: src/views/IDO/component/CountDownTime/index.tsx:111
 msgid "secs"
-msgstr "secs"
+msgstr "zweite"
 
 #: src/views/Claim/index.tsx:529
 #: src/views/DaoProfit/index.tsx:240
@@ -837,11 +837,11 @@ msgstr "secs"
 #: src/views/Sc/index.tsx:274
 #: src/views/Sc/index.tsx:340
 msgid "time"
-msgstr "time"
+msgstr "Zeit"
 
 #: src/components/RebaseTimer/RebaseTimer.jsx:92
 msgid "to next rebase"
-msgstr "to next rebase"
+msgstr "zur nächsten rebase"
 
 #: src/views/Claim/index.tsx:522
 #: src/views/Claim/index.tsx:549
@@ -849,4 +849,4 @@ msgstr "to next rebase"
 #: src/views/Sc/index.tsx:290
 #: src/views/Sc/index.tsx:354
 msgid "view more"
-msgstr "view more"
+msgstr "mehr anzeigen"

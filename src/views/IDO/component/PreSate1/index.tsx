@@ -13,6 +13,7 @@ import { addresses } from "src/constants"
 import { IERC20 } from "src/typechain"
 import { abi as ierc20Abi } from "src/abi/IERC20.json";
 import { debounce } from "src/utils/debounce"
+import { Trans, t } from "@lingui/macro"
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -169,10 +170,10 @@ function PreSate1({ accountBuy, setHash, isStart, isExperiencerAddressBuy, isExp
 			if (pendingTransactions) {
 				if (address && !isNaN(num) && num >= 100 && num <= 1000) {
 					if ((totalBuy * 4 + Number(value)) > 500000) {
-						dispatch(error("Insufficient MCT or already sold out"))
+						dispatch(error(t`Insufficient THS or already sold out`))
 					} else {
 						if ((accountBuy * 4 + num) > 1000) {
-							return dispatch(error("Your maximum purchase amount is 1000 USDT (BEP20)"))
+							return dispatch(error(t`Your maximum purchase amount is 1000 USDT (BEP20)`))
 						} else {
 							setPendingStatus({ send: true })
 							buyFtn(num.toString()).then((res: any) => {
@@ -185,7 +186,7 @@ function PreSate1({ accountBuy, setHash, isStart, isExperiencerAddressBuy, isExp
 					}
 				} else {
 					setPendingStatus({ send: false })
-					dispatch(error("Please enter at least 100 USDT (BEP20) and no more than 1000 USDT (BEP20)"))
+					dispatch(error(t`Please enter at least 100 USDT (BEP20) and no more than 1000 USDT (BEP20)`))
 				}
 			} else {
 				userApprove()
@@ -216,7 +217,7 @@ function PreSate1({ accountBuy, setHash, isStart, isExperiencerAddressBuy, isExp
 						setValue(strN)
 					}}
 					value={value}
-					placeholder={"Please enter 100-1000 USDT(BEP20)"}
+					placeholder={t`Please enter 100-1000 USDT(BEP20)`}
 					disabled={!isBuy || pendingStatus.send}
 				/>
 			</Paper>
@@ -227,9 +228,9 @@ function PreSate1({ accountBuy, setHash, isStart, isExperiencerAddressBuy, isExp
 				key={pendingStatus.send + "pendingStatus"}
 				onClick={() => debounce(buyIdo, 500)}
 			>
-				{isPending(pendingStatus, "send", pendingTransactions ? "Send" : "Approve")}
+				{isPending(pendingStatus, "send", pendingTransactions ? t`Send` : t`Approve`)}
 			</Send >
-			<Total>{"Your Total Contribution(THS):"}</Total>
+			<Total><Trans>Your Total Contribution(THS):</Trans></Total>
 			<BanlanceU>{pendingStatus.send ? <Skeleton width="100px" /> : participated}</BanlanceU>
 		</Container >
 

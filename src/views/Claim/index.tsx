@@ -14,6 +14,7 @@ import dayjs from "dayjs"
 import utc from 'dayjs/plugin/utc'
 import { stakeTHSReleaseEarningsList } from "src/slices/scSlice"
 import Skeleton from "@material-ui/lab/Skeleton/Skeleton"
+import { t, Trans } from "@lingui/macro"
 dayjs.extend(utc)
 
 const listDay = [
@@ -364,7 +365,7 @@ function Claim() {
 						style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}
 				>
 						<ReleaseTime >
-						<div> Release Time：{listDay[Number(block?.speedLevel)].value ?? 0}d</div>
+							<div> <Trans>Release Time：</Trans>{listDay[Number(block?.speedLevel)].value ?? 0}d</div>
 							<div>SC:{num ? <Skeleton width="80px" /> : SCBanlance}</div>
 					</ReleaseTime>
 					<ModalTop
@@ -385,7 +386,7 @@ function Claim() {
 								>{item.value} DAY</Item>))}
 							</Select>
 						</FormControl>
-						<Cost>Cost: {optionData.gasSc}SC</Cost>
+							<Cost><Trans>Cost:</Trans> {optionData.gasSc}SC</Cost>
 					</ModalTop>
 					<Confrim
 						className="stake-button sc-stake-button"
@@ -411,7 +412,7 @@ function Claim() {
 									await approveTx.wait();
 									const info = await StakingRewardReleaseContract.provider.getTransactionReceipt(infoHash.hash)
 								} else {
-									dispatch(error("SC Insufficient Balance"));
+									dispatch(error(t`SC Insufficient Balance`));
 								}
 							} catch (error) {
 
@@ -447,7 +448,7 @@ function Claim() {
 							>
 							<CardContainer>
 								<TopText>{listDay[Number(item.speedLevel)]?.value ?? 0} day</TopText>
-								<Text>Release Time</Text>
+									<Text><Trans>Release Time</Trans></Text>
 								<ClaimBtn
 									className="stake-button sc-stake-button"
 									variant="contained"
@@ -465,7 +466,7 @@ function Claim() {
 							<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}>
 							<CardContainer>
 								<TopText>{item.pendingTotal} THS</TopText>
-								<Text>Unclaimed</Text>
+									<Text><Trans>Unclaimed</Trans></Text>
 								<ClaimBtn
 									className="stake-button sc-stake-button"
 									variant="contained"
@@ -481,7 +482,7 @@ function Claim() {
 										})
 										claim(item.recordBlock)
 									}}
-								>{isPending(pendingStatus, "claim", "Claim")}</ClaimBtn>
+									>{isPending(pendingStatus, "claim", t`Claim`)}</ClaimBtn>
 							</CardContainer>
 						</CardItem>
 					</CardTop>
@@ -490,7 +491,7 @@ function Claim() {
 
 							<CardContainer>
 								<TopText>UTC {dayjs.unix(Number(item.recordTimestamp)).utc().format("YYYY-MM-DD HH:mm")}</TopText>
-								<Text>Unstable Time</Text>
+									<Text><Trans>Unstable Time</Trans></Text>
 							</CardContainer>
 						</CardItem>
 							<CardItem
@@ -500,13 +501,13 @@ function Claim() {
 								}}>
 							<CardContainer>
 								<TopText>{item.rewardTotal} THS</TopText>
-								<Text>Profit Balance</Text>
+									<Text><Trans>Profit Balance</Trans></Text>
 							</CardContainer>
 						</CardItem>
 							<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}>
 							<CardContainer>
 								<TopText>{item.earnedTotal} THS</TopText>
-								<Text>Received</Text>
+									<Text><Trans>Received</Trans></Text>
 							</CardContainer>
 						</CardItem>
 					</CardBottom>
@@ -518,15 +519,15 @@ function Claim() {
 					setPage(page + 1)
 				}}
 					style={{ backgroundColor: theme === THEME_LIGHT ? "rgba(255, 255, 255, 0.6)" : "#18253A" }}
-				>view more</More>}
+				><Trans>view more</Trans></More>}
 
 				<CardDetaile
 					style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}
 				>
 				<Item>
-					<CardDetaileOl>hash</CardDetaileOl>
-					<Option>time</Option>
-					<Amount>THS amount</Amount>
+						<CardDetaileOl><Trans>Hash</Trans></CardDetaileOl>
+						<Option><Trans>time</Trans></Option>
+						<Amount><Trans>THS amount</Trans></Amount>
 				</Item>
 				{stakeReleaseEarningsList.map((item) => (
 					<React.Fragment>
@@ -545,7 +546,7 @@ function Claim() {
 					}) : ({})}
 					onClick={() => {
 						setStakeReleaseEarningsListPage(stakeReleaseEarningsListPage + 1)
-					}} > view more</More>
+						}} > <Trans>view more</Trans></More>
 					</CardDetaile>
 			</React.Fragment>
 			</Main>

@@ -10,6 +10,7 @@ import utc from 'dayjs/plugin/utc'
 import copy from "copy-to-clipboard"
 import { isPending } from "../Claim"
 import Skeleton from "@material-ui/lab/Skeleton/Skeleton"
+import { t, Trans } from "@lingui/macro"
 dayjs.extend(utc)
 const GridFlex = styled("div")({
 	width: "100%",
@@ -167,7 +168,7 @@ export default function DaoProfit() {
 				const signer = provider.getSigner();
 				const THSFarmForInvterContract = new ethers.Contract(addresses[chainID].ScFarmForStaker_ADDRESS, THSFarmForStakerABI, signer)
 				const THSFarmForInvterpendingRewardValue = await THSFarmForInvterContract.pendingReward(address)
-				setStakValue((Math.floor(Number(ethers.utils.formatUnits(THSFarmForInvterpendingRewardValue, "gwei")) * 10000) / 10000) + "")
+				setStakValue((Math.floor(Number(ethers.utils.formatUnits(THSFarmForInvterpendingRewardValue, "ether")) * 10000) / 10000) + "")
 			} finally {
 				setTimeout(() => {
 					setInvter(false)
@@ -189,12 +190,12 @@ export default function DaoProfit() {
 		<Main>
 			<Container >
 				<Top style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}>
-					<Title >THS Amount</Title>
+					<Title ><Trans>THS Amount</Trans></Title>
 					<Blance>{flag ? <Skeleton width="80px" /> : Number(thsBalance).toFixed(4)}</Blance>
 				</Top>
-				<CardTitle>Invite Earnings</CardTitle>
+				<CardTitle><Trans>Invite Earnings</Trans></CardTitle>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-					<Left ><div>THS Unclaimed</div> <Value>{stakValue === "0" ? "0.0000" : stakValue}</Value></Left>
+					<Left ><div><Trans>THS Unclaimed</Trans></div> <Value>{stakValue === "0" ? "0.0000" : stakValue}</Value></Left>
 					<Claim
 						className="invter-button sc-invter-button"
 						variant="contained"
@@ -230,14 +231,14 @@ export default function DaoProfit() {
 								}, 500);
 							}
 						}}>
-						{isPending(pendingStatus, "ScFarmForStaker", "Claim")}
+						{isPending(pendingStatus, "ScFarmForStaker", t`Claim`)}
 					</Claim>
 				</Card>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}>
 					<Item>
-						<Ol>hash</Ol>
-						<Option>time</Option>
-						<Amount>THS amount</Amount>
+						<Ol><Trans>Hash</Trans></Ol>
+						<Option><Trans>time</Trans></Option>
+						<Amount><Trans>THS amount</Trans></Amount>
 					</Item>
 					{scStakeEarningsList.map((item) => <React.Fragment>
 						<Item>
@@ -252,7 +253,7 @@ export default function DaoProfit() {
 						style={((scStakeEarningsDetailsListPage * 10) > scStakeEarningsList.length) ? ({ display: "none" }) : ({})}
 						onClick={() => {
 							setScStakeEarningsDetailsListPage(scStakeEarningsDetailsListPage + 1)
-						}}>view more</More>
+						}}><Trans>view more</Trans></More>
 				</Card>
 			</Container>
 		</Main>

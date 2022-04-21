@@ -36,7 +36,7 @@ interface ILoadAppDetails {
   readonly marketCap?: number;
   readonly circSupply?: number;
   readonly totalSupply?: number;
-  readonly treasuryMarketValue?: BigNumberish;
+  readonly treasuryMarketValue?: number;
 }
 
 export const loadAppDetails = createAsyncThunk(
@@ -71,19 +71,17 @@ export const loadAppDetails = createAsyncThunk(
     }
 
     // try {
-    const THSUSDTPairContract = new ethers.Contract(addresses[chainID]?.THS_USDT_PAIR_ADDRESS, THSUSDTPAIRABI, provider);
-    const [thsBanlance, usdtBanlance] = await THSUSDTPairContract.getReserves()
-    const thsPrice = Number(ethers.utils.formatUnits(thsBanlance, "ether")) / Number(ethers.utils.formatUnits(usdtBanlance, "gwei"))
-    // } catch (error) {
-    //   thsPrice = parseFloat(graphData?.data?.protocolMetrics[0]?.thsPrice ?? 0);
-    // }
+    // const THSUSDTPairContract = new ethers.Contract(addresses[chainID]?.THS_USDT_PAIR_ADDRESS, THSUSDTPAIRABI, provider);
+    // const [thsBanlance, usdtBanlance] = await THSUSDTPairContract.getReserves()
+    // const thsPrice = Number(ethers.utils.formatUnits(thsBanlance, "ether")) / Number(ethers.utils.formatUnits(usdtBanlance, "gwei"))
 
     const stakingTVL = parseFloat(graphData?.data?.protocolMetrics[0]?.totalValueLocked ?? 0);
     const marketCap = parseFloat(graphData?.data?.protocolMetrics[0]?.marketCap ?? 0);
-    const circSupply = parseFloat(graphData?.data?.protocolMetrics[0]?.thsCirculatingSupply ?? 0);
+    const circSupply = parseFloat(graphData?.data?.protocolMetrics[0]?.thsCirculatingSupply ?? 0) 
     const totalSupply = parseFloat(graphData?.data?.protocolMetrics[0]?.totalSupply ?? 0);
-    const treasuryMarketValue = parseFloat(graphData?.data?.protocolMetrics[0]?.treasuryMarketValue ?? 0) / Math.pow(10, 9);
-    // const currentBlock = parseFloat(graphData.data._meta.block.number ?? 0);
+    const treasuryMarketValue = parseFloat(graphData?.data?.protocolMetrics[0]?.treasuryMarketValue ?? 0)
+    const thsPrice = parseFloat(graphData?.data?.protocolMetrics[0]?.thsPrice ?? 0)
+
     return {
       stakingTVL,
       thsPrice,
@@ -131,7 +129,7 @@ export const loadAppDetailsContract = createAsyncThunk(
       console.error("Returned a null response when querying TheGraph");
       return;
     }
-    const currentIndex = graphData?.data?.rebases[0]?.index ?? "0";
+    const currentIndex = graphData?.data?.rebases[0]?.index ?? 0;
     const fiveDayRate = parseFloat(graphData?.data?.protocolMetrics[0]?.days5APY ?? 0);
     const stakingAPY = parseFloat(graphData?.data?.protocolMetrics[0]?.currentAPY ?? 0);
     const stakingRebase = parseFloat(graphData?.data?.protocolMetrics[0]?.nextEpochRebase ?? 0);
@@ -147,7 +145,7 @@ export const loadAppDetailsContract = createAsyncThunk(
 
 interface IAppData {
   readonly circSupply?: number;
-  readonly currentIndex?: string;
+  readonly currentIndex?: number;
   readonly currentBlock?: number;
   readonly fiveDayRate?: number;
   readonly loading: boolean;
@@ -159,7 +157,7 @@ interface IAppData {
   readonly stakingTVL?: number;
   readonly totalSupply?: number;
   readonly treasuryBalance?: number;
-  readonly treasuryMarketValue?: BigNumberish;
+  readonly treasuryMarketValue?: number;
 }
 
 const initialState: IAppData = {

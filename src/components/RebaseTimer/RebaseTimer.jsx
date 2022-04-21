@@ -89,8 +89,8 @@ function RebaseTimer() {
         {currentBlock ? (
           secondsToRebase ? (
             <>
-              <strong>{rebaseString}&nbsp;</strong>
               <Trans>to next rebase</Trans>
+              <strong>{rebaseString}&nbsp;</strong>
             </>
           ) : (
             <strong>rebasing</strong>
@@ -98,8 +98,6 @@ function RebaseTimer() {
         ) : (
           <Skeleton width="155px" />
         )}
-        <div>currentBlock: {currentBlock}</div>
-        <div>rebaseBlock: {rebaseBlock}</div>
       </Typography>
     </Box>
   );

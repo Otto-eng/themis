@@ -10,6 +10,7 @@ import { error, info } from "../slices/MessagesSlice";
 import { IActionValueAsyncThunk, IChangeApprovalAsyncThunk, IJsonRPCError } from "./interfaces";
 import { IERC20, ThemisStaking, StakingHelper } from "src/typechain";
 import { abi as sTHSAbi } from "src/abi/sThemis.json"; 
+import { t } from "@lingui/macro";
 
 interface IUAData {
   address: string;
@@ -41,7 +42,7 @@ export const changeApproval = createAsyncThunk(
   "stake/changeApproval",
   async ({ token, provider, address, networkID }: IChangeApprovalAsyncThunk, { dispatch }) => {
     if (!provider) {
-      dispatch(error("Please connect your wallet!"));
+      dispatch(error(t`Please connect your wallet!`));
       return;
     }
 
@@ -115,7 +116,7 @@ export const changeStake = createAsyncThunk(
   "stake/changeStake",
   async ({ action, value, provider, address, networkID }: IActionValueAsyncThunk, { dispatch }) => {
     if (!provider) {
-      dispatch(error("Please connect your wallet!"));
+      dispatch(error(t`Please connect your wallet!`));
       return;
     }
 

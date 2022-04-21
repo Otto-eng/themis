@@ -11,6 +11,7 @@ import { isPending } from "../Claim";
 
 import { abi as RegisterFormABI } from "src/abi/RegisterForm.json";
 import { GridFlex } from "src/components/Grid";
+import { t } from "@lingui/macro";
 
 
 
@@ -168,10 +169,10 @@ export default function OpenBeta() {
 								const info = await RegisterFormContract.provider.getTransactionReceipt(infoHash.hash)
 								setNum(num + 1)
 							} else {
-								dispatch(error("Please enter the Telegram Username"));
+								dispatch(error(t`Please enter the Telegram Username`));
 							}
 						} catch (err) {
-							dispatch(error("The Telegram ID have been register"))
+							dispatch(error(t`The Telegram ID have been register`))
 							setTimeout(() => {
 								setPeddingStatus({
 									submit: false

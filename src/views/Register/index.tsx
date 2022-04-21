@@ -13,6 +13,7 @@ import { abi as RelationshipABI } from "src/abi/Relationship.json";
 import { invitationIdCode } from "src/utils/invitationIdCode";
 import { isPending } from "../Claim";
 import { useHistory } from "react-router-dom";
+import { t } from "@lingui/macro";
 
 
 const GridFlex = styled(Grid)({
@@ -94,20 +95,9 @@ function Register() {
 		const signer = pro.getSigner();
 
 		const RelationshipContract = new ethers.Contract(addresses[chainID].Relationship_ADDRESS as string, RelationshipABI, signer)
-		const info = await RelationshipContract.RegisterInfoOf(address)
-		let defaultCode = "";
-		let invitedAddress = "";
-		if (!!info?.inviterCode && !!info.inviter) {
-			// inviter
-			invitedAddress = info.inviter;
-			defaultCode = info.inviterCode;
-			setUserRegisterInvitedCode(defaultCode)
-		} else {
-			defaultCode = await RelationshipContract.defaultInviteCode()
-			invitedAddress = await RelationshipContract.getInviter(address)
-		}
 
-		setIsInvited(invitedAddress !== ZERO_ADDRESS)
+		let defaultCode = await RelationshipContract.defaultInviteCode()
+		let invitedAddress = await RelationshipContract.getInviter(address)
 		let paramsObj: { [key: string]: any } = {}
 		if (location.search) {
 			const [_firstStr, nextStr] = location.search.split("?")
@@ -119,11 +109,24 @@ function Register() {
 				})
 			}
 		}
-		const invitationIdStr = paramsObj["initCode"]
+		console.log('paramsObj["initCode"]', paramsObj["initCode"])
+		if (paramsObj["initCode"]) {
+			defaultCode = paramsObj["initCode"]
+		}
+		const info = await RelationshipContract.RegisterInfoOf(address)
+		console.log("!!info?.inviterCode && !!info.inviter", !!info?.inviterCode && !!info.inviter)
+		if (!!info?.inviterCode && !!info.inviter) {
+			// inviter
+			invitedAddress = info.inviter;
+			defaultCode = info.inviterCode;
+			setUserRegisterInvitedCode(defaultCode)
+		}
+
+		setIsInvited(invitedAddress !== ZERO_ADDRESS)
 
 		updateValues({
 			...values,
-			invitationId: invitationIdStr ?? defaultCode
+			invitationId: defaultCode
 		})
 	}
 
@@ -154,11 +157,14 @@ function Register() {
 				await infoHash.wait()
 				if ("hash" in infoHash) {
 					const info = await RelationshipContract.provider.getTransactionReceipt(infoHash.hash)
-					history.replace("/stake")
 				}
 				setTimeout(() => {
 					setIsConfig(false)
 					setConfig(true)
+					setUserRegisterInvitedCode(values.invitationId ?? "")
+				}, 500);
+				setTimeout(() => {
+					history.replace("/stake")
 				}, 2000);
 			} catch (error) {
 				console.log("CONFIG", error)
@@ -188,7 +194,7 @@ function Register() {
 						height={30}
 						color={theme === THEME_LIGHT ? "#000" : "#F9FAFC"}
 						align="center"
-						text={"Bind Invitation ID"}
+						text={t`Bind Invitation ID`}
 					/>
 				</GridFlex>
 				<FormFieldsGroup fields={[
@@ -199,23 +205,23 @@ function Register() {
 						error: validations.address,
 						correct: corrects.address,
 						type: "text",
-						label: "Wallet Address",
-						placeholder: "Wallet address",
-						warn: (!!address || !showWarn) ? "" : "Please connect wallet",
+						label: t`Wallet Address`,
+						placeholder: t`Wallet address`,
+						warn: (!!address || !showWarn) ? `` : t`Please connect wallet`,
 						value: getFormatedAddressForShow(values.address || "", { startNum: 10, endNum: 34 }),
 						onClear: onClear,
 						onChange: onChange,
 					},
 					{
 						top: 28,
-						keyName: "invitationId",
+						keyName: t`invitationId`,
 						readOnly: false,
 						error: validations.invitationId,
 						correct: corrects.invitationId,
 						type: "text",
-						label: "Invitation ID",
-						placeholder: "Invitation ID",
-						warn: !validations.invitationId || !showWarn ? "" : "Please enter the correct invitation ID",
+						label: t`Invitation ID`,
+						placeholder: t`Invitation ID`,
+						warn: !validations.invitationId || !showWarn ? `` : t`Please enter the correct invitation ID`,
 						value: values.invitationId,
 						onClear: onClear,
 						onChange: onChange,
@@ -227,8 +233,10 @@ function Register() {
 						variant="contained"
 						color="primary"
 						disabled={config || !!isInvited || !(!!values.invitationId && !!values.address)}
-						onClick={onConfirm}>
-						{isPending({ config: isConfig }, "config", userRegisterInvitedCode ? "Success" : "Confirm")}
+						onClick={onConfirm}
+						key={isConfig + "config"}
+					>
+						{isPending({ config: isConfig }, "config", userRegisterInvitedCode ? t`Success` : t`Confirm`)}
 					</RegisterButton>
 				</Confirm>
 			</StyledGrid>

@@ -5,6 +5,7 @@ import img1 from "../../../../asstes/images/ido/lock@2x.png"
 import img2 from "../../../../asstes/images/ido/square@2x.png"
 import img3 from "../../../../asstes/images/ido/piechart@2x.png"
 import BgMain from "src/components/BgMain"
+import { Trans } from "@lingui/macro";
 
 const Main = styled.div`
 	position: relative;
@@ -82,11 +83,11 @@ function LinearReleaseRule() {
 	return (
 		<Main>
 			<LinearTitle>
-				<Left ><span>{"Linear Release Rules"}</span></Left>
+				<Left ><span><Trans>Linear Release Rules</Trans></span></Left>
 			</LinearTitle>
 			<Box>
 				<Text>
-					{"Release 35% of the total participated amount first, the leftover will release an equal amount every day."}
+					<Trans>Release 35% of the total participated amount first, the leftover will release an equal amount every day.</Trans>
 				</Text>
 				<BgMain imgsrc={img1} style={{ width: "56px", marginLeft: "16px", height: "56px" }} />
 			</Box>
@@ -96,14 +97,14 @@ function LinearReleaseRule() {
 				<Content>
 					<Item>
 						<Text>
-							{"eg. if one user has 10000 THS tokens leftover, of which 100 tokens will be released every day and needs 100 days to release all."}
+							<Trans>eg. if one user has 10000 THS tokens leftover, of which 100 tokens will be released every day and needs 100 days to release all.</Trans>
 						</Text>
 					</Item>
 				</Content>
 			</Box>
 			<Box>
 				<Text>
-					{"Part of IDO release rules won’t be affected by other staking rules."}
+					<Trans>Part of IDO release rules won’t be affected by other staking rules.</Trans>
 				</Text>
 				<BgMain imgsrc={img3} style={{ width: "56px", marginLeft: "16px", height: "56px" }} />
 

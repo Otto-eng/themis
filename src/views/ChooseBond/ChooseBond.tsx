@@ -50,15 +50,16 @@ function ChooseBond() {
   });
 
   const treasuryBalance: number | undefined = useAppSelector(state => {
-    if (state.bonding.loading == false) {
-      let tokenBalances = 0;
-      for (const bond in allBondsMap) {
-        if (state.bonding[bond]) {
-          tokenBalances += state.bonding[bond].purchased;
-        }
-      }
-      return tokenBalances;
-    }
+    return state.app.treasuryMarketValue
+    // if (state.bonding.loading == false) {
+    //   let tokenBalances = 0;
+    //   for (const bond in allBondsMap) {
+    //     if (state.bonding[bond]) {
+    //       tokenBalances += state.bonding[bond].purchased;
+    //     }
+    //   }
+    //   return tokenBalances;
+    // }
   });
 
   return (
@@ -138,7 +139,7 @@ function ChooseBond() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {bonds.slice(0,1).map(bond => (
+                    {bonds.map(bond => (
                       <BondTableData key={bond.name} bond={bond} />
                     ))}
                   </TableBody>

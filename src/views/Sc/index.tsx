@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux"
 import { scInviterEarningsDetailsList, scStakeEarningsDetailsList } from "src/slices/scSlice"
 import { isPending } from "../Claim"
 import Skeleton from "@material-ui/lab/Skeleton/Skeleton"
+import { t, Trans } from "@lingui/macro"
 dayjs.extend(utc)
 const GridFlex = styled("div")({
 	width: "100%",
@@ -218,12 +219,12 @@ export default function Sc() {
 		<Main>
 			<Container >
 				<Top style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}>
-						<Title >SC Amount</Title>
+					<Title ><Trans>SC Amount</Trans></Title>
 						<Blance>{num ? <Skeleton width="80px" /> : SCBanlance}</Blance>
 					</Top>
-				<CardTitle>Staking Earnings</CardTitle>
+				<CardTitle><Trans>Staking Earnings</Trans></CardTitle>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-					<Left ><div>SC Unclaimed</div> <Value>{stakValue === "0" ? "0.0000" : stakValue}</Value></Left>
+					<Left ><div><Trans>SC Unclaimed</Trans></div> <Value>{stakValue === "0" ? "0.0000" : stakValue}</Value></Left>
 						<Claim
 						className="stake-button sc-stake-button"
 							variant="contained"
@@ -264,14 +265,14 @@ export default function Sc() {
 									}, 500);
 								}
 							}}>
-							{isPending(pendingStatus, "ScFarmForStaker", "Claim")}
+						{isPending(pendingStatus, "ScFarmForStaker", t`Claim`)}
 						</Claim>
 					</Card>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}>
 						<Item>
-							<Ol>hash</Ol>
-							<Option>time</Option>
-							<Amount>SC amount</Amount>
+						<Ol><Trans>Hash</Trans></Ol>
+						<Option><Trans>time</Trans></Option>
+						<Amount><Trans>SC amount</Trans></Amount>
 						</Item>
 						{scStakeEarningsList.map((item) => <React.Fragment>
 							<Item>
@@ -286,11 +287,11 @@ export default function Sc() {
 							style={((scStakeEarningsDetailsListPage * 10) > scStakeEarningsList.length) ? ({ display: "none" }) : ({})}
 							onClick={() => {
 							setScStakeEarningsDetailsListPage(scStakeEarningsDetailsListPage + 1)
-						}}>view more</More>
+						}}><Trans>view more</Trans></More>
 					</Card>
-				<CardTitle >Invite Earnings</CardTitle>
+				<CardTitle ><Trans>Invite Earnings</Trans></CardTitle>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-					<Left ><div>SC Unclaimed </div><Value>{invterValue === "0" ? "0.0000" : invterValue}</Value></Left>
+					<Left ><div><Trans>SC Unclaimed </Trans></div><Value>{invterValue === "0" ? "0.0000" : invterValue}</Value></Left>
 						<Claim
 							className="stake-button sc-stake-button"
 							variant="contained"
@@ -331,13 +332,13 @@ export default function Sc() {
 										})
 									}, 500);
 								}
-							}}>{isPending(pendingStatus, "ScFarmForInvter", "Claim")}</Claim>
+						}}>{isPending(pendingStatus, "ScFarmForInvter", t`Claim`)}</Claim>
 					</Card>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}>
 						<Item>
-							<Ol>hash</Ol>
-							<Option>time</Option>
-							<Amount>SC amount</Amount>
+						<Ol><Trans>Hash</Trans></Ol>
+						<Option><Trans>time</Trans></Option>
+						<Amount><Trans>SC amount</Trans></Amount>
 						</Item>
 						{scInviterEarningsList.map((item, _idx) => (<Item>
 							<Ol onClick={() => {
@@ -350,7 +351,7 @@ export default function Sc() {
 							style={((scScInviterEarningsDetailsListPage * 10) > scInviterEarningsList.length) ? ({ display: "none" }) : ({})}
 							onClick={() => {
 								setScInviterEarningsDetailsListPage(scScInviterEarningsDetailsListPage + 1)
-							}}>view more</More>
+						}}><Trans>view more</Trans></More>
 					</Card>
 			</Container>
 		</Main>

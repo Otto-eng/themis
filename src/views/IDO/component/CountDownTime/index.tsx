@@ -1,3 +1,4 @@
+import { Trans } from "@lingui/macro"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import styled from "styled-components"
 import { GridFlex } from "../../../../components/Grid"
@@ -104,10 +105,10 @@ function CountDownTime({ setIsStart, startTimestamp, endTimestamp }: CountDownTi
 					<Value>{date?.s ? (date.s < 10 ? ("0" + date.s) : (date.s ?? "00")) : "00"}</Value>
 				</Top>
 				<Bottom>
-					{/* <Tips>{"days"}</Tips> */}
-					<Tips>{"hrs"}</Tips>
-					<Tips>{"mins"}</Tips>
-					<Tips>{"secs"}</Tips>
+					{/* <Tips><Trans>{"days"}</Trans></Tips> */}
+					<Tips><Trans>{"hrs"}</Trans></Tips>
+					<Tips><Trans>{"mins"}</Trans></Tips>
+					<Tips><Trans>{"secs"}</Trans></Tips>
 				</Bottom>
 			</Main>
 		</CountDownTimeMain>

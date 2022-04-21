@@ -167,7 +167,7 @@ function Stake() {
           <Grid container direction="column" spacing={2}>
             <Grid item>
               <div className="card-header">
-                <Typography variant="h5">Single Stake (3, 3)</Typography>
+                <Typography variant="h5"><Trans>Single Stake</Trans> (3, 3)</Typography>
                 <RebaseTimer />
 
                 {/* {address && Number(oldSohmBalance) > 0.01 && (
@@ -237,8 +237,8 @@ function Stake() {
                         <Trans>Current Index</Trans>
                       </Typography>
                       <Typography variant="h4">
-                        {currentIndex || currentIndex === "0" ? (
-                          <span data-testid="index-value">{trim(Number(currentIndex), 1)} THS</span>
+                        {currentIndex ? (
+                          <span data-testid="index-value">{trim(Number(currentIndex), 4)} THS</span>
                         ) : (
                           <Skeleton width="150px" data-testid="index-loading" />
                         )}
@@ -321,7 +321,7 @@ function Stake() {
                               endAdornment={
                                 <InputAdornment position="end">
                                   <Button variant="text" onClick={setMax} color="inherit">
-                                    Max
+                                    <Trans>Max</Trans>
                                   </Button>
                                 </InputAdornment>
                               }

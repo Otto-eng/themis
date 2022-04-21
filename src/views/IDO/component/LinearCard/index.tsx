@@ -3,6 +3,7 @@ import { GridFlex } from "../../../../components/Grid"
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core"
 import { useState } from "react"
 import { makeStyles } from '@material-ui/core/styles';
+import { Trans, t } from "@lingui/macro";
 
 const Main = styled.div`
   width: 100%;
@@ -90,39 +91,36 @@ const useStyles = makeStyles({
 function LinearCard() {
 	const classes = useStyles();
 
-	const [page, setPage] = useState(0);
-	const [rowsPerPage, setRowsPerPage] = useState(10);
-
 	const columns: Column[] = [
 		{
-			id: 'name', label: "Phase"
+			id: 'name', label: t`Phase`
 		},
 		{
-			id: 'total', label: "THS per USDT"
+			id: 'total', label: t`THS per USDT`
 		},
 		{
 			id: 'price',
-			label: "Token Supply",
+			label: t`Token Supply`,
 
 			align: 'right',
 		},
 		{
 			id: 'addNum',
-			label: "THS per 1000 USDT",
+			label: t`THS per 1000 USDT`,
 
 			align: 'right',
 		}
 	];
 
 	const rows = [
-		createData("Pre-Sale", "4U", "125,000", 250),
+		createData(t`Pre-Sale`, "4U", "125,000", 250),
 	];
 
 
 	return (
 		<Main>
 			<LinearTitle>
-				<Left ><span>{"IDO Rules"}</span></Left>
+				<Left ><span><Trans>IDO Rules</Trans></span></Left>
 			</LinearTitle>
 			<Paper className={classes.root}>
 				<TableContainer className={classes.container}>

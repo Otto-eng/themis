@@ -3,6 +3,7 @@ import Typography from "@material-ui/core/Typography"
 import Box from "@material-ui/core/Box"
 import styled from "styled-components"
 import { GridFlex } from "../../../../components/Grid"
+import { Trans } from "@lingui/macro"
 
 const Main = styled.div`
 	width: 100%;
@@ -66,7 +67,7 @@ function Progress({ totalBuy }: PropsType) {
 					value={ratio <= 100 ? ratio : 100} />
 			</div>
 			<Text>
-				<Left>{"Progress"}</Left>
+				<Left><Trans>Progress</Trans></Left>
 				<Right>{total <= 500000 ? total.toFixed(2) : 500000}/{500000}</Right>
 			</Text>
 		</Main>

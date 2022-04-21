@@ -38,6 +38,7 @@ import { idoRelease35List, idoRelease65List } from "./slices/idoReleaseSlice";
 import { info } from "./slices/MessagesSlice";
 import Admin from "./views/Admin";
 import DaoProfit from "./views/DaoProfit";
+import { t } from "@lingui/macro";
 
 // 😬 Sorry for all the console logging
 const DEBUG = false;
@@ -97,6 +98,7 @@ function App() {
   const isSmallerScreen = useMediaQuery("(max-width: 980px)");
   const isSmallScreen = useMediaQuery("(max-width: 600px)");
   const [isInvited, setIsInvited] = useState(false)
+  const [pathname, setPathname] = useState("")
   const [adminAddress, setAdminAddress] = useState("hash")
 
   const { connect, provider, chainID, connected, disconnect } = useWeb3Context();
@@ -123,7 +125,6 @@ function App() {
 
   const getloadAppDetails = useCallback(
     async () => {
-      console.log(111)
       await dispatch(loadAppDetails({ provider, chainID }))
     },
     [provider, chainID],
@@ -192,10 +193,10 @@ function App() {
     async (account: string) => {
       const signer = provider.getSigner();
       const RelationshipContract = new ethers.Contract(addresses[chainID].Relationship_ADDRESS as string, RelationshipABI, signer)
-
       const invitedAddress = await RelationshipContract.RegisterInfoOf(account)
       setIsInvited(!invitedAddress.registrantCode)
-    }, [address, chainID, provider, addresses]
+      setPathname(location.pathname)
+    }, [address, chainID, provider, addresses, location.pathname]
   )
 
   const scData = useCallback(
@@ -212,9 +213,8 @@ function App() {
   useEffect(() => {
     if (address && chainID && provider && addresses[chainID]?.Relationship_ADDRESS) {
       serachRelationship(address)
-      scData()
     }
-  }, [address, chainID, provider, addresses])
+  }, [address, chainID, provider, addresses, location.pathname])
 
   const setRoot = useCallback(
     async () => {
@@ -228,8 +228,9 @@ function App() {
     }, [address, chainID, provider, addresses])
 
   useEffect(() => {
-    if (address && chainID && provider && addresses[chainID]?.THS_ADDRESS) {
+    if (address && chainID && provider && addresses[chainID]?.THS_ADDRESS && addresses[chainID]?.Relationship_ADDRESS) {
       setRoot()
+      scData()
     }
   }, [address, chainID, provider, addresses])
 
@@ -242,17 +243,18 @@ function App() {
   }, [location]);
 
   // useEffect(() => {
-  //   if (address && isInvited && (["/bonds", "/stake"].some(item => location.pathname.includes(item)))) {
+  //   console.log(" location.pathname", pathname)
+  //   if (address && isInvited && (["/bonds", "/stake"].some(item => pathname.includes(item)))) {
   //     history.replace("/register" + (location.search ?? ""))
   //   }
-  // }, [address, isInvited, location.pathname])
+  // }, [address, isInvited, pathname])
 
-  // useEffect(() => {
-  //   if (address && isInvited && (["/bonds", "/stake"].some(item => location.pathname.includes(item)))) {
-  //     // history.replace("/dashboard")
-  //     dispatch(info("Themis systerm will be launched at 11:00 on April 16, utc time."));
-  //   }
-  // }, [location.pathname])
+  useEffect(() => {
+    if (["/daoRewards"].includes(pathname)) {
+      history.replace("/stake")
+      dispatch(info(t`The launch time of DAO Rewards is waiting for the DAO voting.`));
+    }
+  }, [pathname])
 
   useEffect(() => {
     const height = document.body.scrollHeight;
@@ -284,7 +286,7 @@ function App() {
             </Route>
 
             <Route exact path="/">
-              <Redirect to="/dashboard" />
+              <Redirect to="/stake" />
             </Route>
 
             <Route exact path="/stake">
@@ -312,7 +314,7 @@ function App() {
             <Route path="/sc">
               <Sc />
             </Route>
-            <Route path="/daoProfit">
+            <Route path="/daoRewards">
               <DaoProfit />
             </Route>
 

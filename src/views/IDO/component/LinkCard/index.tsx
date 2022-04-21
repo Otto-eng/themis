@@ -12,6 +12,7 @@ import { useState } from "react"
 // import { APP_MAIN_URL } from "../../../../constants"
 import useModel from "flooks"
 import { GlobalAttentionDialog } from "../../../../models"
+import { Trans } from "@lingui/macro"
 
 const Main = styled.div`
   width: 100%;
@@ -91,30 +92,14 @@ const CopyBtn = styled(GridFlex)`
 `
 
 function LinkCard() {
-	// const { t } = useTranslation()
 
-	const [copyText, setCopyText] = useState("copy")
-
-	const handleCopy = (value: string) => {
-		if (copy(value)) {
-			setCopyText("copySuccess");
-			setTimeout(() => {
-				setCopyText("copy")
-			}, 3000);
-		}
-	}
-
-	const { update: showAttention } = useModel(GlobalAttentionDialog);
 
 
 	// const { id } = useInvitationId(true);
 	return (
 		<Main>
 			<LinearTitle>
-				<Left ><span>{
-					"inviteLink"
-					// t("inviteLink")
-				}</span></Left>
+				<Left ><span><Trans>inviteLink</Trans></span></Left>
 				<Right ></Right>
 			</LinearTitle>
 			{/* <Copy>

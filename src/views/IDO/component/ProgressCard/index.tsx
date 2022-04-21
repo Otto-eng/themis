@@ -2,6 +2,7 @@ import styled from "styled-components"
 import { GridFlex } from "../../../../components/Grid"
 import hotImg from "../../../../asstes/images/home/hot@2x.png"
 import { LinearProgressWithLabel } from "../Progress"
+import { Trans } from "@lingui/macro"
 
 const data: LinearProgresstype[] = [{
 	topLeftText: "Pre-Sale",
@@ -172,7 +173,7 @@ const LinearProgress = ({
 					</TopRight>
 					<BtnStatus status={status}>{status}</BtnStatus>
 				</Text>
-				<SmallText>{"Total"}</SmallText>
+				<SmallText><Trans>Total</Trans></SmallText>
 				<LinearProgressWithLabel style={{
 					height: "14px",
 					background: "rgba(89, 66, 52, 0.39)",
@@ -198,7 +199,7 @@ function ProgressCard({ totalBuy }: PropsType) {
 	return (
 		<Main key={totalBuy}>
 			<LinearTitle>
-				<Left ><span>{"Token Sales Progress"}</span></Left>
+				<Left ><span><Trans>Token Sales Progress</Trans></span></Left>
 			</LinearTitle>
 			<ProgressList>
 				{

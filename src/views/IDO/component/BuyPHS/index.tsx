@@ -1,3 +1,4 @@
+import { Trans } from "@lingui/macro"
 import styled from "styled-components"
 import { GridFlex } from "../../../../components/Grid"
 
@@ -42,10 +43,12 @@ function BuyPHS() {
 	return (
 		<Main>
 			<LinearTitle>
-				<Left ><span>{"How to buy THS?"}</span></Left>
+				<Left ><span><Trans>How to buy THS?</Trans></span></Left>
 			</LinearTitle>
 			<Box>
-				{"Users can use MetaMask， TokenPocket， and imTokent wallet to purchase THS, make sure you have USDT(BEP20) on balance and use the Binance Smart Chain network. Enter the amount, click the send button, the smart contract will automatically complete the transaction. Please refer to the tutorial below."}
+				<Trans>
+					Users can use MetaMask， TokenPocket， and imTokent wallet to purchase THS, make sure you have USDT(BEP20) on balance and use the Binance Smart Chain network. Enter the amount, click the send button, the smart contract will automatically complete the transaction. Please refer to the tutorial below.
+				</Trans>
 			</Box>
 		</Main>
 	)

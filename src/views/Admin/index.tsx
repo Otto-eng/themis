@@ -13,6 +13,7 @@ import { useAppSelector } from "src/hooks";
 import { GridFlex } from "src/components/Grid";
 import copy from "copy-to-clipboard"
 import React from "react";
+import { t } from "@lingui/macro";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -131,7 +132,7 @@ export default function Admin() {
 	const setRoot = useCallback(
 		async (key: string) => {
 			if (!value) {
-				dispatch(error("Please enter address!"));
+				dispatch(error(t`Please enter address!`));
 				return;
 			}
 			const flag = key === "update";

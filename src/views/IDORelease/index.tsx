@@ -14,6 +14,7 @@ import { isPending } from "../Claim"
 import Skeleton from "@material-ui/lab/Skeleton/Skeleton"
 import { ThemisERC20Token } from "src/typechain"
 import { idoRelease65List } from "src/slices/idoReleaseSlice"
+import { t, Trans } from "@lingui/macro"
 dayjs.extend(utc)
 const GridFlex = styled("div")({
 	width: "100%",
@@ -216,12 +217,12 @@ export default function IDORelease() {
 		<Main>
 			<Container >
 				<Top style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}>
-					<Title >THS Amount</Title>
+					<Title ><Trans>THS Amount</Trans></Title>
 					<Blance>{flag ? <Skeleton width="80px" /> : SCBanlance}</Blance>
 				</Top>
-				<CardTitle>IDO Release 35%</CardTitle>
+				<CardTitle><Trans>IDO Release {"35%"}</Trans> </CardTitle>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-					<Left ><div>THS Unclaimed</div> <Value>{stakValue === "0" ? "0.0000" : stakValue}</Value></Left>
+					<Left ><div><Trans>THS Unclaimed </Trans></div> <Value>{stakValue === "0" ? "0.0000" : stakValue}</Value></Left>
 					<Claim
 						className="stake-button sc-stake-button"
 						variant="contained"
@@ -264,14 +265,14 @@ export default function IDORelease() {
 								}, 500);
 							}
 						}}>
-						{isPending(pendingStatus, "ScFarmForStaker", "Claim")}
+						{isPending(pendingStatus, "ScFarmForStaker", t`Claim`)}
 					</Claim>
 				</Card>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}>
 					<Item>
-						<Ol>hash</Ol>
-						<Option>time</Option>
-						<Amount>THS amount</Amount>
+						<Ol><Trans>Hash</Trans></Ol>
+						<Option><Trans>time</Trans></Option>
+						<Amount><Trans>THS amount</Trans></Amount>
 					</Item>
 					{ido35List.map((item) => <React.Fragment>
 						<Item>
@@ -283,9 +284,9 @@ export default function IDORelease() {
 						</Item>
 					</React.Fragment>)}
 				</Card>
-				<CardTitle >IDO Release 65%</CardTitle>
+				<CardTitle ><Trans>IDO Release {"65%"}</Trans></CardTitle>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-					<Left ><div>THS Unclaimed </div><Value>{invterValue === "0" ? "0.0000" : invterValue}</Value></Left>
+					<Left ><div><Trans>THS Unclaimed </Trans></div><Value>{invterValue === "0" ? "0.0000" : invterValue}</Value></Left>
 					<Claim
 						className="stake-button sc-stake-button"
 						variant="contained"
@@ -328,13 +329,13 @@ export default function IDORelease() {
 									})
 								}, 500);
 							}
-						}}>{isPending(pendingStatus, "ScFarmForInvter", "Claim")}</Claim>
+						}}>{isPending(pendingStatus, "ScFarmForInvter", t`Claim`)}</Claim>
 				</Card>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}>
 					<Item>
-						<Ol>hash</Ol>
-						<Option>time</Option>
-						<Amount>THS amount</Amount>
+						<Ol><Trans>Hash</Trans></Ol>
+						<Option><Trans>time</Trans></Option>
+						<Amount><Trans>THS amount</Trans></Amount>
 					</Item>
 					{ido65List.map((item, _idx) => (<Item>
 						<Ol onClick={() => {

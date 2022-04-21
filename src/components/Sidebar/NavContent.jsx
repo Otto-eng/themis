@@ -21,7 +21,7 @@ import adminLightIcon from "../../asstes/icons/admin@2x.png";
 import daoProfitLightIcon from "../../asstes/icons/daoProfit@2x.png";
 import daoProfitDarkIcon from "../../asstes/icons/daoProfitLight@2x.png";
 
-import { Trans } from "@lingui/macro";
+import { Trans, t } from "@lingui/macro";
 import { styled } from "@material-ui/core"
 import { useDispatch } from "react-redux";
 import { info } from "../../slices/MessagesSlice";
@@ -51,7 +51,7 @@ function NavContent() {
   const [isActive] = useState();
   const { chainID, address, provider } = useWeb3Context();
   const { bonds } = useBonds(chainID);
-  const [icon, setIcon] = useState({ claim: ClaimDarkIcon, logo: THSDarkPng, sc: SCDarkIcon, openBeta: openBetaDarkIcon, ido: idoDarkIcon, idoRelease: idoReleaseDarkIcon.default, admin: adminDarkIcon, daoProfit: daoProfitDarkIcon })
+  const [icon, setIcon] = useState({ claim: ClaimDarkIcon, logo: THSDarkPng, sc: SCDarkIcon, openBeta: openBetaDarkIcon, ido: idoDarkIcon, idoRelease: idoReleaseDarkIcon.default, admin: adminDarkIcon, daoRewards: daoProfitDarkIcon })
   const dispatch = useDispatch()
   const [adminAddress, setAdminAddress] = useState("hash")
 
@@ -67,11 +67,11 @@ function NavContent() {
         ido: idoLightIcon,
         idoRelease: idoReleaseLightIcon,
         admin: adminLightIcon,
-        daoProfit: daoProfitLightIcon
+        daoRewards: daoProfitLightIcon
       })
     } else {
       setIcon({
-        claim: ClaimDarkIcon, sc: SCDarkIcon, logo: THSDarkPng, openBeta: openBetaDarkIcon, ido: idoDarkIcon, idoRelease: idoReleaseDarkIcon, admin: adminDarkIcon, daoProfit: daoProfitDarkIcon
+        claim: ClaimDarkIcon, sc: SCDarkIcon, logo: THSDarkPng, openBeta: openBetaDarkIcon, ido: idoDarkIcon, idoRelease: idoReleaseDarkIcon, admin: adminDarkIcon, daoRewards: daoProfitDarkIcon
       })
     }
   }, [theme])
@@ -120,7 +120,6 @@ function NavContent() {
               <img src={icon.logo} style={{ width: "100px", height: "72px" }}></img>
               <Title>THEMIS</Title>
             </Link>
-            <div>NETWORKID: {chainID}</div>
             {address && (
               <div className="wallet-link">
                 <Link href={`https://etherscan.io/address/${address}`} target="_blank">
@@ -196,7 +195,7 @@ function NavContent() {
                   <Typography variant="body2">
                     <Trans>Bond discounts</Trans>
                   </Typography>
-                  {bonds.slice(0,1 ).map((bond, i) => (
+                  {bonds.map((bond, i) => (
                     <Link
                       component={NavLink}
                       to={`/bonds/${bond.name}`} key={i} className={"bond"}>
@@ -250,17 +249,18 @@ function NavContent() {
                 </Typography>
               </Link>
               <Link
-                component={NavLink}
-                id="daoProfit-nav"
-                to="/daoProfit"
+                // component={NavLink}
+                id="daoRewards-nav"
+                to="/daoRewards"
                 isActive={(match, location) => {
-                  return checkPage(match, location, "daoProfit");
+                  return checkPage(match, location, "daoRewards");
                 }}
+                onClick={() => dispatch(info(t`The launch time of DAO Rewards is waiting for the DAO voting.`))}
                 className={`button-dapp-menu ${isActive ? "active" : ""}`}
               >
                 <Typography style={{ display: "flex", alignItems: "center" }} variant="h6">
-                  <img style={{ width: "20px", height: "20px", marginRight: "12px" }} src={icon.daoProfit} />
-                  <Trans>DAO Profit</Trans>
+                  <img style={{ width: "20px", height: "20px", marginRight: "12px" }} src={icon.daoRewards} />
+                  <Trans>DAO Rewards</Trans>
                 </Typography>
               </Link>
               <Link

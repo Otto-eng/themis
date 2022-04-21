@@ -1,5 +1,5 @@
 import { i18n } from "@lingui/core";
-import { en, fr, ko, tr } from "make-plural/plurals";
+import { en, zh, de } from "make-plural/plurals";
 
 // Declare locales
 interface ILocale {
@@ -11,6 +11,8 @@ interface ILocales {
 }
 export const locales: ILocales = {
   en: { flag: "us", plurals: en },
+  zh: { flag: "cn", plurals: zh },
+  de: { flag: "de", plurals: de },
   // fr: { flag: "fr", plurals: fr },
   // ko: { flag: "kr", plurals: ko },
   // tr: { flag: "tr", plurals: tr },

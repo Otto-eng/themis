@@ -9,6 +9,7 @@ import { Drawer, SvgIcon, Button, Typography, Box, IconButton, ButtonProps, styl
 import { ethers } from "ethers";
 import { addresses } from "src/constants";
 import { abi as RelationshipABI } from "src/abi/Relationship.json";
+import { Trans } from "@lingui/macro";
 
 
 
@@ -19,14 +20,14 @@ const WalletButtonBase = (props: ButtonProps) => (
 const OpenWalletButton = (props: ButtonProps) => (
   <WalletButtonBase {...props}>
     <SvgIcon component={WalletIcon} color="primary" />
-    <Typography>Wallet</Typography>
+    <Typography><Trans>Wallet</Trans></Typography>
   </WalletButtonBase>
 );
 
 const ConnectButton = (props: ButtonProps) => (
   <WalletButtonBase {...props}>
     <SvgIcon component={WalletIcon} color="primary" />
-    <Typography>Connect Wallet</Typography>
+    <Typography><Trans>Connect Wallet</Trans></Typography>
   </WalletButtonBase>
 );
 
@@ -66,7 +67,7 @@ const DisconnectButton = () => {
   const { disconnect } = useWeb3Context();
   return (
     <Button onClick={disconnect} variant="contained" size="large" color="secondary">
-      <Typography>Disconnect</Typography>
+      <Typography><Trans>Disconnect</Trans></Typography>
     </Button>
   );
 };
@@ -112,7 +113,7 @@ export function Wallet() {
         </Box>
         <InitialWalletView />
         {initCode && <InitCode onClick={() => {
-          if (initCode && copy("https://beta.themis.capital/register?initCode=" + initCode)) {
+          if (initCode && copy("https://asian.themis.capital/register?initCode=" + initCode)) {
             setState(true)
             setInterval(() => {
               setState(false)

@@ -40,7 +40,6 @@ function LocaleSwitcher() {
         <FlagIcon code={getLocaleFlag(i18n.locale)} />
         <span>&nbsp;</span>
       </Button>
-
       <Popper id={id} open={open} anchorEl={anchorEl} placement="bottom-start" transition>
         {({ TransitionProps }) => {
           return (

@@ -24,10 +24,10 @@ import type {
   OnEvent,
 } from "./common";
 
-export interface ThemisERC20TokenInterface extends ethers.utils.Interface {
+export interface PreThemisERC20Interface extends ethers.utils.Interface {
   functions: {
-    "DOMAIN_SEPARATOR()": FunctionFragment;
-    "PERMIT_TYPEHASH()": FunctionFragment;
+    "addrPresale()": FunctionFragment;
+    "addrRelease()": FunctionFragment;
     "allowance(address,address)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
@@ -35,37 +35,28 @@ export interface ThemisERC20TokenInterface extends ethers.utils.Interface {
     "burnFrom(address,uint256)": FunctionFragment;
     "decimals()": FunctionFragment;
     "decreaseAllowance(address,uint256)": FunctionFragment;
-    "getRobotByPage(uint256,uint256)": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
-    "isRobot(address)": FunctionFragment;
     "mint(address,uint256)": FunctionFragment;
     "name()": FunctionFragment;
-    "nonces(address)": FunctionFragment;
-    "owner()": FunctionFragment;
-    "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)": FunctionFragment;
     "policy()": FunctionFragment;
     "pullPolicy()": FunctionFragment;
     "pushPolicy(address)": FunctionFragment;
-    "renounceOwnership()": FunctionFragment;
     "renouncePolicy()": FunctionFragment;
-    "robotManager()": FunctionFragment;
-    "setRobot(address,bool)": FunctionFragment;
-    "setRobotManager(address)": FunctionFragment;
-    "setVault(address)": FunctionFragment;
+    "setContract(address)": FunctionFragment;
+    "supportTransfer()": FunctionFragment;
     "symbol()": FunctionFragment;
+    "toggleSupportTransfer()": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transfer(address,uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
-    "vault()": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "DOMAIN_SEPARATOR",
+    functionFragment: "addrPresale",
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "PERMIT_TYPEHASH",
+    functionFragment: "addrRelease",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -88,33 +79,14 @@ export interface ThemisERC20TokenInterface extends ethers.utils.Interface {
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "getRobotByPage",
-    values: [BigNumberish, BigNumberish]
-  ): string;
-  encodeFunctionData(
     functionFragment: "increaseAllowance",
     values: [string, BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: "isRobot", values: [string]): string;
   encodeFunctionData(
     functionFragment: "mint",
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
-  encodeFunctionData(functionFragment: "nonces", values: [string]): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "permit",
-    values: [
-      string,
-      string,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BytesLike,
-      BytesLike
-    ]
-  ): string;
   encodeFunctionData(functionFragment: "policy", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "pullPolicy",
@@ -122,27 +94,19 @@ export interface ThemisERC20TokenInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "pushPolicy", values: [string]): string;
   encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
     functionFragment: "renouncePolicy",
     values?: undefined
   ): string;
+  encodeFunctionData(functionFragment: "setContract", values: [string]): string;
   encodeFunctionData(
-    functionFragment: "robotManager",
+    functionFragment: "supportTransfer",
     values?: undefined
   ): string;
-  encodeFunctionData(
-    functionFragment: "setRobot",
-    values: [string, boolean]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setRobotManager",
-    values: [string]
-  ): string;
-  encodeFunctionData(functionFragment: "setVault", values: [string]): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "toggleSupportTransfer",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
     values?: undefined
@@ -155,18 +119,13 @@ export interface ThemisERC20TokenInterface extends ethers.utils.Interface {
     functionFragment: "transferFrom",
     values: [string, string, BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [string]
-  ): string;
-  encodeFunctionData(functionFragment: "vault", values?: undefined): string;
 
   decodeFunctionResult(
-    functionFragment: "DOMAIN_SEPARATOR",
+    functionFragment: "addrPresale",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "PERMIT_TYPEHASH",
+    functionFragment: "addrRelease",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
@@ -180,41 +139,31 @@ export interface ThemisERC20TokenInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getRobotByPage",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "increaseAllowance",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "isRobot", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "permit", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "policy", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "pullPolicy", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "pushPolicy", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "renounceOwnership",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "renouncePolicy",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "robotManager",
+    functionFragment: "setContract",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "setRobot", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "setRobotManager",
+    functionFragment: "supportTransfer",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "setVault", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "toggleSupportTransfer",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
     data: BytesLike
@@ -224,24 +173,17 @@ export interface ThemisERC20TokenInterface extends ethers.utils.Interface {
     functionFragment: "transferFrom",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "vault", data: BytesLike): Result;
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
     "OwnershipPulled(address,address)": EventFragment;
     "OwnershipPushed(address,address)": EventFragment;
-    "OwnershipTransferred(address,address)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipPulled"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipPushed"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
@@ -266,14 +208,6 @@ export type OwnershipPushedEvent = TypedEvent<
 
 export type OwnershipPushedEventFilter = TypedEventFilter<OwnershipPushedEvent>;
 
-export type OwnershipTransferredEvent = TypedEvent<
-  [string, string],
-  { previousOwner: string; newOwner: string }
->;
-
-export type OwnershipTransferredEventFilter =
-  TypedEventFilter<OwnershipTransferredEvent>;
-
 export type TransferEvent = TypedEvent<
   [string, string, BigNumber],
   { from: string; to: string; value: BigNumber }
@@ -281,12 +215,12 @@ export type TransferEvent = TypedEvent<
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface ThemisERC20Token extends BaseContract {
+export interface PreThemisERC20 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: ThemisERC20TokenInterface;
+  interface: PreThemisERC20Interface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -308,9 +242,9 @@ export interface ThemisERC20Token extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<[string]>;
+    addrPresale(overrides?: CallOverrides): Promise<[string]>;
 
-    PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
+    addrRelease(overrides?: CallOverrides): Promise<[string]>;
 
     allowance(
       owner: string,
@@ -345,50 +279,19 @@ export interface ThemisERC20Token extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    getRobotByPage(
-      _start: BigNumberish,
-      _size: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, string[]] & {
-        resultSize_: BigNumber;
-        blockNameArray_: string[];
-      }
-    >;
-
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    isRobot(
-      _addr: string,
-      overrides?: CallOverrides
-    ): Promise<[boolean] & { isRebot_: boolean }>;
-
     mint(
-      account_: string,
-      amount_: BigNumberish,
+      account: string,
+      amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
-
-    nonces(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    owner(overrides?: CallOverrides): Promise<[string]>;
-
-    permit(
-      owner: string,
-      spender: string,
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
 
     policy(overrides?: CallOverrides): Promise<[string]>;
 
@@ -401,33 +304,22 @@ export interface ThemisERC20Token extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
     renouncePolicy(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    robotManager(overrides?: CallOverrides): Promise<[string]>;
-
-    setRobot(
-      _addr: string,
-      _expectRobot: boolean,
+    setContract(
+      _presaleContract: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    setRobotManager(
-      _manager: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    setVault(
-      vault_: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    supportTransfer(overrides?: CallOverrides): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
+
+    toggleSupportTransfer(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -443,18 +335,11 @@ export interface ThemisERC20Token extends BaseContract {
       amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
-
-    transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    vault(overrides?: CallOverrides): Promise<[string]>;
   };
 
-  DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
+  addrPresale(overrides?: CallOverrides): Promise<string>;
 
-  PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
+  addrRelease(overrides?: CallOverrides): Promise<string>;
 
   allowance(
     owner: string,
@@ -489,47 +374,19 @@ export interface ThemisERC20Token extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  getRobotByPage(
-    _start: BigNumberish,
-    _size: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, string[]] & {
-      resultSize_: BigNumber;
-      blockNameArray_: string[];
-    }
-  >;
-
   increaseAllowance(
     spender: string,
     addedValue: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  isRobot(_addr: string, overrides?: CallOverrides): Promise<boolean>;
-
   mint(
-    account_: string,
-    amount_: BigNumberish,
+    account: string,
+    amount: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
-
-  nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-  owner(overrides?: CallOverrides): Promise<string>;
-
-  permit(
-    owner: string,
-    spender: string,
-    amount: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
 
   policy(overrides?: CallOverrides): Promise<string>;
 
@@ -542,33 +399,22 @@ export interface ThemisERC20Token extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
   renouncePolicy(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  robotManager(overrides?: CallOverrides): Promise<string>;
-
-  setRobot(
-    _addr: string,
-    _expectRobot: boolean,
+  setContract(
+    _presaleContract: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  setRobotManager(
-    _manager: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  setVault(
-    vault_: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  supportTransfer(overrides?: CallOverrides): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
+
+  toggleSupportTransfer(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -585,17 +431,10 @@ export interface ThemisERC20Token extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  vault(overrides?: CallOverrides): Promise<string>;
-
   callStatic: {
-    DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
+    addrPresale(overrides?: CallOverrides): Promise<string>;
 
-    PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
+    addrRelease(overrides?: CallOverrides): Promise<string>;
 
     allowance(
       owner: string,
@@ -627,47 +466,19 @@ export interface ThemisERC20Token extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    getRobotByPage(
-      _start: BigNumberish,
-      _size: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, string[]] & {
-        resultSize_: BigNumber;
-        blockNameArray_: string[];
-      }
-    >;
-
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    isRobot(_addr: string, overrides?: CallOverrides): Promise<boolean>;
-
     mint(
-      account_: string,
-      amount_: BigNumberish,
+      account: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
-
-    nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    owner(overrides?: CallOverrides): Promise<string>;
-
-    permit(
-      owner: string,
-      spender: string,
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     policy(overrides?: CallOverrides): Promise<string>;
 
@@ -675,23 +486,18 @@ export interface ThemisERC20Token extends BaseContract {
 
     pushPolicy(newPolicy_: string, overrides?: CallOverrides): Promise<void>;
 
-    renounceOwnership(overrides?: CallOverrides): Promise<void>;
-
     renouncePolicy(overrides?: CallOverrides): Promise<void>;
 
-    robotManager(overrides?: CallOverrides): Promise<string>;
-
-    setRobot(
-      _addr: string,
-      _expectRobot: boolean,
+    setContract(
+      _presaleContract: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setRobotManager(_manager: string, overrides?: CallOverrides): Promise<void>;
-
-    setVault(vault_: string, overrides?: CallOverrides): Promise<boolean>;
+    supportTransfer(overrides?: CallOverrides): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
+
+    toggleSupportTransfer(overrides?: CallOverrides): Promise<void>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -707,13 +513,6 @@ export interface ThemisERC20Token extends BaseContract {
       amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
-
-    transferOwnership(
-      newOwner: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    vault(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
@@ -746,15 +545,6 @@ export interface ThemisERC20Token extends BaseContract {
       newOwner?: string | null
     ): OwnershipPushedEventFilter;
 
-    "OwnershipTransferred(address,address)"(
-      previousOwner?: string | null,
-      newOwner?: string | null
-    ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(
-      previousOwner?: string | null,
-      newOwner?: string | null
-    ): OwnershipTransferredEventFilter;
-
     "Transfer(address,address,uint256)"(
       from?: string | null,
       to?: string | null,
@@ -768,9 +558,9 @@ export interface ThemisERC20Token extends BaseContract {
   };
 
   estimateGas: {
-    DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<BigNumber>;
+    addrPresale(overrides?: CallOverrides): Promise<BigNumber>;
 
-    PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
+    addrRelease(overrides?: CallOverrides): Promise<BigNumber>;
 
     allowance(
       owner: string,
@@ -805,42 +595,19 @@ export interface ThemisERC20Token extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    getRobotByPage(
-      _start: BigNumberish,
-      _size: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    isRobot(_addr: string, overrides?: CallOverrides): Promise<BigNumber>;
-
     mint(
-      account_: string,
-      amount_: BigNumberish,
+      account: string,
+      amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
-
-    nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    owner(overrides?: CallOverrides): Promise<BigNumber>;
-
-    permit(
-      owner: string,
-      spender: string,
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
 
     policy(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -853,33 +620,22 @@ export interface ThemisERC20Token extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
     renouncePolicy(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    robotManager(overrides?: CallOverrides): Promise<BigNumber>;
-
-    setRobot(
-      _addr: string,
-      _expectRobot: boolean,
+    setContract(
+      _presaleContract: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    setRobotManager(
-      _manager: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    setVault(
-      vault_: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    supportTransfer(overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
+
+    toggleSupportTransfer(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -895,19 +651,12 @@ export interface ThemisERC20Token extends BaseContract {
       amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
-
-    transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    vault(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    addrPresale(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    addrRelease(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     allowance(
       owner: string,
@@ -945,48 +694,19 @@ export interface ThemisERC20Token extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    getRobotByPage(
-      _start: BigNumberish,
-      _size: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    isRobot(
-      _addr: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     mint(
-      account_: string,
-      amount_: BigNumberish,
+      account: string,
+      amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    nonces(
-      owner: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    permit(
-      owner: string,
-      spender: string,
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
 
     policy(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -999,33 +719,22 @@ export interface ThemisERC20Token extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
     renouncePolicy(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    robotManager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    setRobot(
-      _addr: string,
-      _expectRobot: boolean,
+    setContract(
+      _presaleContract: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    setRobotManager(
-      _manager: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    setVault(
-      vault_: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    supportTransfer(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    toggleSupportTransfer(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1041,12 +750,5 @@ export interface ThemisERC20Token extends BaseContract {
       amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
-
-    transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    vault(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

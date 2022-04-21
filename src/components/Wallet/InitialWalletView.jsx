@@ -177,7 +177,7 @@ function InitialWalletView() {
         }
         icon={ThsImg}
         toggleDrawer={() => {
-          window.open(`https://kovan.etherscan.io/address/${addresses[chainID]?.THS_ADDRESS}?fromaddress=${address}`)
+          window.open(`https://www.bscscan.com/address/${addresses[chainID]?.THS_ADDRESS}?fromaddress=${address}`)
         }}
       />
       <Token
@@ -188,7 +188,7 @@ function InitialWalletView() {
         }
         icon={sOhmTokenImg}
         toggleDrawer={() => {
-          window.open(`https://kovan.etherscan.io/address/${addresses[chainID].STHS_ADDRESS}?fromaddress=${address}`)
+          window.open(`https://www.bscscan.com/address/${addresses[chainID].STHS_ADDRESS}?fromaddress=${address}`)
         }}
       />
 
