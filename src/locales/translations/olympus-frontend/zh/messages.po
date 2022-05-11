@@ -177,8 +177,8 @@ msgid "Choose recipient address. By default, this is your currently connected ad
 msgstr "選擇收件人地址。默認情況下，這是您當前連接的地址"
 
 #: src/views/TreasuryDashboard/components/Metric/Metric.js:52
-msgid "Circulating Supply (total)"
-msgstr "供應流通量（總量）"
+msgid "Total casting quantity"
+msgstr "總鑄造量"
 
 #: src/views/Bond/BondRedeem.jsx:71
 #: src/views/ChooseBond/ClaimRow.jsx:130
@@ -976,7 +976,7 @@ msgstr "取消質押 THS"
 
 #: src/views/Stake/Stake.tsx:400
 msgid "Unstaked Balance"
-msgstr "取消質押余額"
+msgstr "未質押余額"
 
 #: src/slices/PendingTxnsSlice.ts:29
 msgid "Unstaking sTHS"

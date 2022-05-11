@@ -71,6 +71,7 @@ function Register() {
 	const [userRegisterInvitedCode, setUserRegisterInvitedCode] = useState("");
 
 	function onChange(value: string, keyName: FieldNameKeys) {
+		console.log("value", values, value, keyName)
 		values[keyName] = value;
 		updateValues({ ...values });
 	}
@@ -109,12 +110,10 @@ function Register() {
 				})
 			}
 		}
-		console.log('paramsObj["initCode"]', paramsObj["initCode"])
 		if (paramsObj["initCode"]) {
 			defaultCode = paramsObj["initCode"]
 		}
 		const info = await RelationshipContract.RegisterInfoOf(address)
-		console.log("!!info?.inviterCode && !!info.inviter", !!info?.inviterCode && !!info.inviter)
 		if (!!info?.inviterCode && !!info.inviter) {
 			// inviter
 			invitedAddress = info.inviter;
@@ -214,7 +213,7 @@ function Register() {
 					},
 					{
 						top: 28,
-						keyName: t`invitationId`,
+						keyName: "invitationId",
 						readOnly: false,
 						error: validations.invitationId,
 						correct: corrects.invitationId,

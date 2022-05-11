@@ -3,7 +3,9 @@ import Web3Modal from "web3modal";
 import { StaticJsonRpcProvider, JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { IFrameEthereumProvider } from "@ledgerhq/iframe-provider";
-import { /* KOVAN_URI, */ BINANCE_URI, NetworkId, NETWORK_CHAINID, addresses /*, NETWORK_TEST_CHAINID */ } from "src/constants";
+import {
+  BINANCE_URI, NetworkId, NETWORK_CHAINID, addresses
+} from "src/constants";
 import { Providers } from "src/helpers/providers/Providers";
 import { ethers } from "ethers";
 
@@ -25,14 +27,10 @@ export const initNetworkFunc = async ({ provider }: IGetCurrentNetwork) => {
     let supported = true;
     const id: number = await provider.getNetwork().then(network => network.chainId);
     switch (id) {
-      case 56:
+      case NETWORK_CHAINID:
         networkName = "Binance";
         uri = BINANCE_URI;
         break;
-      // case 42:
-      //   networkName = "Kovan";
-      //   uri = KOVAN_URI;
-      //   break;
       default:
         supported = false;
         networkName = "Unsupported Network";
@@ -141,7 +139,6 @@ const initModal = new Web3Modal({
       package: WalletConnectProvider,
       options: {
         rpc: {
-          // 42: addresses[42].uri,
           56: addresses[56].uri,
         },
       },
@@ -211,7 +208,7 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
   const _checkNetwork = (otherChainID: number): boolean => {
     if (chainID !== otherChainID) {
       console.warn("You are switching networks");
-      if (otherChainID === NETWORK_CHAINID/* || otherChainID === NETWORK_TEST_CHAINID */) {
+      if (otherChainID == NETWORK_CHAINID/* || otherChainID === NETWORK_TEST_CHAINID */) {
         setChainID(otherChainID);
         // otherChainID === NETWORK_CHAINID ?
         setUri(getMainnetURI())

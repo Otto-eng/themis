@@ -30,8 +30,6 @@ const useStyles = makeStyles(theme => ({
 
 function TopBar({ handleDrawerToggle }) {
   const classes = useStyles();
-  const isVerySmallScreen = useMediaQuery("(max-width: 355px)");
-  const { chainID } = useWeb3Context()
 
   return (
     <AppBar position="sticky" className={classes.appBar} elevation={0}>

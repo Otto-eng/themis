@@ -25,8 +25,9 @@ function LocaleSwitcher() {
   return (
     <Box
       component="div"
-      onMouseEnter={e => handleClick(e)}
-      onMouseLeave={e => handleClick(e)}
+      // onMouseEnter={e => handleClick(e)}
+      // onMouseLeave={e => handleClick(e)}
+      onClick={e => handleClick(e)}
       id="locales-menu-button-hover"
     >
       <Button

@@ -249,13 +249,13 @@ function NavContent() {
                 </Typography>
               </Link>
               <Link
-                // component={NavLink}
+                component={NavLink}
                 id="daoRewards-nav"
                 to="/daoRewards"
                 isActive={(match, location) => {
                   return checkPage(match, location, "daoRewards");
                 }}
-                onClick={() => dispatch(info(t`The launch time of DAO Rewards is waiting for the DAO voting.`))}
+                // onClick={() => dispatch(info(t`The launch time of DAO Rewards is waiting for the DAO voting.`))}
                 className={`button-dapp-menu ${isActive ? "active" : ""}`}
               >
                 <Typography style={{ display: "flex", alignItems: "center" }} variant="h6">

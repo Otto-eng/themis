@@ -20,18 +20,24 @@ interface IUAData {
   type: string | null;
 }
 
-function alreadyApprovedToken(token: string, stakeAllowance: BigNumber, unstakeAllowance: BigNumber) {
+function alreadyApprovedToken(token: string, stakeAllowance: BigNumber, unstakeAllowance: BigNumber, thsBalance: string, sThsBalance: string) {
   // set defaults
   let bigZero = BigNumber.from("0");
-  let applicableAllowance = bigZero;
+  let applicableAllowance = BigNumber.from("0");
 
   // determine which allowance to check
   if (token === "ths") {
     applicableAllowance = stakeAllowance;
+    bigZero = BigNumber.from(Math.floor((Number(thsBalance ?? 0) + 1) * 10000)).div(BigNumber.from("10000"));
+
   } else if (token === "sThs") {
     applicableAllowance = unstakeAllowance;
+    bigZero = BigNumber.from(Math.floor((Number(sThsBalance ?? 0) + 1) * 10000)).div(BigNumber.from("10000"));
   }
 
+  // console.log("bigZero", bigZero.toString())
+
+  bigZero = bigZero.mul(ethers.utils.parseUnits("1", "gwei"))
   // check if allowance exists
   if (applicableAllowance.gt(bigZero)) return true;
 
@@ -40,7 +46,7 @@ function alreadyApprovedToken(token: string, stakeAllowance: BigNumber, unstakeA
 
 export const changeApproval = createAsyncThunk(
   "stake/changeApproval",
-  async ({ token, provider, address, networkID }: IChangeApprovalAsyncThunk, { dispatch }) => {
+  async ({ token, provider, address, networkID, thsBalance, sThsBalance }: IChangeApprovalAsyncThunk, { dispatch }) => {
     if (!provider) {
       dispatch(error(t`Please connect your wallet!`));
       return;
@@ -56,7 +62,7 @@ export const changeApproval = createAsyncThunk(
     let stakeAllowance = await thsContract.allowance(address, addresses[networkID].STAKING_HELPER_ADDRESS);
     let unstakeAllowance = await sThsContract.allowance(address, addresses[networkID].STAKING_ADDRESS);
     // return early if approval has already happened
-    if (alreadyApprovedToken(token, stakeAllowance, unstakeAllowance)) {
+    if (alreadyApprovedToken(token, stakeAllowance, unstakeAllowance, thsBalance, sThsBalance)) {
       dispatch(info("Approval completed."));
       return dispatch(
         fetchAccountSuccess({
@@ -73,12 +79,12 @@ export const changeApproval = createAsyncThunk(
         // won't run if stakeAllowance > 0
         approveTx = await thsContract.approve(
           addresses[networkID].STAKING_HELPER_ADDRESS,
-          ethers.utils.parseUnits("1000000000", "gwei").toString(),
+          ethers.utils.parseUnits("100000", "gwei").toString(),
         );
       } else if (token === "sThs") {
         approveTx = await sThsContract.approve(
           addresses[networkID].STAKING_ADDRESS,
-          ethers.utils.parseUnits("1000000000", "gwei").toString(),
+          ethers.utils.parseUnits("100000", "gwei").toString(),
         );
       }
 

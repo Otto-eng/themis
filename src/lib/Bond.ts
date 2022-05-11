@@ -3,14 +3,12 @@ import { Contract, ethers } from "ethers";
 
 import { abi as ierc20Abi } from "src/abi/IERC20.json";
 import { addresses } from "src/constants";
-import React from "react";
 import { EthContract } from "src/typechain/EthContract";
 import { BondCalcContract } from "src/typechain/BondCalcContract";
 import { abi as BondCalcContractABI } from "src/abi/IBondCalculator.json";
 
 
 export enum NetworkID {
-  // Test = 42, // NETWORK_CHAINID
   Mainnet = 56, // NETWORK_CHAINID
 }
 

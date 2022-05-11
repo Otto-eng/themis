@@ -148,7 +148,6 @@ export default function IDORelease() {
 	const ido65List = useAppSelector(state => state.ido.ido65List)
 
 	const getThsBanlance = useCallback(async () => {
-		if (address && chainID && provider && addresses && flag && addresses[chainID]?.THS_ADDRESS) {
 			try {
 				const signer = provider.getSigner();
 				const thsContract = new ethers.Contract(addresses[chainID]?.THS_ADDRESS as string, ThemisERC20TokenABI, signer) as ThemisERC20Token;
@@ -159,13 +158,11 @@ export default function IDORelease() {
 					setFlag(false)
 				}, 1000);
 			}
-		}
 
 	}, [chainID, address, provider, flag])
 
 
 	const getStakeList = useCallback(async () => {
-		if (address && chainID && provider && !!stake && addresses[chainID]?.IDO_PRESALERELEASE_ADDRESS) {
 			try {
 				const signer = provider.getSigner();
 				const PresaleReleaseContract = new ethers.Contract(addresses[chainID].IDO_PRESALERELEASE_ADDRESS, PresaleReleaseABI, signer)
@@ -176,37 +173,41 @@ export default function IDORelease() {
 					setStake(false)
 				}, 1000);
 			}
-		}
 
-	}, [chainID, address, provider, stake])
+	}, [chainID, address, provider, stake, addresses])
 
 	const getInvterList = useCallback(async () => {
-		if (address && chainID && addresses[chainID]?.IDO_PRESALERELEASE_ADDRESS && provider && !!invter) {
 			try {
 				const signer = provider.getSigner();
 				const PresaleReleaseContract = new ethers.Contract(addresses[chainID].IDO_PRESALERELEASE_ADDRESS, PresaleReleaseABI, signer)
-				const PresaleRelease70 = await PresaleReleaseContract.getpendingPart2(address)
-				setInvterValue((Math.floor(Number(ethers.utils.formatUnits(PresaleRelease70, "gwei")) * 10000) / 10000) + "")
+				const PresaleRelease65 = await PresaleReleaseContract.getpendingPart2(address)
+				setInvterValue((Math.floor(Number(ethers.utils.formatUnits(PresaleRelease65, "gwei")) * 10000) / 10000) + "")
 			} finally {
 				setTimeout(() => {
 					setInvter(false)
 				}, 1000);
 			}
+
+	}, [chainID, address, provider, invter, addresses])
+
+	useEffect(() => {
+		if (address && chainID && provider && !!stake && addresses[chainID]?.IDO_PRESALERELEASE_ADDRESS) {
+			getStakeList()
 		}
+	}, [chainID, address, provider, flag, stake, addresses])
 
-	}, [chainID, address, provider, invter])
+useEffect(() => {
+	if (address && chainID && addresses[chainID]?.IDO_PRESALERELEASE_ADDRESS && provider && !!invter) {
 
-	useEffect(() => {
-		getStakeList()
-	}, [chainID, address, provider, flag, stake])
-
-	useEffect(() => {
 		getInvterList()
-	}, [chainID, address, provider, flag, invter])
+	}
+}, [chainID, address, provider, flag, invter, addresses])
 
 	useEffect(() => {
-		getThsBanlance()
-	}, [chainID, address, provider, flag])
+		if (address && chainID && provider && addresses && flag && addresses[chainID]?.THS_ADDRESS) {
+			getThsBanlance()
+		}
+	}, [chainID, address, provider, flag, addresses])
 
 
 	useEffect(() => {

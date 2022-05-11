@@ -82,8 +82,8 @@ export const loadAccountDetails = createAsyncThunk(
 
     return {
       staking: {
-        ohmStake: +stakeAllowance,
-        ohmUnstake: +unstakeAllowance,
+        ohmStake: ethers.utils.formatUnits(stakeAllowance, "gwei"),
+        ohmUnstake: ethers.utils.formatUnits(unstakeAllowance, "gwei"),
       },
       wrapping: {
         // ohmWrap: +wrapAllowance,

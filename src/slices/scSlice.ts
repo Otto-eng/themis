@@ -22,6 +22,7 @@ interface ISCData {
 	readonly scStakeEarningsList: ScStakeEarningsType[];
 	readonly scInviterEarningsList: ScStakeEarningsType[];
 	readonly stakeReleaseEarningsList: ScStakeEarningsType[];
+	readonly thsInviterEarningsList: ScStakeEarningsType[];
 
 }
 
@@ -150,12 +151,51 @@ export const scInviterEarningsDetailsList = createAsyncThunk(
 	},
 );
 
+export const thsInviterEarningsDetailsList = createAsyncThunk(
+	"sc/thsInviterEarningsDetailsList",
+	async ({ first, address }: ISCAsyncThunk) => {
+		const protocolMetricsQuery = `
+				query MyQuery {
+				  thsInviteEarnings(
+				    first: ${first},
+						orderBy: timestamp,
+						orderDirection: desc,
+						where: { themis: "${address.toLowerCase()}" }
+				  ) {
+						id
+						timestamp
+						amount
+						themis {
+						  id
+						}
+  				}
+				}
+			`;
+		let data: ScStakeEarningsType[] = []
+		try {
+			const graphData = await apollo<any>(protocolMetricsQuery);
+			if (!graphData || graphData == null) {
+				console.error("Returned a null response when querying TheGraph");
+				throw new Error("");
+			}
+			data = graphData.data.thsInviteEarnings ?? []
+		} catch (error) {
+			data = []
+		}
+		return ({
+			data,
+			key: "thsInviterEarningsList"
+		})
+	},
+);
+
 const initialState: ISCData = {
 	loading: false,
 	loadingInviter: false,
 	scStakeEarningsList: [],
 	scInviterEarningsList: [],
-	stakeReleaseEarningsList: []
+	stakeReleaseEarningsList: [],
+	thsInviterEarningsList: []
 };
 
 
@@ -201,9 +241,20 @@ const scSlice = createSlice({
 			.addCase(scInviterEarningsDetailsList.rejected, (state, { error }) => {
 				state.loadingInviter = false;
 				console.error(error.name, error.message, error.stack);
-			});
+			})
+			.addCase(thsInviterEarningsDetailsList.pending, (state, action) => {
+				state.loadingInviter = true;
+			})
+			.addCase(thsInviterEarningsDetailsList.fulfilled, (state, action) => {
+				state.loadingInviter = false;
+				setSCState(state, action.payload);
+			})
+			.addCase(thsInviterEarningsDetailsList.rejected, (state, { error }) => {
+				state.loadingInviter = false;
+				console.error(error.name, error.message, error.stack);
+		});
 
-	},
+	}, 
 });
 
 

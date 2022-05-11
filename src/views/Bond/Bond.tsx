@@ -1,5 +1,4 @@
 import { ChangeEvent, Fragment, ReactNode, ReactElement, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { t, Trans } from "@lingui/macro";
 import { formatCurrency, trim } from "../../helpers";
 import { Backdrop, Box, Fade, Grid, Paper, Tab, Tabs, Typography } from "@material-ui/core";

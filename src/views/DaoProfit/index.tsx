@@ -11,6 +11,8 @@ import copy from "copy-to-clipboard"
 import { isPending } from "../Claim"
 import Skeleton from "@material-ui/lab/Skeleton/Skeleton"
 import { t, Trans } from "@lingui/macro"
+import { thsInviterEarningsDetailsList } from "src/slices/scSlice"
+import { useDispatch } from "react-redux"
 dayjs.extend(utc)
 const GridFlex = styled("div")({
 	width: "100%",
@@ -125,22 +127,19 @@ export default function DaoProfit() {
 	const theme = useAppSelector(state => state.theme.theme)
 	const [thsBalance, setThsBalance] = useState("0.0000")
 	const [flag, setFlag] = useState(true)
-	const scStakeEarningsList = useAppSelector(state => state.sc.scStakeEarningsList)
+	const thsInviterEarningsList = useAppSelector(state => state.sc.thsInviterEarningsList)
 	const [invter, setInvter] = useState(true)
+	const dispatch = useDispatch();
 
 	const [pendingStatus, setPeddingStatus] = useState({
 		banlance: false
 	})
 	const [stakValue, setStakValue] = useState("0.0000")
-	const [scStakeEarningsDetailsListPage, setScStakeEarningsDetailsListPage] = useState(1)
+	const [thsInviterEarningsDetailsListPage, setThsInviterEarningsDetailsListPage] = useState(1)
 
 	const getBalance = useCallback(async () => {
 		if (address && chainID && provider && addresses[chainID]?.THS_ADDRESS) {
 			if (pendingStatus.banlance) return;
-
-			setPeddingStatus({
-				banlance: true
-			})
 			try {
 				const signer = provider.getSigner();
 
@@ -162,15 +161,19 @@ export default function DaoProfit() {
 		}
 	}, [chainID, address, provider, flag, pendingStatus])
 
-	const getStakeList = useCallback(async () => {
+	const getStake = useCallback(async () => {
 		if (address && chainID && provider && !!invter) {
 			try {
 				const signer = provider.getSigner();
-				const THSFarmForInvterContract = new ethers.Contract(addresses[chainID].ScFarmForStaker_ADDRESS, THSFarmForStakerABI, signer)
+				const THSFarmForInvterContract = new ethers.Contract(addresses[chainID].THSFarmForInviter_ADDRESS, THSFarmForStakerABI, signer)
+				console.log("THSFarmForInvterContract", THSFarmForInvterContract)
 				const THSFarmForInvterpendingRewardValue = await THSFarmForInvterContract.pendingReward(address)
-				setStakValue((Math.floor(Number(ethers.utils.formatUnits(THSFarmForInvterpendingRewardValue, "ether")) * 10000) / 10000) + "")
+				console.log("THSFarmForInvterpendingRewardValue", THSFarmForInvterpendingRewardValue)
+
+				setStakValue((Math.floor(Number(ethers.utils.formatUnits(THSFarmForInvterpendingRewardValue, "gwei")) * 10000) / 10000) + "")
 			} finally {
 				setTimeout(() => {
+					setInvter(false)
 					setInvter(false)
 				}, 1000);
 			}
@@ -179,12 +182,16 @@ export default function DaoProfit() {
 	}, [chainID, address, provider, invter])
 
 	useEffect(() => {
-		getStakeList()
-	}, [chainID, address, provider, flag, invter])
+		getStake()
+	}, [chainID, address, provider, invter])
 
 	useEffect(() => {
 		getBalance();
 	}, [chainID, address, provider, flag])
+
+	useEffect(() => {
+		dispatch(thsInviterEarningsDetailsList({ first: thsInviterEarningsDetailsListPage * 10, address }))
+	}, [thsInviterEarningsDetailsListPage])
 
 	return (
 		<Main>
@@ -209,11 +216,11 @@ export default function DaoProfit() {
 							})
 							const signer = provider.getSigner();
 							try {
-								const ScFarmForStakerContract = new ethers.Contract(addresses[chainID].ScFarmForStaker_ADDRESS, THSFarmForStakerABI, signer)
-								const infoHash = await ScFarmForStakerContract.claim()
+								const THSFarmForInvterContract = new ethers.Contract(addresses[chainID].THSFarmForInviter_ADDRESS, THSFarmForStakerABI, signer)
+								const infoHash = await THSFarmForInvterContract.claim()
 								await infoHash.wait()
 								if ("hash" in infoHash) {
-									const info = await ScFarmForStakerContract.provider.getTransactionReceipt(infoHash.hash)
+									const info = await THSFarmForInvterContract.provider.getTransactionReceipt(infoHash.hash)
 								}
 								setTimeout(() => {
 									setPeddingStatus({
@@ -222,6 +229,7 @@ export default function DaoProfit() {
 								}, 500);
 								setTimeout(() => {
 									setFlag(true)
+									setInvter(true)
 								}, 1000);
 							} catch (error) {
 								setTimeout(() => {
@@ -231,7 +239,7 @@ export default function DaoProfit() {
 								}, 500);
 							}
 						}}>
-						{isPending(pendingStatus, "ScFarmForStaker", t`Claim`)}
+						{isPending(pendingStatus, "banlance", t`Claim`)}
 					</Claim>
 				</Card>
 				<Card style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}>
@@ -240,7 +248,7 @@ export default function DaoProfit() {
 						<Option><Trans>time</Trans></Option>
 						<Amount><Trans>THS amount</Trans></Amount>
 					</Item>
-					{scStakeEarningsList.map((item) => <React.Fragment>
+					{thsInviterEarningsList.map((item) => <React.Fragment>
 						<Item>
 							<Ol onClick={() => {
 								copy(item.id)
@@ -250,9 +258,9 @@ export default function DaoProfit() {
 						</Item>
 					</React.Fragment>)}
 					<More
-						style={((scStakeEarningsDetailsListPage * 10) > scStakeEarningsList.length) ? ({ display: "none" }) : ({})}
+						style={((thsInviterEarningsDetailsListPage * 10) > thsInviterEarningsList.length) ? ({ display: "none" }) : ({})}
 						onClick={() => {
-							setScStakeEarningsDetailsListPage(scStakeEarningsDetailsListPage + 1)
+							setThsInviterEarningsDetailsListPage(thsInviterEarningsDetailsListPage + 1)
 						}}><Trans>view more</Trans></More>
 				</Card>
 			</Container>

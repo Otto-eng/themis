@@ -1,6 +1,7 @@
 import { StableBond, LPBond, NetworkID } from "src/lib/Bond";
 import { abi as UsdtBondContractABI } from "src/abi/UsdtBondDepository.json";
 import { abi as ierc20Abi } from "src/abi/THSUSDTPair.json";
+import { addresses, NETWORK_CHAINID } from "src/constants";
 
 export const usdt = new StableBond({
   name: "usdt",
@@ -20,8 +21,8 @@ export const usdt = new StableBond({
   },
   networkAddrs: {
     [NetworkID.Mainnet]: {
-      bondAddress: "0x96D626D15909b94A7DA82C712DC532954ABE5204",
-      reserveAddress: "0x55d398326f99059ff775485246999027b3197955",
+      bondAddress: addresses[NETWORK_CHAINID].USDT_BOND,
+      reserveAddress: addresses[NETWORK_CHAINID].USDT_ADDRESS,
     },
   },
 });
@@ -53,14 +54,9 @@ export const ths_usdt = new LPBond({
   networkAddrs: {
     [NetworkID.Mainnet]: {
       // TODO: add correct bond address when it's created
-      bondAddress: "0x96D626D15909b94A7DA82C712DC532954ABE5204",
-      reserveAddress: "0xBB0E8171E3C14D3E56a3C8860a7AA3d3204e5178",
+      bondAddress: addresses[NETWORK_CHAINID].THS_USDT_BOND,
+      reserveAddress: addresses[NETWORK_CHAINID].THS_USDT_PAIR_ADDRESS,
     },
-    // [NetworkID.Test]: {
-    //   // TODO: add correct bond address when it's created
-    //   bondAddress: "0x497F9303C65d572A72413A478E24FE33f3725E05",
-    //   reserveAddress: "0x196623F3b407d1B69bC2f3d256e84c2A0834154f",
-    // },
   },
   lpUrl: "https://app.sushi.com/add/0xE43329547ef139a874564f7D1006fab95Ea1CfE8/0xbd8a03E74e53929DB75E30ca692e6188FabdEdE7",
 });
@@ -69,7 +65,7 @@ export const ths_usdt = new LPBond({
 // Is it a stableCoin bond? use `new StableBond`
 // Is it an LP Bond? use `new LPBond`
 // Add new bonds to this array!!
-export const allBonds = [ths_usdt /*,usdt, frax, eth, cvx, ohm_dai, ohm_frax, lusd, ohm_lusd, ohm_weth */];
+export const allBonds = [usdt, ths_usdt /* usdt, frax, eth, cvx, ohm_dai, ohm_frax, lusd, ohm_lusd, ohm_weth */];
 // TODO (appleseed-expiredBonds): there may be a smarter way to refactor this
 // export const allExpiredBonds = [cvx_expired];
 export const allBondsMap = allBonds.reduce((prevVal, bond) => {

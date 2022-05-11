@@ -7,7 +7,6 @@ import { clearPendingTxn, fetchPendingTxns } from "./PendingTxnsSlice";
 import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
 import { getBondCalculator } from "src/helpers/BondCalculator";
 import { RootState } from "src/store";
-import { abi as THSUSDTPAIRABI } from "src/abi/THSUSDTPair.json";
 
 import {
   IApproveBondAsyncThunk,

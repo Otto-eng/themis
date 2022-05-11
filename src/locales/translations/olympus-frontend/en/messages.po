@@ -97,8 +97,8 @@ msgid "Choose recipient address. By default, this is your currently connected ad
 msgstr "Choose recipient address. By default, this is your currently connected address"
 
 #: src/views/TreasuryDashboard/components/Metric/Metric.js:52
-msgid "Circulating Supply (total)"
-msgstr "Circulating Supply (total)"
+msgid "Total casting quantity"
+msgstr "Total casting quantity"
 
 #: src/views/Bond/BondRedeem.jsx:71
 #: src/views/ChooseBond/ClaimRow.jsx:130

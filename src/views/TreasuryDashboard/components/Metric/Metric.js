@@ -49,9 +49,11 @@ export const CircSupply = () => {
 
   return (
     <Metric className="circ">
-      <Metric.Title><Trans>Circulating Supply (total)</Trans></Metric.Title>
+      <Metric.Title><Trans>Total casting quantity</Trans></Metric.Title>
       <Metric.Value>
-        {isDataLoaded && parseInt(circSupply) + " / " + parseInt(totalSupply)}
+        {isDataLoaded &&
+          // parseInt(circSupply) + " / " + 
+          parseInt(totalSupply)}
       </Metric.Value>
     </Metric>
   );

@@ -101,11 +101,11 @@ function Stake() {
   };
 
   const onSeekApproval = async (token: string) => {
-    await dispatch(changeApproval({ address, token, provider, networkID: chainID }));
+    await dispatch(changeApproval({ address, token, provider, networkID: chainID, thsBalance, sThsBalance }));
   };
 
   const onChangeStake = async (action: string) => {
-    console.log("action", action)
+    // console.log("action", action)
     // eslint-disable-next-line no-restricted-globals
     if (isNaN(Number(quantity)) || quantity === "0") {
       // eslint-disable-next-line no-alert
@@ -126,8 +126,12 @@ function Stake() {
 
   const hasAllowance = useCallback(
     token => {
-      if (token === "ths") return stakeAllowance > 0;
-      if (token === "sThs") return unstakeAllowance > 0;
+      // console.log("stakeAllowance", stakeAllowance);
+      // console.log("thsBalance", thsBalance);
+      // console.log("unstakeAllowance", unstakeAllowance);
+      // console.log("sThsBalance", sThsBalance);
+      if (token === "ths") return stakeAllowance > Number(thsBalance);
+      if (token === "sThs") return unstakeAllowance > Number(sThsBalance);
       return 0;
     },
     [stakeAllowance, unstakeAllowance],
@@ -341,7 +345,7 @@ function Stake() {
                             variant="contained"
                             color="primary"
                             disabled={isPendingTxn(pendingTransactions, "staking")}
-                                key={!!isPendingTxn(pendingTransactions, "staking") + ""}
+                            key={!!isPendingTxn(pendingTransactions, "staking") + ""}
                             onClick={() => {
                               debounce(onChangeStake, 500, "stake");
                             }}
@@ -409,7 +413,7 @@ function Stake() {
                         <Trans>Staked Balance</Trans>
                       </Typography>
                       <Typography variant="body1" id="user-staked-balance">
-                          {isAppLoading ? <Skeleton width="80px" /> : <>{sThsSTakingBalance} sTHS</>}
+                          {isAppLoading ? <Skeleton width="80px" /> : <>{trim(Number(sThsSTakingBalance), 4)} sTHS</>}
                       </Typography>
                       </div>
                       

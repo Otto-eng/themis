@@ -23,14 +23,14 @@ import { dark as darkTheme } from "./themes/dark.js";
 import { light as lightTheme } from "./themes/light.js";
 import "./style.scss";
 import Claim from "./views/Claim";
-import { addresses, THEME_LIGHT } from "./constants";
+import { addresses, NETWORK_CHAINID, THEME_LIGHT } from "./constants";
 import Sc from "./views/Sc";
 import { useAppSelector } from "./hooks";
 import Register from "./views/Register";
 
 import { abi as RelationshipABI } from "src/abi/Relationship.json";
 import { abi as ThemisERC20TokenABI } from "src/abi/ThemisERC20Token.json";
-import { scInviterEarningsDetailsList, scStakeEarningsDetailsList, stakeTHSReleaseEarningsList } from "./slices/scSlice";
+import { scInviterEarningsDetailsList, scStakeEarningsDetailsList, stakeTHSReleaseEarningsList, thsInviterEarningsDetailsList } from "./slices/scSlice";
 import { IDO } from "./views/IDO";
 // import OpenBeta from "./views/OpenBeta";
 import IDORelease from "./views/IDORelease";
@@ -131,10 +131,10 @@ function App() {
   )
 
   useEffect(() => {
-    if (connected /* && ((chainID != 42) */ && (chainID != 56)) {
+    if (connected && (chainID != NETWORK_CHAINID)) {
       disconnect()
     }
-    if (address && connected && provider && chainID && chainID === 56) {
+    if ((address && connected && provider && chainID && chainID == NETWORK_CHAINID) || !(address || connected)) {
       getloadAppDetails()
     }
 
@@ -158,7 +158,7 @@ function App() {
         dispatch(calculateUserBondDetails({ address, bond, provider, networkID: chainID }));
       });
     },
-    [connected, chainID],
+    [connected, chainID, address],
   );
 
   // this useEffect fires on state change from above. It will ALWAYS fire AFTER
@@ -169,7 +169,7 @@ function App() {
     if ((!themisConnected || themisConnected === "true") && !connected) {
       connect()
     }
-  }, [chainID]);
+  }, [chainID, address]);
 
 
   // this useEffect picks up any time a user Connects via the button
@@ -202,6 +202,7 @@ function App() {
   const scData = useCallback(
     () => {
       dispatch(scInviterEarningsDetailsList({ first: 10, address }));
+      dispatch(thsInviterEarningsDetailsList({ first: 10, address }));
       dispatch(scStakeEarningsDetailsList({ first: 10, address }))
       dispatch(stakeTHSReleaseEarningsList({ first: 10, address }))
       dispatch(idoRelease35List({ first: 1, address }))
@@ -242,19 +243,11 @@ function App() {
     if (isSidebarExpanded) handleSidebarClose();
   }, [location]);
 
-  // useEffect(() => {
-  //   console.log(" location.pathname", pathname)
-  //   if (address && isInvited && (["/bonds", "/stake"].some(item => pathname.includes(item)))) {
-  //     history.replace("/register" + (location.search ?? ""))
-  //   }
-  // }, [address, isInvited, pathname])
-
   useEffect(() => {
-    if (["/daoRewards"].includes(pathname)) {
-      history.replace("/stake")
-      dispatch(info(t`The launch time of DAO Rewards is waiting for the DAO voting.`));
+    if (address && isInvited && (["/bonds", "/stake"].some(item => pathname.includes(item)))) {
+      history.replace("/register" + (location.search ?? ""))
     }
-  }, [pathname])
+  }, [address, isInvited, pathname])
 
   useEffect(() => {
     const height = document.body.scrollHeight;

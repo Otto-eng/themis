@@ -1,9 +1,9 @@
-import { BigNumberish, ethers } from "ethers";
+import { ethers } from "ethers";
 import { setAll } from "../helpers";
 import apollo from "../lib/apolloClient";
 import { createSlice, createSelector, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "src/store";
-import { addresses, BINANCE_URI /*, KOVAN_URI */, NetworkId } from "src/constants";
+import { addresses, BINANCE_URI, NetworkId } from "src/constants";
 import { StaticJsonRpcProvider } from "@ethersproject/providers";
 import { abi as THSUSDTPAIRABI } from "src/abi/THSUSDTPair.json";
 
@@ -70,17 +70,20 @@ export const loadAppDetails = createAsyncThunk(
       return;
     }
 
-    // try {
-    // const THSUSDTPairContract = new ethers.Contract(addresses[chainID]?.THS_USDT_PAIR_ADDRESS, THSUSDTPAIRABI, provider);
-    // const [thsBanlance, usdtBanlance] = await THSUSDTPairContract.getReserves()
-    // const thsPrice = Number(ethers.utils.formatUnits(thsBanlance, "ether")) / Number(ethers.utils.formatUnits(usdtBanlance, "gwei"))
+    let thsPrice = 0;
 
+    try {
+      const THSUSDTPairContract = new ethers.Contract(addresses[chainID]?.THS_USDT_PAIR_ADDRESS, THSUSDTPAIRABI, provider);
+      const [thsBanlance, usdtBanlance] = await THSUSDTPairContract.getReserves()
+      thsPrice = Number(ethers.utils.formatUnits(thsBanlance, "ether")) / Number(ethers.utils.formatUnits(usdtBanlance, "gwei"))
+    } catch {
+      thsPrice = parseFloat(graphData?.data?.protocolMetrics[0]?.thsPrice ?? 0)
+    }
     const stakingTVL = parseFloat(graphData?.data?.protocolMetrics[0]?.totalValueLocked ?? 0);
     const marketCap = parseFloat(graphData?.data?.protocolMetrics[0]?.marketCap ?? 0);
     const circSupply = parseFloat(graphData?.data?.protocolMetrics[0]?.thsCirculatingSupply ?? 0) 
     const totalSupply = parseFloat(graphData?.data?.protocolMetrics[0]?.totalSupply ?? 0);
     const treasuryMarketValue = parseFloat(graphData?.data?.protocolMetrics[0]?.treasuryMarketValue ?? 0)
-    const thsPrice = parseFloat(graphData?.data?.protocolMetrics[0]?.thsPrice ?? 0)
 
     return {
       stakingTVL,
@@ -109,7 +112,6 @@ export const loadAppDetailsContract = createAsyncThunk(
       }
     }
 `;
-    // const result = await fetch("https://kovan.infura.io/v3/4e658875764f4112a9cbfe92c4e93b9e/", {
     const result = await fetch(BINANCE_URI, {
       method: "POST",
       body: JSON.stringify({

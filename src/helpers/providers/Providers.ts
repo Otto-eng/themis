@@ -1,5 +1,5 @@
 import { StaticJsonRpcProvider } from "@ethersproject/providers";
-import { BINANCE_URI /*, KOVAN_URI */, NetworkId } from "src/constants";
+import { BINANCE_URI, NetworkId } from "src/constants";
 
 export class Environment {
 	public static env = process.env;
@@ -37,7 +37,7 @@ export class Environment {
 			// case NetworkId.TESTNET_KOVAN:
 			// 	return this._get({
 			// 		key: `REACT_APP_KOVAN_NODE_URL`,
-			// 		fallback: KOVAN_URI,
+			// 		fallback: BINANCE_URI,
 			// 	});
 			case NetworkId.MAIN_BINANCE:
 				return this._get({
