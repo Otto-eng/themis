@@ -254,7 +254,7 @@ export default function DaoProfit() {
 								copy(item.id)
 							}} style={{ cursor: "pointer" }}>{item.id.slice(0, 4)}...{item.id.slice(item.id.length - 4)}</Ol>
 							<Option>UTC {dayjs.unix(Number(item.timestamp)).utc().format("YYYY-MM-DD HH:mm")}</Option>
-							<Amount>{(Math.floor(Number(Number(item.amount) / Math.pow(10, 9)) * 10000) / 10000).toFixed(4)}</Amount>
+							<Amount>{(Math.floor(Number(item.amount) * 10000) / 10000).toFixed(4)}</Amount>
 						</Item>
 					</React.Fragment>)}
 					<More

@@ -319,7 +319,7 @@ function Stake() {
                               className="stake-input"
                               value={quantity}
                                   onChange={e => {
-                                    setQuantity(Number(e.target.value) + "")
+                                    setQuantity(e.target.value)
                                   }}
                               labelWidth={0}
                               endAdornment={

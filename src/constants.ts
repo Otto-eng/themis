@@ -15,8 +15,9 @@ export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000"
 
 
 export const BINANCE_URI =
-  "https://bsc-dataseed.binance.org"
-  // "https://kovan.infura.io/v3/4e658875764f4112a9cbfe92c4e93b9e";
+  "https://bsc-dataseed1.ninicoin.io"
+  // "https://kovan.infura.io/v3/4e658875764f4112a9cbfe92c4e93b9e"
+  ;
 
 export enum NetworkId {
   // TESTNET_KOVAN = NETWORK_TEST_CHAINID,
@@ -48,7 +49,7 @@ export const addresses: IAddresses = {
   //   USDT_BOND: "0x289ce758F9eCFc4C2e5f212d25e2BEab9a173Eaf",
   //   THS_USDT_BOND: "0x497F9303C65d572A72413A478E24FE33f3725E05",
   //   ScFarmForStaker_ADDRESS: "0x91f1C7EDfA681dD4BaA60EfB6B9d6429C4d78Fe8",
-  //   ScFarmForInvter_ADDRESS: "0x816D6821f68ecB7024E4AdD514ddBAE1a3196Eb0",
+  //   ScFarmForInvter_ADDRESS: "0x04Cf4A51D12d3d6b3c6d037e0884F96e725A5b6f",
   //   StakingRewardRelease_ADDRESS: "0x1692F7356f60CBA451360Be36D2008c4A2E66cC5",
   //   Relationship_ADDRESS: "0xE6E2EF65d1c71255F7545efFEc3aD1827f0a983C",
   //   ScaleCode_ADDRESS: "0xDe08933B9C0Aa63860E38A36CF2d3449EaA37967",
@@ -74,7 +75,7 @@ export const addresses: IAddresses = {
     THS_USDT_BOND: "0x96D626D15909b94A7DA82C712DC532954ABE5204",
     USDT_BOND: "0x74B5B5940d01E2b69195D16E6Ca6Ba30627728Fa",
     ScFarmForStaker_ADDRESS: "0x89A45b5e8d8b2136b8264Ec4e5dB911dAAb11895", //
-    ScFarmForInvter_ADDRESS: "0x91621288C0E1739103f7D106b0FfDa7dB1Bf85Fb", //
+    ScFarmForInvter_ADDRESS: "0xBd3D61E335c9a5a455E2cC1456b8F17c15380439", //
     StakingRewardRelease_ADDRESS: "0xf962E68cCE07E4AFA8C11BEEf04F9B0222728124", //
     Relationship_ADDRESS: "0xb7D952117282eE127Fd53c6Da512c18CBf93731b", //
     ScaleCode_ADDRESS: "0x59e9ea6D581e0b71D4db8B7Ab3d142b1A575216B", //
@@ -90,3 +91,6 @@ export const addresses: IAddresses = {
 export const THEME_KEYWORD = "THS_THEME"
 export const THEME_DARK = "dark"
 export const THEME_LIGHT = "light"
+
+export const allInvitedUrl = "https://themis.capital/themis/api/account/allInvitedByPage"
+export const invitedUrl = "https://themis.capital/themis/api/account/invitedByPage"

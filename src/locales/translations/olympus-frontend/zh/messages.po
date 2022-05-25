@@ -13,34 +13,15 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/views/33Together/PoolInfo.jsx:67
-#~ msgid "1 in {0}"
-#~ msgstr "1 in {0}"
-
-#: src/views/33Together/PoolInfo.jsx:64
-#~ msgid "1 in{0}"
-#~ msgstr "1 in{0}"
-
-#: src/views/33Together/PoolInfo.jsx:64
-#~ msgid "1 in {0}"
-#~ msgstr "1 in {0}"
-
-#: src/components/TopBar/treasuryData.js:138
-#: src/views/TreasuryDashboard/treasuryData.ts:165
+#: src/views/TreasuryDashboard/treasuryData.ts:166
 msgid "2.5K APY"
 msgstr "2.5K APY"
 
-#: src/views/33Together/33Together.jsx:150
-#~ msgid "3, 3 Together"
-#~ msgstr "3, 3 Together"
-
-#: src/components/TopBar/treasuryData.js:138
-#: src/views/TreasuryDashboard/treasuryData.ts:165
+#: src/views/TreasuryDashboard/treasuryData.ts:166
 msgid "5K APY"
 msgstr "5K APY"
 
-#: src/components/TopBar/treasuryData.js:138
-#: src/views/TreasuryDashboard/treasuryData.ts:165
+#: src/views/TreasuryDashboard/treasuryData.ts:166
 msgid "7.5K APY"
 msgstr "7.5K APY"
 
@@ -48,88 +29,61 @@ msgstr "7.5K APY"
 msgid "<0>IDO ended at 10:00 UTC</0><1>on April 15, 2022</1>"
 msgstr "<0>IDO 結束時間爲</0><1>2022年4月15日10:00 UTC</1>"
 
-#: src/components/TopBar/OhmMenu.jsx:155
-#~ msgid "ADD TOKEN TO WALLET"
-#~ msgstr "ADD TOKEN TO WALLET"
-
-#: src/views/Stake/ExternalStakePool.jsx:87
-#~ msgid "APR"
-#~ msgstr "APR"
-
-#: src/components/TopBar/treasuryData.js:137
-#: src/views/Stake/Stake.tsx:196
-#: src/views/TreasuryDashboard/treasuryData.ts:164
+#: src/views/Stake/Stake.tsx:200
+#: src/views/TreasuryDashboard/treasuryData.ts:165
 msgid "APY"
 msgstr "年收益率"
 
-#: src/views/TreasuryDashboard/TreasuryDashboard.jsx:306
-#~ msgid "APY over time"
-#~ msgstr "APY over time"
+#: src/views/Claim/index.tsx:463
+msgid "Accelerate"
+msgstr "加速"
 
-#: src/components/Sidebar/NavContent.jsx:305
+#: src/views/InviteUsers/index.tsx:146
+msgid "Address"
+msgstr "錢包地址"
+
+#: src/components/Sidebar/NavContent.jsx:322
 msgid "Admin"
 msgstr "Admin"
+
+#: src/views/InviteUsers/index.tsx:308
+msgid "All subordinate users"
+msgstr "所有邀请用戶"
 
 #: src/views/Bond/BondPurchase.jsx:160
 msgid "Amount"
 msgstr "數量"
 
-#: src/components/TopBar/treasuryData.js:149
-#: src/views/TreasuryDashboard/treasuryData.ts:176
+#: src/views/TreasuryDashboard/treasuryData.ts:179
 msgid "Annual Percentage Yield, is the normalized representation of an interest rate, based on a compounding period over one year. Note that APYs provided are rather ballpark level indicators and not so much precise future results."
 msgstr "年百分比收益率是基於一年以上的複利期的利率的標準化表示。 請注意，提供的APY只是大致水准的名額，而不是太精確的未來結果。"
 
 #: src/views/IDO/component/PreSate1/index.tsx:231
-#: src/views/Stake/Stake.tsx:361
-#: src/views/Stake/Stake.tsx:390
+#: src/views/Stake/Stake.tsx:365
+#: src/views/Stake/Stake.tsx:394
 msgid "Approve"
 msgstr "批准"
 
-#: src/views/Stake/ExternalStakePool.jsx:84
-#~ msgid "Asset"
-#~ msgstr "Asset"
-
-#: src/views/33Together/PoolPrize.jsx:114
-#~ msgid "Award Balance will grow at 1st rebase."
-#~ msgstr "Award Balance will grow at 1st rebase."
-
-#: src/views/33Together/PoolPrize.jsx:231
-#~ msgid "Award period has finished, click 'Start Award' to begin distribution"
-#~ msgstr "Award period has finished, click 'Start Award' to begin distribution"
-
-#: src/views/33Together/PoolPrize.jsx:202
-#~ msgid "Award period has finished, you can navigate to Pool Together's UI to begin distribution"
-#~ msgstr "Award period has finished, you can navigate to Pool Together's UI to begin distribution"
-
-#: src/views/33Together/PoolPrize.jsx:181
-#~ msgid "Award period has finished, you can navigate to Pool Together's UI to complete distribution"
-#~ msgstr "Award period has finished, you can navigate to Pool Together's UI to complete distribution"
-
-#: src/views/TreasuryDashboard/components/Metric/Metric.js:65
+#: src/views/TreasuryDashboard/components/Metric/Metric.js:67
 msgid "Backing per THS"
 msgstr "每個THS的儲備資產"
 
-#: src/views/Stake/ExternalStakePool.jsx:93
-#: src/views/Stake/ExternalStakePool.jsx:189
-#~ msgid "Balance"
-#~ msgstr "Balance"
-
-#: src/views/Register/index.tsx:197
+#: src/views/Register/index.tsx:196
 msgid "Bind Invitation ID"
 msgstr "綁定邀請ID"
 
-#: src/components/Sidebar/NavContent.jsx:189
+#: src/components/Sidebar/NavContent.jsx:190
 #: src/views/ChooseBond/ChooseBond.tsx:73
 #: src/views/ChooseBond/ChooseBond.tsx:127
 #: src/views/ChooseBond/ClaimBonds.jsx:74
 msgid "Bond"
 msgstr "債券"
 
-#: src/views/Bond/Bond.tsx:70
+#: src/views/Bond/Bond.tsx:69
 msgid "Bond Price"
 msgstr "債券價格"
 
-#: src/components/Sidebar/NavContent.jsx:196
+#: src/components/Sidebar/NavContent.jsx:197
 msgid "Bond discounts"
 msgstr "債券折扣"
 
@@ -137,61 +91,30 @@ msgstr "債券折扣"
 msgid "Bond {0}"
 msgstr "債券 {0}"
 
-#: src/components/TopBar/OhmMenu.jsx:104
-#: src/components/TopBar/OhmMenu.jsx:117
-#~ msgid "Buy on"
-#~ msgstr "Buy on"
-
-#: src/components/TopBar/OhmMenu.jsx:104
-#~ msgid "Buy on Sushiswap"
-#~ msgstr "Buy on Sushiswap"
-
-#: src/components/TopBar/OhmMenu.jsx:117
-#~ msgid "Buy on Uniswap"
-#~ msgstr "Buy on Uniswap"
-
-#: src/components/TopBar/OhmMenu.jsx:114
-#: src/components/TopBar/OhmMenu.jsx:127
-#~ msgid "Buy on {0}"
-#~ msgstr "Buy on {0}"
-
 #: src/components/TopBar/ThemeSwitch.jsx:17
 msgid "Change Theme"
 msgstr "切換主題"
 
-#: src/components/TopBar/LocaleSwitch.tsx:31
-#~ msgid "Change language"
-#~ msgstr "Change language"
-
-#: src/components/TopBar/LocaleSwitch.tsx:37
+#: src/components/TopBar/LocaleSwitch.tsx:38
 msgid "Change locale"
 msgstr "切換語言"
-
-#: src/views/33Together/PoolDeposit.jsx:115
-#: src/views/33Together/PoolWithdraw.jsx:108
-#~ msgid "Check back soon!"
-#~ msgstr "Check back soon!"
 
 #: src/views/Bond/AdvancedSettings.jsx:63
 msgid "Choose recipient address. By default, this is your currently connected address"
 msgstr "選擇收件人地址。默認情況下，這是您當前連接的地址"
 
-#: src/views/TreasuryDashboard/components/Metric/Metric.js:52
-msgid "Total casting quantity"
-msgstr "總鑄造量"
-
 #: src/views/Bond/BondRedeem.jsx:71
 #: src/views/ChooseBond/ClaimRow.jsx:130
-#: src/views/Claim/index.tsx:485
-#: src/views/DaoProfit/index.tsx:234
-#: src/views/IDORelease/index.tsx:268
-#: src/views/IDORelease/index.tsx:332
+#: src/views/Claim/index.tsx:486
+#: src/views/DaoProfit/index.tsx:242
+#: src/views/IDORelease/index.tsx:269
+#: src/views/IDORelease/index.tsx:333
 #: src/views/Sc/index.tsx:268
 #: src/views/Sc/index.tsx:335
 msgid "Claim"
 msgstr "領取"
 
-#: src/components/Sidebar/NavContent.jsx:233
+#: src/components/Sidebar/NavContent.jsx:234
 msgid "Claim Profit"
 msgstr "領取利潤"
 
@@ -219,34 +142,22 @@ msgstr "可領取"
 msgid "Claimable Rewards"
 msgstr "可領取的報酬"
 
-#: src/views/33Together/PoolPrize.jsx:190
-#~ msgid "Click 'Complete Award' to distribute and start a new prize period"
-#~ msgstr "Click 'Complete Award' to distribute and start a new prize period"
-
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:123
 msgid "Click \\\"Connect\\\" to make your wallet connect to the THS offering page."
 msgstr "單擊“連接”使您的錢包連接到THS服務頁面。"
 
-#: src/views/Stake/ExternalStakePool.jsx:164
-#~ msgid "Coming Soon"
-#~ msgstr "Coming Soon"
-
-#: src/views/Register/index.tsx:239
+#: src/views/Register/index.tsx:238
 msgid "Confirm"
 msgstr "確認"
 
 #: src/components/ConnectButton.jsx:9
 #: src/components/TopBar/ConnectMenu.jsx:23
 #: src/components/Wallet/index.tsx:30
-#: src/views/Stake/Stake.tsx:142
+#: src/views/Stake/Stake.tsx:146
 msgid "Connect Wallet"
 msgstr "連接錢包"
 
-#: src/views/Stake/Stake.jsx:257
-#~ msgid "Connect your wallet to stake OHM"
-#~ msgstr "Connect your wallet to stake OHM"
-
-#: src/views/Stake/Stake.tsx:259
+#: src/views/Stake/Stake.tsx:263
 msgid "Connect your wallet to stake THS"
 msgstr "把你的錢包連接到電腦上"
 
@@ -258,28 +169,23 @@ msgstr "費用:"
 msgid "Create a Wallet"
 msgstr "創建一個錢包"
 
-#: src/components/TopBar/treasuryData.js:138
-#: src/views/TreasuryDashboard/treasuryData.ts:165
+#: src/views/TreasuryDashboard/treasuryData.ts:166
 msgid "Current"
 msgstr "當前"
 
-#: src/views/Stake/Stake.tsx:237
+#: src/views/Stake/Stake.tsx:241
 msgid "Current Index"
 msgstr "當前指數"
 
-#: src/views/TreasuryDashboard/components/Metric/Metric.js:78
+#: src/views/TreasuryDashboard/components/Metric/Metric.js:80
 msgid "Current Index<0/>"
 msgstr "當前指數<0/>"
 
-#: src/views/33Together/PoolPrize.jsx:121
-#~ msgid "Current Prize"
-#~ msgstr "Current Prize"
-
-#: src/components/Sidebar/NavContent.jsx:263
+#: src/components/Sidebar/NavContent.jsx:264
 msgid "DAO Rewards"
 msgstr "DAO 獎勵"
 
-#: src/components/Sidebar/NavContent.jsx:159
+#: src/components/Sidebar/NavContent.jsx:160
 msgid "Dashboard"
 msgstr "儀表板"
 
@@ -288,103 +194,50 @@ msgstr "儀表板"
 msgid "Debt Ratio"
 msgstr "負債率"
 
-#: src/views/33Together/33Together.jsx:164
-#~ msgid "Deposit"
-#~ msgstr "Deposit"
-
-#: src/views/33Together/PoolDeposit.jsx:162
-#~ msgid "Deposit sTHS"
-#~ msgstr "Deposit sTHS"
-
-#: src/views/33Together/PoolDeposit.jsx:100
-#~ msgid "Deposit sTHS to win! Once deposited, you will receive a corresponding amount of 33T and be entered to win until your sTHS is withdrawn."
-#~ msgstr "Deposit sTHS to win! Once deposited, you will receive a corresponding amount of 33T and be entered to win until your sTHS is withdrawn."
-
-#: src/views/33Together/PoolDeposit.jsx:179
-#~ msgid "Depositing {quantity} sTHS will increase odds of winning to 1 in {newOdds}"
-#~ msgstr "Depositing {quantity} sTHS will increase odds of winning to 1 in {newOdds}"
-
-#: src/views/33Together/PoolDeposit.jsx:112
-#~ msgid "Deposits can be made once the prize has been awarded."
-#~ msgstr "Deposits can be made once the prize has been awarded."
-
 #: src/components/TopBar/ConnectMenu.jsx:31
 #: src/components/TopBar/ConnectMenu.jsx:111
 #: src/components/Wallet/index.tsx:70
 msgid "Disconnect"
 msgstr "斷開連接"
 
-#: src/components/Sidebar/externalUrls.jsx:20
-#~ msgid "Docs"
-#~ msgstr "文檔"
-
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:92
 msgid "Download Trust Wallet from this page."
 msgstr "從該頁面下載Trust Wallet。"
 
-#: src/views/33Together/PoolInfo.jsx:122
-#~ msgid "Early Exit Fee"
-#~ msgstr "Early Exit Fee"
-
-#: src/views/33Together/PoolWithdraw.jsx:171
-#~ msgid "Early withdraw will incur a fairness fee of {exitFee}."
-#~ msgstr "Early withdraw will incur a fairness fee of {exitFee}."
-
-#: src/views/33Together/PoolDeposit.jsx:133
-#~ msgid "Enter an amount"
-#~ msgstr "Enter an amount"
+#: src/views/InviteUsers/index.tsx:252
+msgid "Enter a wallet Address"
+msgstr "輸入一個錢包地址"
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:142
 msgid "Enter the USDT(BEP20) amount (At Least 100~1000 USDT(BEP20)) you want to participate in this offering."
 msgstr "輸入您希望參與本次活動的USDT（BEP20）金額（至少100~1000 USDT（BEP20））。"
 
-#: src/views/33Together/PoolInfo.jsx:128
-#~ msgid "Exit Fee Decay Time"
-#~ msgstr "Exit Fee Decay Time"
-
-#: src/views/Stake/ExternalStakePool.jsx:74
-#~ msgid "Farm Pool"
-#~ msgstr "Farm Pool"
-
-#: src/components/Sidebar/externalUrls.jsx:25
-#~ msgid "Feedback"
-#~ msgstr "Feedback"
-
 #: src/views/Bond/BondPurchase.jsx:151
 msgid "First time bonding"
 msgstr "第一次購買債券"
 
-#: src/views/Stake/Stake.tsx:293
+#: src/views/Stake/Stake.tsx:297
 msgid "First time staking"
 msgstr "第一次質押"
 
-#: src/views/Stake/Stake.tsx:300
+#: src/views/Stake/Stake.tsx:304
 msgid "First time unstaking"
 msgstr "第一次取消質押"
-
-#: src/components/Sidebar/externalUrls.jsx:10
-#~ msgid "Forum"
-#~ msgstr "論壇"
 
 #: src/views/ChooseBond/ClaimBonds.jsx:83
 msgid "Fully Vested"
 msgstr "Fully Vested"
 
-#: src/components/Sidebar/externalUrls.jsx:15
-#~ msgid "Governance"
-#~ msgstr "Governance"
-
-#: src/views/Claim/index.tsx:528
-#: src/views/DaoProfit/index.tsx:239
-#: src/views/IDORelease/index.tsx:273
-#: src/views/IDORelease/index.tsx:336
+#: src/views/Claim/index.tsx:529
+#: src/views/DaoProfit/index.tsx:247
+#: src/views/IDORelease/index.tsx:274
+#: src/views/IDORelease/index.tsx:337
 #: src/views/Sc/index.tsx:273
 #: src/views/Sc/index.tsx:339
 msgid "Hash"
 msgstr "Hash"
 
-#: src/components/TopBar/treasuryData.js:147
-#: src/views/TreasuryDashboard/treasuryData.ts:174
+#: src/views/TreasuryDashboard/treasuryData.ts:177
 msgid "Holders, represents the total number of Themis (sTHS holders)"
 msgstr "持有者,表示Themis（sTHS持有者）的總數"
 
@@ -392,19 +245,19 @@ msgstr "持有者,表示Themis（sTHS持有者）的總數"
 msgid "How to buy THS?"
 msgstr "如何購買THS？"
 
-#: src/components/Sidebar/NavContent.jsx:291
+#: src/components/Sidebar/NavContent.jsx:292
 msgid "IDO"
 msgstr "IDO"
 
-#: src/components/Sidebar/NavContent.jsx:277
+#: src/components/Sidebar/NavContent.jsx:278
 msgid "IDO Release"
 msgstr "IDO 釋放獎勵"
 
-#: src/views/IDORelease/index.tsx:223
+#: src/views/IDORelease/index.tsx:224
 msgid "IDO Release 35%"
 msgstr "IDO釋放35%"
 
-#: src/views/IDORelease/index.tsx:287
+#: src/views/IDORelease/index.tsx:288
 msgid "IDO Release 65%"
 msgstr "IDO釋放65%"
 
@@ -420,15 +273,27 @@ msgstr "進行中"
 msgid "Insufficient THS or already sold out"
 msgstr "THS不足或已售罄"
 
+#: src/views/Register/index.tsx:221
 #: src/views/Register/index.tsx:222
-#: src/views/Register/index.tsx:223
 msgid "Invitation ID"
 msgstr "邀請ID"
 
-#: src/views/DaoProfit/index.tsx:196
+#: src/views/DaoProfit/index.tsx:203
 #: src/views/Sc/index.tsx:292
 msgid "Invite Earnings"
 msgstr "邀請獎勵"
+
+#: src/components/Sidebar/NavContent.jsx:307
+msgid "Invite Users"
+msgstr "邀請用戶"
+
+#: src/views/InviteUsers/index.tsx:306
+msgid "Invite users"
+msgstr "直接邀請用戶"
+
+#: src/views/InviteUsers/index.tsx:147
+msgid "InviteCode"
+msgstr "邀請碼"
 
 #: src/components/RebaseTimer/RebaseTimer.jsx:80
 msgid "Less than a minute"
@@ -438,33 +303,28 @@ msgstr "不到一分鍾"
 msgid "Linear Release Rules"
 msgstr "線性釋放規則"
 
-#: src/components/TopBar/treasuryData.js:139
-msgid "Liquidity THS-USDT"
-msgstr "THS-USDT流動性"
-
 #: src/views/TreasuryDashboard/components/Metric/Metric.js:23
 msgid "Market Cap"
 msgstr "市值"
 
-#: src/views/Bond/Bond.tsx:78
+#: src/views/Bond/Bond.tsx:77
 msgid "Market Price"
 msgstr "市場價"
 
-#: src/views/TreasuryDashboard/treasuryData.ts:166
+#: src/views/TreasuryDashboard/treasuryData.ts:167
 msgid "Market SLP"
 msgstr "市場SLP"
 
-#: src/views/TreasuryDashboard/components/Graph/Graph.js:48
+#: src/views/TreasuryDashboard/components/Graph/Graph.js:47
 msgid "Market Value of Treasury Assets"
 msgstr "金庫資產的市場價值"
 
-#: src/components/TopBar/treasuryData.js:144
-#: src/views/TreasuryDashboard/treasuryData.ts:171
+#: src/views/TreasuryDashboard/treasuryData.ts:174
 msgid "Market Value of Treasury Assets, is the sum of the value (in dollars) of all assets held by the treasury."
 msgstr "金庫資產的市場價值是金庫持有的所有資產的價值（美元）之和。"
 
 #: src/views/Bond/BondPurchase.jsx:172
-#: src/views/Stake/Stake.tsx:324
+#: src/views/Stake/Stake.tsx:328
 msgid "Max"
 msgstr "最大"
 
@@ -472,37 +332,13 @@ msgstr "最大"
 msgid "Max You Can Buy"
 msgstr "您可以購買的最大數量"
 
-#: src/views/Stake/Stake.jsx:183
-#~ msgid "Migrate sTHS!"
-#~ msgstr "Migrate sTHS!"
-
-#: src/views/Stake/Stake.tsx:429
+#: src/views/Stake/Stake.tsx:433
 msgid "Next Reward Amount"
 msgstr "下一次獎勵金額"
 
-#: src/views/Stake/Stake.tsx:438
+#: src/views/Stake/Stake.tsx:442
 msgid "Next Reward Yield"
 msgstr "下一次獎勵收益率"
-
-#: src/views/33Together/PoolPrize.jsx:131
-#~ msgid "Next award"
-#~ msgstr "Next award"
-
-#: src/views/Bond/BondPurchase.jsx:178
-#~ msgid "Note: The \"Approve\" transaction is only needed when bonding for the first time; subsequent bonding only requires you to perform the \"Bond\" transaction."
-#~ msgstr "Note: The \"Approve\" transaction is only needed when bonding for the first time; subsequent bonding only requires you to perform the \"Bond\" transaction."
-
-#: src/views/Stake/Stake.jsx:265
-#~ msgid "Note: The \"Approve\" transaction is only needed when staking/unstaking for the first time; subsequent staking/unstaking only requires you to perform the \"Stake\" or \"Unstake\" transaction."
-#~ msgstr "Note: The \"Approve\" transaction is only needed when staking/unstaking for the first time; subsequent staking/unstaking only requires you to perform the \"Stake\" or \"Unstake\" transaction."
-
-#: src/views/ChooseBond/ChooseBond.jsx:101
-#~ msgid "OHM Price"
-#~ msgstr "OHM Price"
-
-#: src/views/TreasuryDashboard/TreasuryDashboard.jsx:286
-#~ msgid "OHM Staked"
-#~ msgstr "OHM Staked"
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:109
 msgid "Open THS IDO Page on Trust Wallet"
@@ -538,20 +374,20 @@ msgid "Phase"
 msgstr "階段"
 
 #: src/views/Bond/BondPurchase.jsx:152
-#: src/views/Stake/Stake.tsx:295
-#: src/views/Stake/Stake.tsx:302
+#: src/views/Stake/Stake.tsx:299
+#: src/views/Stake/Stake.tsx:306
 msgid "Please approve Themis Dao to use your"
 msgstr "請您批准Themis Dao使用"
 
-#: src/views/Register/index.tsx:210
+#: src/views/Register/index.tsx:209
 msgid "Please connect wallet"
 msgstr "請連接錢包"
 
-#: src/slices/BondSlice.ts:27
-#: src/slices/BondSlice.ts:244
-#: src/slices/BondSlice.ts:287
-#: src/slices/StakeThunk.ts:45
-#: src/slices/StakeThunk.ts:119
+#: src/slices/BondSlice.ts:26
+#: src/slices/BondSlice.ts:243
+#: src/slices/BondSlice.ts:286
+#: src/slices/StakeThunk.ts:51
+#: src/slices/StakeThunk.ts:125
 msgid "Please connect your wallet!"
 msgstr "請連接你的錢包！"
 
@@ -581,17 +417,9 @@ msgstr "請輸入至少100USDT（BEP20）和不超過1000USDT（BEP20）"
 msgid "Please enter the Telegram Username"
 msgstr "請輸入電報用戶名"
 
-#: src/views/Register/index.tsx:224
+#: src/views/Register/index.tsx:223
 msgid "Please enter the correct invitation ID"
 msgstr "請輸入正確的邀請ID"
-
-#: src/views/33Together/PoolPrize.jsx:111
-#~ msgid "Pool Award Balance is currently 0."
-#~ msgstr "Pool Award Balance is currently 0."
-
-#: src/views/33Together/PoolInfo.jsx:113
-#~ msgid "Pool owner"
-#~ msgstr "Pool owner"
 
 #: src/views/IDO/component/LinearCard/index.tsx:116
 msgid "Pre-Sale"
@@ -602,15 +430,7 @@ msgstr "預售"
 msgid "Price"
 msgstr "價格"
 
-#: src/views/33Together/PoolInfo.jsx:40
-#~ msgid "Prize Pool Info"
-#~ msgstr "Prize Pool Info"
-
-#: src/views/33Together/PoolPrize.jsx:127
-#~ msgid "Prize is being awarded"
-#~ msgstr "Prize is being awarded"
-
-#: src/views/Claim/index.tsx:504
+#: src/views/Claim/index.tsx:505
 msgid "Profit Balance"
 msgstr "收益余額"
 
@@ -618,16 +438,11 @@ msgstr "收益余額"
 msgid "Progress"
 msgstr "進度"
 
-#: src/views/TreasuryDashboard/TreasuryDashboard.jsx:248
-#~ msgid "Protocol Owned Liquidity OHM-DAI"
-#~ msgstr "Protocol Owned Liquidity OHM-DAI"
-
-#: src/views/TreasuryDashboard/components/Graph/Graph.js:98
+#: src/views/TreasuryDashboard/components/Graph/Graph.js:97
 msgid "Protocol Owned Liquidity THS-USDT"
 msgstr "協定擁有的流動性THS-USDT"
 
-#: src/components/TopBar/treasuryData.js:146
-#: src/views/TreasuryDashboard/treasuryData.ts:173
+#: src/views/TreasuryDashboard/treasuryData.ts:176
 msgid "Protocol Owned Liquidity, is the amount of LP the treasury owns and controls. The more POL the better for the protocol and its users."
 msgstr "協定擁有的流動性，是指財政部擁有和控制的LP金額。 POL越多，協定及其用戶就越好。"
 
@@ -636,6 +451,10 @@ msgstr "協定擁有的流動性，是指財政部擁有和控制的LP金額。 
 msgid "Purchased"
 msgstr "購買量"
 
+#: src/views/InviteUsers/index.tsx:266
+msgid "Query invited users"
+msgstr "査詢邀請用戶"
+
 #: src/views/Bond/BondPurchase.jsx:255
 #: src/views/Bond/BondRedeem.jsx:121
 #: src/views/ChooseBond/BondRow.jsx:47
@@ -643,15 +462,11 @@ msgstr "購買量"
 msgid "ROI"
 msgstr "投資回報率"
 
-#: src/views/Stake/Stake.tsx:447
+#: src/views/Stake/Stake.tsx:451
 msgid "ROI (5-Day Rate)"
 msgstr "投資回報率 (五天利率)"
 
-#: src/views/33Together/PoolWithdraw.jsx:179
-#~ msgid "Read more about Fairness"
-#~ msgstr "Read more about Fairness"
-
-#: src/views/Claim/index.tsx:510
+#: src/views/Claim/index.tsx:511
 msgid "Received"
 msgstr "已收到"
 
@@ -663,7 +478,7 @@ msgstr "接收者"
 msgid "Recipient Address"
 msgstr "接收者地址"
 
-#: src/views/Bond/Bond.tsx:102
+#: src/views/Bond/Bond.tsx:101
 msgid "Redeem"
 msgstr "贖回"
 
@@ -671,7 +486,7 @@ msgstr "贖回"
 msgid "Release 35% of the total participated amount first, the leftover will release an equal amount every day."
 msgstr "先釋放總參與量的35%，剩余部分每天釋放等量。"
 
-#: src/views/Claim/index.tsx:451
+#: src/views/Claim/index.tsx:450
 msgid "Release Time"
 msgstr "釋放時間"
 
@@ -679,30 +494,27 @@ msgstr "釋放時間"
 msgid "Release Time："
 msgstr "釋放時間:"
 
-#: src/views/TreasuryDashboard/components/Graph/Graph.js:72
+#: src/views/TreasuryDashboard/components/Graph/Graph.js:71
 msgid "Risk Free Value of Treasury Assets"
 msgstr "金庫資產的無風險價值"
 
-#: src/components/TopBar/treasuryData.js:145
-#: src/views/TreasuryDashboard/treasuryData.ts:172
+#: src/views/TreasuryDashboard/treasuryData.ts:175
 msgid "Risk Free Value, is the amount of funds the treasury guarantees to use for backing THS."
 msgstr "無風險價值，是指金庫擔保用於支持的資金金額。"
 
-#: src/views/TreasuryDashboard/components/Graph/Graph.js:183
+#: src/views/InviteUsers/index.tsx:370
+msgid "Rows per page:"
+msgstr "每頁條數"
+
+#: src/views/TreasuryDashboard/components/Graph/Graph.js:182
 msgid "Runway Available"
 msgstr "穩定運行週期"
 
-#: src/components/TopBar/treasuryData.js:150
-#: src/views/TreasuryDashboard/treasuryData.ts:177
-#~ msgid "Runway, is the number of days sTHS emissions can be sustained at a given rate. Lower APY = \"longer runway"
-#~ msgstr "跑道，是指在給定速率下，sTHS排放能够持續的天數。 APY較低=跑道較長"
-
-#: src/components/TopBar/treasuryData.js:150
-#: src/views/TreasuryDashboard/treasuryData.ts:177
+#: src/views/TreasuryDashboard/treasuryData.ts:180
 msgid "Runway, is the number of days sTHS emissions can be sustained at a given rate. Lower APY = longer runway"
 msgstr "永續時間，是指在給定速率下，sTHS排放能够持續的天數。 APY較低=永續時間較長"
 
-#: src/components/Sidebar/NavContent.jsx:248
+#: src/components/Sidebar/NavContent.jsx:249
 msgid "SC"
 msgstr "SC"
 
@@ -710,7 +522,11 @@ msgstr "SC"
 msgid "SC Amount"
 msgstr "SC數量"
 
-#: src/views/Claim/index.tsx:415
+#: src/views/InviteUsers/index.tsx:150
+msgid "SC Balance"
+msgstr "SC 余额"
+
+#: src/views/Claim/index.tsx:414
 msgid "SC Insufficient Balance"
 msgstr "SC餘額不足"
 
@@ -724,21 +540,21 @@ msgstr "SC可領取數量"
 msgid "SC amount"
 msgstr "SC數量"
 
-#: src/views/TreasuryDashboard/treasuryData.ts:166
+#: src/views/TreasuryDashboard/treasuryData.ts:167
 msgid "SLP Treasury"
 msgstr "金庫SLP"
+
+#: src/views/InviteUsers/index.tsx:287
+msgid "Search"
+msgstr "蒐索"
 
 #: src/views/IDO/component/PreSate1/index.tsx:231
 msgid "Send"
 msgstr "參與"
 
-#: src/views/Stake/Stake.tsx:170
+#: src/views/Stake/Stake.tsx:174
 msgid "Single Stake"
 msgstr "代幣質押"
-
-#: src/views/Stake/Stake.jsx:413
-#~ msgid "Single Staking"
-#~ msgstr "Single Staking"
 
 #: src/views/Bond/AdvancedSettings.jsx:37
 msgid "Slippage"
@@ -750,43 +566,17 @@ msgstr "下降"
 msgid "Sold Out"
 msgstr "已售完"
 
-#: src/views/33Together/PoolInfo.jsx:143
-#~ msgid "Something not right, fren? Check Pool Together's UI below."
-#~ msgstr "Something not right, fren? Check Pool Together's UI below."
-
-#: src/components/Sidebar/NavContent.jsx:174
+#: src/components/Sidebar/NavContent.jsx:175
 msgid "Stake"
 msgstr "質押"
 
-#: src/views/Stake/Stake.jsx:344
-#~ msgid "Stake OHM"
-#~ msgstr "Stake OHM"
-
-#: src/views/Stake/Stake.tsx:349
+#: src/views/Stake/Stake.tsx:353
 msgid "Stake THS"
 msgstr "質押 THS"
 
-#: src/views/Stake/ExternalStakePool.jsx:140
-#: src/views/Stake/ExternalStakePool.jsx:205
-#~ msgid "Stake in Crucible"
-#~ msgstr "Stake in Crucible"
-
-#: src/views/Stake/ExternalStakePool.jsx:140
-#: src/views/Stake/ExternalStakePool.jsx:205
-#~ msgid "Stake on Crucible"
-#~ msgstr "Stake on Crucible"
-
-#: src/views/Stake/Stake.tsx:409
+#: src/views/Stake/Stake.tsx:413
 msgid "Staked Balance"
 msgstr "質押余額"
-
-#: src/views/Stake/Stake.jsx:422
-#~ msgid "Staked Balance in Fuse"
-#~ msgstr "Staked Balance in Fuse"
-
-#: src/slices/PendingTxnsSlice.ts:29
-#~ msgid "Staking DAI"
-#~ msgstr "Staking DAI"
 
 #: src/views/Sc/index.tsx:225
 msgid "Staking Earnings"
@@ -796,24 +586,16 @@ msgstr "質押收益"
 msgid "Staking THS"
 msgstr "質押THS"
 
-#: src/views/33Together/PoolPrize.jsx:228
-#~ msgid "Start Award"
-#~ msgstr "Start Award"
-
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:136
 msgid "Start to Buy THS Token"
 msgstr "開始購買代幣"
 
-#: src/views/Register/index.tsx:239
+#: src/views/Register/index.tsx:238
 msgid "Success"
 msgstr "成功"
 
-#: src/views/Dashboard/Dashboard.jsx:66
-#~ msgid "Supply (circulating/total)"
-#~ msgstr "Supply (circulating/total)"
-
-#: src/views/DaoProfit/index.tsx:193
-#: src/views/IDORelease/index.tsx:220
+#: src/views/DaoProfit/index.tsx:200
+#: src/views/IDORelease/index.tsx:221
 msgid "THS Amount"
 msgstr "THS數量"
 
@@ -822,25 +604,24 @@ msgstr "THS數量"
 msgid "THS Price"
 msgstr "THS價格"
 
-#: src/views/TreasuryDashboard/components/Graph/Graph.js:125
+#: src/views/TreasuryDashboard/components/Graph/Graph.js:124
 msgid "THS Staked"
 msgstr "當前質押THS份額"
 
-#: src/components/TopBar/treasuryData.js:148
-#: src/views/TreasuryDashboard/treasuryData.ts:175
+#: src/views/TreasuryDashboard/treasuryData.ts:178
 msgid "THS Staked, is the ratio of sTHS to THS (staked vs unstaked)"
 msgstr "當前質押THS份額，是STH與THS的比率（Staked與unstaked）"
 
-#: src/views/DaoProfit/index.tsx:198
-#: src/views/IDORelease/index.tsx:225
-#: src/views/IDORelease/index.tsx:289
+#: src/views/DaoProfit/index.tsx:205
+#: src/views/IDORelease/index.tsx:226
+#: src/views/IDORelease/index.tsx:290
 msgid "THS Unclaimed"
 msgstr "THS可領取數量"
 
-#: src/views/Claim/index.tsx:530
-#: src/views/DaoProfit/index.tsx:241
-#: src/views/IDORelease/index.tsx:275
-#: src/views/IDORelease/index.tsx:338
+#: src/views/Claim/index.tsx:531
+#: src/views/DaoProfit/index.tsx:249
+#: src/views/IDORelease/index.tsx:276
+#: src/views/IDORelease/index.tsx:339
 msgid "THS amount"
 msgstr "THS數量"
 
@@ -852,31 +633,13 @@ msgstr "THS per 1000 USDT"
 msgid "THS per USDT"
 msgstr "THS per USDT"
 
-#: src/views/Stake/ExternalStakePool.jsx:90
-#: src/views/Stake/ExternalStakePool.jsx:172
-#~ msgid "TVD"
-#~ msgstr "TVD"
-
 #: src/views/OpenBeta/index.tsx:175
 msgid "The Telegram ID have been register"
 msgstr "電報號碼已登記"
 
-#: src/views/TreasuryDashboard/TreasuryDashboard.jsx:158
-#~ msgid "The current index tracks the amount of sTHS accumulated since the beginning of staking. Basically, how much sTHS one would have if they staked and held a single OHM from day 1."
-#~ msgstr "The current index tracks the amount of sTHS accumulated since the beginning of staking. Basically, how much sTHS one would have if they staked and held a single OHM from day 1."
-
-#: src/views/TreasuryDashboard/components/Metric/Metric.js:80
+#: src/views/TreasuryDashboard/components/Metric/Metric.js:82
 msgid "The current index tracks the amount of sTHS accumulated since the beginning of staking. Basically, how much sTHS one would have if they staked and held a single THS from day 1."
 msgstr "當前指數跟踪自下注開始以來累積的STH數量。 基本上，如果他們從第一天開始下注並持有一個THS，一個人會有多少STH。"
-
-#: src/App.tsx:255
-#: src/components/Sidebar/NavContent.jsx:258
-msgid "The launch time of DAO Rewards is waiting for the DAO voting."
-msgstr "DAO獎勵的發佈時間正在等待DAO投票。"
-
-#: src/views/33Together/PoolPrize.jsx:209
-#~ msgid "The random number generator has timed out. You must cancel the awarding process to unlock users funds users funds and start the awarding process again."
-#~ msgstr "The random number generator has timed out. You must cancel the awarding process to unlock users funds users funds and start the awarding process again."
 
 #: src/views/IDO/index.tsx:199
 msgid "Themis IDO"
@@ -885,14 +648,6 @@ msgstr "Themis IDO"
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:97
 msgid "Then create your own wallet  (Keep your seed phrase and private key safety. Don’t share them with anyone and  store them in a safe place. )"
 msgstr "然後創建自己的錢包（請妥善保管種子密碼和私鑰。不要與任何人共享，並將其存放在安全的地方。）"
-
-#: src/views/33Together/PoolDeposit.jsx:109
-#~ msgid "This Prize Pool is unable to accept deposits at this time."
-#~ msgstr "This Prize Pool is unable to accept deposits at this time."
-
-#: src/views/33Together/PoolWithdraw.jsx:102
-#~ msgid "This Prize Pool is unable to accept withdrawals at this time."
-#~ msgstr "This Prize Pool is unable to accept withdrawals at this time."
 
 #: src/views/Bond/BondRedeem.jsx:112
 msgid "Time until fully vested"
@@ -910,29 +665,19 @@ msgstr "代幣供應"
 msgid "Total"
 msgstr "總量"
 
-#: src/views/33Together/PoolInfo.jsx:91
-#~ msgid "Total Deposits"
-#~ msgstr "Total Deposits"
-
-#: src/views/33Together/PoolInfo.jsx:99
-#~ msgid "Total Sponsorship"
-#~ msgstr "Total Sponsorship"
-
-#: src/components/TopBar/treasuryData.js:133
-#: src/views/Stake/Stake.tsx:213
-#: src/views/TreasuryDashboard/components/Graph/Graph.js:21
-#: src/views/TreasuryDashboard/treasuryData.ts:160
+#: src/views/Stake/Stake.tsx:217
+#: src/views/TreasuryDashboard/components/Graph/Graph.js:20
+#: src/views/TreasuryDashboard/treasuryData.ts:161
 msgid "Total Value Deposited"
 msgstr "存款總額"
 
-#: src/components/TopBar/treasuryData.js:143
-#: src/views/TreasuryDashboard/treasuryData.ts:170
+#: src/views/TreasuryDashboard/treasuryData.ts:173
 msgid "Total Value Deposited, is the dollar amount of all THS staked in the protocol. This metric is often used as growth or health indicator in DeFi projects."
 msgstr "存款總額是協定中所有押注金額的美元金額。 在DeFi項目中，該名額通常用作增長或健康名額。"
 
-#: src/views/TreasuryDashboard/TreasuryDashboard.jsx:136
-#~ msgid "Total Value Locked"
-#~ msgstr "Total Value Locked"
+#: src/views/TreasuryDashboard/components/Metric/Metric.js:52
+msgid "Total casting quantity"
+msgstr "總鑄造量"
 
 #: src/views/Bond/AdvancedSettings.jsx:51
 msgid "Transaction may revert if price changes by more than slippage %"
@@ -946,35 +691,23 @@ msgstr "將USDT（BEP20）從其他錢包或交易所轉移到信托錢包上的
 msgid "Treasury Balance"
 msgstr "金庫余額"
 
-#: src/views/Claim/index.tsx:469
+#: src/views/Claim/index.tsx:470
 msgid "Unclaimed"
 msgstr "可領取的"
 
-#: src/views/Claim/index.tsx:494
+#: src/views/Claim/index.tsx:495
 msgid "Unstable Time"
 msgstr "Unstable Time"
 
-#: src/views/Stake/Stake.tsx:284
+#: src/views/Stake/Stake.tsx:288
 msgid "Unstake"
 msgstr "取消質押"
 
-#: src/components/TopBar/OhmMenu.jsx:147
-#~ msgid "Unstake LP Token"
-#~ msgstr "Unstake LP Token"
-
-#: src/components/TopBar/OhmMenu.jsx:226
-#~ msgid "Unstake Legacy LP Token"
-#~ msgstr "Unstake Legacy LP Token"
-
-#: src/views/Stake/Stake.jsx:373
-#~ msgid "Unstake OHM"
-#~ msgstr "Unstake OHM"
-
-#: src/views/Stake/Stake.tsx:378
+#: src/views/Stake/Stake.tsx:382
 msgid "Unstake THS"
 msgstr "取消質押 THS"
 
-#: src/views/Stake/Stake.tsx:400
+#: src/views/Stake/Stake.tsx:404
 msgid "Unstaked Balance"
 msgstr "未質押余額"
 
@@ -995,91 +728,29 @@ msgstr "用戶可以使用MetaMask、TokenPocket和imTokent wallet購買THS，�
 msgid "Vesting Term"
 msgstr "歸屬期限"
 
-#: src/views/ChooseBond/BondRow.jsx:28
-#: src/views/ChooseBond/BondRow.jsx:97
-#~ msgid "View Contract"
-#~ msgstr "View Contract"
-
 #: src/components/Wallet/index.tsx:23
 msgid "Wallet"
 msgstr "錢包"
 
-#: src/views/Register/index.tsx:208
+#: src/views/Register/index.tsx:207
 msgid "Wallet Address"
 msgstr "錢包地址"
 
-#: src/views/Register/index.tsx:209
+#: src/views/Register/index.tsx:208
 msgid "Wallet address"
 msgstr "錢包地址"
-
-#: src/views/33Together/PoolInfo.jsx:85
-#~ msgid "Winners / prize period"
-#~ msgstr "Winners / prize period"
-
-#: src/views/33Together/33Together.jsx:165
-#~ msgid "Withdraw"
-#~ msgstr "Withdraw"
-
-#: src/views/33Together/PoolWithdraw.jsx:153
-#~ msgid "Withdraw Early & pay"
-#~ msgstr "Withdraw Early & pay"
-
-#: src/views/33Together/PoolWithdraw.jsx:147
-#~ msgid "Withdraw Early & pay t"
-#~ msgstr "Withdraw Early & pay t"
-
-#: src/views/33Together/PoolWithdraw.jsx:148
-#~ msgid "Withdraw sOHMt"
-#~ msgstr "Withdraw sOHMt"
-
-#: src/views/33Together/PoolWithdraw.jsx:154
-#~ msgid "Withdraw sTHS"
-#~ msgstr "Withdraw sTHS"
-
-#: src/views/33Together/PoolWithdraw.jsx:105
-#~ msgid "Withdrawals can be made once the prize has been awarded."
-#~ msgstr "Withdrawals can be made once the prize has been awarded."
-
-#: src/views/33Together/PoolWithdraw.jsx:161
-#~ msgid "Withdrawing {quantity} sTHS reduces your odds of winning to 1 in {newOdds}"
-#~ msgstr "Withdrawing {quantity} sTHS reduces your odds of winning to 1 in {newOdds}"
-
-#: src/views/Stake/Stake.jsx:431
-#~ msgid "Wrapped Balance"
-#~ msgstr "Wrapped Balance"
-
-#: src/slices/PendingTxnsSlice.ts:33
-#~ msgid "Wrapping OHM"
-#~ msgstr "Wrapping OHM"
 
 #: src/slices/PendingTxnsSlice.ts:33
 msgid "Wrapping THS"
 msgstr "包裝 THS"
 
-#: src/views/Stake/Stake.tsx:418
+#: src/views/Stake/Stake.tsx:422
 msgid "Yield Amount"
 msgstr "産量"
-
-#: src/views/33Together/PoolInfo.jsx:107
-#~ msgid "Yield Source"
-#~ msgstr "Yield Source"
 
 #: src/views/Bond/BondPurchase.jsx:237
 msgid "You Will Get"
 msgstr "你將會獲得"
-
-#: src/views/33Together/PoolWithdraw.jsx:182
-#~ msgid "You can choose to withdraw the deposited fund at any time. By withdrawing the fund, you are eliminating / reducing the chance to win the prize in this pool in future prize periods"
-#~ msgstr "You can choose to withdraw the deposited fund at any time. By withdrawing the fund, you are eliminating / reducing the chance to win the prize in this pool in future prize periods"
-
-#: src/views/33Together/PoolWithdraw.jsx:93
-#~ msgid "You can choose to withdraw the deposited fund at any time. By withdrawing the fund, you are eliminating reducing the chance to win the prize in this pool in future prize periods"
-#~ msgstr "You can choose to withdraw the deposited fund at any time. By withdrawing the fund, you are eliminating reducing the chance to win the prize in this pool in future prize periods"
-
-#: src/views/Stake/Stake.jsx:119
-#: src/views/Stake/Stake.jsx:119
-#~ msgid "You cannot stake more than your OHM balance."
-#~ msgstr "You cannot stake more than your OHM balance."
 
 #: src/views/Stake/Stake.tsx:118
 #: src/views/Stake/Stake.tsx:118
@@ -1091,33 +762,17 @@ msgstr "你的質押不能超過你的THS余額。"
 msgid "You cannot unstake more than your sTHS balance."
 msgstr "你的取消質押不能超過你的sTHS余額。"
 
-#: src/views/33Together/PoolWithdraw.jsx:86
-#~ msgid "You cannot withdraw more than your pool balance"
-#~ msgstr "You cannot withdraw more than your pool balance"
-
 #: src/views/Bond/BondPurchase.jsx:55
 msgid "You have an existing bond. Bonding will reset your vesting period and forfeit rewards. We recommend claiming rewards first or using a fresh wallet. Do you still want to proceed?"
 msgstr "你有一個現有的債券。債券將重置你的行權期並沒收獎勵。我們建議先申請獎勵或使用新錢包。你還想繼續嗎？"
 
-#: src/slices/BondSlice.ts:229
+#: src/slices/BondSlice.ts:228
 msgid "You may be trying to bond more than your balance! Error code: 32603. Message: ds-math-sub-underflow"
 msgstr "你可能在試圖建立比平衡更緊密的關係！ 錯誤代碼：32603。 消息：ds-math-sub-underflow"
 
 #: src/views/Bond/BondPurchase.jsx:222
 msgid "Your Balance"
 msgstr "你的余額"
-
-#: src/views/33Together/PoolWithdraw.jsx:189
-#~ msgid "Your Pooled Balance (withdrawable)"
-#~ msgstr "Your Pooled Balance (withdrawable)"
-
-#: src/views/Stake/Stake.jsx:400
-#~ msgid "Your Staked Balance"
-#~ msgstr "Your Staked Balance"
-
-#: src/views/33Together/PoolDeposit.jsx:190
-#~ msgid "Your Staked Balance (Depositable)"
-#~ msgstr "Your Staked Balance (Depositable)"
 
 #: src/views/IDO/component/PreSate1/index.tsx:233
 msgid "Your Total Contribution(THS):"
@@ -1132,34 +787,14 @@ msgstr "連接後，您的資産余額將顯示在産品頁面上。"
 msgid "Your maximum purchase amount is 1000 USDT (BEP20)"
 msgstr "您的最大購買金額爲1000 USDT（BEP20）"
 
-#: src/views/33Together/PoolInfo.jsx:61
-#~ msgid "Your odds"
-#~ msgstr "Your odds"
-
-#: src/views/33Together/PoolInfo.jsx:55
-#~ msgid "Your pool deposits"
-#~ msgstr "Your pool deposits"
-
-#: src/views/33Together/PoolInfo.jsx:49
-#~ msgid "Your total awards"
-#~ msgstr "Your total awards"
-
-#: src/views/33Together/PoolInfo.jsx:73
-#~ msgid "Your wallet balance"
-#~ msgstr "Your wallet balance"
-
-#: src/views/33Together/PoolPrize.jsx:140
-#~ msgid "day"
-#~ msgstr "day"
-
 #. The action of bonding (verb)
-#: src/views/Bond/Bond.tsx:96
+#: src/views/Bond/Bond.tsx:95
 #: src/views/ChooseBond/BondRow.jsx:131
 msgid "do_bond"
 msgstr "買債券"
 
 #. The action of staking (verb)
-#: src/views/Stake/Stake.tsx:278
+#: src/views/Stake/Stake.tsx:282
 msgid "do_stake"
 msgstr "質押"
 
@@ -1171,22 +806,13 @@ msgstr "例如，如果一個用戶剩下10000個THS代幣，其中100個代幣�
 msgid "for bonding"
 msgstr "購買債券"
 
-#: src/views/Stake/Stake.tsx:296
+#: src/views/Stake/Stake.tsx:300
 msgid "for staking"
 msgstr "進行質押"
 
-#: src/views/Stake/Stake.tsx:303
+#: src/views/Stake/Stake.tsx:307
 msgid "for unstaking"
 msgstr "取消質押"
-
-#: src/views/Claim/index.tsx:528
-#: src/views/DaoProfit/index.tsx:239
-#: src/views/IDORelease/index.tsx:273
-#: src/views/IDORelease/index.tsx:336
-#: src/views/Sc/index.tsx:273
-#: src/views/Sc/index.tsx:339
-#~ msgid "hash"
-#~ msgstr "hash"
 
 #: src/views/IDO/component/CountDownTime/index.tsx:109
 msgid "hrs"
@@ -1196,46 +822,26 @@ msgstr "hrs"
 msgid "in the search box, then click the enter to jump to the connect page."
 msgstr "在搜索框中，單擊enter鍵跳轉到connect頁面。"
 
-#: src/views/Register/index.tsx:217
-msgid "invitationId"
-msgstr "邀請"
-
 #: src/views/IDO/component/LinkCard/index.tsx:102
 msgid "inviteLink"
 msgstr "邀請鏈接"
-
-#: src/views/33Together/PoolPrize.jsx:154
-#~ msgid "min"
-#~ msgstr "min"
 
 #: src/views/IDO/component/CountDownTime/index.tsx:110
 msgid "mins"
 msgstr "分"
 
-#: src/views/33Together/PoolInfo.jsx:158
-#~ msgid "sTHS Pool Details"
-#~ msgstr "sTHS Pool Details"
-
-#: src/views/TreasuryDashboard/components/Metric/Metric.js:94
+#: src/views/TreasuryDashboard/components/Metric/Metric.js:96
 msgid "sTHS Price"
 msgstr "sTHS價格"
-
-#: src/views/33Together/PoolInfo.jsx:150
-#~ msgid "sTHS Prize Pool"
-#~ msgstr "sTHS Prize Pool"
-
-#: src/views/33Together/PoolPrize.jsx:160
-#~ msgid "sec"
-#~ msgstr "sec"
 
 #: src/views/IDO/component/CountDownTime/index.tsx:111
 msgid "secs"
 msgstr "秒"
 
-#: src/views/Claim/index.tsx:529
-#: src/views/DaoProfit/index.tsx:240
-#: src/views/IDORelease/index.tsx:274
-#: src/views/IDORelease/index.tsx:337
+#: src/views/Claim/index.tsx:530
+#: src/views/DaoProfit/index.tsx:248
+#: src/views/IDORelease/index.tsx:275
+#: src/views/IDORelease/index.tsx:338
 #: src/views/Sc/index.tsx:274
 #: src/views/Sc/index.tsx:340
 msgid "time"
@@ -1245,10 +851,18 @@ msgstr "時間"
 msgid "to next rebase"
 msgstr "距離下一次rebase時間"
 
-#: src/views/Claim/index.tsx:522
-#: src/views/Claim/index.tsx:549
-#: src/views/DaoProfit/index.tsx:256
+#: src/views/Claim/index.tsx:523
+#: src/views/Claim/index.tsx:550
+#: src/views/DaoProfit/index.tsx:264
 #: src/views/Sc/index.tsx:290
 #: src/views/Sc/index.tsx:354
 msgid "view more"
 msgstr "更多"
+
+#: src/views/TreasuryDashboard/components/Graph/Graph.js:116
+msgid "{0}"
+msgstr "{0}"
+
+#: src/views/InviteUsers/index.tsx:202
+msgid "{searchAddress} no invited users"
+msgstr "{searchAddress} 無邀請用戶"

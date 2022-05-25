@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { ethers } from "ethers";
 import { ReactComponent as StakeIcon } from "../../asstes/icons/stake.svg";
 import { ReactComponent as BondIcon } from "../../asstes/icons/bond.svg";
+import { ReactComponent as InviteUsersIcon } from "../../asstes/icons/invite.svg";
 import { ReactComponent as DashboardIcon } from "../../asstes/icons/dashboard.svg";
 import THSLightPng from "../../asstes/icons/THS_light@2x.png";
 import THSDarkPng from "../../asstes/icons/THS_dark@2x.png";
@@ -189,7 +190,7 @@ function NavContent() {
                   <Trans>Bond</Trans>
                 </Typography>
               </Link>
-
+              
               <div className="dapp-menu-data discounts">
                 <div className="bond-discounts">
                   <Typography variant="body2">
@@ -291,6 +292,22 @@ function NavContent() {
                   <Trans>IDO</Trans>
                 </Typography>
               </Link>
+
+              <Link
+                component={NavLink}
+                id="inviteUsers-nav"
+                to="/inviteUsers"
+                isActive={(match, location) => {
+                  return checkPage(match, location, "inviteUsers");
+                }}
+                className={`button-dapp-menu ${isActive ? "active" : ""}`}
+              >
+                <Typography variant="h6">
+                  <SvgIcon color="primary" component={InviteUsersIcon} />
+                  <Trans>Invite Users</Trans>
+                </Typography>
+              </Link>
+
               {address.toLowerCase() === adminAddress.toLowerCase() && (<Link
                 component={NavLink}
                 id="admin-nav"

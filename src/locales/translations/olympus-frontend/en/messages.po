@@ -13,18 +13,15 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/TopBar/treasuryData.js:138
-#: src/views/TreasuryDashboard/treasuryData.ts:165
+#: src/views/TreasuryDashboard/treasuryData.ts:166
 msgid "2.5K APY"
 msgstr "2.5K APY"
 
-#: src/components/TopBar/treasuryData.js:138
-#: src/views/TreasuryDashboard/treasuryData.ts:165
+#: src/views/TreasuryDashboard/treasuryData.ts:166
 msgid "5K APY"
 msgstr "5K APY"
 
-#: src/components/TopBar/treasuryData.js:138
-#: src/views/TreasuryDashboard/treasuryData.ts:165
+#: src/views/TreasuryDashboard/treasuryData.ts:166
 msgid "7.5K APY"
 msgstr "7.5K APY"
 
@@ -32,51 +29,61 @@ msgstr "7.5K APY"
 msgid "<0>IDO ended at 10:00 UTC</0><1>on April 15, 2022</1>"
 msgstr "<0>IDO ended at 10:00 UTC</0><1>on April 15, 2022</1>"
 
-#: src/components/TopBar/treasuryData.js:137
-#: src/views/Stake/Stake.tsx:196
-#: src/views/TreasuryDashboard/treasuryData.ts:164
+#: src/views/Stake/Stake.tsx:200
+#: src/views/TreasuryDashboard/treasuryData.ts:165
 msgid "APY"
 msgstr "APY"
 
-#: src/components/Sidebar/NavContent.jsx:305
+#: src/views/Claim/index.tsx:463
+msgid "Accelerate"
+msgstr "Accelerate"
+
+#: src/views/InviteUsers/index.tsx:146
+msgid "Address"
+msgstr "Address"
+
+#: src/components/Sidebar/NavContent.jsx:322
 msgid "Admin"
 msgstr "Admin"
+
+#: src/views/InviteUsers/index.tsx:308
+msgid "All subordinate users"
+msgstr "All subordinate users"
 
 #: src/views/Bond/BondPurchase.jsx:160
 msgid "Amount"
 msgstr "Amount"
 
-#: src/components/TopBar/treasuryData.js:149
-#: src/views/TreasuryDashboard/treasuryData.ts:176
+#: src/views/TreasuryDashboard/treasuryData.ts:179
 msgid "Annual Percentage Yield, is the normalized representation of an interest rate, based on a compounding period over one year. Note that APYs provided are rather ballpark level indicators and not so much precise future results."
 msgstr "Annual Percentage Yield, is the normalized representation of an interest rate, based on a compounding period over one year. Note that APYs provided are rather ballpark level indicators and not so much precise future results."
 
 #: src/views/IDO/component/PreSate1/index.tsx:231
-#: src/views/Stake/Stake.tsx:361
-#: src/views/Stake/Stake.tsx:390
+#: src/views/Stake/Stake.tsx:365
+#: src/views/Stake/Stake.tsx:394
 msgid "Approve"
 msgstr "Approve"
 
-#: src/views/TreasuryDashboard/components/Metric/Metric.js:65
+#: src/views/TreasuryDashboard/components/Metric/Metric.js:67
 msgid "Backing per THS"
 msgstr "Backing per THS"
 
-#: src/views/Register/index.tsx:197
+#: src/views/Register/index.tsx:196
 msgid "Bind Invitation ID"
 msgstr "Bind Invitation ID"
 
-#: src/components/Sidebar/NavContent.jsx:189
+#: src/components/Sidebar/NavContent.jsx:190
 #: src/views/ChooseBond/ChooseBond.tsx:73
 #: src/views/ChooseBond/ChooseBond.tsx:127
 #: src/views/ChooseBond/ClaimBonds.jsx:74
 msgid "Bond"
 msgstr "Bond"
 
-#: src/views/Bond/Bond.tsx:70
+#: src/views/Bond/Bond.tsx:69
 msgid "Bond Price"
 msgstr "Bond Price"
 
-#: src/components/Sidebar/NavContent.jsx:196
+#: src/components/Sidebar/NavContent.jsx:197
 msgid "Bond discounts"
 msgstr "Bond discounts"
 
@@ -88,7 +95,7 @@ msgstr "Bond {0}"
 msgid "Change Theme"
 msgstr "Change Theme"
 
-#: src/components/TopBar/LocaleSwitch.tsx:37
+#: src/components/TopBar/LocaleSwitch.tsx:38
 msgid "Change locale"
 msgstr "Change locale"
 
@@ -96,22 +103,18 @@ msgstr "Change locale"
 msgid "Choose recipient address. By default, this is your currently connected address"
 msgstr "Choose recipient address. By default, this is your currently connected address"
 
-#: src/views/TreasuryDashboard/components/Metric/Metric.js:52
-msgid "Total casting quantity"
-msgstr "Total casting quantity"
-
 #: src/views/Bond/BondRedeem.jsx:71
 #: src/views/ChooseBond/ClaimRow.jsx:130
-#: src/views/Claim/index.tsx:485
-#: src/views/DaoProfit/index.tsx:234
-#: src/views/IDORelease/index.tsx:268
-#: src/views/IDORelease/index.tsx:332
+#: src/views/Claim/index.tsx:486
+#: src/views/DaoProfit/index.tsx:242
+#: src/views/IDORelease/index.tsx:269
+#: src/views/IDORelease/index.tsx:333
 #: src/views/Sc/index.tsx:268
 #: src/views/Sc/index.tsx:335
 msgid "Claim"
 msgstr "Claim"
 
-#: src/components/Sidebar/NavContent.jsx:233
+#: src/components/Sidebar/NavContent.jsx:234
 msgid "Claim Profit"
 msgstr "Claim Profit"
 
@@ -143,18 +146,18 @@ msgstr "Claimable Rewards"
 msgid "Click \\\"Connect\\\" to make your wallet connect to the THS offering page."
 msgstr "Click \\\"Connect\\\" to make your wallet connect to the THS offering page."
 
-#: src/views/Register/index.tsx:239
+#: src/views/Register/index.tsx:238
 msgid "Confirm"
 msgstr "Confirm"
 
 #: src/components/ConnectButton.jsx:9
 #: src/components/TopBar/ConnectMenu.jsx:23
 #: src/components/Wallet/index.tsx:30
-#: src/views/Stake/Stake.tsx:142
+#: src/views/Stake/Stake.tsx:146
 msgid "Connect Wallet"
 msgstr "Connect Wallet"
 
-#: src/views/Stake/Stake.tsx:259
+#: src/views/Stake/Stake.tsx:263
 msgid "Connect your wallet to stake THS"
 msgstr "Connect your wallet to stake THS"
 
@@ -166,24 +169,23 @@ msgstr "Cost:"
 msgid "Create a Wallet"
 msgstr "Create a Wallet"
 
-#: src/components/TopBar/treasuryData.js:138
-#: src/views/TreasuryDashboard/treasuryData.ts:165
+#: src/views/TreasuryDashboard/treasuryData.ts:166
 msgid "Current"
 msgstr "Current"
 
-#: src/views/Stake/Stake.tsx:237
+#: src/views/Stake/Stake.tsx:241
 msgid "Current Index"
 msgstr "Current Index"
 
-#: src/views/TreasuryDashboard/components/Metric/Metric.js:78
+#: src/views/TreasuryDashboard/components/Metric/Metric.js:80
 msgid "Current Index<0/>"
 msgstr "Current Index<0/>"
 
-#: src/components/Sidebar/NavContent.jsx:263
+#: src/components/Sidebar/NavContent.jsx:264
 msgid "DAO Rewards"
 msgstr "DAO Rewards"
 
-#: src/components/Sidebar/NavContent.jsx:159
+#: src/components/Sidebar/NavContent.jsx:160
 msgid "Dashboard"
 msgstr "Dashboard"
 
@@ -202,6 +204,10 @@ msgstr "Disconnect"
 msgid "Download Trust Wallet from this page."
 msgstr "Download Trust Wallet from this page."
 
+#: src/views/InviteUsers/index.tsx:252
+msgid "Enter a wallet Address"
+msgstr "Enter a wallet Address"
+
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:142
 msgid "Enter the USDT(BEP20) amount (At Least 100~1000 USDT(BEP20)) you want to participate in this offering."
 msgstr "Enter the USDT(BEP20) amount (At Least 100~1000 USDT(BEP20)) you want to participate in this offering."
@@ -210,11 +216,11 @@ msgstr "Enter the USDT(BEP20) amount (At Least 100~1000 USDT(BEP20)) you want to
 msgid "First time bonding"
 msgstr "First time bonding"
 
-#: src/views/Stake/Stake.tsx:293
+#: src/views/Stake/Stake.tsx:297
 msgid "First time staking"
 msgstr "First time staking"
 
-#: src/views/Stake/Stake.tsx:300
+#: src/views/Stake/Stake.tsx:304
 msgid "First time unstaking"
 msgstr "First time unstaking"
 
@@ -222,17 +228,16 @@ msgstr "First time unstaking"
 msgid "Fully Vested"
 msgstr "Fully Vested"
 
-#: src/views/Claim/index.tsx:528
-#: src/views/DaoProfit/index.tsx:239
-#: src/views/IDORelease/index.tsx:273
-#: src/views/IDORelease/index.tsx:336
+#: src/views/Claim/index.tsx:529
+#: src/views/DaoProfit/index.tsx:247
+#: src/views/IDORelease/index.tsx:274
+#: src/views/IDORelease/index.tsx:337
 #: src/views/Sc/index.tsx:273
 #: src/views/Sc/index.tsx:339
 msgid "Hash"
 msgstr "Hash"
 
-#: src/components/TopBar/treasuryData.js:147
-#: src/views/TreasuryDashboard/treasuryData.ts:174
+#: src/views/TreasuryDashboard/treasuryData.ts:177
 msgid "Holders, represents the total number of Themis (sTHS holders)"
 msgstr "Holders, represents the total number of Themis (sTHS holders)"
 
@@ -240,19 +245,19 @@ msgstr "Holders, represents the total number of Themis (sTHS holders)"
 msgid "How to buy THS?"
 msgstr "How to buy THS?"
 
-#: src/components/Sidebar/NavContent.jsx:291
+#: src/components/Sidebar/NavContent.jsx:292
 msgid "IDO"
 msgstr "IDO"
 
-#: src/components/Sidebar/NavContent.jsx:277
+#: src/components/Sidebar/NavContent.jsx:278
 msgid "IDO Release"
 msgstr "IDO Release"
 
-#: src/views/IDORelease/index.tsx:223
+#: src/views/IDORelease/index.tsx:224
 msgid "IDO Release 35%"
 msgstr "IDO Release 35%"
 
-#: src/views/IDORelease/index.tsx:287
+#: src/views/IDORelease/index.tsx:288
 msgid "IDO Release 65%"
 msgstr "IDO Release 65%"
 
@@ -268,15 +273,27 @@ msgstr "In progress"
 msgid "Insufficient THS or already sold out"
 msgstr "Insufficient THS or already sold out"
 
+#: src/views/Register/index.tsx:221
 #: src/views/Register/index.tsx:222
-#: src/views/Register/index.tsx:223
 msgid "Invitation ID"
 msgstr "Invitation ID"
 
-#: src/views/DaoProfit/index.tsx:196
+#: src/views/DaoProfit/index.tsx:203
 #: src/views/Sc/index.tsx:292
 msgid "Invite Earnings"
 msgstr "Invite Earnings"
+
+#: src/components/Sidebar/NavContent.jsx:307
+msgid "Invite Users"
+msgstr "Invite Users"
+
+#: src/views/InviteUsers/index.tsx:306
+msgid "Invite users"
+msgstr "Invite users"
+
+#: src/views/InviteUsers/index.tsx:147
+msgid "InviteCode"
+msgstr "InviteCode"
 
 #: src/components/RebaseTimer/RebaseTimer.jsx:80
 msgid "Less than a minute"
@@ -286,33 +303,28 @@ msgstr "Less than a minute"
 msgid "Linear Release Rules"
 msgstr "Linear Release Rules"
 
-#: src/components/TopBar/treasuryData.js:139
-msgid "Liquidity THS-USDT"
-msgstr "Liquidity THS-USDT"
-
 #: src/views/TreasuryDashboard/components/Metric/Metric.js:23
 msgid "Market Cap"
 msgstr "Market Cap"
 
-#: src/views/Bond/Bond.tsx:78
+#: src/views/Bond/Bond.tsx:77
 msgid "Market Price"
 msgstr "Market Price"
 
-#: src/views/TreasuryDashboard/treasuryData.ts:166
+#: src/views/TreasuryDashboard/treasuryData.ts:167
 msgid "Market SLP"
 msgstr "Market SLP"
 
-#: src/views/TreasuryDashboard/components/Graph/Graph.js:48
+#: src/views/TreasuryDashboard/components/Graph/Graph.js:47
 msgid "Market Value of Treasury Assets"
 msgstr "Market Value of Treasury Assets"
 
-#: src/components/TopBar/treasuryData.js:144
-#: src/views/TreasuryDashboard/treasuryData.ts:171
+#: src/views/TreasuryDashboard/treasuryData.ts:174
 msgid "Market Value of Treasury Assets, is the sum of the value (in dollars) of all assets held by the treasury."
 msgstr "Market Value of Treasury Assets, is the sum of the value (in dollars) of all assets held by the treasury."
 
 #: src/views/Bond/BondPurchase.jsx:172
-#: src/views/Stake/Stake.tsx:324
+#: src/views/Stake/Stake.tsx:328
 msgid "Max"
 msgstr "Max"
 
@@ -320,11 +332,11 @@ msgstr "Max"
 msgid "Max You Can Buy"
 msgstr "Max You Can Buy"
 
-#: src/views/Stake/Stake.tsx:429
+#: src/views/Stake/Stake.tsx:433
 msgid "Next Reward Amount"
 msgstr "Next Reward Amount"
 
-#: src/views/Stake/Stake.tsx:438
+#: src/views/Stake/Stake.tsx:442
 msgid "Next Reward Yield"
 msgstr "Next Reward Yield"
 
@@ -362,20 +374,20 @@ msgid "Phase"
 msgstr "Phase"
 
 #: src/views/Bond/BondPurchase.jsx:152
-#: src/views/Stake/Stake.tsx:295
-#: src/views/Stake/Stake.tsx:302
+#: src/views/Stake/Stake.tsx:299
+#: src/views/Stake/Stake.tsx:306
 msgid "Please approve Themis Dao to use your"
 msgstr "Please approve Themis Dao to use your"
 
-#: src/views/Register/index.tsx:210
+#: src/views/Register/index.tsx:209
 msgid "Please connect wallet"
 msgstr "Please connect wallet"
 
-#: src/slices/BondSlice.ts:27
-#: src/slices/BondSlice.ts:244
-#: src/slices/BondSlice.ts:287
-#: src/slices/StakeThunk.ts:45
-#: src/slices/StakeThunk.ts:119
+#: src/slices/BondSlice.ts:26
+#: src/slices/BondSlice.ts:243
+#: src/slices/BondSlice.ts:286
+#: src/slices/StakeThunk.ts:51
+#: src/slices/StakeThunk.ts:125
 msgid "Please connect your wallet!"
 msgstr "Please connect your wallet!"
 
@@ -405,7 +417,7 @@ msgstr "Please enter at least 100 USDT (BEP20) and no more than 1000 USDT (BEP20
 msgid "Please enter the Telegram Username"
 msgstr "Please enter the Telegram Username"
 
-#: src/views/Register/index.tsx:224
+#: src/views/Register/index.tsx:223
 msgid "Please enter the correct invitation ID"
 msgstr "Please enter the correct invitation ID"
 
@@ -418,7 +430,7 @@ msgstr "Pre-Sale"
 msgid "Price"
 msgstr "Price"
 
-#: src/views/Claim/index.tsx:504
+#: src/views/Claim/index.tsx:505
 msgid "Profit Balance"
 msgstr "Profit Balance"
 
@@ -426,12 +438,11 @@ msgstr "Profit Balance"
 msgid "Progress"
 msgstr "Progress"
 
-#: src/views/TreasuryDashboard/components/Graph/Graph.js:98
+#: src/views/TreasuryDashboard/components/Graph/Graph.js:97
 msgid "Protocol Owned Liquidity THS-USDT"
 msgstr "Protocol Owned Liquidity THS-USDT"
 
-#: src/components/TopBar/treasuryData.js:146
-#: src/views/TreasuryDashboard/treasuryData.ts:173
+#: src/views/TreasuryDashboard/treasuryData.ts:176
 msgid "Protocol Owned Liquidity, is the amount of LP the treasury owns and controls. The more POL the better for the protocol and its users."
 msgstr "Protocol Owned Liquidity, is the amount of LP the treasury owns and controls. The more POL the better for the protocol and its users."
 
@@ -440,6 +451,10 @@ msgstr "Protocol Owned Liquidity, is the amount of LP the treasury owns and cont
 msgid "Purchased"
 msgstr "Purchased"
 
+#: src/views/InviteUsers/index.tsx:266
+msgid "Query invited users"
+msgstr "Query invited users"
+
 #: src/views/Bond/BondPurchase.jsx:255
 #: src/views/Bond/BondRedeem.jsx:121
 #: src/views/ChooseBond/BondRow.jsx:47
@@ -447,11 +462,11 @@ msgstr "Purchased"
 msgid "ROI"
 msgstr "ROI"
 
-#: src/views/Stake/Stake.tsx:447
+#: src/views/Stake/Stake.tsx:451
 msgid "ROI (5-Day Rate)"
 msgstr "ROI (5-Day Rate)"
 
-#: src/views/Claim/index.tsx:510
+#: src/views/Claim/index.tsx:511
 msgid "Received"
 msgstr "Received"
 
@@ -463,7 +478,7 @@ msgstr "Recipient"
 msgid "Recipient Address"
 msgstr "Recipient Address"
 
-#: src/views/Bond/Bond.tsx:102
+#: src/views/Bond/Bond.tsx:101
 msgid "Redeem"
 msgstr "Redeem"
 
@@ -471,7 +486,7 @@ msgstr "Redeem"
 msgid "Release 35% of the total participated amount first, the leftover will release an equal amount every day."
 msgstr "Release 35% of the total participated amount first, the leftover will release an equal amount every day."
 
-#: src/views/Claim/index.tsx:451
+#: src/views/Claim/index.tsx:450
 msgid "Release Time"
 msgstr "Release Time"
 
@@ -479,25 +494,27 @@ msgstr "Release Time"
 msgid "Release Time："
 msgstr "Release Time："
 
-#: src/views/TreasuryDashboard/components/Graph/Graph.js:72
+#: src/views/TreasuryDashboard/components/Graph/Graph.js:71
 msgid "Risk Free Value of Treasury Assets"
 msgstr "Risk Free Value of Treasury Assets"
 
-#: src/components/TopBar/treasuryData.js:145
-#: src/views/TreasuryDashboard/treasuryData.ts:172
+#: src/views/TreasuryDashboard/treasuryData.ts:175
 msgid "Risk Free Value, is the amount of funds the treasury guarantees to use for backing THS."
 msgstr "Risk Free Value, is the amount of funds the treasury guarantees to use for backing THS."
 
-#: src/views/TreasuryDashboard/components/Graph/Graph.js:183
+#: src/views/InviteUsers/index.tsx:370
+msgid "Rows per page:"
+msgstr "Rows per page:"
+
+#: src/views/TreasuryDashboard/components/Graph/Graph.js:182
 msgid "Runway Available"
 msgstr "Runway Available"
 
-#: src/components/TopBar/treasuryData.js:150
-#: src/views/TreasuryDashboard/treasuryData.ts:177
+#: src/views/TreasuryDashboard/treasuryData.ts:180
 msgid "Runway, is the number of days sTHS emissions can be sustained at a given rate. Lower APY = longer runway"
 msgstr "Runway, is the number of days sTHS emissions can be sustained at a given rate. Lower APY = longer runway"
 
-#: src/components/Sidebar/NavContent.jsx:248
+#: src/components/Sidebar/NavContent.jsx:249
 msgid "SC"
 msgstr "SC"
 
@@ -505,7 +522,11 @@ msgstr "SC"
 msgid "SC Amount"
 msgstr "SC Amount"
 
-#: src/views/Claim/index.tsx:415
+#: src/views/InviteUsers/index.tsx:150
+msgid "SC Balance"
+msgstr "SC Balance"
+
+#: src/views/Claim/index.tsx:414
 msgid "SC Insufficient Balance"
 msgstr "SC Insufficient Balance"
 
@@ -519,15 +540,19 @@ msgstr "SC Unclaimed"
 msgid "SC amount"
 msgstr "SC amount"
 
-#: src/views/TreasuryDashboard/treasuryData.ts:166
+#: src/views/TreasuryDashboard/treasuryData.ts:167
 msgid "SLP Treasury"
 msgstr "SLP Treasury"
+
+#: src/views/InviteUsers/index.tsx:287
+msgid "Search"
+msgstr "Search"
 
 #: src/views/IDO/component/PreSate1/index.tsx:231
 msgid "Send"
 msgstr "Send"
 
-#: src/views/Stake/Stake.tsx:170
+#: src/views/Stake/Stake.tsx:174
 msgid "Single Stake"
 msgstr "Single Stake"
 
@@ -541,15 +566,15 @@ msgstr "Slippage"
 msgid "Sold Out"
 msgstr "Sold Out"
 
-#: src/components/Sidebar/NavContent.jsx:174
+#: src/components/Sidebar/NavContent.jsx:175
 msgid "Stake"
 msgstr "Stake"
 
-#: src/views/Stake/Stake.tsx:349
+#: src/views/Stake/Stake.tsx:353
 msgid "Stake THS"
 msgstr "Stake THS"
 
-#: src/views/Stake/Stake.tsx:409
+#: src/views/Stake/Stake.tsx:413
 msgid "Staked Balance"
 msgstr "Staked Balance"
 
@@ -565,12 +590,12 @@ msgstr "Staking THS"
 msgid "Start to Buy THS Token"
 msgstr "Start to Buy THS Token"
 
-#: src/views/Register/index.tsx:239
+#: src/views/Register/index.tsx:238
 msgid "Success"
 msgstr "Success"
 
-#: src/views/DaoProfit/index.tsx:193
-#: src/views/IDORelease/index.tsx:220
+#: src/views/DaoProfit/index.tsx:200
+#: src/views/IDORelease/index.tsx:221
 msgid "THS Amount"
 msgstr "THS Amount"
 
@@ -579,25 +604,24 @@ msgstr "THS Amount"
 msgid "THS Price"
 msgstr "THS Price"
 
-#: src/views/TreasuryDashboard/components/Graph/Graph.js:125
+#: src/views/TreasuryDashboard/components/Graph/Graph.js:124
 msgid "THS Staked"
 msgstr "THS Staked"
 
-#: src/components/TopBar/treasuryData.js:148
-#: src/views/TreasuryDashboard/treasuryData.ts:175
+#: src/views/TreasuryDashboard/treasuryData.ts:178
 msgid "THS Staked, is the ratio of sTHS to THS (staked vs unstaked)"
 msgstr "THS Staked, is the ratio of sTHS to THS (staked vs unstaked)"
 
-#: src/views/DaoProfit/index.tsx:198
-#: src/views/IDORelease/index.tsx:225
-#: src/views/IDORelease/index.tsx:289
+#: src/views/DaoProfit/index.tsx:205
+#: src/views/IDORelease/index.tsx:226
+#: src/views/IDORelease/index.tsx:290
 msgid "THS Unclaimed"
 msgstr "THS Unclaimed"
 
-#: src/views/Claim/index.tsx:530
-#: src/views/DaoProfit/index.tsx:241
-#: src/views/IDORelease/index.tsx:275
-#: src/views/IDORelease/index.tsx:338
+#: src/views/Claim/index.tsx:531
+#: src/views/DaoProfit/index.tsx:249
+#: src/views/IDORelease/index.tsx:276
+#: src/views/IDORelease/index.tsx:339
 msgid "THS amount"
 msgstr "THS amount"
 
@@ -613,14 +637,9 @@ msgstr "THS per USDT"
 msgid "The Telegram ID have been register"
 msgstr "The Telegram ID have been register"
 
-#: src/views/TreasuryDashboard/components/Metric/Metric.js:80
+#: src/views/TreasuryDashboard/components/Metric/Metric.js:82
 msgid "The current index tracks the amount of sTHS accumulated since the beginning of staking. Basically, how much sTHS one would have if they staked and held a single THS from day 1."
 msgstr "The current index tracks the amount of sTHS accumulated since the beginning of staking. Basically, how much sTHS one would have if they staked and held a single THS from day 1."
-
-#: src/App.tsx:255
-#: src/components/Sidebar/NavContent.jsx:258
-msgid "The launch time of DAO Rewards is waiting for the DAO voting."
-msgstr "The launch time of DAO Rewards is waiting for the DAO voting."
 
 #: src/views/IDO/index.tsx:199
 msgid "Themis IDO"
@@ -646,17 +665,19 @@ msgstr "Token Supply"
 msgid "Total"
 msgstr "Total"
 
-#: src/components/TopBar/treasuryData.js:133
-#: src/views/Stake/Stake.tsx:213
-#: src/views/TreasuryDashboard/components/Graph/Graph.js:21
-#: src/views/TreasuryDashboard/treasuryData.ts:160
+#: src/views/Stake/Stake.tsx:217
+#: src/views/TreasuryDashboard/components/Graph/Graph.js:20
+#: src/views/TreasuryDashboard/treasuryData.ts:161
 msgid "Total Value Deposited"
 msgstr "Total Value Deposited"
 
-#: src/components/TopBar/treasuryData.js:143
-#: src/views/TreasuryDashboard/treasuryData.ts:170
+#: src/views/TreasuryDashboard/treasuryData.ts:173
 msgid "Total Value Deposited, is the dollar amount of all THS staked in the protocol. This metric is often used as growth or health indicator in DeFi projects."
 msgstr "Total Value Deposited, is the dollar amount of all THS staked in the protocol. This metric is often used as growth or health indicator in DeFi projects."
+
+#: src/views/TreasuryDashboard/components/Metric/Metric.js:52
+msgid "Total casting quantity"
+msgstr "Total casting quantity"
 
 #: src/views/Bond/AdvancedSettings.jsx:51
 msgid "Transaction may revert if price changes by more than slippage %"
@@ -670,23 +691,23 @@ msgstr "Transfer USDT(BEP20) from other wallets or Exchanges to your USDT(BEP20)
 msgid "Treasury Balance"
 msgstr "Treasury Balance"
 
-#: src/views/Claim/index.tsx:469
+#: src/views/Claim/index.tsx:470
 msgid "Unclaimed"
 msgstr "Unclaimed"
 
-#: src/views/Claim/index.tsx:494
+#: src/views/Claim/index.tsx:495
 msgid "Unstable Time"
 msgstr "Unstable Time"
 
-#: src/views/Stake/Stake.tsx:284
+#: src/views/Stake/Stake.tsx:288
 msgid "Unstake"
 msgstr "Unstake"
 
-#: src/views/Stake/Stake.tsx:378
+#: src/views/Stake/Stake.tsx:382
 msgid "Unstake THS"
 msgstr "Unstake THS"
 
-#: src/views/Stake/Stake.tsx:400
+#: src/views/Stake/Stake.tsx:404
 msgid "Unstaked Balance"
 msgstr "Unstaked Balance"
 
@@ -711,11 +732,11 @@ msgstr "Vesting Term"
 msgid "Wallet"
 msgstr "Wallet"
 
-#: src/views/Register/index.tsx:208
+#: src/views/Register/index.tsx:207
 msgid "Wallet Address"
 msgstr "Wallet Address"
 
-#: src/views/Register/index.tsx:209
+#: src/views/Register/index.tsx:208
 msgid "Wallet address"
 msgstr "Wallet address"
 
@@ -723,7 +744,7 @@ msgstr "Wallet address"
 msgid "Wrapping THS"
 msgstr "Wrapping THS"
 
-#: src/views/Stake/Stake.tsx:418
+#: src/views/Stake/Stake.tsx:422
 msgid "Yield Amount"
 msgstr "Yield Amount"
 
@@ -745,7 +766,7 @@ msgstr "You cannot unstake more than your sTHS balance."
 msgid "You have an existing bond. Bonding will reset your vesting period and forfeit rewards. We recommend claiming rewards first or using a fresh wallet. Do you still want to proceed?"
 msgstr "You have an existing bond. Bonding will reset your vesting period and forfeit rewards. We recommend claiming rewards first or using a fresh wallet. Do you still want to proceed?"
 
-#: src/slices/BondSlice.ts:229
+#: src/slices/BondSlice.ts:228
 msgid "You may be trying to bond more than your balance! Error code: 32603. Message: ds-math-sub-underflow"
 msgstr "You may be trying to bond more than your balance! Error code: 32603. Message: ds-math-sub-underflow"
 
@@ -767,13 +788,13 @@ msgid "Your maximum purchase amount is 1000 USDT (BEP20)"
 msgstr "Your maximum purchase amount is 1000 USDT (BEP20)"
 
 #. The action of bonding (verb)
-#: src/views/Bond/Bond.tsx:96
+#: src/views/Bond/Bond.tsx:95
 #: src/views/ChooseBond/BondRow.jsx:131
 msgid "do_bond"
 msgstr "Bond"
 
 #. The action of staking (verb)
-#: src/views/Stake/Stake.tsx:278
+#: src/views/Stake/Stake.tsx:282
 msgid "do_stake"
 msgstr "Stake"
 
@@ -785,22 +806,13 @@ msgstr "eg. if one user has 10000 THS tokens leftover, of which 100 tokens will 
 msgid "for bonding"
 msgstr "for bonding"
 
-#: src/views/Stake/Stake.tsx:296
+#: src/views/Stake/Stake.tsx:300
 msgid "for staking"
 msgstr "for staking"
 
-#: src/views/Stake/Stake.tsx:303
+#: src/views/Stake/Stake.tsx:307
 msgid "for unstaking"
 msgstr "for unstaking"
-
-#: src/views/Claim/index.tsx:528
-#: src/views/DaoProfit/index.tsx:239
-#: src/views/IDORelease/index.tsx:273
-#: src/views/IDORelease/index.tsx:336
-#: src/views/Sc/index.tsx:273
-#: src/views/Sc/index.tsx:339
-#~ msgid "hash"
-#~ msgstr "hash"
 
 #: src/views/IDO/component/CountDownTime/index.tsx:109
 msgid "hrs"
@@ -810,10 +822,6 @@ msgstr "hrs"
 msgid "in the search box, then click the enter to jump to the connect page."
 msgstr "in the search box, then click the enter to jump to the connect page."
 
-#: src/views/Register/index.tsx:217
-msgid "invitationId"
-msgstr "invitationId"
-
 #: src/views/IDO/component/LinkCard/index.tsx:102
 msgid "inviteLink"
 msgstr "inviteLink"
@@ -822,7 +830,7 @@ msgstr "inviteLink"
 msgid "mins"
 msgstr "mins"
 
-#: src/views/TreasuryDashboard/components/Metric/Metric.js:94
+#: src/views/TreasuryDashboard/components/Metric/Metric.js:96
 msgid "sTHS Price"
 msgstr "sTHS Price"
 
@@ -830,10 +838,10 @@ msgstr "sTHS Price"
 msgid "secs"
 msgstr "secs"
 
-#: src/views/Claim/index.tsx:529
-#: src/views/DaoProfit/index.tsx:240
-#: src/views/IDORelease/index.tsx:274
-#: src/views/IDORelease/index.tsx:337
+#: src/views/Claim/index.tsx:530
+#: src/views/DaoProfit/index.tsx:248
+#: src/views/IDORelease/index.tsx:275
+#: src/views/IDORelease/index.tsx:338
 #: src/views/Sc/index.tsx:274
 #: src/views/Sc/index.tsx:340
 msgid "time"
@@ -843,10 +851,18 @@ msgstr "time"
 msgid "to next rebase"
 msgstr "to next rebase"
 
-#: src/views/Claim/index.tsx:522
-#: src/views/Claim/index.tsx:549
-#: src/views/DaoProfit/index.tsx:256
+#: src/views/Claim/index.tsx:523
+#: src/views/Claim/index.tsx:550
+#: src/views/DaoProfit/index.tsx:264
 #: src/views/Sc/index.tsx:290
 #: src/views/Sc/index.tsx:354
 msgid "view more"
 msgstr "view more"
+
+#: src/views/TreasuryDashboard/components/Graph/Graph.js:116
+msgid "{0}"
+msgstr "{0}"
+
+#: src/views/InviteUsers/index.tsx:202
+msgid "{searchAddress} no invited users"
+msgstr "{searchAddress} no invited users"

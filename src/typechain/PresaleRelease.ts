@@ -26,27 +26,54 @@ import type {
 
 export interface PresaleReleaseInterface extends ethers.utils.Interface {
   functions: {
+    "CALCULATE_DECIMAL()": FunctionFragment;
+    "ONE_THS()": FunctionFragment;
+    "ONE_USDT()": FunctionFragment;
+    "addrPair()": FunctionFragment;
     "addrPreThs()": FunctionFragment;
     "addrPresale()": FunctionFragment;
+    "addrRelationship()": FunctionFragment;
+    "addrReleaseV0()": FunctionFragment;
+    "addrStaking()": FunctionFragment;
     "addrThs()": FunctionFragment;
+    "addrUsdt()": FunctionFragment;
+    "calculatePart2ReleasePerBlock(address)": FunctionFragment;
+    "changeStakeAmount(address,uint256)": FunctionFragment;
     "claimPart1()": FunctionFragment;
     "claimPart2()": FunctionFragment;
-    "earnedTotal()": FunctionFragment;
     "getpendingPart1(address)": FunctionFragment;
     "getpendingPart2(address)": FunctionFragment;
+    "initialize(address,address,address,address,address,address,address,address)": FunctionFragment;
+    "lockBlocksAfterStakedThsChange()": FunctionFragment;
     "owner()": FunctionFragment;
     "part1Rate()": FunctionFragment;
     "part1Start()": FunctionFragment;
     "part2Start()": FunctionFragment;
-    "part2TermBlocks()": FunctionFragment;
+    "part2TermMinBlocks()": FunctionFragment;
     "releaseDec()": FunctionFragment;
     "releaseInfoOf(address)": FunctionFragment;
+    "releaseSpeedDenominator()": FunctionFragment;
+    "releasedTotal()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
+    "setLockBlocksAfterStakedThsChange(uint256)": FunctionFragment;
+    "setPart1Rate(uint256)": FunctionFragment;
+    "setPart1StartBlock(uint256)": FunctionFragment;
+    "setPart2StartBlock(uint256)": FunctionFragment;
     "setPart2Terms(uint256)": FunctionFragment;
+    "stakeThresholdToRelease()": FunctionFragment;
+    "stakedInfoOf(address)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
-    "withdrawToken(address,address)": FunctionFragment;
+    "viewAsUsdt(uint256)": FunctionFragment;
+    "withdrawToken(address,uint256,address)": FunctionFragment;
   };
 
+  encodeFunctionData(
+    functionFragment: "CALCULATE_DECIMAL",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "ONE_THS", values?: undefined): string;
+  encodeFunctionData(functionFragment: "ONE_USDT", values?: undefined): string;
+  encodeFunctionData(functionFragment: "addrPair", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "addrPreThs",
     values?: undefined
@@ -55,7 +82,28 @@ export interface PresaleReleaseInterface extends ethers.utils.Interface {
     functionFragment: "addrPresale",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "addrRelationship",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "addrReleaseV0",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "addrStaking",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "addrThs", values?: undefined): string;
+  encodeFunctionData(functionFragment: "addrUsdt", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "calculatePart2ReleasePerBlock",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "changeStakeAmount",
+    values: [string, BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "claimPart1",
     values?: undefined
@@ -65,16 +113,20 @@ export interface PresaleReleaseInterface extends ethers.utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "earnedTotal",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
     functionFragment: "getpendingPart1",
     values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "getpendingPart2",
     values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "initialize",
+    values: [string, string, string, string, string, string, string, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "lockBlocksAfterStakedThsChange",
+    values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(functionFragment: "part1Rate", values?: undefined): string;
@@ -87,7 +139,7 @@ export interface PresaleReleaseInterface extends ethers.utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "part2TermBlocks",
+    functionFragment: "part2TermMinBlocks",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -99,34 +151,94 @@ export interface PresaleReleaseInterface extends ethers.utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(
+    functionFragment: "releaseSpeedDenominator",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "releasedTotal",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setLockBlocksAfterStakedThsChange",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setPart1Rate",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setPart1StartBlock",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setPart2StartBlock",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setPart2Terms",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "stakeThresholdToRelease",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "stakedInfoOf",
+    values: [string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "transferOwnership",
     values: [string]
   ): string;
   encodeFunctionData(
+    functionFragment: "viewAsUsdt",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "withdrawToken",
-    values: [string, string]
+    values: [string, BigNumberish, string]
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "CALCULATE_DECIMAL",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "ONE_THS", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "ONE_USDT", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "addrPair", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "addrPreThs", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "addrPresale",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "addrThs", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "claimPart1", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "claimPart2", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "earnedTotal",
+    functionFragment: "addrRelationship",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "addrReleaseV0",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "addrStaking",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "addrThs", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "addrUsdt", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "calculatePart2ReleasePerBlock",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "changeStakeAmount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "claimPart1", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "claimPart2", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getpendingPart1",
     data: BytesLike
@@ -135,12 +247,17 @@ export interface PresaleReleaseInterface extends ethers.utils.Interface {
     functionFragment: "getpendingPart2",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "lockBlocksAfterStakedThsChange",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "part1Rate", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "part1Start", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "part2Start", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "part2TermBlocks",
+    functionFragment: "part2TermMinBlocks",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "releaseDec", data: BytesLike): Result;
@@ -149,7 +266,31 @@ export interface PresaleReleaseInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "releaseSpeedDenominator",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "releasedTotal",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "renounceOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setLockBlocksAfterStakedThsChange",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setPart1Rate",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setPart1StartBlock",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setPart2StartBlock",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -157,26 +298,45 @@ export interface PresaleReleaseInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "stakeThresholdToRelease",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "stakedInfoOf",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "viewAsUsdt", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "withdrawToken",
     data: BytesLike
   ): Result;
 
   events: {
+    "ChangeStakeAmount(address,uint256,uint256)": EventFragment;
     "ClaimPart1(address,uint256)": EventFragment;
     "ClaimPart2(address,uint256)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "SetPart2Terms(address,uint256)": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "ChangeStakeAmount"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ClaimPart1"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ClaimPart2"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "SetPart2Terms"): EventFragment;
 }
+
+export type ChangeStakeAmountEvent = TypedEvent<
+  [string, BigNumber, BigNumber],
+  { staker: string; oldAmount: BigNumber; newAmount: BigNumber }
+>;
+
+export type ChangeStakeAmountEventFilter =
+  TypedEventFilter<ChangeStakeAmountEvent>;
 
 export type ClaimPart1Event = TypedEvent<
   [string, BigNumber],
@@ -234,11 +394,38 @@ export interface PresaleRelease extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    CALCULATE_DECIMAL(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    ONE_THS(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    ONE_USDT(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    addrPair(overrides?: CallOverrides): Promise<[string]>;
+
     addrPreThs(overrides?: CallOverrides): Promise<[string]>;
 
     addrPresale(overrides?: CallOverrides): Promise<[string]>;
 
+    addrRelationship(overrides?: CallOverrides): Promise<[string]>;
+
+    addrReleaseV0(overrides?: CallOverrides): Promise<[string]>;
+
+    addrStaking(overrides?: CallOverrides): Promise<[string]>;
+
     addrThs(overrides?: CallOverrides): Promise<[string]>;
+
+    addrUsdt(overrides?: CallOverrides): Promise<[string]>;
+
+    calculatePart2ReleasePerBlock(
+      _user: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { releasePerBlock_: BigNumber }>;
+
+    changeStakeAmount(
+      _staker: string,
+      _newAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     claimPart1(
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -247,8 +434,6 @@ export interface PresaleRelease extends BaseContract {
     claimPart2(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
-
-    earnedTotal(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getpendingPart1(
       _receiptor: string,
@@ -260,6 +445,22 @@ export interface PresaleRelease extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { pending_: BigNumber }>;
 
+    initialize(
+      _pair: string,
+      _usdt: string,
+      _ths: string,
+      _relationship: string,
+      _releaseContractV0: string,
+      _preThs: string,
+      _presaleContract: string,
+      _staking: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    lockBlocksAfterStakedThsChange(
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     part1Rate(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -268,7 +469,7 @@ export interface PresaleRelease extends BaseContract {
 
     part2Start(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    part2TermBlocks(overrides?: CallOverrides): Promise<[BigNumber]>;
+    part2TermMinBlocks(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     releaseDec(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -276,15 +477,40 @@ export interface PresaleRelease extends BaseContract {
       arg0: string,
       overrides?: CallOverrides
     ): Promise<
-      [BigNumber, BigNumber, BigNumber, BigNumber] & {
-        part2EarnedTotal: BigNumber;
-        part2LastEarnBlock: BigNumber;
+      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
+        part2ReleaseedTotal: BigNumber;
+        part2ReleasedButNotClaimed: BigNumber;
+        part2LastReleaseBlock: BigNumber;
         part1EarnedBlock: BigNumber;
         part1EarnedAmount: BigNumber;
       }
     >;
 
+    releaseSpeedDenominator(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    releasedTotal(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     renounceOwnership(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setLockBlocksAfterStakedThsChange(
+      _blockCount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setPart1Rate(
+      _rate: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setPart1StartBlock(
+      _startBlock: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setPart2StartBlock(
+      _startBlock: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -293,23 +519,68 @@ export interface PresaleRelease extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    stakeThresholdToRelease(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    stakedInfoOf(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber] & {
+        currentStakedTHS: BigNumber;
+        amountChangedBlock: BigNumber;
+      }
+    >;
+
     transferOwnership(
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    viewAsUsdt(
+      _thsAmount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { usdtAmount_: BigNumber }>;
+
     withdrawToken(
       _token: string,
+      _amount: BigNumberish,
       _to: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
 
+  CALCULATE_DECIMAL(overrides?: CallOverrides): Promise<BigNumber>;
+
+  ONE_THS(overrides?: CallOverrides): Promise<BigNumber>;
+
+  ONE_USDT(overrides?: CallOverrides): Promise<BigNumber>;
+
+  addrPair(overrides?: CallOverrides): Promise<string>;
+
   addrPreThs(overrides?: CallOverrides): Promise<string>;
 
   addrPresale(overrides?: CallOverrides): Promise<string>;
 
+  addrRelationship(overrides?: CallOverrides): Promise<string>;
+
+  addrReleaseV0(overrides?: CallOverrides): Promise<string>;
+
+  addrStaking(overrides?: CallOverrides): Promise<string>;
+
   addrThs(overrides?: CallOverrides): Promise<string>;
+
+  addrUsdt(overrides?: CallOverrides): Promise<string>;
+
+  calculatePart2ReleasePerBlock(
+    _user: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  changeStakeAmount(
+    _staker: string,
+    _newAmount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   claimPart1(
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -318,8 +589,6 @@ export interface PresaleRelease extends BaseContract {
   claimPart2(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
-
-  earnedTotal(overrides?: CallOverrides): Promise<BigNumber>;
 
   getpendingPart1(
     _receiptor: string,
@@ -331,6 +600,20 @@ export interface PresaleRelease extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  initialize(
+    _pair: string,
+    _usdt: string,
+    _ths: string,
+    _relationship: string,
+    _releaseContractV0: string,
+    _preThs: string,
+    _presaleContract: string,
+    _staking: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  lockBlocksAfterStakedThsChange(overrides?: CallOverrides): Promise<BigNumber>;
+
   owner(overrides?: CallOverrides): Promise<string>;
 
   part1Rate(overrides?: CallOverrides): Promise<BigNumber>;
@@ -339,7 +622,7 @@ export interface PresaleRelease extends BaseContract {
 
   part2Start(overrides?: CallOverrides): Promise<BigNumber>;
 
-  part2TermBlocks(overrides?: CallOverrides): Promise<BigNumber>;
+  part2TermMinBlocks(overrides?: CallOverrides): Promise<BigNumber>;
 
   releaseDec(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -347,15 +630,40 @@ export interface PresaleRelease extends BaseContract {
     arg0: string,
     overrides?: CallOverrides
   ): Promise<
-    [BigNumber, BigNumber, BigNumber, BigNumber] & {
-      part2EarnedTotal: BigNumber;
-      part2LastEarnBlock: BigNumber;
+    [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
+      part2ReleaseedTotal: BigNumber;
+      part2ReleasedButNotClaimed: BigNumber;
+      part2LastReleaseBlock: BigNumber;
       part1EarnedBlock: BigNumber;
       part1EarnedAmount: BigNumber;
     }
   >;
 
+  releaseSpeedDenominator(overrides?: CallOverrides): Promise<BigNumber>;
+
+  releasedTotal(overrides?: CallOverrides): Promise<BigNumber>;
+
   renounceOwnership(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setLockBlocksAfterStakedThsChange(
+    _blockCount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setPart1Rate(
+    _rate: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setPart1StartBlock(
+    _startBlock: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setPart2StartBlock(
+    _startBlock: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -364,29 +672,72 @@ export interface PresaleRelease extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  stakeThresholdToRelease(overrides?: CallOverrides): Promise<BigNumber>;
+
+  stakedInfoOf(
+    arg0: string,
+    overrides?: CallOverrides
+  ): Promise<
+    [BigNumber, BigNumber] & {
+      currentStakedTHS: BigNumber;
+      amountChangedBlock: BigNumber;
+    }
+  >;
+
   transferOwnership(
     newOwner: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  viewAsUsdt(
+    _thsAmount: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   withdrawToken(
     _token: string,
+    _amount: BigNumberish,
     _to: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    CALCULATE_DECIMAL(overrides?: CallOverrides): Promise<BigNumber>;
+
+    ONE_THS(overrides?: CallOverrides): Promise<BigNumber>;
+
+    ONE_USDT(overrides?: CallOverrides): Promise<BigNumber>;
+
+    addrPair(overrides?: CallOverrides): Promise<string>;
+
     addrPreThs(overrides?: CallOverrides): Promise<string>;
 
     addrPresale(overrides?: CallOverrides): Promise<string>;
 
+    addrRelationship(overrides?: CallOverrides): Promise<string>;
+
+    addrReleaseV0(overrides?: CallOverrides): Promise<string>;
+
+    addrStaking(overrides?: CallOverrides): Promise<string>;
+
     addrThs(overrides?: CallOverrides): Promise<string>;
+
+    addrUsdt(overrides?: CallOverrides): Promise<string>;
+
+    calculatePart2ReleasePerBlock(
+      _user: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    changeStakeAmount(
+      _staker: string,
+      _newAmount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     claimPart1(overrides?: CallOverrides): Promise<void>;
 
     claimPart2(overrides?: CallOverrides): Promise<void>;
-
-    earnedTotal(overrides?: CallOverrides): Promise<BigNumber>;
 
     getpendingPart1(
       _receiptor: string,
@@ -398,6 +749,22 @@ export interface PresaleRelease extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    initialize(
+      _pair: string,
+      _usdt: string,
+      _ths: string,
+      _relationship: string,
+      _releaseContractV0: string,
+      _preThs: string,
+      _presaleContract: string,
+      _staking: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    lockBlocksAfterStakedThsChange(
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     owner(overrides?: CallOverrides): Promise<string>;
 
     part1Rate(overrides?: CallOverrides): Promise<BigNumber>;
@@ -406,7 +773,7 @@ export interface PresaleRelease extends BaseContract {
 
     part2Start(overrides?: CallOverrides): Promise<BigNumber>;
 
-    part2TermBlocks(overrides?: CallOverrides): Promise<BigNumber>;
+    part2TermMinBlocks(overrides?: CallOverrides): Promise<BigNumber>;
 
     releaseDec(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -414,34 +781,85 @@ export interface PresaleRelease extends BaseContract {
       arg0: string,
       overrides?: CallOverrides
     ): Promise<
-      [BigNumber, BigNumber, BigNumber, BigNumber] & {
-        part2EarnedTotal: BigNumber;
-        part2LastEarnBlock: BigNumber;
+      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
+        part2ReleaseedTotal: BigNumber;
+        part2ReleasedButNotClaimed: BigNumber;
+        part2LastReleaseBlock: BigNumber;
         part1EarnedBlock: BigNumber;
         part1EarnedAmount: BigNumber;
       }
     >;
 
+    releaseSpeedDenominator(overrides?: CallOverrides): Promise<BigNumber>;
+
+    releasedTotal(overrides?: CallOverrides): Promise<BigNumber>;
+
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
+
+    setLockBlocksAfterStakedThsChange(
+      _blockCount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setPart1Rate(_rate: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    setPart1StartBlock(
+      _startBlock: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setPart2StartBlock(
+      _startBlock: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     setPart2Terms(
       _termBlocks: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
+    stakeThresholdToRelease(overrides?: CallOverrides): Promise<BigNumber>;
+
+    stakedInfoOf(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber] & {
+        currentStakedTHS: BigNumber;
+        amountChangedBlock: BigNumber;
+      }
+    >;
+
     transferOwnership(
       newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
+    viewAsUsdt(
+      _thsAmount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     withdrawToken(
       _token: string,
+      _amount: BigNumberish,
       _to: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
 
   filters: {
+    "ChangeStakeAmount(address,uint256,uint256)"(
+      staker?: string | null,
+      oldAmount?: BigNumberish | null,
+      newAmount?: BigNumberish | null
+    ): ChangeStakeAmountEventFilter;
+    ChangeStakeAmount(
+      staker?: string | null,
+      oldAmount?: BigNumberish | null,
+      newAmount?: BigNumberish | null
+    ): ChangeStakeAmountEventFilter;
+
     "ClaimPart1(address,uint256)"(
       sender?: string | null,
       amount?: BigNumberish | null
@@ -480,11 +898,38 @@ export interface PresaleRelease extends BaseContract {
   };
 
   estimateGas: {
+    CALCULATE_DECIMAL(overrides?: CallOverrides): Promise<BigNumber>;
+
+    ONE_THS(overrides?: CallOverrides): Promise<BigNumber>;
+
+    ONE_USDT(overrides?: CallOverrides): Promise<BigNumber>;
+
+    addrPair(overrides?: CallOverrides): Promise<BigNumber>;
+
     addrPreThs(overrides?: CallOverrides): Promise<BigNumber>;
 
     addrPresale(overrides?: CallOverrides): Promise<BigNumber>;
 
+    addrRelationship(overrides?: CallOverrides): Promise<BigNumber>;
+
+    addrReleaseV0(overrides?: CallOverrides): Promise<BigNumber>;
+
+    addrStaking(overrides?: CallOverrides): Promise<BigNumber>;
+
     addrThs(overrides?: CallOverrides): Promise<BigNumber>;
+
+    addrUsdt(overrides?: CallOverrides): Promise<BigNumber>;
+
+    calculatePart2ReleasePerBlock(
+      _user: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    changeStakeAmount(
+      _staker: string,
+      _newAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     claimPart1(
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -494,8 +939,6 @@ export interface PresaleRelease extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    earnedTotal(overrides?: CallOverrides): Promise<BigNumber>;
-
     getpendingPart1(
       _receiptor: string,
       overrides?: CallOverrides
@@ -503,6 +946,22 @@ export interface PresaleRelease extends BaseContract {
 
     getpendingPart2(
       _receiptor: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    initialize(
+      _pair: string,
+      _usdt: string,
+      _ths: string,
+      _relationship: string,
+      _releaseContractV0: string,
+      _preThs: string,
+      _presaleContract: string,
+      _staking: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    lockBlocksAfterStakedThsChange(
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -514,13 +973,37 @@ export interface PresaleRelease extends BaseContract {
 
     part2Start(overrides?: CallOverrides): Promise<BigNumber>;
 
-    part2TermBlocks(overrides?: CallOverrides): Promise<BigNumber>;
+    part2TermMinBlocks(overrides?: CallOverrides): Promise<BigNumber>;
 
     releaseDec(overrides?: CallOverrides): Promise<BigNumber>;
 
     releaseInfoOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+    releaseSpeedDenominator(overrides?: CallOverrides): Promise<BigNumber>;
+
+    releasedTotal(overrides?: CallOverrides): Promise<BigNumber>;
+
     renounceOwnership(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    setLockBlocksAfterStakedThsChange(
+      _blockCount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    setPart1Rate(
+      _rate: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    setPart1StartBlock(
+      _startBlock: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    setPart2StartBlock(
+      _startBlock: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -529,24 +1012,61 @@ export interface PresaleRelease extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    stakeThresholdToRelease(overrides?: CallOverrides): Promise<BigNumber>;
+
+    stakedInfoOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
     transferOwnership(
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    viewAsUsdt(
+      _thsAmount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     withdrawToken(
       _token: string,
+      _amount: BigNumberish,
       _to: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
+    CALCULATE_DECIMAL(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    ONE_THS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    ONE_USDT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    addrPair(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     addrPreThs(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addrPresale(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    addrRelationship(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    addrReleaseV0(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    addrStaking(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     addrThs(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    addrUsdt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    calculatePart2ReleasePerBlock(
+      _user: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    changeStakeAmount(
+      _staker: string,
+      _newAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
     claimPart1(
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -555,8 +1075,6 @@ export interface PresaleRelease extends BaseContract {
     claimPart2(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
-
-    earnedTotal(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getpendingPart1(
       _receiptor: string,
@@ -568,6 +1086,22 @@ export interface PresaleRelease extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    initialize(
+      _pair: string,
+      _usdt: string,
+      _ths: string,
+      _relationship: string,
+      _releaseContractV0: string,
+      _preThs: string,
+      _presaleContract: string,
+      _staking: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    lockBlocksAfterStakedThsChange(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     part1Rate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -576,7 +1110,9 @@ export interface PresaleRelease extends BaseContract {
 
     part2Start(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    part2TermBlocks(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    part2TermMinBlocks(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     releaseDec(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -585,7 +1121,33 @@ export interface PresaleRelease extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    releaseSpeedDenominator(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    releasedTotal(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     renounceOwnership(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setLockBlocksAfterStakedThsChange(
+      _blockCount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setPart1Rate(
+      _rate: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setPart1StartBlock(
+      _startBlock: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setPart2StartBlock(
+      _startBlock: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -594,13 +1156,28 @@ export interface PresaleRelease extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    stakeThresholdToRelease(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    stakedInfoOf(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     transferOwnership(
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    viewAsUsdt(
+      _thsAmount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     withdrawToken(
       _token: string,
+      _amount: BigNumberish,
       _to: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;

@@ -95,7 +95,7 @@ function Register() {
 	const serachRelationship = async (pro: ethers.providers.JsonRpcProvider) => {
 		const signer = pro.getSigner();
 
-		const RelationshipContract = new ethers.Contract(addresses[chainID].Relationship_ADDRESS as string, RelationshipABI, signer)
+		const RelationshipContract = new ethers.Contract(addresses[chainID]?.Relationship_ADDRESS as string, RelationshipABI, signer)
 
 		let defaultCode = await RelationshipContract.defaultInviteCode()
 		let invitedAddress = await RelationshipContract.getInviter(address)

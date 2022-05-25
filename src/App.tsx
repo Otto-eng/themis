@@ -39,6 +39,7 @@ import { info } from "./slices/MessagesSlice";
 import Admin from "./views/Admin";
 import DaoProfit from "./views/DaoProfit";
 import { t } from "@lingui/macro";
+import InviteUsers from "./views/InviteUsers";
 
 // 😬 Sorry for all the console logging
 const DEBUG = false;
@@ -295,9 +296,9 @@ function App() {
             <Route path="/bonds">
               <ChooseBond />
             </Route>
-            {/* <Route path="/openBeta">
-              <OpenBeta />
-            </Route> */}
+            <Route path="/inviteUsers">
+              <InviteUsers />
+            </Route>
             <Route exact path="/ido">
               <IDO />
             </Route>
@@ -322,8 +323,6 @@ function App() {
                 <Admin />
               </Route> : null
             }
-
-
             <Route component={NotFound} />
           </Switch>
         </div>

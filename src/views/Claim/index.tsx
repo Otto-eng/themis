@@ -393,7 +393,7 @@ function Claim() {
 						variant="contained"
 						color="primary"
 							key={pendingStatus.confrim + ""}
-						disabled={!optionData.id || pendingStatus.confrim}
+							disabled={!optionData.id || pendingStatus.confrim}
 							onClick={async () => {
 								if (pendingStatus.confrim) return;
 
@@ -405,17 +405,16 @@ function Claim() {
 							try {
 								const StakingRewardReleaseContract = new ethers.Contract(addresses[chainID].StakingRewardRelease_ADDRESS, StakingRewardReleaseABI, signer);
 								const SCContract = new ethers.Contract(addresses[chainID].ScaleCode_ADDRESS, ThemisERC20TokenABI, signer);
-								const balance = await SCContract.balanceOf(address);
-								if (ethers.utils.parseUnits(optionData.value + "", "ether").lt(balance)) {
+								// const balance = await SCContract.balanceOf(address);
+								if (ethers.utils.parseUnits(optionData.gasSc + "", "ether").lt(ethers.utils.parseUnits(SCBanlance, "ether"))) {
 									const approveTx = await SCContract.approve(addresses[chainID].StakingRewardRelease_ADDRESS, ethers.utils.parseUnits(optionData.gasSc, "ether"));
 									const infoHash = await StakingRewardReleaseContract.speedUp(block?.recordBlock!, BigNumber.from(optionData.id))
-									await approveTx.wait();
-									const info = await StakingRewardReleaseContract.provider.getTransactionReceipt(infoHash.hash)
+									await infoHash.wait();
 								} else {
 									dispatch(error(t`SC Insufficient Balance`));
 								}
 							} catch (error) {
-
+								console.log("123");
 							}
 							setTimeout(() => {
 								setPeddingStatus({
@@ -424,11 +423,11 @@ function Claim() {
 								})
 								setOptionData({ id: 0, value: 180, gasSc: "0" });
 								setIsOpen(false)
-							}, 2000);
+								!num && setNum(true)
+							}, 500);
 						}}>{isPending(pendingStatus, "confrim", "Confrim")}</Confrim>
 				</Container>
-			</CalimModal>}
-
+				</CalimModal>}
 				<Top style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}>
 						<Title >THS:</Title>
 					<Blance>{pendingStatus.banlance ? <Skeleton width="80px" /> : Number(thsBalance).toFixed(4)}</Blance>
@@ -460,7 +459,9 @@ function Claim() {
 										setBlock(item)
 										setLen(Number(item.speedLevel))
 									}}
-								>{isPending(pendingStatus, "confrim", "Accelerate")}</ClaimBtn>
+									>
+										{isPending(pendingStatus, "confrim", t`Accelerate`)}
+									</ClaimBtn>
 							</CardContainer>
 						</CardItem>
 							<CardItem style={{ backgroundColor: theme === THEME_LIGHT ? "#FAFAFA" : "#18253A" }}>

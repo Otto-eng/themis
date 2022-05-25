@@ -61,7 +61,6 @@ export const scStakeEarningsDetailsList = createAsyncThunk(
 			}
 			const list = graphData.data.scStakeEarnings ?? []
 			data = list.filter((item: ScStakeEarningsType) => item.themis.id.toLowerCase() === address.toLowerCase());
-
 		} catch (error) {
 			data = []
 		}
@@ -76,8 +75,6 @@ export const scStakeEarningsDetailsList = createAsyncThunk(
 export const stakeTHSReleaseEarningsList = createAsyncThunk(
 	"sc/stakeReleaseEarningsList",
 	async ({ first, address }: ISCAsyncThunk) => {
-		// where: { themis: "${address.toLowerCase()}" }
-
 		const protocolMetricsQuery = `
 				query MyQuery {
 				  stakeReleaseEarnings(

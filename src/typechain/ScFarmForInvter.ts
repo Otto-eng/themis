@@ -26,66 +26,47 @@ import type {
 
 export interface ScFarmForInvterInterface extends ethers.utils.Interface {
   functions: {
-    "DEFAULT_ADMIN_ROLE()": FunctionFragment;
-    "MANAGER_ROLE()": FunctionFragment;
     "ONE_SC()": FunctionFragment;
     "ONE_THS()": FunctionFragment;
     "ONE_USDT()": FunctionFragment;
-    "OWNER_ROLE()": FunctionFragment;
-    "addManagerBatch(address[])": FunctionFragment;
-    "changeOwner(address)": FunctionFragment;
+    "changeHistoryOf(address,uint256)": FunctionFragment;
     "changeStakeAmount(address,uint256)": FunctionFragment;
     "claim()": FunctionFragment;
     "claimSpecificInvitee(address)": FunctionFragment;
     "earnBlockCountMax()": FunctionFragment;
-    "getRoleAdmin(bytes32)": FunctionFragment;
-    "grantRole(bytes32,address)": FunctionFragment;
-    "hasRole(bytes32,address)": FunctionFragment;
-    "initFlag()": FunctionFragment;
-    "initalize(address,address,address,address,address,address)": FunctionFragment;
+    "getCurrentStakeInfo(address)": FunctionFragment;
+    "initialize(address,address,address,address,address,address)": FunctionFragment;
     "inviteRewardPerLevelPerBlock()": FunctionFragment;
-    "inviterThresholdToEarned()": FunctionFragment;
     "levelDec()": FunctionFragment;
+    "owner()": FunctionFragment;
     "pairAddr()": FunctionFragment;
     "pendingReward(address)": FunctionFragment;
-    "pendingRewardSpecificInvitee(address,address)": FunctionFragment;
+    "pendingRewardSpecificInvitee(address)": FunctionFragment;
     "relationshipAdr()": FunctionFragment;
-    "removeManager(address)": FunctionFragment;
-    "renounceRole(bytes32,address)": FunctionFragment;
-    "revokeRole(bytes32,address)": FunctionFragment;
-    "rewardInfoOf(address,address)": FunctionFragment;
+    "renounceOwnership()": FunctionFragment;
+    "rewardLockBlocks()": FunctionFragment;
+    "rewardedDataOf(address,address)": FunctionFragment;
     "scAddr()": FunctionFragment;
     "setEarnBlockCountMax(uint256)": FunctionFragment;
-    "setInviteRewardPerLevelPerBlock(uint256)": FunctionFragment;
-    "stakedInfoOf(address)": FunctionFragment;
-    "supportsInterface(bytes4)": FunctionFragment;
+    "setRewardLockBlocks(uint256)": FunctionFragment;
+    "stakeThresholdToEarn()": FunctionFragment;
+    "supportClaim()": FunctionFragment;
     "thsAddr()": FunctionFragment;
     "thsStaking()": FunctionFragment;
+    "toggleSupportClaim()": FunctionFragment;
+    "transferOwnership(address)": FunctionFragment;
     "usdtAddr()": FunctionFragment;
     "viewAsUsdt(uint256)": FunctionFragment;
-    "withdrawToken(address,address)": FunctionFragment;
+    "withdrawToken(address,uint256,address)": FunctionFragment;
   };
 
-  encodeFunctionData(
-    functionFragment: "DEFAULT_ADMIN_ROLE",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "MANAGER_ROLE",
-    values?: undefined
-  ): string;
   encodeFunctionData(functionFragment: "ONE_SC", values?: undefined): string;
   encodeFunctionData(functionFragment: "ONE_THS", values?: undefined): string;
   encodeFunctionData(functionFragment: "ONE_USDT", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "OWNER_ROLE",
-    values?: undefined
+    functionFragment: "changeHistoryOf",
+    values: [string, BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "addManagerBatch",
-    values: [string[]]
-  ): string;
-  encodeFunctionData(functionFragment: "changeOwner", values: [string]): string;
   encodeFunctionData(
     functionFragment: "changeStakeAmount",
     values: [string, BigNumberish]
@@ -100,31 +81,19 @@ export interface ScFarmForInvterInterface extends ethers.utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "getRoleAdmin",
-    values: [BytesLike]
+    functionFragment: "getCurrentStakeInfo",
+    values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: "grantRole",
-    values: [BytesLike, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "hasRole",
-    values: [BytesLike, string]
-  ): string;
-  encodeFunctionData(functionFragment: "initFlag", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "initalize",
+    functionFragment: "initialize",
     values: [string, string, string, string, string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "inviteRewardPerLevelPerBlock",
     values?: undefined
   ): string;
-  encodeFunctionData(
-    functionFragment: "inviterThresholdToEarned",
-    values?: undefined
-  ): string;
   encodeFunctionData(functionFragment: "levelDec", values?: undefined): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(functionFragment: "pairAddr", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "pendingReward",
@@ -132,26 +101,22 @@ export interface ScFarmForInvterInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "pendingRewardSpecificInvitee",
-    values: [string, string]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "relationshipAdr",
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "removeManager",
-    values: [string]
+    functionFragment: "renounceOwnership",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "renounceRole",
-    values: [BytesLike, string]
+    functionFragment: "rewardLockBlocks",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "revokeRole",
-    values: [BytesLike, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rewardInfoOf",
+    functionFragment: "rewardedDataOf",
     values: [string, string]
   ): string;
   encodeFunctionData(functionFragment: "scAddr", values?: undefined): string;
@@ -160,21 +125,29 @@ export interface ScFarmForInvterInterface extends ethers.utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "setInviteRewardPerLevelPerBlock",
+    functionFragment: "setRewardLockBlocks",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "stakedInfoOf",
-    values: [string]
+    functionFragment: "stakeThresholdToEarn",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "supportsInterface",
-    values: [BytesLike]
+    functionFragment: "supportClaim",
+    values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "thsAddr", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "thsStaking",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "toggleSupportClaim",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferOwnership",
+    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "usdtAddr", values?: undefined): string;
   encodeFunctionData(
@@ -183,27 +156,14 @@ export interface ScFarmForInvterInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawToken",
-    values: [string, string]
+    values: [string, BigNumberish, string]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "DEFAULT_ADMIN_ROLE",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "MANAGER_ROLE",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "ONE_SC", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ONE_THS", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ONE_USDT", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "OWNER_ROLE", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "addManagerBatch",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "changeOwner",
+    functionFragment: "changeHistoryOf",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -220,22 +180,16 @@ export interface ScFarmForInvterInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getRoleAdmin",
+    functionFragment: "getCurrentStakeInfo",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "grantRole", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "hasRole", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "initFlag", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "initalize", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "inviteRewardPerLevelPerBlock",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "inviterThresholdToEarned",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "levelDec", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "pairAddr", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "pendingReward",
@@ -250,16 +204,15 @@ export interface ScFarmForInvterInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "removeManager",
+    functionFragment: "renounceOwnership",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "renounceRole",
+    functionFragment: "rewardLockBlocks",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "revokeRole", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "rewardInfoOf",
+    functionFragment: "rewardedDataOf",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "scAddr", data: BytesLike): Result;
@@ -268,19 +221,27 @@ export interface ScFarmForInvterInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setInviteRewardPerLevelPerBlock",
+    functionFragment: "setRewardLockBlocks",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "stakedInfoOf",
+    functionFragment: "stakeThresholdToEarn",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "supportsInterface",
+    functionFragment: "supportClaim",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "thsAddr", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "thsStaking", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "toggleSupportClaim",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "transferOwnership",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "usdtAddr", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "viewAsUsdt", data: BytesLike): Result;
   decodeFunctionResult(
@@ -291,18 +252,12 @@ export interface ScFarmForInvterInterface extends ethers.utils.Interface {
   events: {
     "ChangeStakeAmount(address,uint256,uint256)": EventFragment;
     "Claim(address,uint256)": EventFragment;
-    "Initalize(address,address,address,address,address,address,address)": EventFragment;
-    "RoleAdminChanged(bytes32,bytes32,bytes32)": EventFragment;
-    "RoleGranted(bytes32,address,address)": EventFragment;
-    "RoleRevoked(bytes32,address,address)": EventFragment;
+    "OwnershipTransferred(address,address)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "ChangeStakeAmount"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Claim"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Initalize"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleAdminChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleGranted"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleRevoked"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
 }
 
 export type ChangeStakeAmountEvent = TypedEvent<
@@ -320,42 +275,13 @@ export type ClaimEvent = TypedEvent<
 
 export type ClaimEventFilter = TypedEventFilter<ClaimEvent>;
 
-export type InitalizeEvent = TypedEvent<
-  [string, string, string, string, string, string, string],
-  {
-    sender: string;
-    pair: string;
-    ths: string;
-    usdt: string;
-    staking: string;
-    sc: string;
-    relationship: string;
-  }
+export type OwnershipTransferredEvent = TypedEvent<
+  [string, string],
+  { previousOwner: string; newOwner: string }
 >;
 
-export type InitalizeEventFilter = TypedEventFilter<InitalizeEvent>;
-
-export type RoleAdminChangedEvent = TypedEvent<
-  [string, string, string],
-  { role: string; previousAdminRole: string; newAdminRole: string }
->;
-
-export type RoleAdminChangedEventFilter =
-  TypedEventFilter<RoleAdminChangedEvent>;
-
-export type RoleGrantedEvent = TypedEvent<
-  [string, string, string],
-  { role: string; account: string; sender: string }
->;
-
-export type RoleGrantedEventFilter = TypedEventFilter<RoleGrantedEvent>;
-
-export type RoleRevokedEvent = TypedEvent<
-  [string, string, string],
-  { role: string; account: string; sender: string }
->;
-
-export type RoleRevokedEventFilter = TypedEventFilter<RoleRevokedEvent>;
+export type OwnershipTransferredEventFilter =
+  TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface ScFarmForInvter extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -384,27 +310,23 @@ export interface ScFarmForInvter extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<[string]>;
-
-    MANAGER_ROLE(overrides?: CallOverrides): Promise<[string]>;
-
     ONE_SC(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     ONE_THS(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     ONE_USDT(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    OWNER_ROLE(overrides?: CallOverrides): Promise<[string]>;
-
-    addManagerBatch(
-      _users: string[],
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    changeOwner(
-      _newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    changeHistoryOf(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber] & {
+        currentBlock: BigNumber;
+        amount: BigNumber;
+        amountAsUSDT: BigNumber;
+      }
+    >;
 
     changeStakeAmount(
       _staker: string,
@@ -423,23 +345,17 @@ export interface ScFarmForInvter extends BaseContract {
 
     earnBlockCountMax(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
-
-    grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    hasRole(
-      role: BytesLike,
-      account: string,
+    getCurrentStakeInfo(
+      _staker: string,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<
+      [BigNumber, BigNumber] & {
+        thsAmount_: BigNumber;
+        amountAsUsdt_: BigNumber;
+      }
+    >;
 
-    initFlag(overrides?: CallOverrides): Promise<[boolean]>;
-
-    initalize(
+    initialize(
       _pair: string,
       _ths: string,
       _usdt: string,
@@ -453,9 +369,9 @@ export interface ScFarmForInvter extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    inviterThresholdToEarned(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     levelDec(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    owner(overrides?: CallOverrides): Promise<[string]>;
 
     pairAddr(overrides?: CallOverrides): Promise<[string]>;
 
@@ -465,53 +381,30 @@ export interface ScFarmForInvter extends BaseContract {
     ): Promise<[BigNumber] & { pendingReward_: BigNumber }>;
 
     pendingRewardSpecificInvitee(
-      _inviter: string,
       _invitee: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { pendingReward_: BigNumber }>;
 
     relationshipAdr(overrides?: CallOverrides): Promise<[string]>;
 
-    removeManager(
-      _user: string,
+    renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    rewardLockBlocks(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    rewardInfoOf(
+    rewardedDataOf(
       arg0: string,
       arg1: string,
       overrides?: CallOverrides
     ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber
-      ] & {
-        earnedTotal: BigNumber;
+      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
+        rewaradedTotal: BigNumber;
         earnedBlockTotal: BigNumber;
-        lastEarnedBlock: BigNumber;
-        lastEarnedAmount: BigNumber;
-        lastInviterStakedTHS: BigNumber;
-        lastInviterStakedTHSAsUsdt: BigNumber;
-        lastInviteeStakedTHS: BigNumber;
-        lastInviteeStakedTHSAsUsdt: BigNumber;
+        lastRewardedBlock: BigNumber;
+        lastRewardedAmount: BigNumber;
+        lastInviterHistoryIndex: BigNumber;
+        lastInviteeHistoryIndex: BigNumber;
       }
     >;
 
@@ -522,29 +415,27 @@ export interface ScFarmForInvter extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    setInviteRewardPerLevelPerBlock(
-      _newReward: BigNumberish,
+    setRewardLockBlocks(
+      _blockCount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    stakedInfoOf(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & {
-        currentStakedTHS: BigNumber;
-        earnedTotal: BigNumber;
-      }
-    >;
+    stakeThresholdToEarn(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    supportClaim(overrides?: CallOverrides): Promise<[boolean]>;
 
     thsAddr(overrides?: CallOverrides): Promise<[string]>;
 
     thsStaking(overrides?: CallOverrides): Promise<[string]>;
+
+    toggleSupportClaim(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     usdtAddr(overrides?: CallOverrides): Promise<[string]>;
 
@@ -555,14 +446,11 @@ export interface ScFarmForInvter extends BaseContract {
 
     withdrawToken(
       _token: string,
+      _amount: BigNumberish,
       _to: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
-
-  DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
-
-  MANAGER_ROLE(overrides?: CallOverrides): Promise<string>;
 
   ONE_SC(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -570,17 +458,17 @@ export interface ScFarmForInvter extends BaseContract {
 
   ONE_USDT(overrides?: CallOverrides): Promise<BigNumber>;
 
-  OWNER_ROLE(overrides?: CallOverrides): Promise<string>;
-
-  addManagerBatch(
-    _users: string[],
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  changeOwner(
-    _newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  changeHistoryOf(
+    arg0: string,
+    arg1: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<
+    [BigNumber, BigNumber, BigNumber] & {
+      currentBlock: BigNumber;
+      amount: BigNumber;
+      amountAsUSDT: BigNumber;
+    }
+  >;
 
   changeStakeAmount(
     _staker: string,
@@ -599,23 +487,14 @@ export interface ScFarmForInvter extends BaseContract {
 
   earnBlockCountMax(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
-
-  grantRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  hasRole(
-    role: BytesLike,
-    account: string,
+  getCurrentStakeInfo(
+    _staker: string,
     overrides?: CallOverrides
-  ): Promise<boolean>;
+  ): Promise<
+    [BigNumber, BigNumber] & { thsAmount_: BigNumber; amountAsUsdt_: BigNumber }
+  >;
 
-  initFlag(overrides?: CallOverrides): Promise<boolean>;
-
-  initalize(
+  initialize(
     _pair: string,
     _ths: string,
     _usdt: string,
@@ -627,9 +506,9 @@ export interface ScFarmForInvter extends BaseContract {
 
   inviteRewardPerLevelPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-  inviterThresholdToEarned(overrides?: CallOverrides): Promise<BigNumber>;
-
   levelDec(overrides?: CallOverrides): Promise<BigNumber>;
+
+  owner(overrides?: CallOverrides): Promise<string>;
 
   pairAddr(overrides?: CallOverrides): Promise<string>;
 
@@ -639,53 +518,30 @@ export interface ScFarmForInvter extends BaseContract {
   ): Promise<BigNumber>;
 
   pendingRewardSpecificInvitee(
-    _inviter: string,
     _invitee: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   relationshipAdr(overrides?: CallOverrides): Promise<string>;
 
-  removeManager(
-    _user: string,
+  renounceOwnership(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  renounceRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  rewardLockBlocks(overrides?: CallOverrides): Promise<BigNumber>;
 
-  revokeRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  rewardInfoOf(
+  rewardedDataOf(
     arg0: string,
     arg1: string,
     overrides?: CallOverrides
   ): Promise<
-    [
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber
-    ] & {
-      earnedTotal: BigNumber;
+    [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
+      rewaradedTotal: BigNumber;
       earnedBlockTotal: BigNumber;
-      lastEarnedBlock: BigNumber;
-      lastEarnedAmount: BigNumber;
-      lastInviterStakedTHS: BigNumber;
-      lastInviterStakedTHSAsUsdt: BigNumber;
-      lastInviteeStakedTHS: BigNumber;
-      lastInviteeStakedTHSAsUsdt: BigNumber;
+      lastRewardedBlock: BigNumber;
+      lastRewardedAmount: BigNumber;
+      lastInviterHistoryIndex: BigNumber;
+      lastInviteeHistoryIndex: BigNumber;
     }
   >;
 
@@ -696,29 +552,27 @@ export interface ScFarmForInvter extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  setInviteRewardPerLevelPerBlock(
-    _newReward: BigNumberish,
+  setRewardLockBlocks(
+    _blockCount: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  stakedInfoOf(
-    arg0: string,
-    overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, BigNumber] & {
-      currentStakedTHS: BigNumber;
-      earnedTotal: BigNumber;
-    }
-  >;
+  stakeThresholdToEarn(overrides?: CallOverrides): Promise<BigNumber>;
 
-  supportsInterface(
-    interfaceId: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  supportClaim(overrides?: CallOverrides): Promise<boolean>;
 
   thsAddr(overrides?: CallOverrides): Promise<string>;
 
   thsStaking(overrides?: CallOverrides): Promise<string>;
+
+  toggleSupportClaim(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  transferOwnership(
+    newOwner: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   usdtAddr(overrides?: CallOverrides): Promise<string>;
 
@@ -729,26 +583,29 @@ export interface ScFarmForInvter extends BaseContract {
 
   withdrawToken(
     _token: string,
+    _amount: BigNumberish,
     _to: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
-
-    MANAGER_ROLE(overrides?: CallOverrides): Promise<string>;
-
     ONE_SC(overrides?: CallOverrides): Promise<BigNumber>;
 
     ONE_THS(overrides?: CallOverrides): Promise<BigNumber>;
 
     ONE_USDT(overrides?: CallOverrides): Promise<BigNumber>;
 
-    OWNER_ROLE(overrides?: CallOverrides): Promise<string>;
-
-    addManagerBatch(_users: string[], overrides?: CallOverrides): Promise<void>;
-
-    changeOwner(_newOwner: string, overrides?: CallOverrides): Promise<void>;
+    changeHistoryOf(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber] & {
+        currentBlock: BigNumber;
+        amount: BigNumber;
+        amountAsUSDT: BigNumber;
+      }
+    >;
 
     changeStakeAmount(
       _staker: string,
@@ -765,23 +622,17 @@ export interface ScFarmForInvter extends BaseContract {
 
     earnBlockCountMax(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
-
-    grantRole(
-      role: BytesLike,
-      account: string,
+    getCurrentStakeInfo(
+      _staker: string,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<
+      [BigNumber, BigNumber] & {
+        thsAmount_: BigNumber;
+        amountAsUsdt_: BigNumber;
+      }
+    >;
 
-    hasRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    initFlag(overrides?: CallOverrides): Promise<boolean>;
-
-    initalize(
+    initialize(
       _pair: string,
       _ths: string,
       _usdt: string,
@@ -793,9 +644,9 @@ export interface ScFarmForInvter extends BaseContract {
 
     inviteRewardPerLevelPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    inviterThresholdToEarned(overrides?: CallOverrides): Promise<BigNumber>;
-
     levelDec(overrides?: CallOverrides): Promise<BigNumber>;
+
+    owner(overrides?: CallOverrides): Promise<string>;
 
     pairAddr(overrides?: CallOverrides): Promise<string>;
 
@@ -805,50 +656,28 @@ export interface ScFarmForInvter extends BaseContract {
     ): Promise<BigNumber>;
 
     pendingRewardSpecificInvitee(
-      _inviter: string,
       _invitee: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     relationshipAdr(overrides?: CallOverrides): Promise<string>;
 
-    removeManager(_user: string, overrides?: CallOverrides): Promise<void>;
+    renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    rewardLockBlocks(overrides?: CallOverrides): Promise<BigNumber>;
 
-    revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    rewardInfoOf(
+    rewardedDataOf(
       arg0: string,
       arg1: string,
       overrides?: CallOverrides
     ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber
-      ] & {
-        earnedTotal: BigNumber;
+      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
+        rewaradedTotal: BigNumber;
         earnedBlockTotal: BigNumber;
-        lastEarnedBlock: BigNumber;
-        lastEarnedAmount: BigNumber;
-        lastInviterStakedTHS: BigNumber;
-        lastInviterStakedTHSAsUsdt: BigNumber;
-        lastInviteeStakedTHS: BigNumber;
-        lastInviteeStakedTHSAsUsdt: BigNumber;
+        lastRewardedBlock: BigNumber;
+        lastRewardedAmount: BigNumber;
+        lastInviterHistoryIndex: BigNumber;
+        lastInviteeHistoryIndex: BigNumber;
       }
     >;
 
@@ -859,29 +688,25 @@ export interface ScFarmForInvter extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setInviteRewardPerLevelPerBlock(
-      _newReward: BigNumberish,
+    setRewardLockBlocks(
+      _blockCount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    stakedInfoOf(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & {
-        currentStakedTHS: BigNumber;
-        earnedTotal: BigNumber;
-      }
-    >;
+    stakeThresholdToEarn(overrides?: CallOverrides): Promise<BigNumber>;
 
-    supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    supportClaim(overrides?: CallOverrides): Promise<boolean>;
 
     thsAddr(overrides?: CallOverrides): Promise<string>;
 
     thsStaking(overrides?: CallOverrides): Promise<string>;
+
+    toggleSupportClaim(overrides?: CallOverrides): Promise<void>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     usdtAddr(overrides?: CallOverrides): Promise<string>;
 
@@ -892,6 +717,7 @@ export interface ScFarmForInvter extends BaseContract {
 
     withdrawToken(
       _token: string,
+      _amount: BigNumberish,
       _to: string,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -918,80 +744,27 @@ export interface ScFarmForInvter extends BaseContract {
       reward?: BigNumberish | null
     ): ClaimEventFilter;
 
-    "Initalize(address,address,address,address,address,address,address)"(
-      sender?: null,
-      pair?: null,
-      ths?: null,
-      usdt?: null,
-      staking?: null,
-      sc?: null,
-      relationship?: null
-    ): InitalizeEventFilter;
-    Initalize(
-      sender?: null,
-      pair?: null,
-      ths?: null,
-      usdt?: null,
-      staking?: null,
-      sc?: null,
-      relationship?: null
-    ): InitalizeEventFilter;
-
-    "RoleAdminChanged(bytes32,bytes32,bytes32)"(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null
-    ): RoleAdminChangedEventFilter;
-    RoleAdminChanged(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null
-    ): RoleAdminChangedEventFilter;
-
-    "RoleGranted(bytes32,address,address)"(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null
-    ): RoleGrantedEventFilter;
-    RoleGranted(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null
-    ): RoleGrantedEventFilter;
-
-    "RoleRevoked(bytes32,address,address)"(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null
-    ): RoleRevokedEventFilter;
-    RoleRevoked(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null
-    ): RoleRevokedEventFilter;
+    "OwnershipTransferred(address,address)"(
+      previousOwner?: string | null,
+      newOwner?: string | null
+    ): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: string | null,
+      newOwner?: string | null
+    ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
-    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MANAGER_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
-
     ONE_SC(overrides?: CallOverrides): Promise<BigNumber>;
 
     ONE_THS(overrides?: CallOverrides): Promise<BigNumber>;
 
     ONE_USDT(overrides?: CallOverrides): Promise<BigNumber>;
 
-    OWNER_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
-
-    addManagerBatch(
-      _users: string[],
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    changeOwner(
-      _newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+    changeHistoryOf(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     changeStakeAmount(
@@ -1011,26 +784,12 @@ export interface ScFarmForInvter extends BaseContract {
 
     earnBlockCountMax(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRoleAdmin(
-      role: BytesLike,
+    getCurrentStakeInfo(
+      _staker: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    hasRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    initFlag(overrides?: CallOverrides): Promise<BigNumber>;
-
-    initalize(
+    initialize(
       _pair: string,
       _ths: string,
       _usdt: string,
@@ -1042,9 +801,9 @@ export interface ScFarmForInvter extends BaseContract {
 
     inviteRewardPerLevelPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    inviterThresholdToEarned(overrides?: CallOverrides): Promise<BigNumber>;
-
     levelDec(overrides?: CallOverrides): Promise<BigNumber>;
+
+    owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     pairAddr(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1054,31 +813,19 @@ export interface ScFarmForInvter extends BaseContract {
     ): Promise<BigNumber>;
 
     pendingRewardSpecificInvitee(
-      _inviter: string,
       _invitee: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     relationshipAdr(overrides?: CallOverrides): Promise<BigNumber>;
 
-    removeManager(
-      _user: string,
+    renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    rewardLockBlocks(overrides?: CallOverrides): Promise<BigNumber>;
 
-    revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    rewardInfoOf(
+    rewardedDataOf(
       arg0: string,
       arg1: string,
       overrides?: CallOverrides
@@ -1091,21 +838,27 @@ export interface ScFarmForInvter extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    setInviteRewardPerLevelPerBlock(
-      _newReward: BigNumberish,
+    setRewardLockBlocks(
+      _blockCount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    stakedInfoOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    stakeThresholdToEarn(overrides?: CallOverrides): Promise<BigNumber>;
 
-    supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    supportClaim(overrides?: CallOverrides): Promise<BigNumber>;
 
     thsAddr(overrides?: CallOverrides): Promise<BigNumber>;
 
     thsStaking(overrides?: CallOverrides): Promise<BigNumber>;
+
+    toggleSupportClaim(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     usdtAddr(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1116,34 +869,23 @@ export interface ScFarmForInvter extends BaseContract {
 
     withdrawToken(
       _token: string,
+      _amount: BigNumberish,
       _to: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    DEFAULT_ADMIN_ROLE(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    MANAGER_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     ONE_SC(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ONE_THS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ONE_USDT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    OWNER_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    addManagerBatch(
-      _users: string[],
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    changeOwner(
-      _newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+    changeHistoryOf(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     changeStakeAmount(
@@ -1163,26 +905,12 @@ export interface ScFarmForInvter extends BaseContract {
 
     earnBlockCountMax(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getRoleAdmin(
-      role: BytesLike,
+    getCurrentStakeInfo(
+      _staker: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    hasRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    initFlag(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    initalize(
+    initialize(
       _pair: string,
       _ths: string,
       _usdt: string,
@@ -1196,11 +924,9 @@ export interface ScFarmForInvter extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    inviterThresholdToEarned(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     levelDec(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pairAddr(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1210,31 +936,19 @@ export interface ScFarmForInvter extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     pendingRewardSpecificInvitee(
-      _inviter: string,
       _invitee: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     relationshipAdr(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    removeManager(
-      _user: string,
+    renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    rewardLockBlocks(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    rewardInfoOf(
+    rewardedDataOf(
       arg0: string,
       arg1: string,
       overrides?: CallOverrides
@@ -1247,24 +961,29 @@ export interface ScFarmForInvter extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    setInviteRewardPerLevelPerBlock(
-      _newReward: BigNumberish,
+    setRewardLockBlocks(
+      _blockCount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    stakedInfoOf(
-      arg0: string,
+    stakeThresholdToEarn(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    supportClaim(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     thsAddr(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     thsStaking(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    toggleSupportClaim(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
     usdtAddr(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1275,6 +994,7 @@ export interface ScFarmForInvter extends BaseContract {
 
     withdrawToken(
       _token: string,
+      _amount: BigNumberish,
       _to: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
