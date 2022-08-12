@@ -125,3 +125,11 @@ Only the following people have merge access for the master branch.
 
 * [Join our Discord](https://discord.gg/gGZUMVDuhQ) and ask how you can get involved with the DAO!
 
+
+
+
+######  本地测试修改，测试参数，有### 号处修改正式/测试环境参数
+
+- src/constants.ts
+- src/hooks/web3Context.tsx
+- src/lib/Bond.ts

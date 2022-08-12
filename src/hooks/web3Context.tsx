@@ -139,6 +139,7 @@ const initModal = new Web3Modal({
       package: WalletConnectProvider,
       options: {
         rpc: {
+          // ###
           56: addresses[56].uri,
         },
       },
@@ -161,6 +162,7 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
 
   // NOTE (appleseed): if you are testing on rinkeby you need to set chainId === 4 as the default for non-connected wallet testing...
   // ... you also need to set getTestnetURI() as the default uri state below
+  // ### 42测试
   const [chainID, setChainID] = useState(56);
 
   const [networkName, setNetworkName] = useState("");

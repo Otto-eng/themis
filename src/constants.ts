@@ -10,10 +10,11 @@ export const BLOCK_RATE_SECONDS = 3;
 
 export const TOKEN_DECIMALS = 9;
 
-export const NETWORK_CHAINID = 56
+//###: 
+export const NETWORK_CHAINID = 56 // 42
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000"
 
-
+// ###
 export const BINANCE_URI =
   "https://bsc-dataseed1.ninicoin.io"
 // "https://kovan.infura.io/v3/4e658875764f4112a9cbfe92c4e93b9e"
@@ -32,7 +33,7 @@ interface IAddresses {
   [key: string]: { [key: string]: string };
 }
 
-
+// ###
 export const addresses: IAddresses = {
   // kovan
   // [NETWORK_CHAINID]: {
