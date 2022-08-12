@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import { ethers } from "ethers";
 import { ReactComponent as StakeIcon } from "../../asstes/icons/stake.svg";
 import { ReactComponent as BondIcon } from "../../asstes/icons/bond.svg";
-import { ReactComponent as InviteUsersIcon } from "../../asstes/icons/invite.svg";
 import { ReactComponent as DashboardIcon } from "../../asstes/icons/dashboard.svg";
 import THSLightPng from "../../asstes/icons/THS_light@2x.png";
 import THSDarkPng from "../../asstes/icons/THS_dark@2x.png";
@@ -21,6 +20,8 @@ import adminDarkIcon from "../../asstes/icons/adminLight@2x.png";
 import adminLightIcon from "../../asstes/icons/admin@2x.png";
 import daoProfitLightIcon from "../../asstes/icons/daoProfit@2x.png";
 import daoProfitDarkIcon from "../../asstes/icons/daoProfitLight@2x.png";
+import borrowDarkIcon from "../../asstes/icons/borrowLight.png";
+import borrowLightIcon from "../../asstes/icons/borrow.png";
 
 import { Trans, t } from "@lingui/macro";
 import { styled } from "@material-ui/core"
@@ -52,7 +53,7 @@ function NavContent() {
   const [isActive] = useState();
   const { chainID, address, provider } = useWeb3Context();
   const { bonds } = useBonds(chainID);
-  const [icon, setIcon] = useState({ claim: ClaimDarkIcon, logo: THSDarkPng, sc: SCDarkIcon, openBeta: openBetaDarkIcon, ido: idoDarkIcon, idoRelease: idoReleaseDarkIcon.default, admin: adminDarkIcon, daoRewards: daoProfitDarkIcon })
+  const [icon, setIcon] = useState({ claim: ClaimDarkIcon, logo: THSDarkPng, sc: SCDarkIcon, openBeta: openBetaDarkIcon, ido: idoDarkIcon, idoRelease: idoReleaseDarkIcon.default, admin: adminDarkIcon, daoRewards: daoProfitDarkIcon, borrow: borrowDarkIcon })
   const dispatch = useDispatch()
   const [adminAddress, setAdminAddress] = useState("hash")
 
@@ -68,11 +69,13 @@ function NavContent() {
         ido: idoLightIcon,
         idoRelease: idoReleaseLightIcon,
         admin: adminLightIcon,
-        daoRewards: daoProfitLightIcon
+        daoRewards: daoProfitLightIcon,
+        borrow: borrowLightIcon
       })
     } else {
       setIcon({
-        claim: ClaimDarkIcon, sc: SCDarkIcon, logo: THSDarkPng, openBeta: openBetaDarkIcon, ido: idoDarkIcon, idoRelease: idoReleaseDarkIcon, admin: adminDarkIcon, daoRewards: daoProfitDarkIcon
+        claim: ClaimDarkIcon, sc: SCDarkIcon, logo: THSDarkPng, openBeta: openBetaDarkIcon, ido: idoDarkIcon, idoRelease: idoReleaseDarkIcon, admin: adminDarkIcon, daoRewards: daoProfitDarkIcon,
+        borrow: borrowDarkIcon
       })
     }
   }, [theme])
@@ -251,6 +254,21 @@ function NavContent() {
               </Link>
               <Link
                 component={NavLink}
+                id="borrow-nav"
+                to="/borrow"
+                isActive={(match, location) => {
+                  return checkPage(match, location, "borrow");
+                }}
+                // onClick={() => dispatch(info(t`The launch time of DAO Rewards is waiting for the DAO voting.`))}
+                className={`button-dapp-menu ${isActive ? "active" : ""}`}
+              >
+                <Typography style={{ display: "flex", alignItems: "center" }} variant="h6">
+                  <img style={{ width: "20px", height: "20px", marginRight: "12px" }} src={icon.borrow} />
+                  <Trans>Borrow</Trans>
+                </Typography>
+              </Link>
+              <Link
+                component={NavLink}
                 id="daoRewards-nav"
                 to="/daoRewards"
                 isActive={(match, location) => {
@@ -293,7 +311,7 @@ function NavContent() {
                 </Typography>
               </Link>
 
-              <Link
+              {/* <Link
                 component={NavLink}
                 id="inviteUsers-nav"
                 to="/inviteUsers"
@@ -306,7 +324,7 @@ function NavContent() {
                   <SvgIcon color="primary" component={InviteUsersIcon} />
                   <Trans>Invite Users</Trans>
                 </Typography>
-              </Link>
+              </Link> */}
 
               {address.toLowerCase() === adminAddress.toLowerCase() && (<Link
                 component={NavLink}

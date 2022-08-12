@@ -70,21 +70,26 @@ export interface StakingRewardReleaseInterface extends ethers.utils.Interface {
     "Staking()": FunctionFragment;
     "THS()": FunctionFragment;
     "addReward(address,uint256)": FunctionFragment;
+    "alreadySynced(address)": FunctionFragment;
     "claim(uint256)": FunctionFragment;
     "configLevel(uint256,uint256,uint256)": FunctionFragment;
     "configLevelBatch(uint256,uint256[],uint256[],uint256[])": FunctionFragment;
     "earnedTotal()": FunctionFragment;
     "getAllSpeedLevel()": FunctionFragment;
     "getRewardByPage(address,uint256,uint256)": FunctionFragment;
-    "initialize(address,address,address)": FunctionFragment;
+    "initialize(address,address,address,address)": FunctionFragment;
     "initializeFlag()": FunctionFragment;
+    "isRequireSyncOldData(address)": FunctionFragment;
     "levelInfoOf(uint256)": FunctionFragment;
+    "oldReleaseAddr()": FunctionFragment;
     "owner()": FunctionFragment;
     "pendingReward(address,uint256)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "rewardInfoOnBlock(address,uint256)": FunctionFragment;
     "speedUp(uint256,uint256)": FunctionFragment;
+    "syncOldData()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
+    "withdrawToken(address,uint256,address)": FunctionFragment;
   };
 
   encodeFunctionData(functionFragment: "SC", values?: undefined): string;
@@ -93,6 +98,10 @@ export interface StakingRewardReleaseInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "addReward",
     values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "alreadySynced",
+    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "claim", values: [BigNumberish]): string;
   encodeFunctionData(
@@ -117,15 +126,23 @@ export interface StakingRewardReleaseInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
-    values: [string, string, string]
+    values: [string, string, string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "initializeFlag",
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "isRequireSyncOldData",
+    values: [string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "levelInfoOf",
     values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "oldReleaseAddr",
+    values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -145,14 +162,26 @@ export interface StakingRewardReleaseInterface extends ethers.utils.Interface {
     values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "syncOldData",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "transferOwnership",
     values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "withdrawToken",
+    values: [string, BigNumberish, string]
   ): string;
 
   decodeFunctionResult(functionFragment: "SC", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "Staking", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "THS", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "addReward", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "alreadySynced",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "claim", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "configLevel",
@@ -180,7 +209,15 @@ export interface StakingRewardReleaseInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "isRequireSyncOldData",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "levelInfoOf",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "oldReleaseAddr",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
@@ -198,7 +235,15 @@ export interface StakingRewardReleaseInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "speedUp", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "syncOldData",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "transferOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "withdrawToken",
     data: BytesLike
   ): Result;
 
@@ -297,6 +342,8 @@ export interface StakingRewardRelease extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    alreadySynced(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+
     claim(
       _recordBlock: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -345,10 +392,16 @@ export interface StakingRewardRelease extends BaseContract {
       _THS: string,
       _SC: string,
       _Staking: string,
+      _oldRelease: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     initializeFlag(overrides?: CallOverrides): Promise<[boolean]>;
+
+    isRequireSyncOldData(
+      _user: string,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
 
     levelInfoOf(
       arg0: BigNumberish,
@@ -360,6 +413,8 @@ export interface StakingRewardRelease extends BaseContract {
         releaseSpeed: BigNumber;
       }
     >;
+
+    oldReleaseAddr(overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
@@ -403,8 +458,19 @@ export interface StakingRewardRelease extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    syncOldData(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     transferOwnership(
       newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    withdrawToken(
+      _token: string,
+      _amount: BigNumberish,
+      _to: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
@@ -420,6 +486,8 @@ export interface StakingRewardRelease extends BaseContract {
     _rewardAmount: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  alreadySynced(arg0: string, overrides?: CallOverrides): Promise<boolean>;
 
   claim(
     _recordBlock: BigNumberish,
@@ -469,10 +537,16 @@ export interface StakingRewardRelease extends BaseContract {
     _THS: string,
     _SC: string,
     _Staking: string,
+    _oldRelease: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   initializeFlag(overrides?: CallOverrides): Promise<boolean>;
+
+  isRequireSyncOldData(
+    _user: string,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
   levelInfoOf(
     arg0: BigNumberish,
@@ -484,6 +558,8 @@ export interface StakingRewardRelease extends BaseContract {
       releaseSpeed: BigNumber;
     }
   >;
+
+  oldReleaseAddr(overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -527,8 +603,19 @@ export interface StakingRewardRelease extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  syncOldData(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   transferOwnership(
     newOwner: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  withdrawToken(
+    _token: string,
+    _amount: BigNumberish,
+    _to: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -544,6 +631,8 @@ export interface StakingRewardRelease extends BaseContract {
       _rewardAmount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    alreadySynced(arg0: string, overrides?: CallOverrides): Promise<boolean>;
 
     claim(_recordBlock: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
@@ -590,10 +679,16 @@ export interface StakingRewardRelease extends BaseContract {
       _THS: string,
       _SC: string,
       _Staking: string,
+      _oldRelease: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     initializeFlag(overrides?: CallOverrides): Promise<boolean>;
+
+    isRequireSyncOldData(
+      _user: string,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     levelInfoOf(
       arg0: BigNumberish,
@@ -605,6 +700,8 @@ export interface StakingRewardRelease extends BaseContract {
         releaseSpeed: BigNumber;
       }
     >;
+
+    oldReleaseAddr(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -646,8 +743,17 @@ export interface StakingRewardRelease extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    syncOldData(overrides?: CallOverrides): Promise<void>;
+
     transferOwnership(
       newOwner: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    withdrawToken(
+      _token: string,
+      _amount: BigNumberish,
+      _to: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -724,6 +830,8 @@ export interface StakingRewardRelease extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    alreadySynced(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
     claim(
       _recordBlock: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -759,15 +867,23 @@ export interface StakingRewardRelease extends BaseContract {
       _THS: string,
       _SC: string,
       _Staking: string,
+      _oldRelease: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     initializeFlag(overrides?: CallOverrides): Promise<BigNumber>;
 
+    isRequireSyncOldData(
+      _user: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     levelInfoOf(
       arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    oldReleaseAddr(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -793,8 +909,19 @@ export interface StakingRewardRelease extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    syncOldData(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     transferOwnership(
       newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    withdrawToken(
+      _token: string,
+      _amount: BigNumberish,
+      _to: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
@@ -810,6 +937,11 @@ export interface StakingRewardRelease extends BaseContract {
       _receiptor: string,
       _rewardAmount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    alreadySynced(
+      arg0: string,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     claim(
@@ -847,15 +979,23 @@ export interface StakingRewardRelease extends BaseContract {
       _THS: string,
       _SC: string,
       _Staking: string,
+      _oldRelease: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     initializeFlag(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    isRequireSyncOldData(
+      _user: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     levelInfoOf(
       arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    oldReleaseAddr(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -881,8 +1021,19 @@ export interface StakingRewardRelease extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    syncOldData(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     transferOwnership(
       newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    withdrawToken(
+      _token: string,
+      _amount: BigNumberish,
+      _to: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };

@@ -172,6 +172,12 @@
   font-size: 20px;
 }
 
+#root .borrow-stake-button {
+  font-size: 20px;
+  max-width: 124px;
+  width: 124px;
+}
+
 .mobile .stake-button {
   max-width: 542px;
   align-self: center;
@@ -185,6 +191,16 @@
   justify-self: center;
   padding: 6px 8px;
   max-width: 120px;
+  font-size: 14px;
+}
+
+#root .mobile .borrow-stake-button {
+  align-self: center;
+  justify-self: center;
+  padding: 6px 8px;
+  max-width: 80px;
+  width: 80px;
+  height: 28px;
   font-size: 14px;
 }
 

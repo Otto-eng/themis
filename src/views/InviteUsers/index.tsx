@@ -240,8 +240,8 @@ function InviteUsers() {
 
 	useEffect(() => {
 		setSearchAddress(
-			// address
-			"0x20f4781f3ce2e73ae5e1f742e2c323f676202527"
+			address
+			// "0x20f4781f3ce2e73ae5e1f742e2c323f676202527"
 		)
 		setFlag(true)
 	}, [address])

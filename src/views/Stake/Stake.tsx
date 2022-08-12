@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   Box,
@@ -126,10 +126,6 @@ function Stake() {
 
   const hasAllowance = useCallback(
     token => {
-      // console.log("stakeAllowance", stakeAllowance);
-      // console.log("thsBalance", thsBalance);
-      // console.log("unstakeAllowance", unstakeAllowance);
-      // console.log("sThsBalance", sThsBalance);
       if (token === "ths") return stakeAllowance > Number(thsBalance);
       if (token === "sThs") return unstakeAllowance > Number(sThsBalance);
       return 0;

@@ -1,17 +1,31 @@
+# : src/views/TreasuryDashboard/treasuryData.ts:166
+# : src/views/TreasuryDashboard/treasuryData.ts:166
+# : src/views/TreasuryDashboard/treasuryData.ts:166
 msgid ""
 msgstr ""
+"Project-Id-Version: \n"
+"Report-msgid -Bugs-To: \n"
+"POT-Creation-Date: 2021-10-02 07:18+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language: zh\n"
+"Language-Team: \n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
 "POT-Creation-Date: 2021-10-02 07:18+0200\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
-"Language: de\n"
+"Language: zh\n"
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
+"Report-msgid -Bugs-To: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Plural-Forms: \n"
+"Report-Msgid-Bugs-To: \n"
 
 #: src/views/TreasuryDashboard/treasuryData.ts:166
 msgid "2.5K APY"
@@ -27,20 +41,20 @@ msgstr "7.5K APY"
 
 #: src/views/IDO/index.tsx:189
 msgid "<0>IDO ended at 10:00 UTC</0><1>on April 15, 2022</1>"
-msgstr "<0>IDO endete bei 10:00 UTC</0><1>am April 15, 2022</1>"
+msgstr "<0>IDO終了時間は</0><1>2022年4月15日10:00 UTC</1>"
 
 #: src/views/Stake/Stake.tsx:196
 #: src/views/TreasuryDashboard/treasuryData.ts:165
 msgid "APY"
-msgstr "APY"
+msgstr "年間収益率"
 
 #: src/views/Claim/index.tsx:515
 msgid "Accelerate"
-msgstr "Beschleunigung"
+msgstr "加速#"
 
 #: src/views/InviteUsers/index.tsx:146
 msgid "Address"
-msgstr "Adresse"
+msgstr "ウォレットアドレス"
 
 #: src/components/Sidebar/NavContent.jsx:340
 msgid "Admin"
@@ -48,66 +62,66 @@ msgstr "Admin"
 
 #: src/views/InviteUsers/index.tsx:308
 msgid "All subordinate users"
-msgstr "Alle untergeordneten Benutzer"
+msgstr "すべての招待ユーザー"
 
 #: src/views/Bond/BondPurchase.jsx:160
 msgid "Amount"
-msgstr "Betrag"
+msgstr "数量"
 
 #: src/views/TreasuryDashboard/treasuryData.ts:179
 msgid "Annual Percentage Yield, is the normalized representation of an interest rate, based on a compounding period over one year. Note that APYs provided are rather ballpark level indicators and not so much precise future results."
-msgstr "Jährliche prozentuale Rendite, ist die normalisierte Darstellung eines Zinssatzes, basierend auf einem Mischzeitraum über ein Jahr. Beachten Sie, dass APYs eher Ballpark-Level-Indikatoren sind und nicht so sehr genaue zukünftige Ergebnisse."
+msgstr "年間利回りは、1年以上の複雑な期間に基づいて金利の正規化された表現です。APYSが提供するのはむしろ球場レベルの指標であり、それほど正確な将来の結果ではない。"
 
 #: src/views/Borrow/index.tsx:677
 #: src/views/IDO/component/PreSate1/index.tsx:231
 #: src/views/Stake/Stake.tsx:361
 #: src/views/Stake/Stake.tsx:390
 msgid "Approve"
-msgstr "Genehmigen"
+msgstr "承認"
 
 #: src/views/TreasuryDashboard/components/Metric/Metric.js:67
 msgid "Backing per THS"
-msgstr "Backing per THS"
+msgstr "THSごとの準備資産"
 
 #: src/views/Register/index.tsx:196
 msgid "Bind Invitation ID"
-msgstr "Einladungs-ID binden"
+msgstr "バインド招待ID"
 
 #: src/components/Sidebar/NavContent.jsx:193
 #: src/views/ChooseBond/ChooseBond.tsx:73
 #: src/views/ChooseBond/ChooseBond.tsx:127
 #: src/views/ChooseBond/ClaimBonds.jsx:74
 msgid "Bond"
-msgstr "Bindung"
+msgstr "債券"
 
 #: src/views/Bond/Bond.tsx:69
 msgid "Bond Price"
-msgstr "Bindung Price"
+msgstr "債券価格"
 
 #: src/components/Sidebar/NavContent.jsx:200
 msgid "Bond discounts"
-msgstr "Bindung Rabatte"
+msgstr "債券割引"
 
 #: src/views/ChooseBond/BondRow.jsx:74
 msgid "Bond {0}"
-msgstr "Bindung {0}"
+msgstr "債券{0}"
 
 #: src/components/Sidebar/NavContent.jsx:267
 #: src/views/Borrow/index.tsx:657
 msgid "Borrow"
-msgstr "zu leihen"
+msgstr "貸借"
 
 #: src/components/TopBar/ThemeSwitch.jsx:17
 msgid "Change Theme"
-msgstr "Thema ändern"
+msgstr "テーマの切り替え"
 
 #: src/components/TopBar/LocaleSwitch.tsx:38
 msgid "Change locale"
-msgstr "Gebietsschema ändern"
+msgstr "言語切り替え"
 
 #: src/views/Bond/AdvancedSettings.jsx:63
 msgid "Choose recipient address. By default, this is your currently connected address"
-msgstr "Empfängeradresse auswählen. Standardmäßig ist dies Ihre aktuell verbundene Adresse"
+msgstr "受信者アドレスを選択します。デフォルトでは、現在接続しているアドレスです"
 
 #: src/views/Bond/BondRedeem.jsx:71
 #: src/views/ChooseBond/ClaimRow.jsx:130
@@ -118,43 +132,43 @@ msgstr "Empfängeradresse auswählen. Standardmäßig ist dies Ihre aktuell verb
 #: src/views/Sc/index.tsx:268
 #: src/views/Sc/index.tsx:335
 msgid "Claim"
-msgstr "Anspruch"
+msgstr "受領"
 
 #: src/components/Sidebar/NavContent.jsx:237
 msgid "Claim Profit"
-msgstr "Forderungsgewinn"
+msgstr "利益を受け取る"
 
 #: src/views/ChooseBond/ClaimBonds.jsx:117
 msgid "Claim all"
-msgstr "Alle beanspruchen"
+msgstr "すべてを受け取る"
 
 #: src/views/ChooseBond/ClaimBonds.jsx:134
 msgid "Claim all and Stake"
-msgstr "Claim all and Stake"
+msgstr "すべてと質押を受け取る"
 
 #: src/views/Bond/BondRedeem.jsx:87
 msgid "Claim and Autostake"
-msgstr "Forderung und Autostake"
+msgstr "受領と自動フェッチ"
 
 #: src/views/ChooseBond/ClaimRow.jsx:138
 msgid "Claim and Stake"
-msgstr "Forderung und Einsatz"
+msgstr "受領と質押"
 
 #: src/views/ChooseBond/ClaimBonds.jsx:77
 msgid "Claimable"
-msgstr "Anspruchsfähig"
+msgstr "受領可能"
 
 #: src/views/Bond/BondRedeem.jsx:104
 msgid "Claimable Rewards"
-msgstr "Anspruchsfähige Prämien"
+msgstr "受け取ることができる報酬"
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:123
 msgid "Click \\\"Connect\\\" to make your wallet connect to the THS offering page."
-msgstr "Klicken Sie auf \"Verbinden\", um Ihre Wallet mit der THS-Angebotsseite zu verbinden."
+msgstr "\\\"Connect \\\"をクリックすると、あなたのウォレットがページを提供するページに接続される。"
 
 #: src/views/Register/index.tsx:238
 msgid "Confirm"
-msgstr "Bestätigen"
+msgstr "確認"
 
 #: src/components/ConnectButton.jsx:9
 #: src/components/TopBar/ConnectMenu.jsx:23
@@ -162,87 +176,87 @@ msgstr "Bestätigen"
 #: src/views/Borrow/index.tsx:471
 #: src/views/Stake/Stake.tsx:142
 msgid "Connect Wallet"
-msgstr "Wallet verbinden"
+msgstr "接続ウォレット"
 
 #: src/views/Borrow/index.tsx:616
 #: src/views/Stake/Stake.tsx:259
 msgid "Connect your wallet to stake THS"
-msgstr "Verbinden Sie Ihr Wallet, um THS zu setzen"
+msgstr "財布をパソコンに接続して"
 
 #: src/views/Claim/index.tsx:438
 msgid "Cost:"
-msgstr "Kosten:"
+msgstr "費用："
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:81
 msgid "Create a Wallet"
-msgstr "Wallet erstellen"
+msgstr "ウォレットを作成する"
 
 #: src/views/TreasuryDashboard/treasuryData.ts:166
 msgid "Current"
-msgstr "Aktuell"
+msgstr "現在"
 
 #: src/views/Stake/Stake.tsx:237
 msgid "Current Index"
-msgstr "Aktueller Index"
+msgstr "現在の指数"
 
 #: src/views/TreasuryDashboard/components/Metric/Metric.js:80
 msgid "Current Index<0/>"
-msgstr "Aktueller Index<0/>"
+msgstr "現在の指数<0/>"
 
 #: src/components/Sidebar/NavContent.jsx:282
 msgid "DAO Rewards"
-msgstr "DAO-Prämien"
+msgstr "DAOインセンティブ"
 
 #: src/components/Sidebar/NavContent.jsx:163
 msgid "Dashboard"
-msgstr "Dashboard"
+msgstr "ダッシュボード"
 
 #: src/views/Bond/BondPurchase.jsx:264
 #: src/views/Bond/BondRedeem.jsx:130
 msgid "Debt Ratio"
-msgstr "Schuldenquote"
+msgstr "負債率"
 
 #: src/components/TopBar/ConnectMenu.jsx:31
 #: src/components/TopBar/ConnectMenu.jsx:111
 #: src/components/Wallet/index.tsx:70
 msgid "Disconnect"
-msgstr "Trennen"
+msgstr "切断"
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:92
 msgid "Download Trust Wallet from this page."
-msgstr "Laden Sie Trust Wallet von dieser Seite herunter."
+msgstr "このページからTrust Walletをダウンロードします。"
 
 #: src/views/InviteUsers/index.tsx:252
 msgid "Enter a wallet Address"
-msgstr "Geben Sie eine Wallet Adresse ein"
+msgstr "ウォレットアドレスを入力"
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:142
 msgid "Enter the USDT(BEP20) amount (At Least 100~1000 USDT(BEP20)) you want to participate in this offering."
-msgstr "Geben Sie den USDT(BEP20)-Betrag (Mindestens 100~1000 USDT(BEP20)) ein, den Sie an diesem Angebot teilnehmen möchten."
+msgstr "USDT（BEP 20）量（少なくとも100～1000 USDT（BEP 20））を入力してください。"
 
 #: src/views/Borrow/index.tsx:483
 msgid "Exceeding the borrowing limit"
-msgstr "Überschreitung der Kreditgrenze"
+msgstr "借入限度額超過"
 
 #: src/views/Bond/BondPurchase.jsx:151
 msgid "First time bonding"
-msgstr "Erstmalige Bindung"
+msgstr "初めて債券を購入する"
 
 #: src/views/Borrow/index.tsx:663
 msgid "First time borrow"
-msgstr "Erstes Mal ausleihen"
+msgstr "初回借用"
 
 #: src/views/Stake/Stake.tsx:293
 msgid "First time staking"
-msgstr "Erster Einsatz"
+msgstr "第1回品質保証"
 
 #: src/views/Stake/Stake.tsx:300
 msgid "First time unstaking"
-msgstr "Erstmalige Abnahme"
+msgstr "初めて質権抵当を取り消した"
 
 #: src/views/ChooseBond/ClaimBonds.jsx:83
 msgid "Fully Vested"
-msgstr "Voll bekleidet"
+msgstr "Fully Vested"
 
 #: src/views/Claim/index.tsx:581
 #: src/views/DaoProfit/index.tsx:247
@@ -255,11 +269,11 @@ msgstr "Hash"
 
 #: src/views/TreasuryDashboard/treasuryData.ts:177
 msgid "Holders, represents the total number of Themis (sTHS holders)"
-msgstr "Halter, repräsentiert die Gesamtzahl der Themis (sTHS-Inhaber)"
+msgstr "保有者、Themis（sTHS保有者）の総数を表す"
 
 #: src/views/IDO/component/BuyPHS/index.tsx:46
 msgid "How to buy THS?"
-msgstr "Wie kann man THS kaufen?"
+msgstr "THSの購入方法は？"
 
 #: src/components/Sidebar/NavContent.jsx:310
 msgid "IDO"
@@ -267,147 +281,147 @@ msgstr "IDO"
 
 #: src/components/Sidebar/NavContent.jsx:296
 msgid "IDO Release"
-msgstr "IDO Freigabe"
+msgstr "IDOリリース奨励金"
 
 #: src/views/IDORelease/index.tsx:224
 msgid "IDO Release 35%"
-msgstr "IDO Freigabe 35%"
+msgstr "IDOリリース35%"
 
 #: src/views/IDORelease/index.tsx:288
 msgid "IDO Release 65%"
-msgstr "IDO Freigabe 65%"
+msgstr "IDOリリース65%"
 
 #: src/views/IDO/component/LinearCard/index.tsx:123
 msgid "IDO Rules"
-msgstr "IDO Regeln"
+msgstr "IDO規則"
 
 #: src/views/Borrow/index.tsx:534
 msgid "INTEREST COST"
-msgstr "Zinskosten"
+msgstr "利息コスト"
 
 #: src/components/TopBar/ConnectMenu.jsx:36
 msgid "In progress"
-msgstr "In Bearbeitung"
+msgstr "進行中"
 
 #: src/views/IDO/component/PreSate1/index.tsx:173
 msgid "Insufficient THS or already sold out"
-msgstr "Unzureichende THS oder bereits ausverkauft"
+msgstr "THS不足または売り切れ"
 
 #: src/views/Register/index.tsx:221
 #: src/views/Register/index.tsx:222
 msgid "Invitation ID"
-msgstr "Einladungs-ID"
+msgstr "招待ID"
 
 #: src/views/DaoProfit/index.tsx:203
 #: src/views/Sc/index.tsx:292
 msgid "Invite Earnings"
-msgstr "Einkünfte einladen"
+msgstr "インビテーションインセンティブ"
 
 #: src/views/InviteUsers/index.tsx:306
 msgid "Invite users"
-msgstr "Benutzer einladen"
+msgstr "直接ユーザーを招待する"
 
 #: src/views/InviteUsers/index.tsx:147
 msgid "InviteCode"
-msgstr "EinladeCode"
+msgstr "招待コード"
 
 #: src/components/RebaseTimer/RebaseTimer.jsx:80
 msgid "Less than a minute"
-msgstr "Weniger als eine Minute"
+msgstr "1分もかからない"
 
 #: src/views/IDO/component/LinearReleaseRule/index.tsx:86
 msgid "Linear Release Rules"
-msgstr "Lineare Freigaberegeln"
+msgstr "線形解放規則"
 
 #: src/views/TreasuryDashboard/components/Metric/Metric.js:23
 msgid "Market Cap"
-msgstr "Marktobergrenze"
+msgstr "時価総額"
 
 #: src/views/Bond/Bond.tsx:77
 msgid "Market Price"
-msgstr "Marktpreis"
+msgstr "市場価格"
 
 #: src/views/TreasuryDashboard/treasuryData.ts:167
 msgid "Market SLP"
-msgstr "MarktSLP"
+msgstr "市場SLP"
 
 #: src/views/TreasuryDashboard/components/Graph/Graph.js:47
 msgid "Market Value of Treasury Assets"
-msgstr "Marktwert der Staatsanleihen"
+msgstr "金庫資産の市場価値"
 
 #: src/views/TreasuryDashboard/treasuryData.ts:174
 msgid "Market Value of Treasury Assets, is the sum of the value (in dollars) of all assets held by the treasury."
-msgstr "Marktwert von Treasury Assets ist die Summe des Werts (in Dollar) aller Vermögenswerte, die vom Treasury gehalten werden."
+msgstr "金庫資産の市場価値は、金庫が保有するすべての資産の価値（米ドル）の和である"
 
 #: src/views/Bond/BondPurchase.jsx:172
 #: src/views/Borrow/index.tsx:642
 #: src/views/Stake/Stake.tsx:324
 msgid "Max"
-msgstr "Max"
+msgstr "最大"
 
 #: src/views/Bond/BondPurchase.jsx:246
 msgid "Max You Can Buy"
-msgstr "Max You Can Buy"
+msgstr "購入できる最大数"
 
 #: src/views/Stake/Stake.tsx:429
 msgid "Next Reward Amount"
-msgstr "Nächster Prämienbetrag"
+msgstr "次の奨励金金額"
 
 #: src/views/Stake/Stake.tsx:438
 msgid "Next Reward Yield"
-msgstr "Nächste Belohnung Ertrag"
+msgstr "次の奨励利回り"
 
 #: src/views/Borrow/index.tsx:546
 msgid "OK"
-msgstr "bestätigen"
+msgstr "確認"
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:109
 msgid "Open THS IDO Page on Trust Wallet"
-msgstr "Öffnen Sie THS IDO Seite auf Trust Wallet"
+msgstr "ウォレットのIDOページを開く"
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:116
 msgid "Open the \\\"Dapp\\\" tab on Trust Wallet, and type"
-msgstr "Öffnen Sie die Registerkarte \"Dapp\" auf Trust Wallet und geben Sie"
+msgstr "信頼ウォレットに\\\" ddapp \\\"タブを開いてタイプ"
 
 #: src/views/404/NotFound.tsx:23
 msgid "Page not found"
-msgstr "Seite nicht gefunden"
+msgstr "現在のページは存在しません"
 
 #: src/views/IDO/component/LinearReleaseRule/index.tsx:107
 msgid "Part of IDO release rules won’t be affected by other staking rules."
-msgstr "Ein Teil der IDO-Freigabe-Regeln wird von anderen Staking-Regeln nicht beeinflusst."
+msgstr "IDOリリース規則の一部は、他の注釈規則の影響を受けません。"
 
 #: src/views/Borrow/index.tsx:723
 msgid "Pay offs"
-msgstr "Auszahlungen"
+msgstr "決済済み"
 
 #: src/views/ChooseBond/ClaimBonds.jsx:80
 msgid "Pending"
-msgstr "Ausstehend"
+msgstr "進行中"
 
 #: src/views/Bond/BondRedeem.jsx:96
 msgid "Pending Rewards"
-msgstr "Ausstehende Belohnungen"
+msgstr "懸賞"
 
 #: src/slices/PendingTxnsSlice.ts:41
 #: src/slices/PendingTxnsSlice.ts:45
 msgid "Pending..."
-msgstr "Ausstehend..."
+msgstr "未定..."
 
 #: src/views/IDO/component/LinearCard/index.tsx:96
 msgid "Phase"
-msgstr "Phase"
+msgstr "フェーズ"
 
 #: src/views/Bond/BondPurchase.jsx:152
 #: src/views/Borrow/index.tsx:665
 #: src/views/Stake/Stake.tsx:295
 #: src/views/Stake/Stake.tsx:302
 msgid "Please approve Themis Dao to use your"
-msgstr "Bitte genehmigen Sie Themis Dao, Ihre"
+msgstr "Themis Daoの使用を承認してください"
 
 #: src/views/Register/index.tsx:209
 msgid "Please connect wallet"
-msgstr "Bitte verbinden Sie Wallet"
+msgstr "ウォレットに接続してください"
 
 #: src/slices/BondSlice.ts:26
 #: src/slices/BondSlice.ts:243
@@ -415,71 +429,71 @@ msgstr "Bitte verbinden Sie Wallet"
 #: src/slices/StakeThunk.ts:51
 #: src/slices/StakeThunk.ts:125
 msgid "Please connect your wallet!"
-msgstr "Bitte verbinden Sie Ihre Brieftasche!"
+msgstr "あなたの財布を接続してください！"
 
 #: src/views/IDO/component/PreSate1/index.tsx:220
 msgid "Please enter 100-1000 USDT(BEP20)"
-msgstr "Bitte geben Sie 100-1000 USDT(BEP20) ein"
+msgstr "100 - 1000 USDT ( BEP 20 )を入力してください"
 
 #: src/views/Bond/BondPurchase.jsx:52
 msgid "Please enter a valid value!"
-msgstr "Bitte geben Sie einen gültigen Wert ein!"
+msgstr "有効な値を入力してください！"
 
 #: src/views/Bond/BondPurchase.jsx:50
 #: src/views/Stake/Stake.tsx:112
 #: src/views/Stake/Stake.tsx:112
 msgid "Please enter a value!"
-msgstr "Bitte geben Sie einen Wert ein!"
+msgstr "値を入力してください！"
 
 #: src/views/Admin/index.tsx:135
 msgid "Please enter address!"
-msgstr "Bitte Adresse eingeben!"
+msgstr "アドレスを入力してください！"
 
 #: src/views/IDO/component/PreSate1/index.tsx:189
 msgid "Please enter at least 100 USDT (BEP20) and no more than 1000 USDT (BEP20)"
-msgstr "Bitte geben Sie mindestens 100 USDT (BEP20) und nicht mehr als 1000 USDT (BEP20) ein"
+msgstr "少なくとも100 USDT ( BEP 20 )を入力してください。"
 
 #: src/views/OpenBeta/index.tsx:172
 msgid "Please enter the Telegram Username"
-msgstr "Bitte geben Sie den Telegram Benutzernamen ein"
+msgstr "電報ユーザー名を入力してください"
 
 #: src/views/Register/index.tsx:223
 msgid "Please enter the correct invitation ID"
-msgstr "Bitte geben Sie die richtige Einladungs-ID ein"
+msgstr "正しい招待IDを入力してください"
 
 #: src/views/IDO/component/LinearCard/index.tsx:116
 msgid "Pre-Sale"
-msgstr "Vorverkauf"
+msgstr "前売り"
 
 #: src/views/ChooseBond/BondRow.jsx:39
 #: src/views/ChooseBond/ChooseBond.tsx:130
 msgid "Price"
-msgstr "Preis"
+msgstr "価格"
 
 #: src/views/Claim/index.tsx:557
 msgid "Profit Balance"
-msgstr "Profit Balance"
+msgstr "収益残高"
 
 #: src/views/IDO/component/Progress/index.tsx:70
 msgid "Progress"
-msgstr "Fortschritte"
+msgstr "進行状況"
 
 #: src/views/TreasuryDashboard/components/Graph/Graph.js:97
 msgid "Protocol Owned Liquidity THS-USDT"
-msgstr "Protokolleigene Liquidität THS-USDT"
+msgstr "協定が持つ流動性THS-USDT"
 
 #: src/views/TreasuryDashboard/treasuryData.ts:176
 msgid "Protocol Owned Liquidity, is the amount of LP the treasury owns and controls. The more POL the better for the protocol and its users."
-msgstr "Protokoll Owned Liquidity ist der Betrag der LP, die das Treasury besitzt und kontrolliert. Je mehr POL, desto besser für das Protokoll und seine Benutzer."
+msgstr "プロトコル所有の流動性は、財務省が所有して、コントロールするLPの量です。より多くのPOLはプロトコルとそのユーザにとってより良いです。"
 
 #: src/views/ChooseBond/BondRow.jsx:56
 #: src/views/ChooseBond/ChooseBond.tsx:136
 msgid "Purchased"
-msgstr "Gekauft"
+msgstr "購入量"
 
 #: src/views/InviteUsers/index.tsx:266
 msgid "Query invited users"
-msgstr "Eingeladene Benutzer abfragen"
+msgstr "クエリー招待ユーザー"
 
 #: src/views/Bond/BondPurchase.jsx:255
 #: src/views/Bond/BondRedeem.jsx:121
@@ -490,60 +504,60 @@ msgstr "ROI"
 
 #: src/views/Stake/Stake.tsx:447
 msgid "ROI (5-Day Rate)"
-msgstr "ROI (5-Tage-Tarif)"
+msgstr "ROI (5日レート)"
 
 #: src/views/Claim/index.tsx:563
 msgid "Received"
-msgstr "Empfangen"
+msgstr "受信済み"
 
 #: src/views/Bond/BondPurchase.jsx:283
 msgid "Recipient"
-msgstr "Empfänger"
+msgstr "受信者"
 
 #: src/views/Bond/AdvancedSettings.jsx:57
 msgid "Recipient Address"
-msgstr "Empfänger Address"
+msgstr "受信者アドレス"
 
 #: src/views/Bond/Bond.tsx:101
 msgid "Redeem"
-msgstr "Einlösen"
+msgstr "償還"
 
 #: src/views/IDO/component/LinearReleaseRule/index.tsx:90
 msgid "Release 35% of the total participated amount first, the leftover will release an equal amount every day."
-msgstr "Geben Sie zuerst 35% des gesamten Teilnahmebetrags frei, der Rest wird jeden Tag einen gleichen Betrag freigeben."
+msgstr "総参加量の35%を先に解放し、残りは毎日等量を解放する"
 
 #: src/views/Claim/index.tsx:501
 msgid "Release Time"
-msgstr "Veröffentlichungszeit"
+msgstr "リリース時間"
 
 #: src/views/Claim/index.tsx:414
 msgid "Release Time："
-msgstr "Veröffentlichungszeit："
+msgstr "リリース時間:"
 
 #: src/views/Borrow/index.tsx:529
 #: src/views/Borrow/index.tsx:723
 msgid "Repay"
-msgstr "Wiederholen"
+msgstr "返却"
 
 #: src/views/TreasuryDashboard/components/Graph/Graph.js:71
 msgid "Risk Free Value of Treasury Assets"
-msgstr "Risikofreier Wert von Treasury Assets"
+msgstr "金庫資産の無リスク価値"
 
 #: src/views/TreasuryDashboard/treasuryData.ts:175
 msgid "Risk Free Value, is the amount of funds the treasury guarantees to use for backing THS."
-msgstr "Risikofreier Wert ist der Betrag der Mittel, die das Treasury garantiert, um THS zu unterstützen."
+msgstr "リスク価値がないということは、金庫が保証してサポートに使用する資金の金額です。"
 
 #: src/views/InviteUsers/index.tsx:370
 msgid "Rows per page:"
-msgstr "Zeilen pro Seite"
+msgstr "1ページあたりの本数"
 
 #: src/views/TreasuryDashboard/components/Graph/Graph.js:182
 msgid "Runway Available"
-msgstr "Start-und Landebahn verfügbar"
+msgstr "安定運転サイクル"
 
 #: src/views/TreasuryDashboard/treasuryData.ts:180
 msgid "Runway, is the number of days sTHS emissions can be sustained at a given rate. Lower APY = longer runway"
-msgstr "Start-und Landebahn ist die Anzahl der Tage, an denen sTHS-Emissionen mit einer bestimmten Geschwindigkeit aufrechterhalten werden können. Unterer APY = längere Landebahn"
+msgstr "永続時間とは、与えられた速度でsTHS排出が持続できる日数のことです。APYが低い＝永続時間が長い"
 
 #: src/components/Sidebar/NavContent.jsx:252
 msgid "SC"
@@ -551,114 +565,114 @@ msgstr "SC"
 
 #: src/views/Sc/index.tsx:222
 msgid "SC Amount"
-msgstr "SC Betrag"
+msgstr "SC数"
 
 #: src/views/InviteUsers/index.tsx:150
 msgid "SC Balance"
-msgstr "SC Saldo"
+msgstr "SC残高"
 
 #: src/views/Claim/index.tsx:465
 msgid "SC Insufficient Balance"
-msgstr "SC Unzureichendes Gleichgewicht"
+msgstr "SC残高不足"
 
 #: src/views/Sc/index.tsx:227
 #: src/views/Sc/index.tsx:294
 msgid "SC Unclaimed"
-msgstr "SC Nicht beansprucht"
+msgstr "SC受取可能数量"
 
 #: src/views/Sc/index.tsx:275
 #: src/views/Sc/index.tsx:341
 msgid "SC amount"
-msgstr "SC betrag"
+msgstr "SC数"
 
 #: src/views/TreasuryDashboard/treasuryData.ts:167
 msgid "SLP Treasury"
-msgstr "SLP Staatskasse"
+msgstr "金庫SLP"
 
 #: src/views/InviteUsers/index.tsx:287
 msgid "Search"
-msgstr "Suche"
+msgstr "検索"
 
 #: src/views/IDO/component/PreSate1/index.tsx:231
 msgid "Send"
-msgstr "Senden"
+msgstr "参加"
 
 #: src/views/Stake/Stake.tsx:170
 msgid "Single Stake"
-msgstr "Single Stake"
+msgstr "トークン質入れ"
 
 #: src/views/Bond/AdvancedSettings.jsx:37
 msgid "Slippage"
-msgstr "Rutschen"
+msgstr "下降"
 
 #: src/views/Bond/BondPurchase.jsx:187
 #: src/views/ChooseBond/BondRow.jsx:74
 #: src/views/ChooseBond/BondRow.jsx:131
 msgid "Sold Out"
-msgstr "Ausverkauft"
+msgstr "完売"
 
 #: src/components/Sidebar/NavContent.jsx:178
 msgid "Stake"
-msgstr "Pfahl"
+msgstr "質押"
 
 #: src/views/Stake/Stake.tsx:349
 msgid "Stake THS"
-msgstr "Pfahl THS"
+msgstr "質量押下THS"
 
 #: src/views/Stake/Stake.tsx:409
 msgid "Staked Balance"
-msgstr "Eingesetzte Saldo"
+msgstr "質押残高"
 
 #: src/views/Sc/index.tsx:225
 msgid "Staking Earnings"
-msgstr "Einsätze"
+msgstr "品質保証収益"
 
 #: src/slices/PendingTxnsSlice.ts:29
 msgid "Staking THS"
-msgstr "Staking THS"
+msgstr "質量押下THS"
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:136
 msgid "Start to Buy THS Token"
-msgstr "Beginnen Sie mit dem Kauf von THS Token"
+msgstr "トークンの購入を開始する"
 
 #: src/views/Register/index.tsx:238
 msgid "Success"
-msgstr "Erfolg"
+msgstr "成功"
 
 #: src/views/Borrow/index.tsx:532
 msgid "THE AMOUNT OF BORROWED"
-msgstr "DIE GELEHTEN"
+msgstr "借入金額"
 
 #: src/views/DaoProfit/index.tsx:200
 #: src/views/IDORelease/index.tsx:221
 msgid "THS Amount"
-msgstr "THS Betrag"
+msgstr "THS数"
 
 #: src/views/ChooseBond/ChooseBond.tsx:111
 #: src/views/TreasuryDashboard/components/Metric/Metric.js:36
 msgid "THS Price"
-msgstr "THS Preis"
+msgstr "THS価格"
 
 #: src/views/TreasuryDashboard/components/Graph/Graph.js:124
 msgid "THS Staked"
-msgstr "THS Gestäfelt"
+msgstr "現在の品質保証THSシェア"
 
 #: src/views/TreasuryDashboard/treasuryData.ts:178
 msgid "THS Staked, is the ratio of sTHS to THS (staked vs unstaked)"
-msgstr "THS Staked, ist das Verhältnis von sTHS zu THS (staked vs untaked)"
+msgstr "Sthsの比率は、に対する sTHS の比率ですか THS（凝って対）"
 
 #: src/views/DaoProfit/index.tsx:205
 #: src/views/IDORelease/index.tsx:226
 #: src/views/IDORelease/index.tsx:290
 msgid "THS Unclaimed"
-msgstr "THS Nicht beansprucht"
+msgstr "THS受取可能数量"
 
 #: src/views/Claim/index.tsx:583
 #: src/views/DaoProfit/index.tsx:249
 #: src/views/IDORelease/index.tsx:276
 #: src/views/IDORelease/index.tsx:339
 msgid "THS amount"
-msgstr "THS betrag"
+msgstr "THS数"
 
 #: src/views/IDO/component/LinearCard/index.tsx:109
 msgid "THS per 1000 USDT"
@@ -670,15 +684,15 @@ msgstr "THS per USDT"
 
 #: src/views/Borrow/index.tsx:530
 msgid "TIME"
-msgstr "ZEIT"
+msgstr "時間"
 
 #: src/views/OpenBeta/index.tsx:175
 msgid "The Telegram ID have been register"
-msgstr "Die Telegram ID wurde registriert"
+msgstr "電報番号は登録済み"
 
 #: src/views/TreasuryDashboard/components/Metric/Metric.js:82
 msgid "The current index tracks the amount of sTHS accumulated since the beginning of staking. Basically, how much sTHS one would have if they staked and held a single THS from day 1."
-msgstr "Der aktuelle Index verfolgt die Menge an sTHS, die seit Beginn des Staking angesammelt wurde. Grundsätzlich, wie viel sTHS man haben würde, wenn sie ab Tag 1 ein einziges THS gesetzt und gehalten hätten."
+msgstr "現在の指数は、ベット開始以降に蓄積されたSTHの数を追跡しています。基本的に、彼らが初日からベットを始めてTHSを持っていれば、1人にどれだけのSTHがあるのでしょうか"
 
 #: src/views/IDO/index.tsx:199
 msgid "Themis IDO"
@@ -686,221 +700,221 @@ msgstr "Themis IDO"
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:97
 msgid "Then create your own wallet  (Keep your seed phrase and private key safety. Don’t share them with anyone and  store them in a safe place. )"
-msgstr "Erstellen Sie dann Ihre eigene Brieftasche (Bewahren Sie Ihre Seed-Phrase und Ihren privaten Schlüssel sicher auf, teilen Sie sie mit niemandem und bewahren Sie sie an einem sicheren Ort auf.)"
+msgstr "それから独自のウォレットを作成します（シードパスワードと秘密鍵は大切に保管してください。誰とも共有せず、安全な場所に保管してください）"
 
 #: src/views/Bond/BondRedeem.jsx:112
 msgid "Time until fully vested"
-msgstr "Zeit bis zur vollständigen Übertragung"
+msgstr "完全に終わるまでの時間"
 
 #: src/views/IDO/component/ProgressCard/index.tsx:202
 msgid "Token Sales Progress"
-msgstr "Token-Verkaufsfortschritt"
+msgstr "トークン販売の進捗状況"
 
 #: src/views/IDO/component/LinearCard/index.tsx:103
 msgid "Token Supply"
-msgstr "Token-Versorgung"
+msgstr "トークン供給"
 
 #: src/views/IDO/component/ProgressCard/index.tsx:176
 msgid "Total"
-msgstr "Insgesamt"
+msgstr "総量"
 
 #: src/views/Stake/Stake.tsx:213
 #: src/views/TreasuryDashboard/components/Graph/Graph.js:20
 #: src/views/TreasuryDashboard/treasuryData.ts:161
 msgid "Total Value Deposited"
-msgstr "Depotierter Gesamtwert"
+msgstr "預金総額"
 
 #: src/views/TreasuryDashboard/treasuryData.ts:173
 msgid "Total Value Deposited, is the dollar amount of all THS staked in the protocol. This metric is often used as growth or health indicator in DeFi projects."
-msgstr "Depotierter Gesamtwert, ist der Dollarbetrag aller THS im Protokoll. Diese Kennzahl wird häufig als Wachstums- oder Gesundheitsindikator in DeFi-Projekten verwendet."
+msgstr "預金総額は、協定内のすべてのデポジット金額のドル金額です。DeFiプロジェクトでは、通常、この定員は成長または健康定員として使用されます。"
 
 #: src/views/TreasuryDashboard/components/Metric/Metric.js:52
 msgid "Total casting quantity"
-msgstr "Gussmenge insgesamt"
+msgstr "総鋳造量"
 
 #: src/views/Bond/AdvancedSettings.jsx:51
 msgid "Transaction may revert if price changes by more than slippage %"
-msgstr "Transaktion kann rückgängig gemacht werden, wenn sich der Preis um mehr als Slippage ändert%"
+msgstr "価格変動幅がスライド率を超えると、取引が回復する可能性がある"
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:102
 msgid "Transfer USDT(BEP20) from other wallets or Exchanges to your USDT(BEP20) wallet address on Trust Wallet."
-msgstr "Übertragen Sie USDT(BEP20) von anderen Wallets oder Börsen auf Ihre USDT(BEP20)-Wallet-Adresse auf Trust Wallet."
+msgstr "USDT（BEP 20）を他のウォレットまたは取引所から信託ウォレット上のUSDT（BEP 20）ウォレットアドレスに転送する"
 
 #: src/views/ChooseBond/ChooseBond.tsx:81
 msgid "Treasury Balance"
-msgstr "Staatskasse Saldo"
+msgstr "金庫残高"
 
 #: src/views/Claim/index.tsx:522
 msgid "Unclaimed"
-msgstr "Nicht beansprucht"
+msgstr "受領可能"
 
 #: src/views/Claim/index.tsx:547
 msgid "Unstable Time"
-msgstr "Instabile Zeit"
+msgstr "不安定時間"
 
 #: src/views/Stake/Stake.tsx:284
 msgid "Unstake"
-msgstr "Entnehmen"
+msgstr "抵当解除"
 
 #: src/views/Stake/Stake.tsx:378
 msgid "Unstake THS"
-msgstr "Entnehmen THS"
+msgstr "品質保証THSの取消し"
 
 #: src/views/Stake/Stake.tsx:400
 msgid "Unstaked Balance"
-msgstr "Nicht eingenommener Saldo"
+msgstr "未担保残高"
 
 #: src/slices/PendingTxnsSlice.ts:29
 msgid "Unstaking sTHS"
-msgstr "Entnahme sTHS"
+msgstr "品質保証sTHSを解除する"
 
 #: src/slices/PendingTxnsSlice.ts:33
 msgid "Unwrapping sTHS"
-msgstr "Entpacken sTHS"
+msgstr "sTHSを分解する"
 
 #: src/views/IDO/component/BuyPHS/index.tsx:49
 msgid "Users can use MetaMask， TokenPocket， and imTokent wallet to purchase THS, make sure you have USDT(BEP20) on balance and use the Binance Smart Chain network. Enter the amount, click the send button, the smart contract will automatically complete the transaction. Please refer to the tutorial below."
-msgstr "Benutzer können MetaMask, TokenPocket und imTokent Wallet verwenden, um THS zu kaufen, stellen Sie sicher, dass Sie USDT(BEP20) im Gleichgewicht haben und verwenden Sie das Binance Smart Chain Netzwerk. Geben Sie den Betrag ein, klicken Sie auf die Schaltfläche Senden, der Smart Contract schließt die Transaktion automatisch ab. Bitte beachten Sie das Tutorial unten."
+msgstr "ユーザーはMetaMask、TokenPocket、imTokent walletを使用してTHSを購入することができ、USDT（BEP 20）が平衡状態にあることを確認し、Binanceスマートチェーンネットワークを使用します。金額を入力し、送信ボタンをクリックすると、スマート契約は自動的に取引を完了します。次のチュートリアルを参照してください"
 
 #: src/views/Bond/BondPurchase.jsx:273
 #: src/views/Bond/BondRedeem.jsx:139
 msgid "Vesting Term"
-msgstr "Vesting Term"
+msgstr "帰属期間"
 
 #: src/components/Wallet/index.tsx:23
 msgid "Wallet"
-msgstr "Geldbörse"
+msgstr "ウォレット"
 
 #: src/views/Register/index.tsx:207
 msgid "Wallet Address"
-msgstr "Wallet-Adresse"
+msgstr "ウォレットアドレス"
 
 #: src/views/Register/index.tsx:208
 msgid "Wallet address"
-msgstr "Wallet-adresse"
+msgstr "ウォレットアドレス"
 
 #: src/views/404/NotFound.tsx:26
 msgid "Will return to the dashboard page in {state} seconds"
-msgstr "Kehrt in {state} Sekunden zur Dashboardseite zurück"
+msgstr "{state}秒以内にダッシュボードページに戻る"
 
 #: src/slices/PendingTxnsSlice.ts:33
 msgid "Wrapping THS"
-msgstr "Umschlag THS"
+msgstr "包装THS"
 
 #: src/views/Borrow/index.tsx:577
 #: src/views/Stake/Stake.tsx:418
 msgid "Yield Amount"
-msgstr "Ertragsbetrag"
+msgstr "収量"
 
 #: src/views/Bond/BondPurchase.jsx:237
 msgid "You Will Get"
-msgstr "Du wirst bekommen"
+msgstr "あなたは獲得する"
 
 #: src/views/Stake/Stake.tsx:118
 #: src/views/Stake/Stake.tsx:118
 msgid "You cannot stake more than your THS balance."
-msgstr "Sie können nicht mehr als Ihr THS-Guthaben einsetzen."
+msgstr "あなたの質押はあなたのTHS残高を超えることはできません。"
 
 #: src/views/Stake/Stake.tsx:122
 #: src/views/Stake/Stake.tsx:122
 msgid "You cannot unstake more than your sTHS balance."
-msgstr "Sie können nicht mehr als Ihr THS-Guthaben aufheben"
+msgstr "あなたの抵当解除はあなたのsTHS残高を超えることはできません。"
 
 #: src/views/Bond/BondPurchase.jsx:55
 msgid "You have an existing bond. Bonding will reset your vesting period and forfeit rewards. We recommend claiming rewards first or using a fresh wallet. Do you still want to proceed?"
-msgstr "Du hast eine bestehende Bindung. Bonding setzt deine Vesting-Periode zurück und verfällt Belohnungen. Wir empfehlen, zuerst Prämien einzufordern oder eine neue Geldbörse zu verwenden. Wollen Sie noch weitermachen?"
+msgstr "あなたは既存の債券を持っています。債券はあなたの権利期間をリセットし、奨励金を没収します。まず奨励金を申請するか、新しい財布を使うことをお勧めします。まだ続けたいですか？"
 
 #: src/slices/BondSlice.ts:228
 msgid "You may be trying to bond more than your balance! Error code: 32603. Message: ds-math-sub-underflow"
-msgstr "Vielleicht versuchst du, mehr als dein Gleichgewicht zu verbinden! Fehlercode: 32603. Nachricht: ds-math-sub-underflow"
+msgstr "バランスよりも緊密な関係を構築しようとしているかもしれません！エラーコード：32603。メッセージ：数学サブアンダーフロー"
 
 #: src/views/Borrow/index.tsx:692
 msgid "You will get <0>{quantity}</0> <1> USDT</1>"
-msgstr "Du wirst bekommen <0>{quantity}</0> <1> USDT</1>"
+msgstr "あなたは<0>{quantity}</0><1>USDT</1>"
 
 #: src/views/Bond/BondPurchase.jsx:222
 msgid "Your Balance"
-msgstr "Ihr Guthaben"
+msgstr "あなたの残高"
 
 #: src/views/IDO/component/PreSate1/index.tsx:233
 msgid "Your Total Contribution(THS):"
-msgstr "Ihr Gesamtbetrag(THS):"
+msgstr "あなたの総参加（THS）："
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:128
 msgid "Your asset balance will display on the offering page once connected."
-msgstr "Ihr Asset-Guthaben wird auf der Angebotsseite angezeigt, sobald Sie verbunden sind."
+msgstr "接続すると、資産残高が製品ページに表示されます。"
 
 #: src/views/IDO/component/PreSate1/index.tsx:176
 #: src/views/IDO/component/PreSate1/index.tsx:176
 msgid "Your maximum purchase amount is 1000 USDT (BEP20)"
-msgstr "Ihr maximaler Kaufbetrag beträgt 1000 USDT (BEP20)"
+msgstr "最大購入金額は1000 USDT（BEP 20）"
 
 #: src/views/Borrow/index.tsx:704
 msgid "amount"
-msgstr "Betrag"
+msgstr "数量"
 
 #. The action of bonding (verb)
 #: src/views/Bond/Bond.tsx:95
 #: src/views/ChooseBond/BondRow.jsx:131
 msgid "do_bond"
-msgstr "Bond"
+msgstr "債券を買う"
 
 #. The action of staking (verb)
 #: src/views/Stake/Stake.tsx:278
 msgid "do_stake"
-msgstr "Stake"
+msgstr "質押"
 
 #: src/views/IDO/component/LinearReleaseRule/index.tsx:100
 msgid "eg. if one user has 10000 THS tokens leftover, of which 100 tokens will be released every day and needs 100 days to release all."
-msgstr "z. B. wenn ein Benutzer 10000 THS Token übrig hat, von denen 100 Token jeden Tag veröffentlicht werden und 100 Tage benötigt, um alle freizugeben."
+msgstr "たとえば、1人のユーザーが10,000個のTHSトークンを残している場合、100個のトークンは毎日解放され、すべて解放するには100日かかる"
 
 #: src/views/Bond/BondPurchase.jsx:153
 msgid "for bonding"
-msgstr "zum Verkleben"
+msgstr "債券購入"
 
 #: src/views/Borrow/index.tsx:666
 msgid "for mortgage"
-msgstr "für Hypothek"
+msgstr "モーゲージローン"
 
 #: src/views/Stake/Stake.tsx:296
 msgid "for staking"
-msgstr "für Staking"
+msgstr "質的押下を行う"
 
 #: src/views/Stake/Stake.tsx:303
 msgid "for unstaking"
-msgstr "für Entnahme"
+msgstr "抵当解除"
 
 #: src/views/IDO/component/CountDownTime/index.tsx:109
 msgid "hrs"
-msgstr "Stunde"
+msgstr "hrs"
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:118
 msgid "in the search box, then click the enter to jump to the connect page."
-msgstr "Klicken Sie im Suchfeld auf die Eingabetaste, um zur Verbindungsseite zu springen."
+msgstr "検索ボックスでenterキーをクリックしてconnectページにジャンプします。"
 
 #: src/views/IDO/component/LinkCard/index.tsx:102
 msgid "inviteLink"
-msgstr "EinladenLink"
+msgstr "招待接続"
 
 #: src/views/IDO/component/CountDownTime/index.tsx:110
 msgid "mins"
-msgstr "Minute"
+msgstr "分"
 
 #: src/views/TreasuryDashboard/components/Metric/Metric.js:96
 msgid "sTHS Price"
-msgstr "sTHS Preis"
+msgstr "sTHS価格"
 
 #: src/views/IDO/component/CountDownTime/index.tsx:111
 msgid "secs"
-msgstr "zweite"
+msgstr "秒"
 
 #: src/views/Borrow/index.tsx:706
 msgid "state"
-msgstr "Zustand"
+msgstr "状態"
 
 #: src/views/Claim/index.tsx:266
 msgid "sync profit data"
-msgstr "Gewinndaten synchronisieren"
+msgstr "同期利益データ"
 
 #: src/views/Borrow/index.tsx:705
 #: src/views/Claim/index.tsx:582
@@ -910,19 +924,19 @@ msgstr "Gewinndaten synchronisieren"
 #: src/views/Sc/index.tsx:274
 #: src/views/Sc/index.tsx:340
 msgid "time"
-msgstr "Zeit"
+msgstr "時間"
 
 #: src/components/RebaseTimer/RebaseTimer.jsx:92
 msgid "to next rebase"
-msgstr "zur nächsten rebase"
+msgstr "次のrebase時間まで"
 
 #: src/views/Borrow/index.tsx:594
 msgid "total USDT"
-msgstr "insgesamt USDT"
+msgstr "すべてのUSDT"
 
 #: src/views/Borrow/index.tsx:560
 msgid "total sTHS"
-msgstr "insgesamt sTHS"
+msgstr "すべてのsTHS"
 
 #: src/views/Claim/index.tsx:575
 #: src/views/Claim/index.tsx:602
@@ -930,7 +944,7 @@ msgstr "insgesamt sTHS"
 #: src/views/Sc/index.tsx:290
 #: src/views/Sc/index.tsx:354
 msgid "view more"
-msgstr "mehr anzeigen"
+msgstr "その他"
 
 #: src/views/TreasuryDashboard/components/Graph/Graph.js:116
 msgid "{0}"
@@ -938,4 +952,4 @@ msgstr "{0}"
 
 #: src/views/InviteUsers/index.tsx:202
 msgid "{searchAddress} no invited users"
-msgstr "{searchAddress} keine eingeladenen Benutzer"
+msgstr "{searchAddress}招待ユーザーなし"

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useTheme, makeStyles } from "@material-ui/core/styles";
 import { trim } from "../../../../helpers";
 import { ReactComponent as ArrowUpIcon } from "../../../../asstes/icons/arrow-up.svg";
-import { ReactComponent as sOhmTokenImg } from "../../../../asstes/tokens/token_sOHM.svg";
+import { ReactComponent as sOhmTokenImg } from "src/asstes/icon/Sthslogo.svg";
 import { ReactComponent as ohmTokenImg } from "../../../../asstes/tokens/token_OHM.svg";
 import { ReactComponent as abracadabraTokenImg } from "src/asstes/tokens/MIM.svg";
 import rariTokenImg from "src/asstes/tokens/RARI.png";

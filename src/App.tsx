@@ -35,11 +35,9 @@ import { IDO } from "./views/IDO";
 // import OpenBeta from "./views/OpenBeta";
 import IDORelease from "./views/IDORelease";
 import { idoRelease35List, idoRelease65List } from "./slices/idoReleaseSlice";
-import { info } from "./slices/MessagesSlice";
 import Admin from "./views/Admin";
 import DaoProfit from "./views/DaoProfit";
-import { t } from "@lingui/macro";
-import InviteUsers from "./views/InviteUsers";
+import Borrow from "./views/Borrow";
 
 // 😬 Sorry for all the console logging
 const DEBUG = false;
@@ -83,6 +81,8 @@ const useStyles = makeStyles(theme => ({
     width: drawerWidth,
   },
 }));
+
+
 
 function App() {
   const location = useLocation();
@@ -189,7 +189,6 @@ function App() {
     setIsSidebarExpanded(false);
   };
 
-
   const serachRelationship = useCallback(
     async (account: string) => {
       const signer = provider.getSigner();
@@ -283,9 +282,11 @@ function App() {
               <Redirect to="/stake" />
             </Route>
 
+
             <Route exact path="/stake">
               <Stake />
             </Route>
+
             {(bonds as IAllBondData[]).map(bond => {
               return (
                 <Route exact key={bond.name} path={`/bonds/${bond.name}`}>
@@ -296,9 +297,9 @@ function App() {
             <Route path="/bonds">
               <ChooseBond />
             </Route>
-            <Route path="/inviteUsers">
+            {/* <Route path="/inviteUsers">
               <InviteUsers />
-            </Route>
+            </Route> */}
             <Route exact path="/ido">
               <IDO />
             </Route>
@@ -310,6 +311,10 @@ function App() {
             </Route>
             <Route path="/daoRewards">
               <DaoProfit />
+            </Route>
+
+            <Route path="/borrow">
+              <Borrow />
             </Route>
 
             <Route path="/IDORelease">

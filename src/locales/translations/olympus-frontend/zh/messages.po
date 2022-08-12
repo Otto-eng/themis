@@ -29,12 +29,12 @@ msgstr "7.5K APY"
 msgid "<0>IDO ended at 10:00 UTC</0><1>on April 15, 2022</1>"
 msgstr "<0>IDO 結束時間爲</0><1>2022年4月15日10:00 UTC</1>"
 
-#: src/views/Stake/Stake.tsx:200
+#: src/views/Stake/Stake.tsx:196
 #: src/views/TreasuryDashboard/treasuryData.ts:165
 msgid "APY"
 msgstr "年收益率"
 
-#: src/views/Claim/index.tsx:463
+#: src/views/Claim/index.tsx:515
 msgid "Accelerate"
 msgstr "加速"
 
@@ -42,7 +42,7 @@ msgstr "加速"
 msgid "Address"
 msgstr "錢包地址"
 
-#: src/components/Sidebar/NavContent.jsx:322
+#: src/components/Sidebar/NavContent.jsx:340
 msgid "Admin"
 msgstr "Admin"
 
@@ -58,9 +58,10 @@ msgstr "數量"
 msgid "Annual Percentage Yield, is the normalized representation of an interest rate, based on a compounding period over one year. Note that APYs provided are rather ballpark level indicators and not so much precise future results."
 msgstr "年百分比收益率是基於一年以上的複利期的利率的標準化表示。 請注意，提供的APY只是大致水准的名額，而不是太精確的未來結果。"
 
+#: src/views/Borrow/index.tsx:677
 #: src/views/IDO/component/PreSate1/index.tsx:231
-#: src/views/Stake/Stake.tsx:365
-#: src/views/Stake/Stake.tsx:394
+#: src/views/Stake/Stake.tsx:361
+#: src/views/Stake/Stake.tsx:390
 msgid "Approve"
 msgstr "批准"
 
@@ -72,7 +73,7 @@ msgstr "每個THS的儲備資產"
 msgid "Bind Invitation ID"
 msgstr "綁定邀請ID"
 
-#: src/components/Sidebar/NavContent.jsx:190
+#: src/components/Sidebar/NavContent.jsx:193
 #: src/views/ChooseBond/ChooseBond.tsx:73
 #: src/views/ChooseBond/ChooseBond.tsx:127
 #: src/views/ChooseBond/ClaimBonds.jsx:74
@@ -83,13 +84,18 @@ msgstr "債券"
 msgid "Bond Price"
 msgstr "債券價格"
 
-#: src/components/Sidebar/NavContent.jsx:197
+#: src/components/Sidebar/NavContent.jsx:200
 msgid "Bond discounts"
 msgstr "債券折扣"
 
 #: src/views/ChooseBond/BondRow.jsx:74
 msgid "Bond {0}"
 msgstr "債券 {0}"
+
+#: src/components/Sidebar/NavContent.jsx:267
+#: src/views/Borrow/index.tsx:657
+msgid "Borrow"
+msgstr "借貸"
 
 #: src/components/TopBar/ThemeSwitch.jsx:17
 msgid "Change Theme"
@@ -105,7 +111,7 @@ msgstr "選擇收件人地址。默認情況下，這是您當前連接的地址
 
 #: src/views/Bond/BondRedeem.jsx:71
 #: src/views/ChooseBond/ClaimRow.jsx:130
-#: src/views/Claim/index.tsx:486
+#: src/views/Claim/index.tsx:538
 #: src/views/DaoProfit/index.tsx:242
 #: src/views/IDORelease/index.tsx:269
 #: src/views/IDORelease/index.tsx:333
@@ -114,7 +120,7 @@ msgstr "選擇收件人地址。默認情況下，這是您當前連接的地址
 msgid "Claim"
 msgstr "領取"
 
-#: src/components/Sidebar/NavContent.jsx:234
+#: src/components/Sidebar/NavContent.jsx:237
 msgid "Claim Profit"
 msgstr "領取利潤"
 
@@ -153,15 +159,17 @@ msgstr "確認"
 #: src/components/ConnectButton.jsx:9
 #: src/components/TopBar/ConnectMenu.jsx:23
 #: src/components/Wallet/index.tsx:30
-#: src/views/Stake/Stake.tsx:146
+#: src/views/Borrow/index.tsx:471
+#: src/views/Stake/Stake.tsx:142
 msgid "Connect Wallet"
 msgstr "連接錢包"
 
-#: src/views/Stake/Stake.tsx:263
+#: src/views/Borrow/index.tsx:616
+#: src/views/Stake/Stake.tsx:259
 msgid "Connect your wallet to stake THS"
 msgstr "把你的錢包連接到電腦上"
 
-#: src/views/Claim/index.tsx:389
+#: src/views/Claim/index.tsx:438
 msgid "Cost:"
 msgstr "費用:"
 
@@ -173,7 +181,7 @@ msgstr "創建一個錢包"
 msgid "Current"
 msgstr "當前"
 
-#: src/views/Stake/Stake.tsx:241
+#: src/views/Stake/Stake.tsx:237
 msgid "Current Index"
 msgstr "當前指數"
 
@@ -181,11 +189,11 @@ msgstr "當前指數"
 msgid "Current Index<0/>"
 msgstr "當前指數<0/>"
 
-#: src/components/Sidebar/NavContent.jsx:264
+#: src/components/Sidebar/NavContent.jsx:282
 msgid "DAO Rewards"
 msgstr "DAO 獎勵"
 
-#: src/components/Sidebar/NavContent.jsx:160
+#: src/components/Sidebar/NavContent.jsx:163
 msgid "Dashboard"
 msgstr "儀表板"
 
@@ -212,15 +220,23 @@ msgstr "輸入一個錢包地址"
 msgid "Enter the USDT(BEP20) amount (At Least 100~1000 USDT(BEP20)) you want to participate in this offering."
 msgstr "輸入您希望參與本次活動的USDT（BEP20）金額（至少100~1000 USDT（BEP20））。"
 
+#: src/views/Borrow/index.tsx:483
+msgid "Exceeding the borrowing limit"
+msgstr "超出借款限額"
+
 #: src/views/Bond/BondPurchase.jsx:151
 msgid "First time bonding"
 msgstr "第一次購買債券"
 
-#: src/views/Stake/Stake.tsx:297
+#: src/views/Borrow/index.tsx:663
+msgid "First time borrow"
+msgstr "首次借用"
+
+#: src/views/Stake/Stake.tsx:293
 msgid "First time staking"
 msgstr "第一次質押"
 
-#: src/views/Stake/Stake.tsx:304
+#: src/views/Stake/Stake.tsx:300
 msgid "First time unstaking"
 msgstr "第一次取消質押"
 
@@ -228,7 +244,7 @@ msgstr "第一次取消質押"
 msgid "Fully Vested"
 msgstr "Fully Vested"
 
-#: src/views/Claim/index.tsx:529
+#: src/views/Claim/index.tsx:581
 #: src/views/DaoProfit/index.tsx:247
 #: src/views/IDORelease/index.tsx:274
 #: src/views/IDORelease/index.tsx:337
@@ -245,11 +261,11 @@ msgstr "持有者,表示Themis（sTHS持有者）的總數"
 msgid "How to buy THS?"
 msgstr "如何購買THS？"
 
-#: src/components/Sidebar/NavContent.jsx:292
+#: src/components/Sidebar/NavContent.jsx:310
 msgid "IDO"
 msgstr "IDO"
 
-#: src/components/Sidebar/NavContent.jsx:278
+#: src/components/Sidebar/NavContent.jsx:296
 msgid "IDO Release"
 msgstr "IDO 釋放獎勵"
 
@@ -264,6 +280,10 @@ msgstr "IDO釋放65%"
 #: src/views/IDO/component/LinearCard/index.tsx:123
 msgid "IDO Rules"
 msgstr "IDO規則"
+
+#: src/views/Borrow/index.tsx:534
+msgid "INTEREST COST"
+msgstr "利息成本"
 
 #: src/components/TopBar/ConnectMenu.jsx:36
 msgid "In progress"
@@ -282,10 +302,6 @@ msgstr "邀請ID"
 #: src/views/Sc/index.tsx:292
 msgid "Invite Earnings"
 msgstr "邀請獎勵"
-
-#: src/components/Sidebar/NavContent.jsx:307
-msgid "Invite Users"
-msgstr "邀請用戶"
 
 #: src/views/InviteUsers/index.tsx:306
 msgid "Invite users"
@@ -324,7 +340,8 @@ msgid "Market Value of Treasury Assets, is the sum of the value (in dollars) of 
 msgstr "金庫資產的市場價值是金庫持有的所有資產的價值（美元）之和。"
 
 #: src/views/Bond/BondPurchase.jsx:172
-#: src/views/Stake/Stake.tsx:328
+#: src/views/Borrow/index.tsx:642
+#: src/views/Stake/Stake.tsx:324
 msgid "Max"
 msgstr "最大"
 
@@ -332,13 +349,17 @@ msgstr "最大"
 msgid "Max You Can Buy"
 msgstr "您可以購買的最大數量"
 
-#: src/views/Stake/Stake.tsx:433
+#: src/views/Stake/Stake.tsx:429
 msgid "Next Reward Amount"
 msgstr "下一次獎勵金額"
 
-#: src/views/Stake/Stake.tsx:442
+#: src/views/Stake/Stake.tsx:438
 msgid "Next Reward Yield"
 msgstr "下一次獎勵收益率"
+
+#: src/views/Borrow/index.tsx:546
+msgid "OK"
+msgstr "確認"
 
 #: src/views/IDO/component/BuyPHSProgress/index.tsx:109
 msgid "Open THS IDO Page on Trust Wallet"
@@ -348,13 +369,17 @@ msgstr "打開錢包的IDO頁面"
 msgid "Open the \\\"Dapp\\\" tab on Trust Wallet, and type"
 msgstr "打開錢包上的“Dapp”選項卡，然後鍵入"
 
-#: src/views/404/NotFound.tsx:10
+#: src/views/404/NotFound.tsx:23
 msgid "Page not found"
 msgstr "當前頁面不存在"
 
 #: src/views/IDO/component/LinearReleaseRule/index.tsx:107
 msgid "Part of IDO release rules won’t be affected by other staking rules."
 msgstr "IDO釋放規則的一部分不會受到其他下注規則的影響。"
+
+#: src/views/Borrow/index.tsx:723
+msgid "Pay offs"
+msgstr "已結清"
 
 #: src/views/ChooseBond/ClaimBonds.jsx:80
 msgid "Pending"
@@ -374,8 +399,9 @@ msgid "Phase"
 msgstr "階段"
 
 #: src/views/Bond/BondPurchase.jsx:152
-#: src/views/Stake/Stake.tsx:299
-#: src/views/Stake/Stake.tsx:306
+#: src/views/Borrow/index.tsx:665
+#: src/views/Stake/Stake.tsx:295
+#: src/views/Stake/Stake.tsx:302
 msgid "Please approve Themis Dao to use your"
 msgstr "請您批准Themis Dao使用"
 
@@ -430,7 +456,7 @@ msgstr "預售"
 msgid "Price"
 msgstr "價格"
 
-#: src/views/Claim/index.tsx:505
+#: src/views/Claim/index.tsx:557
 msgid "Profit Balance"
 msgstr "收益余額"
 
@@ -462,11 +488,11 @@ msgstr "査詢邀請用戶"
 msgid "ROI"
 msgstr "投資回報率"
 
-#: src/views/Stake/Stake.tsx:451
+#: src/views/Stake/Stake.tsx:447
 msgid "ROI (5-Day Rate)"
 msgstr "投資回報率 (五天利率)"
 
-#: src/views/Claim/index.tsx:511
+#: src/views/Claim/index.tsx:563
 msgid "Received"
 msgstr "已收到"
 
@@ -486,13 +512,18 @@ msgstr "贖回"
 msgid "Release 35% of the total participated amount first, the leftover will release an equal amount every day."
 msgstr "先釋放總參與量的35%，剩余部分每天釋放等量。"
 
-#: src/views/Claim/index.tsx:450
+#: src/views/Claim/index.tsx:501
 msgid "Release Time"
 msgstr "釋放時間"
 
-#: src/views/Claim/index.tsx:368
+#: src/views/Claim/index.tsx:414
 msgid "Release Time："
 msgstr "釋放時間:"
+
+#: src/views/Borrow/index.tsx:529
+#: src/views/Borrow/index.tsx:723
+msgid "Repay"
+msgstr "歸還"
 
 #: src/views/TreasuryDashboard/components/Graph/Graph.js:71
 msgid "Risk Free Value of Treasury Assets"
@@ -514,7 +545,7 @@ msgstr "穩定運行週期"
 msgid "Runway, is the number of days sTHS emissions can be sustained at a given rate. Lower APY = longer runway"
 msgstr "永續時間，是指在給定速率下，sTHS排放能够持續的天數。 APY較低=永續時間較長"
 
-#: src/components/Sidebar/NavContent.jsx:249
+#: src/components/Sidebar/NavContent.jsx:252
 msgid "SC"
 msgstr "SC"
 
@@ -526,7 +557,7 @@ msgstr "SC數量"
 msgid "SC Balance"
 msgstr "SC 余额"
 
-#: src/views/Claim/index.tsx:414
+#: src/views/Claim/index.tsx:465
 msgid "SC Insufficient Balance"
 msgstr "SC餘額不足"
 
@@ -552,7 +583,7 @@ msgstr "蒐索"
 msgid "Send"
 msgstr "參與"
 
-#: src/views/Stake/Stake.tsx:174
+#: src/views/Stake/Stake.tsx:170
 msgid "Single Stake"
 msgstr "代幣質押"
 
@@ -566,15 +597,15 @@ msgstr "下降"
 msgid "Sold Out"
 msgstr "已售完"
 
-#: src/components/Sidebar/NavContent.jsx:175
+#: src/components/Sidebar/NavContent.jsx:178
 msgid "Stake"
 msgstr "質押"
 
-#: src/views/Stake/Stake.tsx:353
+#: src/views/Stake/Stake.tsx:349
 msgid "Stake THS"
 msgstr "質押 THS"
 
-#: src/views/Stake/Stake.tsx:413
+#: src/views/Stake/Stake.tsx:409
 msgid "Staked Balance"
 msgstr "質押余額"
 
@@ -593,6 +624,10 @@ msgstr "開始購買代幣"
 #: src/views/Register/index.tsx:238
 msgid "Success"
 msgstr "成功"
+
+#: src/views/Borrow/index.tsx:532
+msgid "THE AMOUNT OF BORROWED"
+msgstr "借款金額"
 
 #: src/views/DaoProfit/index.tsx:200
 #: src/views/IDORelease/index.tsx:221
@@ -618,7 +653,7 @@ msgstr "當前質押THS份額，是STH與THS的比率（Staked與unstaked）"
 msgid "THS Unclaimed"
 msgstr "THS可領取數量"
 
-#: src/views/Claim/index.tsx:531
+#: src/views/Claim/index.tsx:583
 #: src/views/DaoProfit/index.tsx:249
 #: src/views/IDORelease/index.tsx:276
 #: src/views/IDORelease/index.tsx:339
@@ -632,6 +667,10 @@ msgstr "THS per 1000 USDT"
 #: src/views/IDO/component/LinearCard/index.tsx:99
 msgid "THS per USDT"
 msgstr "THS per USDT"
+
+#: src/views/Borrow/index.tsx:530
+msgid "TIME"
+msgstr "時間"
 
 #: src/views/OpenBeta/index.tsx:175
 msgid "The Telegram ID have been register"
@@ -665,7 +704,7 @@ msgstr "代幣供應"
 msgid "Total"
 msgstr "總量"
 
-#: src/views/Stake/Stake.tsx:217
+#: src/views/Stake/Stake.tsx:213
 #: src/views/TreasuryDashboard/components/Graph/Graph.js:20
 #: src/views/TreasuryDashboard/treasuryData.ts:161
 msgid "Total Value Deposited"
@@ -691,23 +730,23 @@ msgstr "將USDT（BEP20）從其他錢包或交易所轉移到信托錢包上的
 msgid "Treasury Balance"
 msgstr "金庫余額"
 
-#: src/views/Claim/index.tsx:470
+#: src/views/Claim/index.tsx:522
 msgid "Unclaimed"
 msgstr "可領取的"
 
-#: src/views/Claim/index.tsx:495
+#: src/views/Claim/index.tsx:547
 msgid "Unstable Time"
 msgstr "Unstable Time"
 
-#: src/views/Stake/Stake.tsx:288
+#: src/views/Stake/Stake.tsx:284
 msgid "Unstake"
 msgstr "取消質押"
 
-#: src/views/Stake/Stake.tsx:382
+#: src/views/Stake/Stake.tsx:378
 msgid "Unstake THS"
 msgstr "取消質押 THS"
 
-#: src/views/Stake/Stake.tsx:404
+#: src/views/Stake/Stake.tsx:400
 msgid "Unstaked Balance"
 msgstr "未質押余額"
 
@@ -740,11 +779,16 @@ msgstr "錢包地址"
 msgid "Wallet address"
 msgstr "錢包地址"
 
+#: src/views/404/NotFound.tsx:26
+msgid "Will return to the dashboard page in {state} seconds"
+msgstr "將在{state}秒內返回到儀錶板頁面"
+
 #: src/slices/PendingTxnsSlice.ts:33
 msgid "Wrapping THS"
 msgstr "包裝 THS"
 
-#: src/views/Stake/Stake.tsx:422
+#: src/views/Borrow/index.tsx:577
+#: src/views/Stake/Stake.tsx:418
 msgid "Yield Amount"
 msgstr "産量"
 
@@ -770,6 +814,10 @@ msgstr "你有一個現有的債券。債券將重置你的行權期並沒收獎
 msgid "You may be trying to bond more than your balance! Error code: 32603. Message: ds-math-sub-underflow"
 msgstr "你可能在試圖建立比平衡更緊密的關係！ 錯誤代碼：32603。 消息：ds-math-sub-underflow"
 
+#: src/views/Borrow/index.tsx:692
+msgid "You will get <0>{quantity}</0> <1> USDT</1>"
+msgstr "你會得到 <0>{quantity}</0> <1> USDT</1>"
+
 #: src/views/Bond/BondPurchase.jsx:222
 msgid "Your Balance"
 msgstr "你的余額"
@@ -787,6 +835,10 @@ msgstr "連接後，您的資産余額將顯示在産品頁面上。"
 msgid "Your maximum purchase amount is 1000 USDT (BEP20)"
 msgstr "您的最大購買金額爲1000 USDT（BEP20）"
 
+#: src/views/Borrow/index.tsx:704
+msgid "amount"
+msgstr "數量"
+
 #. The action of bonding (verb)
 #: src/views/Bond/Bond.tsx:95
 #: src/views/ChooseBond/BondRow.jsx:131
@@ -794,7 +846,7 @@ msgid "do_bond"
 msgstr "買債券"
 
 #. The action of staking (verb)
-#: src/views/Stake/Stake.tsx:282
+#: src/views/Stake/Stake.tsx:278
 msgid "do_stake"
 msgstr "質押"
 
@@ -806,11 +858,15 @@ msgstr "例如，如果一個用戶剩下10000個THS代幣，其中100個代幣�
 msgid "for bonding"
 msgstr "購買債券"
 
-#: src/views/Stake/Stake.tsx:300
+#: src/views/Borrow/index.tsx:666
+msgid "for mortgage"
+msgstr "抵押貸款"
+
+#: src/views/Stake/Stake.tsx:296
 msgid "for staking"
 msgstr "進行質押"
 
-#: src/views/Stake/Stake.tsx:307
+#: src/views/Stake/Stake.tsx:303
 msgid "for unstaking"
 msgstr "取消質押"
 
@@ -838,7 +894,16 @@ msgstr "sTHS價格"
 msgid "secs"
 msgstr "秒"
 
-#: src/views/Claim/index.tsx:530
+#: src/views/Borrow/index.tsx:706
+msgid "state"
+msgstr "狀態"
+
+#: src/views/Claim/index.tsx:266
+msgid "sync profit data"
+msgstr "同步利潤數據"
+
+#: src/views/Borrow/index.tsx:705
+#: src/views/Claim/index.tsx:582
 #: src/views/DaoProfit/index.tsx:248
 #: src/views/IDORelease/index.tsx:275
 #: src/views/IDORelease/index.tsx:338
@@ -851,8 +916,16 @@ msgstr "時間"
 msgid "to next rebase"
 msgstr "距離下一次rebase時間"
 
-#: src/views/Claim/index.tsx:523
-#: src/views/Claim/index.tsx:550
+#: src/views/Borrow/index.tsx:594
+msgid "total USDT"
+msgstr "全部的 USDT"
+
+#: src/views/Borrow/index.tsx:560
+msgid "total sTHS"
+msgstr "全部 sTHS"
+
+#: src/views/Claim/index.tsx:575
+#: src/views/Claim/index.tsx:602
 #: src/views/DaoProfit/index.tsx:264
 #: src/views/Sc/index.tsx:290
 #: src/views/Sc/index.tsx:354

@@ -3,14 +3,25 @@ import { useSelector } from "react-redux";
 import { useTheme, makeStyles } from "@material-ui/core/styles";
 import { trim } from "src/helpers";
 import { ReactComponent as ArrowUpIcon } from "src/asstes/icons/arrow-up.svg";
-import { ReactComponent as sOhmTokenImg } from "src/asstes/tokens/token_sOHM.svg";
-import { ReactComponent as ThsImg } from "src/asstes/tokens/ths.svg";
-import { ethers } from "ethers";
+import { ReactComponent as SthsIcon } from "src/asstes/icons/Sthslogo.svg";
 
-import { addresses, } from "src/constants";
-import { useWeb3Context } from "src/hooks";
+
+import { ReactComponent as ThsIcon } from "src/asstes/tokens/ths.svg";
+import { abi as ScaleCodeABI } from "src/abi/ScaleCode.json";
+import { ethers } from "ethers";
+import { useAppSelector, useWeb3Context } from "src/hooks"
+
+import { addresses } from "src/constants";
 import { abi as ierc20Abi } from "src/abi/ThemisERC20Token.json";
 import { abi as sTHSAbi } from "src/abi/sThemis.json"; 
+import { thsIcon, sThsIcon, scIcon } from "src/tokenIcon";
+
+import SCLightIcon from "src/asstes/icons/sc@2x.png";
+import SCDarkIcon from "src/asstes/icons/scLight@2x.png";
+import STHSDarkImg from "src/asstes/icons/sTHSDark.png";
+import STHSLightImg from "src/asstes/icons/sTHS.png";
+
+import { THEME_LIGHT } from "src/constants"
 
 import {
   SvgIcon,
@@ -24,7 +35,28 @@ import {
   AccordionDetails,
   Divider,
   Link,
+  styled,
 } from "@material-ui/core";
+
+
+const TokenImg = styled("img")({
+  width: "24px",
+  height: "24px",
+})
+
+const Wallet = styled(Button)({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  fontSize: "16px",
+  fontWeight: 500,
+  width: "100%",
+  padding: "12px 32px",
+  cursor: "pointer",
+  "&:hover": {
+    background: "#888888"
+  }
+})
 
 const useStyles = makeStyles(theme => ({
   menuContainer: {
@@ -103,7 +135,8 @@ const MenuItemBorrow = ({ Icon1, Icon2, borrowOn, totalAvailable }) => (
   </Button>
 );
 
-const Token = ({ name, icon, userBalance, userBalanceUSD, onExpandedChange, expanded, toggleDrawer = () => {} }) => {
+const Token = ({ name, icon, userBalance, userBalanceUSD, onExpandedChange, expanded, tokenImg, toggleDrawer = () => { } }) => {
+  const theme = useAppSelector(state => state.theme.theme)
   return (
     <Accordion expanded={expanded} onChange={onExpandedChange}>
       <AccordionSummary
@@ -111,16 +144,18 @@ const Token = ({ name, icon, userBalance, userBalanceUSD, onExpandedChange, expa
       >
         <Button variant="contained" style={{ width: "100%", flexDirection: "row" }} color="secondary">
           <Typography align="left" style={{ width: "100%", flexDirection: "row" }}>
-            <SvgIcon component={icon} viewBox="0 0 32 32" style={{ height: "25px", width: "25px", margin: "auto" }} />
+            {icon && <SvgIcon component={icon} viewBox="0 0 32 32" style={{ height: "25px", width: "25px", margin: "auto" }} />}
+            {tokenImg && <TokenImg src={tokenImg}></TokenImg>}
             {name}
           </Typography>
           <Box>
             <Typography align="left">{userBalance}</Typography>
-            <Typography align="left">${userBalanceUSD}</Typography>
+            {userBalanceUSD && <Typography align="left">${userBalanceUSD}</Typography>}
           </Box>
         </Button>
+
       </AccordionSummary>
-      <AccordionDetails margin="auto" style={{ margin: "auto", padding: 0 }}>
+      {toggleDrawer && <AccordionDetails margin="auto" style={{ margin: "auto", padding: 0 }}>
         <Box className="ohm-pairs" style={{ width: "100%" }}>
           <Button
             variant="contained"
@@ -131,13 +166,13 @@ const Token = ({ name, icon, userBalance, userBalanceUSD, onExpandedChange, expa
             <Typography align="left"> Transaction History</Typography>
           </Button>
         </Box>
-      </AccordionDetails>
+      </AccordionDetails>}
     </Accordion>
   );
 };
 
 function InitialWalletView() {
-  const theme = useTheme();
+  const theme = useAppSelector(state => state.theme.theme)
   const styles = useStyles();
   const { chainID, address, provider } = useWeb3Context();
   const thsBalance = useSelector(state => state.account.balances?.ths);
@@ -145,6 +180,27 @@ function InitialWalletView() {
   const marketPrice = useSelector(state => state.app.thsPrice);
   const [ths, setThs] = useState(thsBalance)
   const [sThs, setSThs] = useState(sThsBalance)
+  const [SCBanlance, setSCBanlance] = useState("0.0000")
+
+
+  const getScbanlance = useCallback(async () => {
+
+    try {
+      const signer = provider.getSigner();
+      const ScaleCodeContract = new ethers.Contract(addresses[chainID].ScaleCode_ADDRESS, ScaleCodeABI, signer)
+      const banlance = await ScaleCodeContract.balanceOf(address)
+      setSCBanlance((Math.floor((Number(ethers.utils.formatUnits(banlance, "ether")) ?? 0) * 10000) / 10000) + "");
+    } finally {
+
+    }
+
+  }, [chainID, address, provider])
+
+  useEffect(() => {
+    if (address && chainID && provider && addresses?.[chainID].ScaleCode_ADDRESS) {
+      getScbanlance()
+    }
+  }, [chainID, address, provider])
 
   const getThsBanlance = useCallback(
     async () => {
@@ -167,6 +223,60 @@ function InitialWalletView() {
       getsThsBanlance()
     }
   }, [address, chainID, provider])
+
+  const addSCToken = useCallback(
+    () => {
+      window.ethereum.request({
+        method: "wallet_watchAsset",
+        params: {
+          type: "ERC20",
+          options: {
+            address: "0x59e9ea6D581e0b71D4db8B7Ab3d142b1A575216B",
+            symbol: "SC",
+            decimals: 18,
+            image: scIcon
+          }
+        }
+      })
+    },
+    [window.ethereum, provider],
+  )
+
+  const addTHSToken = useCallback(
+    () => {
+      window.ethereum.request({
+        method: "wallet_watchAsset",
+        params: {
+          type: "ERC20",
+          options: {
+            address: "0x5Ecd430413488C1fBfEfe64f0EF759E4b2FC5F8b",
+            symbol: "THS",
+            decimals: 9,
+            image: thsIcon
+          }
+        }
+      })
+    },
+    [window.ethereum, provider],
+  )
+  const addsTHSToken = useCallback(
+    () => {
+      window.ethereum.request({
+        method: "wallet_watchAsset",
+        params: {
+          type: "ERC20",
+          options: {
+            address: "0x96005e02A7f37b5365dF15081E638E82B48EA87B",
+            symbol: "sTHS",
+            decimals: 9,
+            image: sThsIcon
+          }
+        }
+      })
+    },
+    [window.ethereum, provider],
+  )
+
   return (
     <Paper>
       <Token
@@ -175,7 +285,7 @@ function InitialWalletView() {
         userBalanceUSD={
           !isNaN(marketPrice) ? trim((ths ?? 0) * marketPrice, 4) : "--"
         }
-        icon={ThsImg}
+        icon={ThsIcon}
         toggleDrawer={() => {
           window.open(`https://www.bscscan.com/address/${addresses[chainID]?.THS_ADDRESS}?fromaddress=${address}`)
         }}
@@ -186,10 +296,20 @@ function InitialWalletView() {
         userBalanceUSD={
           !isNaN(marketPrice) ? trim((sThs ?? 0) * marketPrice, 4) : "--"
         }
-        icon={sOhmTokenImg}
+        addToken={addsTHSToken}
+        // icon={SthsIcon}
+        tokenImg={theme === THEME_LIGHT ? STHSLightImg : STHSDarkImg}
         toggleDrawer={() => {
           window.open(`https://www.bscscan.com/address/${addresses[chainID].STHS_ADDRESS}?fromaddress=${address}`)
         }}
+      />
+      <Token
+        name="SC"
+        addToken={addSCToken}
+        userBalance={SCBanlance}
+        // icon={SCIcon}
+        toggleDrawer={null}
+        tokenImg={theme === THEME_LIGHT ? SCLightIcon : SCDarkIcon}
       />
 
       <Divider color="secondary" className="less-margin" />
@@ -197,6 +317,25 @@ function InitialWalletView() {
       <Divider color="secondary" className="less-margin" />
 
       <Divider color="secondary" className="less-margin" />
+
+      <Wallet onClick={addTHSToken}>
+        <SvgIcon
+          component={ThsIcon}
+          viewBox="0 0 32 32"
+          style={{ height: "25px", width: "25px" }}
+        />
+        <div>Add</div>
+      </Wallet>
+      <Wallet onClick={addsTHSToken}>
+        <TokenImg src={theme === THEME_LIGHT ? STHSLightImg : STHSDarkImg}></TokenImg>
+
+
+        <div>Add</div>
+      </Wallet>
+      <Wallet onClick={addSCToken}>
+        <TokenImg src={theme === THEME_LIGHT ? SCLightIcon : SCDarkIcon}></TokenImg>
+        <div>Add</div>
+      </Wallet>
 
       <Box className={styles.menuSection}>
         <Box sx={{ flexWrap: "nowrap", flexDirection: "row" }}>

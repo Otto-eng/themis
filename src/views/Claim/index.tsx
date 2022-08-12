@@ -8,7 +8,7 @@ import { abi as ScaleCodeABI } from "src/abi/ScaleCode.json";
 
 import { abi as StakingRewardReleaseABI } from "src/abi/StakingRewardRelease.json";
 import { IERC20 } from "src/typechain/IERC20"
-import { error } from "src/slices/MessagesSlice"
+import { error, info } from "src/slices/MessagesSlice"
 import { useDispatch } from "react-redux"
 import dayjs from "dayjs"
 import utc from 'dayjs/plugin/utc'
@@ -25,7 +25,8 @@ const listDay = [
 	{ id: 4, value: 80, gasSc: "100" },
 	{ id: 5, value: 60, gasSc: "150" },
 	{ id: 6, value: 45, gasSc: "210" },
-	{ id: 7, value: 30, gasSc: "300" }]
+	{ id: 7, value: 30, gasSc: "300" }
+]
 
 const GridFlex = styled('div')({
 	width: "100%",
@@ -224,12 +225,18 @@ function Claim() {
 	const theme = useAppSelector(state => state.theme.theme)
 	const dispatch = useDispatch();
 	const { chainID, provider, address } = useWeb3Context()
+	const [isRequireSyncOldData, setIsRequireSyncOldData] = useState(true)
 	const [infoList, setInfoList] = useState<InfoListType[]>([])
 	const stakeReleaseEarningsList = useAppSelector(state => state.sc.stakeReleaseEarningsList)
 	const [isOpen, setIsOpen] = useState(false)
 	const [optionData, setOptionData] = useState({ id: 0, value: 180, gasSc: "0" })
 	const [len, setLen] = useState(0)
+	const [hash, setHash] = useState("")
+
 	const [page, setPage] = useState(1)
+	const [scAllowance, setScAllowance] = useState(0)
+	const [speedLevel, setSpeedLevel] = useState("0")
+	const [gas, setGas] = useState("0")
 	const [num, setNum] = useState(true)
 	const [SCBanlance, setSCBanlance] = useState("0.0000")
 	const [stakeReleaseEarningsListPage, setStakeReleaseEarningsListPage] = useState(1)
@@ -245,7 +252,31 @@ function Claim() {
 	const handleClose = () => {
 		setIsOpen(false)
 		setOptionData({ id: 0, value: 180, gasSc: "0" })
+		setSpeedLevel('0')
 	}
+
+	const syncOldData = useCallback(
+		async () => {
+			if (address && chainID && provider && addresses[chainID]?.StakingRewardRelease_ADDRESS) {
+				const signer = provider.getSigner();
+				const StakingRewardReleaseContract = new ethers.Contract(addresses[chainID].StakingRewardRelease_ADDRESS, StakingRewardReleaseABI, signer)
+				const isRequireSyncOldData = await StakingRewardReleaseContract.isRequireSyncOldData(address)
+
+				if (isRequireSyncOldData) {
+					dispatch(info(t`sync profit data`));
+					const infoHash = await StakingRewardReleaseContract.syncOldData()
+					setHash(infoHash.hash)
+					await infoHash.wait()
+				}
+				setIsRequireSyncOldData(isRequireSyncOldData)
+			}
+		},
+		[address, chainID, provider, addresses]
+	)
+
+	useEffect(() => {
+		syncOldData();
+	}, [address])
 
 	const getList = useCallback(async (first: number) => {
 		if (address && chainID && provider) {
@@ -263,8 +294,7 @@ function Claim() {
 				speedLevel: item.speedLevel.toString(),
 				recordTimestamp: item.recordTimestamp.toString()
 			})) ?? [];
-
-			setInfoList(list.reverse());
+			setInfoList(list);
 		}
 	}, [chainID, address, provider])
 
@@ -348,11 +378,27 @@ function Claim() {
 
 	useEffect(() => {
 		getList(10 * page);
-	}, [chainID, address, provider, page, pendingStatus])
+	}, [chainID, address, provider, page, pendingStatus, hash])
 
 	useEffect(() => {
 		dispatch(stakeTHSReleaseEarningsList({ first: stakeReleaseEarningsListPage * 10, address }))
 	}, [stakeReleaseEarningsListPage])
+
+	const init = useCallback(
+		async () => {
+			if (addresses[chainID].ScaleCode_ADDRESS && addresses[chainID].StakingRewardRelease_ADDRESS && address) {
+				const signer = provider.getSigner();
+				const SCContract = new ethers.Contract(addresses[chainID].ScaleCode_ADDRESS, ThemisERC20TokenABI, signer);
+				const info = await SCContract.allowance(address, addresses[chainID].StakingRewardRelease_ADDRESS)
+				setScAllowance(+ethers.utils.formatUnits(info, "ether") || 0)
+			}
+		},
+		[addresses, ThemisERC20TokenABI, provider, address, chainID, num],
+	)
+
+	useEffect(() => {
+		init()
+	}, [addresses, ThemisERC20TokenABI, provider, address, chainID, num])
 
 	return (
 		<Main >
@@ -382,18 +428,21 @@ function Claim() {
 									onClick={async (event) => {
 										event.stopPropagation()
 										setOptionData(item)
+										const prev = listDay[Number(speedLevel)]
+										const gas = Number(item.gasSc) - Number(prev.gasSc)
+										setGas(gas + "")
 									}}
 								>{item.value} DAY</Item>))}
 							</Select>
 						</FormControl>
-							<Cost><Trans>Cost:</Trans> {optionData.gasSc}SC</Cost>
+							<Cost><Trans>Cost:</Trans> {gas}SC</Cost>
 					</ModalTop>
 					<Confrim
 						className="stake-button sc-stake-button"
 						variant="contained"
 						color="primary"
 							key={pendingStatus.confrim + ""}
-							disabled={!optionData.id || pendingStatus.confrim}
+							disabled={!optionData.id || pendingStatus.confrim || isRequireSyncOldData}
 							onClick={async () => {
 								if (pendingStatus.confrim) return;
 
@@ -406,8 +455,10 @@ function Claim() {
 								const StakingRewardReleaseContract = new ethers.Contract(addresses[chainID].StakingRewardRelease_ADDRESS, StakingRewardReleaseABI, signer);
 								const SCContract = new ethers.Contract(addresses[chainID].ScaleCode_ADDRESS, ThemisERC20TokenABI, signer);
 								// const balance = await SCContract.balanceOf(address);
-								if (ethers.utils.parseUnits(optionData.gasSc + "", "ether").lt(ethers.utils.parseUnits(SCBanlance, "ether"))) {
-									const approveTx = await SCContract.approve(addresses[chainID].StakingRewardRelease_ADDRESS, ethers.utils.parseUnits(optionData.gasSc, "ether"));
+								if (ethers.utils.parseUnits(gas + "", "ether").lt(ethers.utils.parseUnits(SCBanlance, "ether"))) {
+									if (scAllowance < Number(gas)) {
+										const approveTx = await SCContract.approve(addresses[chainID].StakingRewardRelease_ADDRESS, ethers.utils.parseUnits("10000", "ether"));
+									}
 									const infoHash = await StakingRewardReleaseContract.speedUp(block?.recordBlock!, BigNumber.from(optionData.id))
 									await infoHash.wait();
 								} else {
@@ -452,12 +503,13 @@ function Claim() {
 									className="stake-button sc-stake-button"
 									variant="contained"
 									color="primary"
-									disabled={item.speedLevel === "7" || pendingStatus.confrim}
+										disabled={item.speedLevel === "7" || pendingStatus.confrim || isRequireSyncOldData}
 									key={pendingStatus.confrim + ""}
 									onClick={() => {
 										setIsOpen(true)
 										setBlock(item)
 										setLen(Number(item.speedLevel))
+										setSpeedLevel(item.speedLevel)
 									}}
 									>
 										{isPending(pendingStatus, "confrim", t`Accelerate`)}
@@ -473,7 +525,7 @@ function Claim() {
 									variant="contained"
 									color="primary"
 										key={pendingStatus.claim + ""}
-									disabled={!Number(item.pendingTotal) || pendingStatus.claim}
+										disabled={!Number(item.pendingTotal) || pendingStatus.claim || isRequireSyncOldData}
 										onClick={() => {
 											if (pendingStatus.claim) return;
 

@@ -3,6 +3,7 @@
 /* eslint-disable */
 export type { IBondCalculator } from "./IBondCalculator";
 export type { IERC20 } from "./IERC20";
+export type { LoanContract } from "./LoanContract";
 export type { PreThemisERC20 } from "./PreThemisERC20";
 export type { PresaleContract } from "./PresaleContract";
 export type { PresaleRelease } from "./PresaleRelease";
@@ -23,6 +24,7 @@ export type { SThemis } from "./SThemis";
 
 export { IBondCalculator__factory } from "./factories/IBondCalculator__factory";
 export { IERC20__factory } from "./factories/IERC20__factory";
+export { LoanContract__factory } from "./factories/LoanContract__factory";
 export { PreThemisERC20__factory } from "./factories/PreThemisERC20__factory";
 export { PresaleContract__factory } from "./factories/PresaleContract__factory";
 export { PresaleRelease__factory } from "./factories/PresaleRelease__factory";

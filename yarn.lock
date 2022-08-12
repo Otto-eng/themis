@@ -3010,31 +3010,43 @@
     jest-validate "^26.5.2"
     lodash.get "^4.4.2"
 
-"@lingui/core@^3.12.1":
-  version "3.12.1"
-  resolved "https://registry.yarnpkg.com/@lingui/core/-/core-3.12.1.tgz#f657deb375521c1cf820f4f6a9ca422fdc1a276e"
-  integrity sha512-MkZgkaaBcFtmUXdck9YNMTMTwCRogUif8Ll4Wyqz0re2Ydo7fdwGFBkacYjOc787R5/UmZr2F21OtPqSbaoaJg==
+"@lingui/conf@^3.14.0":
+  version "3.14.0"
+  resolved "https://mirrors.cloud.tencent.com/npm/@lingui%2fconf/-/conf-3.14.0.tgz#1b2c20d556b6ea78e530a07a934be219a0d6c662"
+  integrity sha512-5GMAbIRad9FavqYsfZCRAwjcOLzE7tONDJe9lSYE5SSJbbG01RI5kR5P0B84DUhTI6cGXau+1dAcP9K+JbEx+g==
+  dependencies:
+    "@babel/runtime" "^7.11.2"
+    "@endemolshinegroup/cosmiconfig-typescript-loader" "^3.0.2"
+    chalk "^4.1.0"
+    cosmiconfig "^7.0.0"
+    jest-validate "^26.5.2"
+    lodash.get "^4.4.2"
+
+"@lingui/core@^3.14.0":
+  version "3.14.0"
+  resolved "https://mirrors.cloud.tencent.com/npm/@lingui%2fcore/-/core-3.14.0.tgz#62e6b5e3d17b3f2ecd84b3f821d591763055aa89"
+  integrity sha512-ertREq9oi9B/umxpd/pInm9uFO8FLK2/0FXfDmMqvH5ydswWn/c9nY5YO4W1h4/8LWO45mewypOIyjoue4De1w==
   dependencies:
     "@babel/runtime" "^7.11.2"
     make-plural "^6.2.2"
     messageformat-parser "^4.1.3"
 
-"@lingui/macro@^3.12.1":
-  version "3.12.1"
-  resolved "https://registry.yarnpkg.com/@lingui/macro/-/macro-3.12.1.tgz#ccc9eb442b32c836ca96633194d3b085a2d7864e"
-  integrity sha512-CszdqDnaCo5cnbg6RROYnYtYGOADPhJuRf9U9t2aL9IsN+N7pSQAMdMLbjYkEMT/V8Cjon33ZjLgeGihe0FhSA==
+"@lingui/macro@^3.14.0":
+  version "3.14.0"
+  resolved "https://mirrors.cloud.tencent.com/npm/@lingui%2fmacro/-/macro-3.14.0.tgz#4d97cd548967c2b4b2b2f92715eec4d69e84545c"
+  integrity sha512-NxTRrhrZ/cUO9PX/4vWys90Ku58+ExxHuE30IuDnnDldWhWlOdycmjDt9tB+yIiUdFym/veSxBs+h114FzG5mA==
   dependencies:
     "@babel/runtime" "^7.11.2"
-    "@lingui/conf" "^3.12.1"
+    "@lingui/conf" "^3.14.0"
     ramda "^0.27.1"
 
-"@lingui/react@^3.12.1":
-  version "3.12.1"
-  resolved "https://registry.yarnpkg.com/@lingui/react/-/react-3.12.1.tgz#1134c71e1454652984e9f775b7bc28db083526e4"
-  integrity sha512-TM64Z3ZUsFRn2hz1svk2DRGZljzMY5peP0UurgbjqS2JnQOavFWJsAZmJDwUIEQCoqZI6pjYbjUlbKUdefpXzA==
+"@lingui/react@^3.14.0":
+  version "3.14.0"
+  resolved "https://mirrors.cloud.tencent.com/npm/@lingui%2freact/-/react-3.14.0.tgz#e3e6732a9d172c8ecb4f82fb8558b1766f5cee31"
+  integrity sha512-ow9Mtru7f0T2S9AwnPWRejppcucCW0LmoDR3P4wqHjL+eH5f8a6nxd2doxGieC91/2i4qqW88y4K/zXJxwRSQw==
   dependencies:
     "@babel/runtime" "^7.11.2"
-    "@lingui/core" "^3.12.1"
+    "@lingui/core" "^3.14.0"
 
 "@material-ui/core@^4.12.3":
   version "4.12.3"
@@ -3847,7 +3859,7 @@
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-2.0.1.tgz#20f18294f797f2209b5f65c8e3b5c8e8261d127c"
   integrity sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==
 
-"@types/styled-components@^5.1.24":
+"@types/styled-components@5.1.24":
   version "5.1.24"
   resolved "https://mirrors.tencent.com/npm/@types%2fstyled-components/-/styled-components-5.1.24.tgz#b52ae677f03ea8a6018aa34c6c96b7018b7a3571"
   integrity sha512-mz0fzq2nez+Lq5IuYammYwWgyLUE6OMAJTQL9D8hFLP4Pkh7gVYJii/VQWxq8/TK34g/OrkehXaFNdcEKcItug==

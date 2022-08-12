@@ -101,6 +101,8 @@ export function Wallet() {
     }
   }, [address, chainID, provider, addresses])
 
+ 
+
 
   return (
     <>
@@ -121,6 +123,7 @@ export function Wallet() {
           }
         }}>{state ? "Copied" : `Invitation code:  ${initCode || "--"}`}</InitCode>
         }
+        {/* <InitCode onClick={addToken}><Trans>Add Token Address</Trans></InitCode> */}
           <DisconnectButton />
       </Drawer>
     </>
