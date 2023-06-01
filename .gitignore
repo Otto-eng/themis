@@ -21,6 +21,7 @@ tenderly.yaml
 /node_modules
 /.pnp
 .pnp.js
+.zip
 
 # testing
 coverage

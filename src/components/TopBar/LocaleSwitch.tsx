@@ -25,8 +25,9 @@ function LocaleSwitcher() {
   return (
     <Box
       component="div"
-      onMouseEnter={e => handleClick(e)}
-      onMouseLeave={e => handleClick(e)}
+      // onMouseEnter={e => handleClick(e)}
+      // onMouseLeave={e => handleClick(e)}
+      onClick={e => handleClick(e)}
       id="locales-menu-button-hover"
     >
       <Button
@@ -40,7 +41,6 @@ function LocaleSwitcher() {
         <FlagIcon code={getLocaleFlag(i18n.locale)} />
         <span>&nbsp;</span>
       </Button>
-
       <Popper id={id} open={open} anchorEl={anchorEl} placement="bottom-start" transition>
         {({ TransitionProps }) => {
           return (

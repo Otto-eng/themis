@@ -1,5 +1,5 @@
 import { StaticJsonRpcProvider } from "@ethersproject/providers";
-import { NetworkId } from "src/constants";
+import { BINANCE_URI, NetworkId } from "src/constants";
 
 export class Environment {
 	public static env = process.env;
@@ -34,10 +34,15 @@ export class Environment {
 
 	public static getNodeUrls = (networkId: NetworkId) => {
 		switch (networkId) {
-			case NetworkId.TESTNET_KOVAN:
+			// case NetworkId.TESTNET_KOVAN:
+			// 	return this._get({
+			// 		key: `REACT_APP_KOVAN_NODE_URL`,
+			// 		fallback: BINANCE_URI,
+			// 	});
+			case NetworkId.MAIN_BINANCE:
 				return this._get({
 					key: `REACT_APP_KOVAN_NODE_URL`,
-					fallback: "https://kovan.infura.io/v3/4e658875764f4112a9cbfe92c4e93b9e",
+					fallback: BINANCE_URI,
 				});
 		}
 	};

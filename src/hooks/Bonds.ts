@@ -31,11 +31,8 @@ function useBonds(chainID: number) {
   const [bonds, setBonds] = useState<Bond[] | IAllBondData[]>(initialBondArray);
   // const [expiredBonds, setExpiredBonds] = useState<Bond[] | IAllBondData[]>(initialExpiredArray);
 
-
   useEffect(() => {
     let bondDetails: IAllBondData[];
-    // console.log("BONDSTATE", bondState)
-    // console.log("ACCOUNTBONDSSTATE", accountBondsState)
     bondDetails = allBonds
       .flatMap(bond => {
         if (bondState[bond.name] && bondState[bond.name].bondDiscount) {
@@ -73,10 +70,9 @@ function useBonds(chainID: number) {
     //     return bond;
     //   });
     // setExpiredBonds(expiredDetails);
-  }, [bondState, accountBondsState, bondLoading]);
+  }, [bondState, accountBondsState, bondLoading, chainID]);
 
   // Debug Log:
-  // console.log(bonds);
   return { bonds, loading: bondLoading /*, expiredBonds */ };
 }
 

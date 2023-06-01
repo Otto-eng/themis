@@ -1,6 +1,13 @@
 import { Box, SvgIcon } from "@material-ui/core";
+import { useAppSelector } from "src/hooks";
+import { THEME_DARK } from "../constants"
+import { ReactComponent as THSUSDTDarkPng } from "../asstes/icons/ths_usdt_light@2x.svg";
+import { ReactComponent as THSUSDTPng } from "../asstes/icons/ths_usdt@2x.svg";
+import { ReactComponent as USDTPng } from "../asstes/tokens/USDT.svg";
+import { ReactComponent as USDTDarkPng } from "../asstes/tokens/USDT.svg";
 
 function BondLogo({ bond }) {
+  const theme = useAppSelector(state => state.theme.theme)
   let viewBox = "0 0 32 32";
   let style = { height: "32px", width: "32px" };
 
@@ -9,10 +16,24 @@ function BondLogo({ bond }) {
     viewBox = "0 0 64 32";
     style = { height: "32px", width: "62px" };
   }
+  let iconDark = THSUSDTDarkPng
+  let icon = THSUSDTPng
+
+  switch (bond.name || bond.bond) {
+    case "usdt":
+      iconDark = USDTDarkPng;
+      icon = USDTPng
+      break;
+
+    default:
+      iconDark = THSUSDTDarkPng
+      icon = THSUSDTPng
+      break;
+  }
 
   return (
     <Box display="flex" alignItems="center" justifyContent="center" width={"64px"}>
-      <SvgIcon component={bond.bondIconSvg} viewBox={viewBox} style={style} />
+      <SvgIcon component={theme === THEME_DARK ? icon : iconDark} viewBox={viewBox} style={style} />
     </Box>
   );
 }

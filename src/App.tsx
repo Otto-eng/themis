@@ -3,18 +3,14 @@ import { useEffect, useState, useCallback } from "react";
 import { Route, Redirect, Switch, useLocation, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useMediaQuery } from "@material-ui/core";
-import { BigNumber, ethers } from "ethers";
+import { ethers } from "ethers";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import useBonds, { IAllBondData } from "./hooks/Bonds";
 import { useAddress, useWeb3Context } from "./hooks/web3Context";
-import useSegmentAnalytics from "./hooks/useSegmentAnalytics";
-import { segmentUA } from "./helpers/userAnalyticHelpers";
-import { shouldTriggerSafetyCheck } from "./helpers";
 
 import { calcBondDetails } from "./slices/BondSlice";
 import { loadAppDetails, loadAppDetailsContract } from "./slices/AppSlice";
 import { loadAccountDetails, calculateUserBondDetails } from "./slices/AccountSlice";
-import { info } from "./slices/MessagesSlice";
 
 import { Stake, ChooseBond, Bond, TreasuryDashboard } from "./views";
 import Sidebar from "./components/Sidebar/Sidebar.jsx";
@@ -26,15 +22,22 @@ import NotFound from "./views/404/NotFound";
 import { dark as darkTheme } from "./themes/dark.js";
 import { light as lightTheme } from "./themes/light.js";
 import "./style.scss";
-import { useGoogleAnalytics } from "./hooks/useGoogleAnalytics";
 import Claim from "./views/Claim";
-import { addresses, THEME_LIGHT, ZERO_ADDRESS } from "./constants";
+import { addresses, NETWORK_CHAINID, THEME_LIGHT } from "./constants";
 import Sc from "./views/Sc";
 import { useAppSelector } from "./hooks";
 import Register from "./views/Register";
 
 import { abi as RelationshipABI } from "src/abi/Relationship.json";
-import { scInviterEarningsDetailsList, scStakeEarningsDetailsList } from "./slices/scSlice";
+import { abi as ThemisERC20TokenABI } from "src/abi/ThemisERC20Token.json";
+import { scInviterEarningsDetailsList, scStakeEarningsDetailsList, stakeTHSReleaseEarningsList, thsInviterEarningsDetailsList } from "./slices/scSlice";
+import { IDO } from "./views/IDO";
+// import OpenBeta from "./views/OpenBeta";
+import IDORelease from "./views/IDORelease";
+import { idoRelease35List, idoRelease65List } from "./slices/idoReleaseSlice";
+import Admin from "./views/Admin";
+import DaoProfit from "./views/DaoProfit";
+import Borrow from "./views/Borrow";
 
 // 😬 Sorry for all the console logging
 const DEBUG = false;
@@ -79,17 +82,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function App() {
-  useSegmentAnalytics();
-  useGoogleAnalytics();
 
+
+function App() {
   const location = useLocation();
   const dispatch = useDispatch();
   const history = useHistory()
   const theme: { theme: string } = useAppSelector(state => {
     return state.theme
   })
-  const currentPath = location.pathname + location.search + location.hash;
   const classes = useStyles();
 
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
@@ -98,30 +99,19 @@ function App() {
   const isSmallerScreen = useMediaQuery("(max-width: 980px)");
   const isSmallScreen = useMediaQuery("(max-width: 600px)");
   const [isInvited, setIsInvited] = useState(false)
+  const [pathname, setPathname] = useState("")
+  const [adminAddress, setAdminAddress] = useState("hash")
 
-  const { connect, hasCachedProvider, provider, chainID, connected } = useWeb3Context();
+  const { connect, provider, chainID, connected, disconnect } = useWeb3Context();
   const address = useAddress();
 
 
-  const [walletChecked, setWalletChecked] = useState(false);
-  // TODO (appleseed-expiredBonds): there may be a smarter way to refactor this
+  // TODO: (appleseed-expiredBonds): there may be a smarter way to refactor this
   const { bonds /*, expiredBonds */ } = useBonds(chainID);
-
-  const loadAppDetail = useCallback(
-    async () => {
-      await dispatch(loadAppDetails())
-    },
-    [],
-  )
-
-  useEffect(() => {
-    loadAppDetail()
-  }, [])
 
   const loadDetails = useCallback(
     async (whichDetails: string) => {
       let loadProvider = provider;
-
       if (whichDetails === "app") {
         loadApp(loadProvider);
       }
@@ -131,20 +121,35 @@ function App() {
         loadAccount(loadProvider);
       }
     },
-    [provider, address, connected, walletChecked]
+    [provider, address, connected, chainID]
   )
 
+  const getloadAppDetails = useCallback(
+    async () => {
+      await dispatch(loadAppDetails({ provider, chainID }))
+    },
+    [provider, chainID],
+  )
+
+  useEffect(() => {
+    if (connected && (chainID != NETWORK_CHAINID)) {
+      disconnect()
+    }
+    if ((address && connected && provider && chainID && chainID == NETWORK_CHAINID) || !(address || connected)) {
+      getloadAppDetails()
+    }
+
+  }, [connected, provider, chainID, address])
 
 
   const loadApp = useCallback(
     async loadProvider => {
-      console.log("loadAppDetailsContract")
-      await dispatch(loadAppDetailsContract({ networkID: chainID, provider: loadProvider }));
+      dispatch(loadAppDetailsContract(chainID));
       bonds.map(async bond => {
         await dispatch(calcBondDetails({ bond, value: "", provider: loadProvider, networkID: chainID }));
       });
     },
-    [connected],
+    [connected, chainID],
   );
 
   const loadAccount = useCallback(
@@ -154,38 +159,19 @@ function App() {
         dispatch(calculateUserBondDetails({ address, bond, provider, networkID: chainID }));
       });
     },
-    [connected],
+    [connected, chainID, address],
   );
-
-
-  useEffect(() => {
-    if (hasCachedProvider()) {
-      // then user DOES have a wallet
-      connect().then(() => {
-        setWalletChecked(true);
-        segmentUA({
-          type: "connect",
-          provider: provider,
-          context: currentPath,
-        });
-      });
-    } else {
-      // then user DOES NOT have a wallet
-      setWalletChecked(true);
-    }
-    if (shouldTriggerSafetyCheck()) {
-      dispatch(info("Safety Check: Always verify you're on app.themis.capital!"));
-    }
-  }, []);
 
   // this useEffect fires on state change from above. It will ALWAYS fire AFTER
   useEffect(() => {
     // don't load ANY details until wallet is Checked
-
-    if (walletChecked) {
-      loadDetails("app");
+    loadDetails("app");
+    const themisConnected = sessionStorage.getItem("THEMIS_CONNECTED")
+    if ((!themisConnected || themisConnected === "true") && !connected) {
+      connect()
     }
-  }, [walletChecked, address, provider]);
+  }, [chainID, address]);
+
 
   // this useEffect picks up any time a user Connects via the button
   useEffect(() => {
@@ -203,27 +189,52 @@ function App() {
     setIsSidebarExpanded(false);
   };
 
+  const serachRelationship = useCallback(
+    async (account: string) => {
+      const signer = provider.getSigner();
+      const RelationshipContract = new ethers.Contract(addresses[chainID].Relationship_ADDRESS as string, RelationshipABI, signer)
+      const invitedAddress = await RelationshipContract.RegisterInfoOf(account)
+      setIsInvited(!invitedAddress.registrantCode)
+      setPathname(location.pathname)
+    }, [address, chainID, provider, addresses, location.pathname]
+  )
 
-  const serachRelationship = async (account: string) => {
-    const RelationshipContract = new ethers.Contract(addresses[chainID].Relationship_ADDRESS as string, RelationshipABI, provider)
-
-    const invitedAddress = await RelationshipContract.getInviter(account)
-    setIsInvited(invitedAddress === ZERO_ADDRESS)
-  }
+  const scData = useCallback(
+    () => {
+      dispatch(scInviterEarningsDetailsList({ first: 10, address }));
+      dispatch(thsInviterEarningsDetailsList({ first: 10, address }));
+      dispatch(scStakeEarningsDetailsList({ first: 10, address }))
+      dispatch(stakeTHSReleaseEarningsList({ first: 10, address }))
+      dispatch(idoRelease35List({ first: 1, address }))
+      dispatch(idoRelease65List({ first: 10, address }))
+    },
+    [address, chainID, provider, addresses],
+  )
 
   useEffect(() => {
-    if (address && chainID && provider && addresses) {
+    if (address && chainID && provider && addresses[chainID]?.Relationship_ADDRESS) {
       serachRelationship(address)
-      dispatch(scInviterEarningsDetailsList({ first: BigNumber.from("10"), address, chainID, provider }))
+    }
+  }, [address, chainID, provider, addresses, location.pathname])
+
+  const setRoot = useCallback(
+    async () => {
+      const signer = provider.getSigner();
+      try {
+        const thsContract = new ethers.Contract(addresses[chainID]?.THS_ADDRESS, ThemisERC20TokenABI, signer);
+        const info = await thsContract.robotManager()
+        setAdminAddress(info)
+      } catch (error) {
+      }
+    }, [address, chainID, provider, addresses])
+
+  useEffect(() => {
+    if (address && chainID && provider && addresses[chainID]?.THS_ADDRESS && addresses[chainID]?.Relationship_ADDRESS) {
+      setRoot()
+      scData()
     }
   }, [address, chainID, provider, addresses])
 
-  useEffect(() => {
-    if (address) {
-      console.log("scStakeEarningsDetailsList", address);
-      dispatch(scStakeEarningsDetailsList({ first: 10, address }))
-    }
-  }, [address])
 
   useEffect(() => {
     setThemeMode(theme.theme === THEME_LIGHT ? lightTheme : darkTheme)
@@ -233,16 +244,23 @@ function App() {
   }, [location]);
 
   useEffect(() => {
-    if (address && isInvited && location.pathname !== "/register") {
-      console.log("location.state", location.search)
+    if (address && isInvited && (["/bonds", "/stake"].some(item => pathname.includes(item)))) {
       history.replace("/register" + (location.search ?? ""))
     }
-  }, [address, isInvited, location.pathname])
+  }, [address, isInvited, pathname])
+
+  useEffect(() => {
+    const height = document.body.scrollHeight;
+    window.onresize = () => {
+      if (document.body.scrollHeight < height) {
+        document.body.style.height = height + "px"
+      }
+    }
+  }, [])
 
   return (
     <ThemeProvider theme={themeMode}>
       <CssBaseline />
-      {/* {isAppLoading && <LoadingSplash />} */}
       <div className={`app ${isSmallerScreen && "tablet"} ${isSmallScreen && "mobile"} ${theme}`}>
         <Messages />
         <TopBar z-index={9} handleDrawerToggle={handleDrawerToggle} />
@@ -264,20 +282,26 @@ function App() {
               <Redirect to="/stake" />
             </Route>
 
-            <Route path="/stake">
+
+            <Route exact path="/stake">
               <Stake />
             </Route>
 
-
+            {(bonds as IAllBondData[]).map(bond => {
+              return (
+                <Route exact key={bond.name} path={`/bonds/${bond.name}`}>
+                  <Bond bond={bond} />
+                </Route>
+              );
+            })}
             <Route path="/bonds">
-              {(bonds as IAllBondData[]).map(bond => {
-                return (
-                  <Route exact key={bond.name} path={`/bonds/${bond.name}`}>
-                    <Bond bond={bond} />
-                  </Route>
-                );
-              })}
               <ChooseBond />
+            </Route>
+            {/* <Route path="/inviteUsers">
+              <InviteUsers />
+            </Route> */}
+            <Route exact path="/ido">
+              <IDO />
             </Route>
             <Route path="/claim">
               <Claim />
@@ -285,10 +309,25 @@ function App() {
             <Route path="/sc">
               <Sc />
             </Route>
+            <Route path="/daoRewards">
+              <DaoProfit />
+            </Route>
+
+            <Route path="/borrow">
+              <Borrow />
+            </Route>
+
+            <Route path="/IDORelease">
+              <IDORelease />
+            </Route>
             <Route path="/register">
               <Register />
             </Route>
-
+            {
+              address.toLowerCase() === adminAddress.toLowerCase() ? <Route path="/admin">
+                <Admin />
+              </Route> : null
+            }
             <Route component={NotFound} />
           </Switch>
         </div>

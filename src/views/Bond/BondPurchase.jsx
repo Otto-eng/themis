@@ -28,7 +28,7 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
 
   const [quantity, setQuantity] = useState("");
   const [secondsToRefresh, setSecondsToRefresh] = useState(SECONDS_TO_REFRESH);
-
+  const bondDetailsDebounce = useDebounce(quantity, 1000)
   const currentBlock = useSelector(state => {
     return state.app.currentBlock;
   });
@@ -100,11 +100,16 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
     setQuantity(maxQ);
   };
 
-  const bondDetailsDebounce = useDebounce(quantity, 1000);
+  const getCalcBondDetails = useCallback(
+    async () => {
+      await dispatch(calcBondDetails({ bond, value: quantity, provider, chainID }));
+    },
+    [bond, quantity, provider, chainID],
+  )
 
   useEffect(() => {
-    dispatch(calcBondDetails({ bond, value: quantity, provider, networkID: chainID }));
-  }, [bondDetailsDebounce]);
+    getCalcBondDetails()
+  }, [bondDetailsDebounce, chainID]);
 
   useEffect(() => {
     let interval = null;
@@ -114,11 +119,11 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
       }, 1000);
     } else {
       clearInterval(interval);
-      dispatch(calcBondDetails({ bond, value: quantity, provider, networkID: chainID }));
+      getCalcBondDetails()
       setSecondsToRefresh(SECONDS_TO_REFRESH);
     }
     return () => clearInterval(interval);
-  }, [secondsToRefresh, quantity]);
+  }, [secondsToRefresh, quantity, chainID]);
 
   const onSeekApproval = async () => {
     // return;

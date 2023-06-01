@@ -1,7 +1,8 @@
 import { BigNumber, BigNumberish, ethers } from "ethers";
 import { addresses } from "../constants";
-import { abi as ierc20Abi } from "../abi/IERC20.json";
-import { abi as sOHMv2 } from "../abi/sOhmv2.json";
+import { abi as ThemisERC20TokenABI } from "src/abi/ThemisERC20Token.json";
+import { abi as ierc20Abi } from "src/abi/IERC20.json";
+import { abi as sTHSAbi } from "src/abi/sThemis.json"; 
 // import { abi as wsOHM } from "../abi/wsOHM.json";
 import { abi as ThemisStakingABI } from "../abi/ThemisStaking.json";
 
@@ -10,8 +11,7 @@ import { setAll } from "../helpers";
 import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "src/store";
 import { IBaseAddressAsyncThunk, ICalcUserBondDetailsAsyncThunk } from "./interfaces";
-import { FuseProxy, IERC20, OlympusStakingv2, SOhmv2, WsOHM } from "src/typechain";
-import { EthContract } from "src/typechain/EthContract";
+import { ThemisERC20Token, SThemis, IERC20 } from "src/typechain";
 
 interface IUserBalances {
   balances: {
@@ -27,8 +27,7 @@ export const getBalances = createAsyncThunk(
   "account/getBalances",
   async ({ address, networkID, provider }: IBaseAddressAsyncThunk) => {
     const signer = provider.getSigner();
-
-    const thsContract = new ethers.Contract(addresses[networkID].THS_ADDRESS as string, ierc20Abi, signer) as IERC20;
+    const thsContract = new ethers.Contract(addresses[networkID].THS_ADDRESS as string, ThemisERC20TokenABI, signer) as ThemisERC20Token;
     const thsBalance = await thsContract.balanceOf(address);
     const usdtContract = new ethers.Contract(addresses[networkID].USDT_ADDRESS as string, ierc20Abi, signer) as IERC20;
     const usdtBalance = await usdtContract.balanceOf(address);
@@ -41,39 +40,11 @@ export const getBalances = createAsyncThunk(
     const sThsStakingBalance = await staking.stakingAmountOf(address);
     const sThsContract = new ethers.Contract(
       addresses[networkID].STHS_ADDRESS as string,
-      ierc20Abi,
+      sTHSAbi,
       provider,
     ) as IERC20;
     const sThsBalance = await sThsContract.balanceOf(address);
 
-    // const wsohmContract = new ethers.Contract(addresses[networkID].WSOHM_ADDRESS as string, wsOHM, provider) as WsOHM;
-
-    // const wsohmBalance = await wsohmContract.balanceOf(address);
-
-    // NOTE (appleseed): wsohmAsSohm is wsOHM given as a quantity of sTHS
-    // const wsohmAsSohm = await wsohmContract.wOHMTosOHM(wsohmBalance);
-
-    // const poolTokenContract = new ethers.Contract(
-    //   addresses[networkID].PT_TOKEN_ADDRESS as string,
-    //   ierc20Abi,
-    //   provider,
-    // ) as IERC20;
-    // const poolBalance = await poolTokenContract.balanceOf(address);
-
-    // let fsohmBalance = BigNumber.from(0);
-    // for (const fuseAddressKey of ["FUSE_6_SOHM", "FUSE_18_SOHM", "FUSE_36_SOHM"]) {
-    //   if (addresses[networkID][fuseAddressKey]) {
-    //     const fsohmContract = new ethers.Contract(
-    //       addresses[networkID][fuseAddressKey] as string,
-    //       fuseProxy,
-    //       provider.getSigner(),
-    //     ) as FuseProxy;
-    //     // fsohmContract.signer;
-    //     const balanceOfUnderlying = await fsohmContract.callStatic.balanceOfUnderlying(address);
-
-    //     fsohmBalance = balanceOfUnderlying.add(fsohmBalance);
-    //   }
-    // }
     return {
       balances: {
         ths: ethers.utils.formatUnits(thsBalance, "gwei"),
@@ -100,22 +71,19 @@ interface IUserAccountDetails {
 export const loadAccountDetails = createAsyncThunk(
   "account/loadAccountDetails",
   async ({ networkID, provider, address }: IBaseAddressAsyncThunk, { dispatch }) => {
-    const thsContract = new ethers.Contract(addresses[networkID].THS_ADDRESS as string, ierc20Abi, provider) as IERC20;
+    const signer = provider.getSigner();
+
+    const thsContract = new ethers.Contract(addresses[networkID].THS_ADDRESS as string, ierc20Abi, signer) as IERC20;
     const stakeAllowance = await thsContract.allowance(address, addresses[networkID].STAKING_HELPER_ADDRESS);
 
-    const sThsContract = new ethers.Contract(addresses[networkID].STHS_ADDRESS as string, sOHMv2, provider) as SOhmv2;
+    const sThsContract = new ethers.Contract(addresses[networkID].STHS_ADDRESS as string, sTHSAbi, signer) as SThemis;
     const unstakeAllowance = await sThsContract.allowance(address, addresses[networkID].STAKING_ADDRESS);
-    // const poolAllowance = await sThsContract.allowance(address, addresses[networkID].PT_PRIZE_POOL_ADDRESS);
-    // const wrapAllowance = await sThsContract.allowance(address, addresses[networkID].WSOHM_ADDRESS);
-
-    // const wsohmContract = new ethers.Contract(addresses[networkID].WSOHM_ADDRESS as string, wsOHM, provider) as WsOHM;
-    // const unwrapAllowance = await wsohmContract.allowance(address, addresses[networkID].WSOHM_ADDRESS);
     await dispatch(getBalances({ address, networkID, provider }));
 
     return {
       staking: {
-        ohmStake: +stakeAllowance,
-        ohmUnstake: +unstakeAllowance,
+        ohmStake: ethers.utils.formatUnits(stakeAllowance, "gwei"),
+        ohmUnstake: ethers.utils.formatUnits(unstakeAllowance, "gwei"),
       },
       wrapping: {
         // ohmWrap: +wrapAllowance,
@@ -141,7 +109,7 @@ export const calculateUserBondDetails = createAsyncThunk(
       return {
         bond: "",
         displayName: "",
-        bondIconSvg: "",
+        // bondIconSvg: "",
         isLP: false,
         allowance: 0,
         balance: "0",
@@ -150,12 +118,12 @@ export const calculateUserBondDetails = createAsyncThunk(
         pendingPayout: "",
       };
     }
-    // dispatch(fetchBondInProgress());
 
-    // Calculate bond details.
-    const bondContract = bond.getContractForBond(networkID, provider);
-    // const bondContract = new ethers.Contract(addresses[networkID].USDT_BOND, OlympusBondDepository, provider) as EthContract;
-    const reserveContract = bond.getContractForReserve(networkID, provider);
+    const signer = provider.getSigner();
+
+
+    const bondContract = bond.getContractForBond(networkID, signer);
+    const reserveContract = bond.getContractForReserve(networkID, signer);
     let pendingPayout, bondMaturationBlock;
 
     const bondDetails = await bondContract.bondInfo(address);
@@ -176,7 +144,7 @@ export const calculateUserBondDetails = createAsyncThunk(
     return {
       bond: bond.name,
       displayName: bond.displayName,
-      bondIconSvg: bond.bondIconSvg,
+      // bondIconSvg: bond.bondIconSvg,
       isLP: bond.isLP,
       allowance: Number(allowance.toString()),
       balance: balanceVal,

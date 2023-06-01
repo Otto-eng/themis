@@ -2,7 +2,7 @@ import CustomTooltip from "./CustomTooltip";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import ExpandedChart from "./ExpandedChart";
 import { useEffect, useState } from "react";
-import { ReactComponent as Fullscreen } from "../../assets/icons/fullscreen.svg";
+import { ReactComponent as Fullscreen } from "../../asstes/icons/fullscreen.svg";
 import {
   ResponsiveContainer,
   BarChart,
@@ -21,9 +21,12 @@ import { Skeleton } from "@material-ui/lab";
 import { trim } from "../../helpers";
 import { format } from "date-fns";
 import "./chart.scss";
+import dayjs from "dayjs"
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
 
 const formatCurrency = c => {
-  new Intl.NumberFormat("en-US", {
+  return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
     maximumFractionDigits: 0,
@@ -64,7 +67,7 @@ const renderAreaChart = (
       interval={30}
       axisLine={false}
       tickLine={false}
-      tickFormatter={str => format(new Date(str * 1000), "MMM dd")}
+      tickFormatter={str =>dayjs.unix(str).utc("MM-DD-YYYY")}
       reversed={true}
       connectNulls={true}
       padding={{ right: 20 }}
@@ -74,12 +77,11 @@ const renderAreaChart = (
       axisLine={false}
       tickLine={false}
       width={dataFormat === "percent" ? 33 : 55}
-      tickFormatter={number =>
-        number !== 0
-          ? dataFormat !== "percent"
-            ? `${formatCurrency(parseFloat(number) / 1000000)}M`
-            : `${trim(parseFloat(number), 2)}%`
-          : ""
+      tickFormatter={number => (number !== 0
+        ? dataFormat !== "percent"
+          ? `${formatCurrency(parseFloat(number) / 1000000)}M`
+          : `${trim(parseFloat(number), 2)}%`
+        : "")
       }
       domain={[0, "auto"]}
       dx={3}
@@ -240,7 +242,7 @@ const renderLineChart = (
       width={32}
       scale={scale}
       tickFormatter={number =>
-        number !== 0 ? (dataFormat !== "percent" ? `${number}` : `${parseFloat(number) / 1000}k`) : ""
+          number !== 0 ? (dataFormat !== "percent" ? `${number}` : `${parseFloat(number) / 1000}k`) : ""
       }
       domain={[scale == "log" ? "dataMin" : 0, "auto"]}
       connectNulls={true}
@@ -283,7 +285,7 @@ const renderMultiLineChart = (
       axisLine={false}
       tickLine={false}
       width={25}
-      tickFormatter={number => (number !== 0 ? `${trim(parseFloat(number), 2)}` : "")}
+      tickFormatter={number =>  (number !== 0 ? `${trim(parseFloat(number) / 1000, 2)}k` : "")}
       domain={[0, "auto"]}
       connectNulls={true}
       allowDataOverflow={false}

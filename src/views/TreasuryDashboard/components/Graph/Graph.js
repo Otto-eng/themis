@@ -2,8 +2,8 @@ import Chart from "src/components/Chart/Chart.jsx";
 import { useTheme } from "@material-ui/core/styles";
 import { trim, formatCurrency } from "../../../../helpers";
 import { useTreasuryMetrics } from "../../hooks/useTreasuryMetrics";
-import { useTreasuryRebases } from "../../hooks/useTreasuryRebases";
 import { bulletpoints, tooltipItems, tooltipInfoMessages, itemType } from "../../treasuryData";
+import { t } from "@lingui/macro";
 
 export const Graph = ({ children }) => <>{children}</>;
 
@@ -15,14 +15,14 @@ export const TotalValueDepositedGraph = () => {
       type="area"
       data={data}
       itemType={itemType.dollar}
-      itemNames={tooltipItems.tvl}
+      itemNames={tooltipItems().tvl}
       dataKey={["totalValueLocked"]}
-      headerText="Total Value Deposited"
+      headerText={t`Total Value Deposited`}
       stopColor={[["#768299", "#98B3E9"]]}
       bulletpointColors={bulletpoints.tvl}
-      infoTooltipMessage={tooltipInfoMessages.tvl}
+      infoTooltipMessage={tooltipInfoMessages().tvl}
       expandedGraphStrokeColor={theme.palette.graphStrokeColor}
-      headerSubText={`${data && formatCurrency(data[0].totalValueLocked)}`}
+      headerSubText={`${data && formatCurrency(data[0]?.totalValueLocked ?? 0)}`}
     />
   );
 };
@@ -44,12 +44,12 @@ export const MarketValueGraph = () => {
         // ["#8BFF4D", "#4C8C2A"],
         // ["#ff758f", "#c9184a"],
       ]}
-      headerText="Market Value of Treasury Assets"
-      headerSubText={`${data && formatCurrency(data[0].treasuryMarketValue)}`}
+      headerText={t`Market Value of Treasury Assets`}
+      headerSubText={`${data && formatCurrency(data[0]?.treasuryMarketValue ?? 0)}`}
       bulletpointColors={bulletpoints.coin}
-      itemNames={tooltipItems.coin}
+      itemNames={tooltipItems().coin}
       itemType={itemType.dollar}
-      infoTooltipMessage={tooltipInfoMessages.mvt}
+      infoTooltipMessage={tooltipInfoMessages().mvt}
       expandedGraphStrokeColor={theme.palette.graphStrokeColor}
     />
   );
@@ -67,44 +67,40 @@ export const RiskFreeValueGraph = () => {
       dataKey={["treasuryRiskFreeValue"]}
       stopColor={[
         ["#F5AC37", "#EA9276"],
-        ["#768299", "#98B3E9"],
-        ["#ff758f", "#c9184a"],
-        ["#000", "#fff"],
-        ["#000", "#fff"],
       ]}
-      headerText="Risk Free Value of Treasury Assets"
-      headerSubText={`${data && formatCurrency(data[0].treasuryRiskFreeValue)}`}
+      headerText={t`Risk Free Value of Treasury Assets`}
+      headerSubText={`${data && formatCurrency(data[0]?.treasuryRiskFreeValue ?? 0)}`}
       bulletpointColors={bulletpoints.rfv}
-      itemNames={tooltipItems.rfv}
+      itemNames={tooltipItems().rfv}
       itemType={itemType.dollar}
-      infoTooltipMessage={tooltipInfoMessages.rfv}
+      infoTooltipMessage={tooltipInfoMessages().rfv}
       expandedGraphStrokeColor={theme.palette.graphStrokeColor}
     />
   );
 };
 
-// export const ProtocolOwnedLiquidityGraph = () => {
-//   const theme = useTheme();
-//   const { data } = useTreasuryMetrics({ refetchOnMount: false });
+export const ProtocolOwnedLiquidityGraph = () => {
+  const theme = useTheme();
+  const { data } = useTreasuryMetrics({ refetchOnMount: false });
 
-//   return (
-//     <Chart
-//       isPOL
-//       type="area"
-//       data={[{}]}
-//       dataFormat="percent"
-//       itemNames={tooltipItems.pol}
-//       itemType={itemType.percentage}
-//       dataKey={["treasuryOhmDaiPOL"]}
-//       bulletpointColors={bulletpoints.pol}
-//       infoTooltipMessage={tooltipInfoMessages.pol}
-//       headerText="Protocol Owned Liquidity THS-USDT"
-//       expandedGraphStrokeColor={theme.palette.graphStrokeColor}
-//       headerSubText={`${data && trim(data[0].treasuryOhmDaiPOL, 2)}% `}
-//       stopColor={[["rgba(128, 204, 131, 1)", "rgba(128, 204, 131, 0)"]]}
-//     />
-//   );
-// };
+  return (
+    <Chart
+      isPOL
+      type="area"
+      data={data}
+      dataFormat="percent"
+      itemNames={tooltipItems().pol}
+      itemType={itemType.percentage}
+      dataKey={["treasuryUsdtThsPOL"]}
+      bulletpointColors={bulletpoints.pol}
+      infoTooltipMessage={tooltipInfoMessages().pol}
+      headerText={t`Protocol Owned Liquidity THS-USDT`}
+      expandedGraphStrokeColor={theme.palette.graphStrokeColor}
+      headerSubText={`${data && trim(data[0]?.treasuryUsdtThsPOL ?? 0, 2)}% `}
+      stopColor={[["rgba(128, 204, 131, 1)", "rgba(128, 204, 131, 0)"]]}
+    />
+  );
+};
 
 export const THSStakedGraph = () => {
   const theme = useTheme();
@@ -117,7 +113,7 @@ export const THSStakedGraph = () => {
         timestamp: metric.timestamp,
       }))
       .filter(metric => metric.staked < 100);
-
+  const stakedText = t`${tooltipInfoMessages().staked}`
   return (
     <Chart
       isStaked
@@ -125,10 +121,10 @@ export const THSStakedGraph = () => {
       data={staked} // staked
       dataKey={["staked"]}
       dataFormat="percent"
-      headerText="THS Staked"
+      headerText={t`THS Staked`}
       stopColor={[["#55EBC7", "#47ACEB"]]}
       bulletpointColors={bulletpoints.staked}
-      infoTooltipMessage={tooltipInfoMessages.staked}
+      infoTooltipMessage={stakedText}
       expandedGraphStrokeColor={theme.palette.graphStrokeColor}
       headerSubText={`${staked && trim(staked[0]?.staked ?? 0, 2)}% `}
     />
@@ -154,12 +150,12 @@ export const THSStakedGraph = () => {
 //       dataKey={["apy"]}
 //       dataFormat="percent"
 //       headerText="APY over time"
-//       itemNames={tooltipItems.apy}
+//       itemNames={ tooltipItems().apy }
 //       itemType={itemType.percentage}
 //       color={theme.palette.text.primary}
 //       bulletpointColors={bulletpoints.apy}
 //       stroke={[theme.palette.text.primary]}
-//       infoTooltipMessage={tooltipInfoMessages.apy}
+//       infoTooltipMessage={tooltipInfoMessages().apy}
 //       headerSubText={`${data && trim(apy[0]?.apy ?? 0, 2)}%`}
 //       expandedGraphStrokeColor={theme.palette.graphStrokeColor}
 //     />
@@ -183,13 +179,13 @@ export const RunwayAvailableGraph = () => {
       dataKey={["runwayCurrent", "runway7dot5k", "runway5k", "runway2dot5k"]}
       color={theme.palette.text.primary}
       stroke={colors}
-      headerText="Runway Available"
-      headerSubText={`${data && trim(data[0].runwayCurrent, 1)} Days`}
+      headerText={t`Runway Available`}
+      headerSubText={`${data && trim(data[0]?.runwayCurrent ?? 0, 1)} Days`}
       dataFormat="days"
       bulletpointColors={runwayBulletpoints}
-      itemNames={tooltipItems.runway}
+      itemNames={tooltipItems().runway}
       itemType={""}
-      infoTooltipMessage={tooltipInfoMessages.runway}
+      infoTooltipMessage={tooltipInfoMessages().runway}
       expandedGraphStrokeColor={theme.palette.graphStrokeColor}
     />
   );

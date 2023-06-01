@@ -1,4 +1,4 @@
-import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAction, createSlice } from "@reduxjs/toolkit";
 import { THEME_DARK, THEME_KEYWORD, THEME_LIGHT } from "src/constants";
 import { setAll } from "src/helpers";
 
@@ -18,7 +18,7 @@ interface MessagesState {
 }
 
 const initialState: MessagesState = {
-	theme: localStorage.getItem(THEME_KEYWORD) ?? THEME_DARK
+	theme: localStorage.getItem(THEME_KEYWORD) ?? THEME_LIGHT
 };
 
 export const toggleTheme = createAction<{ theme: string }>('user/toggleTheme')

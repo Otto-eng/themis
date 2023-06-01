@@ -1,7 +1,7 @@
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import SvgIcon from "@material-ui/core/SvgIcon";
-import { ReactComponent as SunIcon } from "../../assets/icons/sun.svg";
-import { ReactComponent as MoonIcon } from "../../assets/icons/moon.svg";
+import { ReactComponent as SunIcon } from "../../asstes/icons/sun.svg";
+import { ReactComponent as MoonIcon } from "../../asstes/icons/moon.svg";
 import { t } from "@lingui/macro";
 import { useDispatch } from "react-redux";
 import { toggleTheme as toggle } from "../../slices/ThemeSlice"

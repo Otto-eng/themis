@@ -1,7 +1,7 @@
 import { AppBar, Toolbar, Box, Button, SvgIcon } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { ReactComponent as MenuIcon } from "../../assets/icons/hamburger.svg";
+import { ReactComponent as MenuIcon } from "../../asstes/icons/hamburger.svg";
 import ThemeSwitcher from "./ThemeSwitch.jsx";
 import LocaleSwitcher from "./LocaleSwitch.tsx";
 import "./topbar.scss";
@@ -30,8 +30,6 @@ const useStyles = makeStyles(theme => ({
 
 function TopBar({ handleDrawerToggle }) {
   const classes = useStyles();
-  const isVerySmallScreen = useMediaQuery("(max-width: 355px)");
-  const { chainID } = useWeb3Context()
 
   return (
     <AppBar position="sticky" className={classes.appBar} elevation={0}>

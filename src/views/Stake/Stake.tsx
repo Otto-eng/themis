@@ -15,6 +15,7 @@ import {
   Typography,
   Zoom,
   Divider,
+  styled
 } from "@material-ui/core";
 import { t, Trans } from "@lingui/macro";
 import NewReleases from "@material-ui/icons/NewReleases";
@@ -26,10 +27,10 @@ import "./stake.scss";
 import { useWeb3Context } from "src/hooks/web3Context";
 import { isPendingTxn, txnButtonText } from "src/slices/PendingTxnsSlice";
 import { Skeleton } from "@material-ui/lab";
-import ExternalStakePool from "./ExternalStakePool";
 import { error } from "../../slices/MessagesSlice";
 import { ethers } from "ethers";
 import { useAppSelector } from "src/hooks";
+import { debounce } from "src/utils/debounce";
 
 function a11yProps(index: number) {
   return {
@@ -56,9 +57,9 @@ function Stake() {
   const thsBalance = useAppSelector(state => {
     return state.account.balances && state.account.balances.ths;
   });
-  // const oldSohmBalance = useAppSelector(state => {
-  //   return state.account.balances && state.account.balances.oldsohm;
-  // });
+  const sThsBalance = useAppSelector(state => {
+    return state.account.balances && state.account.balances.sThs;
+  });
   const sThsSTakingBalance = useAppSelector(state => {
     return state.account.balances && state.account.balances.sThsStaking;
   });
@@ -100,10 +101,11 @@ function Stake() {
   };
 
   const onSeekApproval = async (token: string) => {
-    await dispatch(changeApproval({ address, token, provider, networkID: chainID }));
+    await dispatch(changeApproval({ address, token, provider, networkID: chainID, thsBalance, sThsBalance }));
   };
 
   const onChangeStake = async (action: string) => {
+    // console.log("action", action)
     // eslint-disable-next-line no-restricted-globals
     if (isNaN(Number(quantity)) || quantity === "0") {
       // eslint-disable-next-line no-alert
@@ -116,7 +118,7 @@ function Stake() {
       return dispatch(error(t`You cannot stake more than your THS balance.`));
     }
 
-    if (action === "unstake" && gweiValue.gt(ethers.utils.parseUnits(sThsSTakingBalance, "gwei"))) {
+    if (action === "unstake" && gweiValue.gt(ethers.utils.parseUnits(sThsBalance, "gwei"))) {
       return dispatch(error(t`You cannot unstake more than your sTHS balance.`));
     }
     await dispatch(changeStake({ address, action, value: quantity.toString(), provider, networkID: chainID }));
@@ -124,8 +126,8 @@ function Stake() {
 
   const hasAllowance = useCallback(
     token => {
-      if (token === "ths") return stakeAllowance > 0;
-      if (token === "sThs") return unstakeAllowance > 0;
+      if (token === "ths") return stakeAllowance > Number(thsBalance);
+      if (token === "sThs") return unstakeAllowance > Number(sThsBalance);
       return 0;
     },
     [stakeAllowance, unstakeAllowance],
@@ -147,15 +149,16 @@ function Stake() {
   };
 
   const trimmedBalance = Number(
-    [sThsSTakingBalance]
+    [sThsBalance]
       .filter(Boolean)
       .map(balance => Number(balance))
       .reduce((a, b) => a + b, 0)
       .toFixed(4),
   );
-  const trimmedStakingAPY = trim(stakingAPY * 100, 1);
-  const stakingRebasePercentage = trim(stakingRebase * 100, 4);
+  const trimmedStakingAPY = trim(stakingAPY, 1);
+  const stakingRebasePercentage = trim(stakingRebase, 4);
   const nextRewardValue = trim((Number(stakingRebasePercentage) / 100) * trimmedBalance, 4);
+  const stakeAmount = Math.floor(((Number(sThsBalance) || 0) - (Number(sThsSTakingBalance) || 0)) * 10000) / 10000
 
   return (
     <div id="stake-view">
@@ -164,7 +167,7 @@ function Stake() {
           <Grid container direction="column" spacing={2}>
             <Grid item>
               <div className="card-header">
-                <Typography variant="h5">Single Stake (3, 3)</Typography>
+                <Typography variant="h5"><Trans>Single Stake</Trans> (3, 3)</Typography>
                 <RebaseTimer />
 
                 {/* {address && Number(oldSohmBalance) > 0.01 && (
@@ -235,7 +238,7 @@ function Stake() {
                       </Typography>
                       <Typography variant="h4">
                         {currentIndex ? (
-                          <span data-testid="index-value">{trim(Number(currentIndex), 1)} THS</span>
+                          <span data-testid="index-value">{trim(Number(currentIndex), 4)} THS</span>
                         ) : (
                           <Skeleton width="150px" data-testid="index-loading" />
                         )}
@@ -312,14 +315,13 @@ function Stake() {
                               className="stake-input"
                               value={quantity}
                                   onChange={e => {
-                                    console.log("e.target.value", e.target.value, Number(e.target.value))
-                                    setQuantity(Number(e.target.value) + "")
+                                    setQuantity(e.target.value)
                                   }}
                               labelWidth={0}
                               endAdornment={
                                 <InputAdornment position="end">
                                   <Button variant="text" onClick={setMax} color="inherit">
-                                    Max
+                                    <Trans>Max</Trans>
                                   </Button>
                                 </InputAdornment>
                               }
@@ -339,8 +341,9 @@ function Stake() {
                             variant="contained"
                             color="primary"
                             disabled={isPendingTxn(pendingTransactions, "staking")}
+                            key={!!isPendingTxn(pendingTransactions, "staking") + ""}
                             onClick={() => {
-                              onChangeStake("stake");
+                              debounce(onChangeStake, 500, "stake");
                             }}
                           >
                                 {txnButtonText(pendingTransactions, "staking", t`Stake THS`)}
@@ -352,7 +355,7 @@ function Stake() {
                             color="primary"
                             disabled={isPendingTxn(pendingTransactions, "approve_staking")}
                             onClick={() => {
-                              onSeekApproval("ths");
+                              debounce(onSeekApproval, 500, "ths");
                             }}
                           >
                             {txnButtonText(pendingTransactions, "approve_staking", t`Approve`)}
@@ -369,7 +372,7 @@ function Stake() {
                             color="primary"
                             disabled={isPendingTxn(pendingTransactions, "unstaking")}
                             onClick={() => {
-                              onChangeStake("unstake");
+                              debounce(onChangeStake, 500, "unstake");
                             }}
                           >
                                 {txnButtonText(pendingTransactions, "unstaking", t`Unstake THS`)}
@@ -381,7 +384,7 @@ function Stake() {
                             color="primary"
                             disabled={isPendingTxn(pendingTransactions, "approve_unstaking")}
                             onClick={() => {
-                              onSeekApproval("sThs");
+                              debounce(onSeekApproval, 500, "sThs");
                             }}
                           >
                             {txnButtonText(pendingTransactions, "approve_unstaking", t`Approve`)}
@@ -406,36 +409,18 @@ function Stake() {
                         <Trans>Staked Balance</Trans>
                       </Typography>
                       <Typography variant="body1" id="user-staked-balance">
-                          {isAppLoading ? <Skeleton width="80px" /> : <>{trimmedBalance} sTHS</>}
-                      </Typography>
-                    </div>
-
-                      {/* <div className="data-row" style={{ paddingLeft: "10px" }}>
-                      <Typography variant="body2" color="textSecondary">
-                        <Trans>Single Staking</Trans>
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary">
                           {isAppLoading ? <Skeleton width="80px" /> : <>{trim(Number(sThsSTakingBalance), 4)} sTHS</>}
                       </Typography>
-                    </div> */}
-
-                      {/* <div className="data-row" style={{ paddingLeft: "10px" }}>
-                      <Typography variant="body2" color="textSecondary">
-                        <Trans>Staked Balance in Fuse</Trans>
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary">
-                        {isAppLoading ? <Skeleton width="80px" /> : <>{trim(Number(fsohmBalance), 4)} fsOHM</>}
-                      </Typography>
-                    </div> */}
-
-                      {/* <div className="data-row" style={{ paddingLeft: "10px" }}>
-                      <Typography variant="body2" color="textSecondary">
-                        <Trans>Wrapped Balance</Trans>
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary">
-                        {isAppLoading ? <Skeleton width="80px" /> : <>{trim(Number(wsohmBalance), 4)} wsOHM</>}
-                      </Typography>
-                    </div> */}
+                      </div>
+                      
+                      <div className="data-row">
+                        <Typography variant="body1">
+                          <Trans>Yield Amount</Trans>
+                        </Typography>
+                        <Typography variant="body1" id="user-staked-balance">
+                          {isAppLoading ? <Skeleton width="80px" /> : <>{stakeAmount >= 0 ? stakeAmount : 0} sTHS</>}
+                        </Typography>
+                      </div>
 
                     <Divider color="secondary" />
 
@@ -462,7 +447,7 @@ function Stake() {
                         <Trans>ROI (5-Day Rate)</Trans>
                       </Typography>
                         <Typography variant="body1">
-                          {isAppLoading ? <Skeleton width="80px" /> : <>{trim(Number(fiveDayRate) * 100, 4)}%</>}
+                          {isAppLoading ? <Skeleton width="80px" /> : <>{trim(Number(fiveDayRate), 4)}%</>}
                       </Typography>
                     </div>
                   </div>
@@ -473,7 +458,6 @@ function Stake() {
         </Paper>
       </Zoom>
 
-      {/* <ExternalStakePool /> */}
     </div>
   );
 }

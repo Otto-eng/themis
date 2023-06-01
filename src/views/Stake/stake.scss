@@ -162,17 +162,46 @@
 
 .stake-button {
   align-self: center;
-  width: 100%;
-  min-width: 163px !important;
-  max-width: 542px !important;
-  height: 43px !important;
+  min-width: 163px;
+  max-width: 542px;
+  height: 44px;
+  padding: 8px 32px;
+}
+
+#root .stake-button {
+  font-size: 20px;
+}
+
+#root .borrow-stake-button {
+  font-size: 20px;
+  max-width: 124px;
+  width: 124px;
 }
 
 .mobile .stake-button {
-  width: 100% !important;
   max-width: 542px;
   align-self: center;
   justify-self: center;
+  padding: 6px 32px;
+  width: 100%;
+}
+
+#root .mobile .sc-stake-button {
+  align-self: center;
+  justify-self: center;
+  padding: 6px 8px;
+  max-width: 120px;
+  font-size: 14px;
+}
+
+#root .mobile .borrow-stake-button {
+  align-self: center;
+  justify-self: center;
+  padding: 6px 8px;
+  max-width: 80px;
+  width: 80px;
+  height: 28px;
+  font-size: 14px;
 }
 
 .staking-area {

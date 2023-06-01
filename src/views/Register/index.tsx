@@ -12,6 +12,8 @@ import { addresses, THEME_LIGHT, ZERO_ADDRESS } from "src/constants";
 import { abi as RelationshipABI } from "src/abi/Relationship.json";
 import { invitationIdCode } from "src/utils/invitationIdCode";
 import { isPending } from "../Claim";
+import { useHistory } from "react-router-dom";
+import { t } from "@lingui/macro";
 
 
 const GridFlex = styled(Grid)({
@@ -55,7 +57,7 @@ const DEFAULT_FEILDS_VALUE = {
 };
 
 function Register() {
-
+	const history = useHistory()
 	const theme = useAppSelector(state => state.theme.theme)
 	const address = useAddress()
 	const { chainID, provider } = useWeb3Context()
@@ -66,8 +68,10 @@ function Register() {
 	const [isInvited, setIsInvited] = useState<boolean>(false);
 	const [isConfig, setIsConfig] = useState<boolean>(false);
 	const [config, setConfig] = useState<boolean>(false);
+	const [userRegisterInvitedCode, setUserRegisterInvitedCode] = useState("");
 
 	function onChange(value: string, keyName: FieldNameKeys) {
+		console.log("value", values, value, keyName)
 		values[keyName] = value;
 		updateValues({ ...values });
 	}
@@ -82,32 +86,19 @@ function Register() {
 			v.address = address;
 			return { ...v };
 		});
-		setCorrects((v) => {
-			v.address = !!address;
-			return { ...v };
+		setCorrects({
+			...corrects,
+			address: !!address
 		});
 	}, [address, updateValues, setCorrects]);
 
 	const serachRelationship = async (pro: ethers.providers.JsonRpcProvider) => {
 		const signer = pro.getSigner();
 
-		const RelationshipContract = new ethers.Contract(addresses[chainID].Relationship_ADDRESS as string, RelationshipABI, signer)
-		const info = await RelationshipContract.RegisterInfoOf(address)
-		console.log("INFO", info)
-		let defaultCode = "";
-		let invitedAddress = "";
-		console.log("!!info?.inviterCode && !!info.inviter", !!info?.inviterCode && !!info.inviter)
-		if (!!info?.inviterCode && !!info.inviter) {
-			// inviter
-			invitedAddress = info.inviter;
-			defaultCode = info.inviterCode;
-		} else {
-			defaultCode = await RelationshipContract.defaultInviteCode()
-			invitedAddress = await RelationshipContract.getInviter(address)
-		}
+		const RelationshipContract = new ethers.Contract(addresses[chainID]?.Relationship_ADDRESS as string, RelationshipABI, signer)
 
-		setIsInvited(invitedAddress !== ZERO_ADDRESS)
-		console.log("location.search", location.search)
+		let defaultCode = await RelationshipContract.defaultInviteCode()
+		let invitedAddress = await RelationshipContract.getInviter(address)
 		let paramsObj: { [key: string]: any } = {}
 		if (location.search) {
 			const [_firstStr, nextStr] = location.search.split("?")
@@ -119,16 +110,27 @@ function Register() {
 				})
 			}
 		}
-		const invitationIdStr = paramsObj["initCode"]
+		if (paramsObj["initCode"]) {
+			defaultCode = paramsObj["initCode"]
+		}
+		const info = await RelationshipContract.RegisterInfoOf(address)
+		if (!!info?.inviterCode && !!info.inviter) {
+			// inviter
+			invitedAddress = info.inviter;
+			defaultCode = info.inviterCode;
+			setUserRegisterInvitedCode(defaultCode)
+		}
+
+		setIsInvited(invitedAddress !== ZERO_ADDRESS)
 
 		updateValues({
 			...values,
-			invitationId: invitationIdStr ?? defaultCode
+			invitationId: defaultCode
 		})
 	}
 
 	useEffect(() => {
-		if (address && chainID && !!provider && !!addresses) {
+		if (address && chainID && provider && addresses[chainID]?.Relationship_ADDRESS) {
 			serachRelationship(provider)
 		}
 	}, [address, chainID, provider, addresses])
@@ -150,10 +152,18 @@ function Register() {
 					}
 					currentInvitationId = invitationIdCode()
 				} while (flag);
-				const info = await RelationshipContract.register(values.invitationId, currentInvitationId);
+				const infoHash = await RelationshipContract.register(values.invitationId, currentInvitationId);
+				await infoHash.wait()
+				if ("hash" in infoHash) {
+					const info = await RelationshipContract.provider.getTransactionReceipt(infoHash.hash)
+				}
 				setTimeout(() => {
 					setIsConfig(false)
 					setConfig(true)
+					setUserRegisterInvitedCode(values.invitationId ?? "")
+				}, 500);
+				setTimeout(() => {
+					history.replace("/stake")
 				}, 2000);
 			} catch (error) {
 				console.log("CONFIG", error)
@@ -183,7 +193,7 @@ function Register() {
 						height={30}
 						color={theme === THEME_LIGHT ? "#000" : "#F9FAFC"}
 						align="center"
-						text={"Bind Invitation ID"}
+						text={t`Bind Invitation ID`}
 					/>
 				</GridFlex>
 				<FormFieldsGroup fields={[
@@ -194,9 +204,9 @@ function Register() {
 						error: validations.address,
 						correct: corrects.address,
 						type: "text",
-						label: "Wallet Address",
-						placeholder: "Wallet address",
-						warn: (!!address || !showWarn) ? "" : "Please connect wallet",
+						label: t`Wallet Address`,
+						placeholder: t`Wallet address`,
+						warn: (!!address || !showWarn) ? `` : t`Please connect wallet`,
 						value: getFormatedAddressForShow(values.address || "", { startNum: 10, endNum: 34 }),
 						onClear: onClear,
 						onChange: onChange,
@@ -208,9 +218,9 @@ function Register() {
 						error: validations.invitationId,
 						correct: corrects.invitationId,
 						type: "text",
-						label: "Invitation ID",
-						placeholder: "Invitation ID",
-						warn: !validations.invitationId || !showWarn ? "" : "Please enter the correct invitation ID",
+						label: t`Invitation ID`,
+						placeholder: t`Invitation ID`,
+						warn: !validations.invitationId || !showWarn ? `` : t`Please enter the correct invitation ID`,
 						value: values.invitationId,
 						onClear: onClear,
 						onChange: onChange,
@@ -222,8 +232,10 @@ function Register() {
 						variant="contained"
 						color="primary"
 						disabled={config || !!isInvited || !(!!values.invitationId && !!values.address)}
-						onClick={onConfirm}>
-						{isPending({ config: isConfig }, "config", "Confirm")}
+						onClick={onConfirm}
+						key={isConfig + "config"}
+					>
+						{isPending({ config: isConfig }, "config", userRegisterInvitedCode ? t`Success` : t`Confirm`)}
 					</RegisterButton>
 				</Confirm>
 			</StyledGrid>

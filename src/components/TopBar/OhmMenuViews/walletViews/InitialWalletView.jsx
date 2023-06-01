@@ -2,25 +2,17 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useTheme, makeStyles } from "@material-ui/core/styles";
 import { trim } from "../../../../helpers";
-import { ReactComponent as ArrowUpIcon } from "../../../../assets/icons/arrow-up.svg";
-import { ReactComponent as sOhmTokenImg } from "../../../../assets/tokens/token_sOHM.svg";
-import { ReactComponent as ohmTokenImg } from "../../../../assets/tokens/token_OHM.svg";
-import { ReactComponent as abracadabraTokenImg } from "src/assets/tokens/MIM.svg";
-import rariTokenImg from "src/assets/tokens/RARI.png";
+import { ReactComponent as ArrowUpIcon } from "../../../../asstes/icons/arrow-up.svg";
+import { ReactComponent as sOhmTokenImg } from "src/asstes/icon/Sthslogo.svg";
+import { ReactComponent as ohmTokenImg } from "../../../../asstes/tokens/token_OHM.svg";
+import { ReactComponent as abracadabraTokenImg } from "src/asstes/tokens/MIM.svg";
+import rariTokenImg from "src/asstes/tokens/RARI.png";
 
-import { segmentUA } from "src/helpers/userAnalyticHelpers";
-
-import OhmImg from "src/assets/tokens/token_OHM.svg";
-import SOhmImg from "src/assets/tokens/token_sOHM.svg";
-import WsOhmImg from "src/assets/tokens/token_wsOHM.svg";
-import token33tImg from "src/assets/tokens/token_33T.svg";
-
-import { addresses, TOKEN_DECIMALS } from "../../../../constants";
+import { addresses } from "../../../../constants";
 // import SOhmLearnView from "./SOhm/SOhmLearnView";
 // import SOhmTxView from "./SOhm/SOhmTxView";
 // import SOhmZapView from "./SOhm/SOhmTxView";
 // import Chart from "../../../../components/Chart/WalletChart.jsx";
-import { rebasesDataQuery, bulletpoints, tooltipItems, tooltipInfoMessages, itemType } from "../../treasuryData.js";
 import { useWeb3Context } from "../../../../../src/hooks";
 import {
   SvgIcon,
@@ -165,61 +157,14 @@ const MenuItemUserToken = ({ name, icon, userBalance, userBalanceUSD, onExpanded
   );
 };
 
-const addTokenToWallet = (tokenSymbol, tokenAddress, address) => async () => {
-  if (!window.ethereum) return;
-
-  const host = window.location.origin;
-  let tokenPath;
-  let tokenDecimals = TOKEN_DECIMALS;
-  switch (tokenSymbol) {
-    case "THS":
-      tokenPath = OhmImg;
-      break;
-    case "33T":
-      tokenPath = token33tImg;
-      break;
-    case "wsOHM":
-      tokenPath = WsOhmImg;
-      tokenDecimals = 18;
-      break;
-    default:
-      tokenPath = SOhmImg;
-  }
-  const imageURL = `${host}/${tokenPath}`;
-
-  try {
-    await window.ethereum.request({
-      method: "wallet_watchAsset",
-      params: {
-        type: "ERC20",
-        options: {
-          address: tokenAddress,
-          symbol: tokenSymbol,
-          decimals: tokenDecimals,
-          image: imageURL,
-        },
-      },
-    });
-    segmentUA({
-      address: address,
-      type: "Add Token",
-      tokenName: tokenSymbol,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
 function InitialWalletView() {
   const theme = useTheme();
   const styles = useStyles();
   const { chainID, address } = useWeb3Context();
   const isEthereumAPIAvailable = window.ethereum;
-  // const [apy, setApy] = useState(null);
-  const [anchor, setAnchor] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
-  // const STHS_ADDRESS = addresses[chainID].STHS_ADDRESS;
-  const THS_ADDRESS = addresses[chainID].THS_ADDRESS;
+  const THS_ADDRESS = addresses[chainID]?.THS_ADDRESS;
   // const PT_TOKEN_ADDRESS = addresses[chainID].PT_TOKEN_ADDRESS;
   // const WSOHM_ADDRESS = addresses[chainID].WSOHM_ADDRESS;
 
@@ -254,23 +199,6 @@ function InitialWalletView() {
             <Typography align="left">${trim(ohmBalance * marketPrice, 2)}</Typography>
           </Paper>
         </AccordionSummary>
-        <Box style={{ width: "100%" }}>
-          {isEthereumAPIAvailable ? (
-            <Box>
-              <Divider color="secondary" />
-              {THS_ADDRESS && (
-                <Button
-                  style={{ width: "100%", fontSize: "12px" }}
-                  variant="contained"
-                  color="secondary"
-                  onClick={addTokenToWallet("THS", THS_ADDRESS, address)}
-                >
-                  ADD TOKEN TO WALLET
-                </Button>
-              )}
-            </Box>
-          ) : null}
-        </Box>
       </Accordion>
       <Accordion expanded={expanded === "sTHS"} onChange={handleChange("sTHS")}>
         <AccordionSummary
@@ -287,99 +215,7 @@ function InitialWalletView() {
             <Typography align="left">${trim(sohmBalance * marketPrice, 2)}</Typography>
           </Paper>
         </AccordionSummary>
-        <AccordionDetails margin="auto" style={{ margin: "auto", padding: 0 }}>
-          <Box style={{ width: "100%" }}>
-            {isEthereumAPIAvailable ? (
-              <Box>
-                <Divider color="secondary" />
-                {STHS_ADDRESS && (
-                  <Button
-                    style={{ width: "100%", fontSize: "12px" }}
-                    variant="contained"
-                    color="secondary"
-                    onClick={addTokenToWallet("sTHS", STHS_ADDRESS, address)}
-                  >
-                    ADD TOKEN TO WALLET
-                  </Button>
-                )}
-              </Box>
-            ) : null}
-          </Box>
-        </AccordionDetails>
       </Accordion>
-      {/* <Accordion expanded={expanded === "wsOHM"} onChange={handleChange("wsOHM")}>
-        <AccordionSummary
-          expandIcon={<SvgIcon component={ArrowUpIcon} viewBox="0 0 32 32" style={{ height: "25px", width: "25px" }} />}
-        >
-          <Typography align="left" style={{ width: "100%", flexDirection: "row" }}>
-            {" "}
-            <SvgIcon component={wsOhmTokenImg} viewBox="0 0 180 180" style={{ height: "25px", width: "25px" }} />
-            wsOHM
-          </Typography>
-          <Paper>
-            <Typography align="left">{wsohmBalance}</Typography>
-            <Typography align="left">${(trim(wsohmBalance * marketPrice), 2)}</Typography>
-          </Paper>
-        </AccordionSummary>
-        <AccordionDetails margin="auto" style={{ margin: "auto", padding: 0 }}>
-          <Box className="ohm-pairs" style={{ width: "100%" }}>
-            {isEthereumAPIAvailable ? (
-              <Box style={{ width: "100%", fontSize: "12px" }}>
-                <Divider color="secondary" />
-                {STHS_ADDRESS && (
-                  <Button
-                    style={{ width: "100%", fontSize: "12px" }}
-                    variant="contained"
-                    color="secondary"
-                    onClick={addTokenToWallet("wsOHM", WSOHM_ADDRESS, address)}
-                  >
-                    ADD TOKEN TO WALLET
-                  </Button>
-                )}
-              </Box>
-            ) : null}
-          </Box>
-        </AccordionDetails>
-      </Accordion> */}
-
-      {/* <Accordion expanded={expanded === "3TT"} onChange={handleChange("3TT")}>
-        <AccordionSummary
-          expandIcon={<SvgIcon component={ArrowUpIcon} viewBox="0 0 32 32" style={{ height: "25px", width: "25px" }} />}
-        >
-          <Typography align="left" style={{ width: "100%", flexDirection: "row" }}>
-            {" "}
-            <SvgIcon component={t33TokenImg} viewBox="0 0 1000 1000" style={{ height: "25px", width: "25px" }} />
-            3TT
-          </Typography>
-          <Paper>
-            <Typography align="left">{"0.00"
-              // new Intl.NumberFormat("en-US").format(poolBalance)
-            
-            }</Typography>
-            <Typography align="left">${trim(poolBalance * marketPrice, 2)}</Typography>
-          </Paper>
-        </AccordionSummary>
-        <AccordionDetails margin="auto" style={{ margin: "auto", padding: 0 }}>
-          <Box className="ohm-pairs" style={{ width: "100%" }}>
-            {isEthereumAPIAvailable ? (
-              <Box style={{ width: "100%", fontSize: "12px" }}>
-                <Divider color="secondary" />
-                {STHS_ADDRESS && (
-                  <Button
-                    style={{ width: "100%", fontSize: "12px" }}
-                    variant="contained"
-                    color="secondary"
-                    onClick={addTokenToWallet("33T", PT_TOKEN_ADDRESS, address)}
-                  >
-                    ADD TOKEN TO WALLET
-                  </Button>
-                )}
-              </Box>
-            ) : null}
-          </Box>
-        </AccordionDetails>
-      </Accordion>
-      <Divider color="secondary" className="less-margin" /> */}
 
       <Divider color="secondary" className="less-margin" />
 
@@ -394,7 +230,7 @@ function InitialWalletView() {
         <Box sx={{ flexWrap: "nowrap", flexDirection: "row" }}>
           <ExternalLink
             href={`https://app.sushi.com/swap?inputCurrency=${dai.getAddressForReserve(chainID)}&outputCurrency=${
-              addresses[chainID].THS_ADDRESS
+              addresses[chainID]?.THS_ADDRESS
             }`}
           >
             <Button size="large" variant="contained" color="secondary">
@@ -406,7 +242,7 @@ function InitialWalletView() {
 
           {/* <ExternalLink
             href={`https://app.uniswap.org/#/swap?inputCurrency=${frax.getAddressForReserve(chainID)}&outputCurrency=${
-              addresses[chainID].THS_ADDRESS
+              addresses[chainID]?.THS_ADDRESS
             }`}
           >
             <Button size="large" variant="contained" color="secondary">
@@ -425,16 +261,7 @@ function InitialWalletView() {
           </ExternalLink>
         </Box>
       </Box>
-      {/* <Drawer style={{ width: "55%" }} anchor={"right"} open={anchor === "sOHMtx"} onClose={toggleDrawer("OG")}>
-        {" "}
-        <SOhmTxView></SOhmTxView>
-      </Drawer>
-      <Drawer style={{ width: "55%" }} anchor={"right"} open={anchor === "sOHMLHIW"} onClose={toggleDrawer("OG")}>
-        <SOhmLearnView></SOhmLearnView>
-      </Drawer>
-      <Drawer style={{ width: "55%" }} anchor={"right"} open={anchor === "sOHMZaps"} onClose={toggleDrawer("OG")}>
-        <SOhmZapView></SOhmZapView>
-      </Drawer> */}
+
     </Paper>
   );
 }

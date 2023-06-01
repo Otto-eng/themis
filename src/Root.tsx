@@ -11,19 +11,15 @@ import { initLocale } from "./locales";
 
 import App from "./App";
 import store from "./store";
-// import getLibrary from "./utils/ethers/getLibrary";
-
 
 // import Vconsole from "vconsole";
+// new Vconsole({ maxLogNumber: 5000 });
 
-// if (process.env.REACT_APP_NODE_ENV !== "production") {
-//   new Vconsole({ maxLogNumber: 5000 });
-// }
 
 const Root: FC = () => {
+
   useEffect(() => {
     initLocale();
-
   }, []);
 
 

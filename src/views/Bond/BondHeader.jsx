@@ -3,8 +3,8 @@ import { NavLink, useHistory } from "react-router-dom";
 import BondLogo from "../../components/BondLogo";
 import AdvancedSettings from "./AdvancedSettings";
 import { Typography, IconButton, SvgIcon, Link } from "@material-ui/core";
-import { ReactComponent as SettingsIcon } from "../../assets/icons/settings.svg";
-import { ReactComponent as XIcon } from "../../assets/icons/x.svg";
+import { ReactComponent as SettingsIcon } from "../../asstes/icons/settings.svg";
+import { ReactComponent as XIcon } from "../../asstes/icons/x.svg";
 import useEscape from "../../hooks/useEscape";
 
 function BondHeader({ bond, slippage, recipientAddress, onRecipientAddressChange, onSlippageChange }) {

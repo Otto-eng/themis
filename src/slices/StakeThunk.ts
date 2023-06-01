@@ -1,15 +1,16 @@
 import { ethers, BigNumber } from "ethers";
 import { addresses } from "../constants";
-import { abi as ierc20ABI } from "../abi/IERC20.json";
-import { abi as ThemisStakingABI } from "../abi/OlympusStakingv2.json";
+import { abi as ierc20ABI } from "../abi/IERC20.json"; // 
+import { abi as ThemisStakingABI } from "../abi/ThemisStaking.json";
 import { abi as StakingHelperABI } from "../abi/StakingHelper.json";
 import { clearPendingTxn, fetchPendingTxns, getStakingTypeText } from "./PendingTxnsSlice";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchAccountSuccess, getBalances } from "./AccountSlice";
 import { error, info } from "../slices/MessagesSlice";
 import { IActionValueAsyncThunk, IChangeApprovalAsyncThunk, IJsonRPCError } from "./interfaces";
-import { segmentUA } from "../helpers/userAnalyticHelpers";
-import { IERC20, OlympusStakingv2, StakingHelper } from "src/typechain";
+import { IERC20, ThemisStaking, StakingHelper } from "src/typechain";
+import { abi as sTHSAbi } from "src/abi/sThemis.json"; 
+import { t } from "@lingui/macro";
 
 interface IUAData {
   address: string;
@@ -19,18 +20,24 @@ interface IUAData {
   type: string | null;
 }
 
-function alreadyApprovedToken(token: string, stakeAllowance: BigNumber, unstakeAllowance: BigNumber) {
+function alreadyApprovedToken(token: string, stakeAllowance: BigNumber, unstakeAllowance: BigNumber, thsBalance: string, sThsBalance: string) {
   // set defaults
   let bigZero = BigNumber.from("0");
-  let applicableAllowance = bigZero;
+  let applicableAllowance = BigNumber.from("0");
 
   // determine which allowance to check
   if (token === "ths") {
     applicableAllowance = stakeAllowance;
+    bigZero = BigNumber.from(Math.floor((Number(thsBalance ?? 0) + 1) * 10000)).div(BigNumber.from("10000"));
+
   } else if (token === "sThs") {
     applicableAllowance = unstakeAllowance;
+    bigZero = BigNumber.from(Math.floor((Number(sThsBalance ?? 0) + 1) * 10000)).div(BigNumber.from("10000"));
   }
 
+  // console.log("bigZero", bigZero.toString())
+
+  bigZero = bigZero.mul(ethers.utils.parseUnits("1", "gwei"))
   // check if allowance exists
   if (applicableAllowance.gt(bigZero)) return true;
 
@@ -39,9 +46,9 @@ function alreadyApprovedToken(token: string, stakeAllowance: BigNumber, unstakeA
 
 export const changeApproval = createAsyncThunk(
   "stake/changeApproval",
-  async ({ token, provider, address, networkID }: IChangeApprovalAsyncThunk, { dispatch }) => {
+  async ({ token, provider, address, networkID, thsBalance, sThsBalance }: IChangeApprovalAsyncThunk, { dispatch }) => {
     if (!provider) {
-      dispatch(error("Please connect your wallet!"));
+      dispatch(error(t`Please connect your wallet!`));
       return;
     }
 
@@ -49,13 +56,13 @@ export const changeApproval = createAsyncThunk(
     const signer = provider.getSigner();
     const thsContract = new ethers.Contract(addresses[networkID].THS_ADDRESS as string, ierc20ABI, signer) as IERC20;
 
-    const sThsContract = new ethers.Contract(addresses[networkID].STHS_ADDRESS as string, ierc20ABI, signer) as IERC20;
+    const sThsContract = new ethers.Contract(addresses[networkID].STHS_ADDRESS as string, sTHSAbi, signer) as IERC20;
 
     let approveTx;
     let stakeAllowance = await thsContract.allowance(address, addresses[networkID].STAKING_HELPER_ADDRESS);
     let unstakeAllowance = await sThsContract.allowance(address, addresses[networkID].STAKING_ADDRESS);
     // return early if approval has already happened
-    if (alreadyApprovedToken(token, stakeAllowance, unstakeAllowance)) {
+    if (alreadyApprovedToken(token, stakeAllowance, unstakeAllowance, thsBalance, sThsBalance)) {
       dispatch(info("Approval completed."));
       return dispatch(
         fetchAccountSuccess({
@@ -72,12 +79,12 @@ export const changeApproval = createAsyncThunk(
         // won't run if stakeAllowance > 0
         approveTx = await thsContract.approve(
           addresses[networkID].STAKING_HELPER_ADDRESS,
-          ethers.utils.parseUnits("1000000000", "gwei").toString(),
+          ethers.utils.parseUnits("100000", "gwei").toString(),
         );
       } else if (token === "sThs") {
         approveTx = await sThsContract.approve(
           addresses[networkID].STAKING_ADDRESS,
-          ethers.utils.parseUnits("1000000000", "gwei").toString(),
+          ethers.utils.parseUnits("100000", "gwei").toString(),
         );
       }
 
@@ -115,7 +122,7 @@ export const changeStake = createAsyncThunk(
   "stake/changeStake",
   async ({ action, value, provider, address, networkID }: IActionValueAsyncThunk, { dispatch }) => {
     if (!provider) {
-      dispatch(error("Please connect your wallet!"));
+      dispatch(error(t`Please connect your wallet!`));
       return;
     }
 
@@ -124,7 +131,7 @@ export const changeStake = createAsyncThunk(
       addresses[networkID].STAKING_ADDRESS as string,
       ThemisStakingABI,
       signer,
-    ) as OlympusStakingv2;
+    ) as ThemisStaking;
     const stakingHelper = new ethers.Contract(
       addresses[networkID].STAKING_HELPER_ADDRESS as string,
       StakingHelperABI,
@@ -142,9 +149,7 @@ export const changeStake = createAsyncThunk(
     try {
       if (action === "stake") {
         uaData.type = "stake";
-
         stakeTx = await stakingHelper.stake(ethers.utils.parseUnits(value, "gwei"), address);
-
       } else {
         uaData.type = "unstake";
         stakeTx = await staking.unstake(ethers.utils.parseUnits(value, "gwei"), true);
@@ -161,13 +166,11 @@ export const changeStake = createAsyncThunk(
           error("You may be trying to stake more than your balance! Error code: 32603. Message: ds-math-sub-underflow"),
         );
       } else {
-        console.log("rpcError", rpcError)
         dispatch(error(rpcError.message));
       }
       return;
     } finally {
       if (stakeTx) {
-        segmentUA(uaData);
         dispatch(clearPendingTxn(stakeTx.hash));
       }
     }

@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import copy from "copy-to-clipboard"
 
-import { ReactComponent as CloseIcon } from "../../assets/icons/x.svg";
-import { ReactComponent as WalletIcon } from "../../assets/icons/wallet.svg";
+import { ReactComponent as CloseIcon } from "../../asstes/icons/x.svg";
+import { ReactComponent as WalletIcon } from "../../asstes/icons/wallet.svg";
 import { useAddress, useWeb3Context } from "../../hooks/web3Context";
 import InitialWalletView from "./InitialWalletView";
 import { Drawer, SvgIcon, Button, Typography, Box, IconButton, ButtonProps, styled } from "@material-ui/core";
 import { ethers } from "ethers";
-import { addresses, ZERO_ADDRESS } from "src/constants";
+import { addresses } from "src/constants";
 import { abi as RelationshipABI } from "src/abi/Relationship.json";
+import { Trans } from "@lingui/macro";
 
 
 
@@ -19,14 +20,14 @@ const WalletButtonBase = (props: ButtonProps) => (
 const OpenWalletButton = (props: ButtonProps) => (
   <WalletButtonBase {...props}>
     <SvgIcon component={WalletIcon} color="primary" />
-    <Typography>Wallet</Typography>
+    <Typography><Trans>Wallet</Trans></Typography>
   </WalletButtonBase>
 );
 
 const ConnectButton = (props: ButtonProps) => (
   <WalletButtonBase {...props}>
     <SvgIcon component={WalletIcon} color="primary" />
-    <Typography>Connect Wallet</Typography>
+    <Typography><Trans>Connect Wallet</Trans></Typography>
   </WalletButtonBase>
 );
 
@@ -66,35 +67,41 @@ const DisconnectButton = () => {
   const { disconnect } = useWeb3Context();
   return (
     <Button onClick={disconnect} variant="contained" size="large" color="secondary">
-      <Typography>Disconnect</Typography>
+      <Typography><Trans>Disconnect</Trans></Typography>
     </Button>
   );
 };
 
 export function Wallet() {
   const [isWalletOpen, setWalletOpen] = useState(false);
-  const [initCode, setInitCode] = useState("--");
+  const [initCode, setInitCode] = useState("");
   const closeWallet = () => setWalletOpen(false);
   const openWallet = () => setWalletOpen(true);
   const { chainID, provider } = useWeb3Context()
   const address = useAddress()
   const [state, setState] = useState(false)
-  // const pendingTransactions = useSelector(state => {
-  //   return state.pendingTransactions;
-  // }); // [{ txnHash: "3241141", text: "test" }];
 
-  const serachRelationship = async (account: string) => {
-    const RelationshipContract = new ethers.Contract(addresses[chainID].Relationship_ADDRESS as string, RelationshipABI, provider)
 
-    const info = await RelationshipContract.RegisterInfoOf(account)
-    info?.registrantCode && setInitCode(info.registrantCode)
-  }
+  const serachRelationship = useCallback(
+
+    async (account: string) => {
+      if (address && chainID && provider && addresses[chainID]?.Relationship_ADDRESS) {
+        const signer = provider.getSigner();
+        const RelationshipContract = new ethers.Contract(addresses[chainID].Relationship_ADDRESS as string, RelationshipABI, signer)
+        const info = await RelationshipContract.RegisterInfoOf(account)
+        info?.registrantCode && setInitCode(info.registrantCode)
+      }
+
+    }, [address, chainID, provider, addresses]
+  )
 
   useEffect(() => {
-    if (address && chainID && !!provider && !!addresses) {
+    if (address && chainID && provider && addresses[chainID]?.Relationship_ADDRESS) {
       serachRelationship(address)
     }
   }, [address, chainID, provider, addresses])
+
+ 
 
 
   return (
@@ -107,14 +114,16 @@ export function Wallet() {
           </IconButton>
         </Box>
         <InitialWalletView />
-        <InitCode onClick={() => {
-          if (initCode && copy("http://122.228.226.116:25001/register?initCode=" + initCode)) {
+        {initCode && <InitCode onClick={() => {
+          if (initCode && copy("https://asian.themis.capital/register?initCode=" + initCode)) {
             setState(true)
             setInterval(() => {
               setState(false)
             }, 2000)
           }
-        }}>{state ? "Copied" : `Invitation code:  ${initCode}`}</InitCode>
+        }}>{state ? "Copied" : `Invitation code:  ${initCode || "--"}`}</InitCode>
+        }
+        {/* <InitCode onClick={addToken}><Trans>Add Token Address</Trans></InitCode> */}
           <DisconnectButton />
       </Drawer>
     </>

@@ -15,6 +15,8 @@ export interface IBaseAsyncThunk {
 export interface IChangeApprovalAsyncThunk extends IBaseAsyncThunk {
   readonly token: string;
   readonly address: string;
+  readonly thsBalance: string;
+  readonly sThsBalance: string;
 }
 
 export interface IActionAsyncThunk extends IBaseAsyncThunk {
@@ -75,8 +77,5 @@ export interface ISCAsyncThunk {
 
 
 export interface ISCInviterEarningAsyncThunk {
-  readonly address: string;
   readonly first: BigNumber;
-  readonly chainID: NetworkID;
-  readonly provider: StaticJsonRpcProvider | JsonRpcProvider;
 }

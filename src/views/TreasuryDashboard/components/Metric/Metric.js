@@ -3,6 +3,7 @@ import { Skeleton } from "@material-ui/lab";
 import { Typography, Box } from "@material-ui/core";
 import { trim, formatCurrency } from "../../../../helpers";
 import InfoTooltip from "src/components/InfoTooltip/InfoTooltip.jsx";
+import { Trans, t } from "@lingui/macro";
 
 export const Metric = props => <Box className={`metric ${props.className}`}>{props.children}</Box>;
 
@@ -19,7 +20,7 @@ export const MarketCap = () => {
 
   return (
     <Metric className="market">
-      <Metric.Title>Market Cap</Metric.Title>
+      <Metric.Title><Trans>Market Cap</Trans></Metric.Title>
       <Metric.Value>
         {marketCap && formatCurrency(marketCap, 0)}
       </Metric.Value>
@@ -27,12 +28,12 @@ export const MarketCap = () => {
   );
 };
 
-export const OHMPrice = () => {
+export const THSPrice = () => {
   const marketPrice = useSelector(state => state.app.thsPrice);
 
   return (
     <Metric className="price">
-      <Metric.Title>THS Price</Metric.Title>
+      <Metric.Title><Trans>THS Price</Trans></Metric.Title>
       <Metric.Value>
         {marketPrice && formatCurrency(marketPrice, 2)}
       </Metric.Value>
@@ -48,9 +49,11 @@ export const CircSupply = () => {
 
   return (
     <Metric className="circ">
-      <Metric.Title>Circulating Supply (total)</Metric.Title>
+      <Metric.Title><Trans>Total casting quantity</Trans></Metric.Title>
       <Metric.Value>
-        {isDataLoaded && parseInt(circSupply) + " / " + parseInt(totalSupply)}
+        {isDataLoaded &&
+          // parseInt(circSupply) + " / " + 
+          parseInt(totalSupply)}
       </Metric.Value>
     </Metric>
   );
@@ -61,7 +64,7 @@ export const BackingPerTHS = () => {
 
   return (
     <Metric className="bpo">
-      <Metric.Title>Backing per THS</Metric.Title>
+      <Metric.Title><Trans>Backing per THS</Trans></Metric.Title>
       <Metric.Value>
         {!isNaN(backingPerThs) && formatCurrency(backingPerThs, 2)}
       </Metric.Value>
@@ -74,30 +77,30 @@ export const CurrentIndex = () => {
 
   return (
     <Metric className="index">
-      <Metric.Title>
+      <Metric.Title><Trans>
         Current Index
-        <InfoTooltip message="The current index tracks the amount of sTHS accumulated since the beginning of staking. Basically, how much sTHS one would have if they staked and held a single THS from day 1." />
-      </Metric.Title>
+        <InfoTooltip message={t`The current index tracks the amount of sTHS accumulated since the beginning of staking. Basically, how much sTHS one would have if they staked and held a single THS from day 1.`} />
+      </Trans></Metric.Title>
       <Metric.Value>
-        {currentIndex && trim(currentIndex, 2) + " sTHS"}
+        {currentIndex && trim(currentIndex, 4) + " sTHS"}
       </Metric.Value>
     </Metric>
   );
 };
 
-export const WSOHMPrice = () => {
+export const STHSPrice = () => {
   const sThsPrice = useSelector(state => state.app.thsPrice);
 
   return (
     <Metric className="wsoprice">
-      <Metric.Title>
+      <Metric.Title><Trans>
         sTHS Price
         {/* <InfoTooltip
           message={
             "sThs = THS * index\n\nThe price of wsOHM is equal to the price of THS multiplied by the current index"
           }
         /> */}
-      </Metric.Title>
+      </Trans></Metric.Title>
       <Metric.Value>
         {sThsPrice && formatCurrency(sThsPrice, 2)}
       </Metric.Value>

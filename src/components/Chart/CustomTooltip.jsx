@@ -1,13 +1,17 @@
 import { Paper, Box, Typography } from "@material-ui/core";
 import "./customtooltip.scss";
+import dayjs from "dayjs"
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
 
 const renderDate = (index, payload, item) => {
   return index === payload.length - 1 ? (
     <div className="tooltip-date">
-      {new Date(item.payload.timestamp * 1000).toLocaleString("default", { month: "long" }).charAt(0).toUpperCase()}
+      {dayjs.unix(item.payload.timestamp).utc().format("MM-DD-YYYY")}
+      {/* {new Date(item.payload.timestamp * 1000).toLocaleString("default", { month: "long" })}
       {new Date(item.payload.timestamp * 1000).toLocaleString("default", { month: "long" }).slice(1)}
       &nbsp;
-      {new Date(item.payload.timestamp * 1000).getDate()}, {new Date(item.payload.timestamp * 1000).getFullYear()}
+      {new Date(item.payload.timestamp * 1000).getDate()}, {new Date(item.payload.timestamp * 1000).getFullYear()} */}
     </div>
   ) : (
     ""
@@ -30,6 +34,7 @@ const renderTooltipItems = (payload, bulletpointColors, itemNames, itemType, isS
           <span className="tooltip-bulletpoint" style={bulletpointColors[0]}></span>
           Staked
         </Typography>
+
         <Typography>{`${Math.round(payload[0].value)}%`}</Typography>
       </Box>
       <Box className="item" display="flex" justifyContent="space-between">
@@ -47,7 +52,8 @@ const renderTooltipItems = (payload, bulletpointColors, itemNames, itemType, isS
         <Typography variant="body2">
           <span className="tooltip-bulletpoint" style={bulletpointColors[0]}></span>
           {itemNames[0]}
-        </Typography>
+          </Typography>
+
         <Typography>{`${Math.round(payload[0].value)}%`}</Typography>
       </Box>
       <Box className="item" display="flex" justifyContent="space-between">

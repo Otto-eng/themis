@@ -137,9 +137,6 @@ const commonSettings = {
         borderBottom: 0,
         fontSize: "1rem",
       },
-      head: {
-        color: "#999999",
-      },
     },
     MuiDrawer: {
       root: {

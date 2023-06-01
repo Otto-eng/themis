@@ -1,14 +1,11 @@
-import { BigNumberish, ethers } from "ethers";
-import { addresses } from "../constants";
-import { abi as ierc20Abi } from "../abi/IERC20.json";
-import { abi as OlympusStakingv2ABI } from "../abi/OlympusStakingv2.json";
-import { abi as sTHS } from "../abi/sThemis.json";
+import { ethers } from "ethers";
 import { setAll } from "../helpers";
 import apollo from "../lib/apolloClient";
 import { createSlice, createSelector, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "src/store";
-import { IBaseAsyncThunk } from "./interfaces";
-import { OlympusStakingv2, SOhmv2 } from "../typechain";
+import { addresses, BINANCE_URI, NetworkId } from "src/constants";
+import { StaticJsonRpcProvider } from "@ethersproject/providers";
+import { abi as THSUSDTPAIRABI } from "src/abi/THSUSDTPair.json";
 
 interface IProtocolMetrics {
   readonly timestamp: string;
@@ -23,49 +20,70 @@ interface IProtocolMetrics {
   readonly nextDistributedOhm: string;
 }
 
+interface IProtocolMetrics2 {
+  readonly currentAPY: string;
+  readonly days5APY: string;
+  readonly nextEpochRebase: string;
+}
+
+interface IRebases {
+  readonly index: string;
+}
+
 interface ILoadAppDetails {
   readonly stakingTVL?: number;
   readonly thsPrice?: number;
   readonly marketCap?: number;
   readonly circSupply?: number;
   readonly totalSupply?: number;
-  readonly treasuryMarketValue?: BigNumberish;
+  readonly treasuryMarketValue?: number;
 }
 
 export const loadAppDetails = createAsyncThunk(
   "app/loadAppDetails",
-  async () => {
-    console.log("loadAppDetails")
+  async ({ provider, chainID }: { provider: StaticJsonRpcProvider, chainID: number }, { dispatch }) => {
     const protocolMetricsQuery = `
- query MyQuery {
-   protocolMetrics(first: 1, orderBy: timestamp, orderDirection: desc) {
-            timestamp
-            thsCirculatingSupply
-            sthsCirculatingSupply
-            totalSupply
-            thsPrice
-            marketCap
-            totalValueLocked
-            treasuryMarketValue
-            nextEpochRebase
-            nextDistributedThs
-        }
-    }
-`;
+      query MyQuery {
+        protocolMetrics(first: 1, orderBy: timestamp, orderDirection: desc) {
+                 timestamp
+                 thsCirculatingSupply
+                 sthsCirculatingSupply
+                 totalSupply
+                 thsPrice
+                 marketCap
+                 totalValueLocked
+                 treasuryMarketValue
+                 nextEpochRebase
+                 nextDistributedThs
+             }
+         }
+      `;
+    
+    let graphData: any = []
+    try {
+      graphData = await apollo<{ protocolMetrics: IProtocolMetrics[] }>(protocolMetricsQuery);
+    } catch (error) {
 
-    const graphData = await apollo<{ protocolMetrics: IProtocolMetrics[] }>(protocolMetricsQuery);
+    }
     if (!graphData || graphData == null) {
       console.error("Returned a null response when querying TheGraph");
       return;
     }
 
-    const stakingTVL = parseFloat(graphData.data.protocolMetrics[0].totalValueLocked);
-    const marketCap = parseFloat(graphData.data.protocolMetrics[0].marketCap);
-    const circSupply = parseFloat(graphData.data.protocolMetrics[0].thsCirculatingSupply);
-    const totalSupply = parseFloat(graphData.data.protocolMetrics[0].totalSupply);
-    const thsPrice = parseFloat(graphData.data.protocolMetrics[0].thsPrice);
-    const treasuryMarketValue = parseFloat(graphData.data.protocolMetrics[0].treasuryMarketValue) / Math.pow(10, 9);
-    // const currentBlock = parseFloat(graphData.data._meta.block.number);
+    let thsPrice = 0;
+
+    try {
+      const THSUSDTPairContract = new ethers.Contract(addresses[chainID]?.THS_USDT_PAIR_ADDRESS, THSUSDTPAIRABI, provider);
+      const [thsBanlance, usdtBanlance] = await THSUSDTPairContract.getReserves()
+      thsPrice = Number(ethers.utils.formatUnits(thsBanlance, "ether")) / Number(ethers.utils.formatUnits(usdtBanlance, "gwei"))
+    } catch {
+      thsPrice = parseFloat(graphData?.data?.protocolMetrics[0]?.thsPrice ?? 0)
+    }
+    const stakingTVL = parseFloat(graphData?.data?.protocolMetrics[0]?.totalValueLocked ?? 0);
+    const marketCap = parseFloat(graphData?.data?.protocolMetrics[0]?.marketCap ?? 0);
+    const circSupply = parseFloat(graphData?.data?.protocolMetrics[0]?.thsCirculatingSupply ?? 0) 
+    const totalSupply = parseFloat(graphData?.data?.protocolMetrics[0]?.totalSupply ?? 0);
+    const treasuryMarketValue = parseFloat(graphData?.data?.protocolMetrics[0]?.treasuryMarketValue ?? 0)
 
     return {
       stakingTVL,
@@ -80,55 +98,56 @@ export const loadAppDetails = createAsyncThunk(
 
 export const loadAppDetailsContract = createAsyncThunk(
   "app/loadAppDetailsContract",
-  async ({ networkID, provider }: IBaseAsyncThunk) => {
-    const firstDate = +new Date()
-    console.log("firstDate", firstDate)
-    const currentBlock = await provider.getBlockNumber();
-    const lastDate = +new Date()
+  async (chainID: NetworkId) => {
 
-    console.log("currentBlock", currentBlock, lastDate - firstDate)
-    const stakingContract = new ethers.Contract(
-      addresses[networkID].STAKING_ADDRESS as string,
-      OlympusStakingv2ABI,
-      provider,
-    ) as OlympusStakingv2;
+    const protocolMetricsQuery = `
+    query MyQuery {
+      protocolMetrics(first: 1, orderBy: timestamp, orderDirection: desc) {
+        currentAPY
+        days5APY
+        nextEpochRebase
+      },
+      rebases(first: 1, orderDirection: desc, orderBy: timestamp) {
+        index
+      }
+    }
+`;
+    const result = await fetch(BINANCE_URI, {
+      method: "POST",
+      body: JSON.stringify({
+        jsonrpc: "2.0", method: "eth_blockNumber",
+        params: [],
+        id: 1
+      })
+    })
+    const res = await result.json()
+    let graphData: any = []
+    try {
+      graphData = await apollo<{ protocolMetrics: IProtocolMetrics2[], rebases: IRebases[] }>(protocolMetricsQuery);
+    } catch (error) {
 
-
-    const sThsMainContract = new ethers.Contract(
-      addresses[networkID].STHS_ADDRESS as string,
-      sTHS,
-      provider,
-    ) as SOhmv2;
-
-
-    const epoch = await stakingContract.epoch();
-
-    const stakingReward = epoch.distribute;
-    const circ = await sThsMainContract.circulatingSupply();
-    const stakingRebase = Number(stakingReward.toString()) / Number(circ.toString());
-    const fiveDayRate = Math.pow(1 + stakingRebase, 5 * 3) - 1;
-    const stakingAPY = Math.pow(1 + stakingRebase, 365 * 3) - 1;
-    // Current index
-    const currentIndex = await stakingContract.index();
+    }
+    if (!graphData || !res || res == null || graphData == null) {
+      console.error("Returned a null response when querying TheGraph");
+      return;
+    }
+    const currentIndex = graphData?.data?.rebases[0]?.index ?? 0;
+    const fiveDayRate = parseFloat(graphData?.data?.protocolMetrics[0]?.days5APY ?? 0);
+    const stakingAPY = parseFloat(graphData?.data?.protocolMetrics[0]?.currentAPY ?? 0);
+    const stakingRebase = parseFloat(graphData?.data?.protocolMetrics[0]?.nextEpochRebase ?? 0);
     return {
-      currentIndex: ethers.utils.formatUnits(currentIndex, "gwei"),
-      currentBlock,
+      currentIndex,
+      currentBlock: Number(res.result.toString()),
       fiveDayRate,
       stakingAPY,
-      // stakingTVL,
       stakingRebase,
-      // marketCap,
-      // thsPrice,
-      // circSupply,
-      // totalSupply,
-      // treasuryMarketValue,
     } as IAppData;
   },
 );
 
 interface IAppData {
   readonly circSupply?: number;
-  readonly currentIndex?: string;
+  readonly currentIndex?: number;
   readonly currentBlock?: number;
   readonly fiveDayRate?: number;
   readonly loading: boolean;
@@ -140,7 +159,7 @@ interface IAppData {
   readonly stakingTVL?: number;
   readonly totalSupply?: number;
   readonly treasuryBalance?: number;
-  readonly treasuryMarketValue?: BigNumberish;
+  readonly treasuryMarketValue?: number;
 }
 
 const initialState: IAppData = {
@@ -190,3 +209,4 @@ export default appSlice.reducer;
 export const { fetchAppSuccess } = appSlice.actions;
 
 export const getAppState = createSelector(baseInfo, app => app);
+

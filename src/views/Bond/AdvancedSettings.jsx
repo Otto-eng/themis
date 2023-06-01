@@ -10,7 +10,7 @@ import {
   InputLabel,
   InputAdornment,
 } from "@material-ui/core";
-import { ReactComponent as XIcon } from "../../assets/icons/x.svg";
+import { ReactComponent as XIcon } from "../../asstes/icons/x.svg";
 import { t, Trans } from "@lingui/macro";
 import "./bondSettings.scss";
 
